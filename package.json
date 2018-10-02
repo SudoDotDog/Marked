@@ -1,0 +1,28 @@
+{
+  "name": "@sudoo/marked",
+  "version": "0.0.0",
+  "description": ":tennis: Code runner in marked territory",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SudoDotDog/Marked.git"
+  },
+  "keywords": [
+    "JS"
+  ],
+  "author": "PCXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SudoDotDog/Marked/issues"
+  },
+  "homepage": "https://github.com/SudoDotDog/Marked#readme",
+  "dependencies": {
+    "acorn": "^6.0.2"
+  },
+  "devDependencies": {
+    "@types/acorn": "^4.0.3"
+  }
+}
