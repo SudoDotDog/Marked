@@ -16,8 +16,10 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "paths": {
+            "marked#evaluate/*": ["evaluate/*"],
             "marked#declare/*": ["declare/*"],
             "marked#util/*": ["util/*"],
+            "marked#variable/*": ["variable/*"],
         },
         "removeComments": true,
         "resolveJsonModule": true,
