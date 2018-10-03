@@ -8,16 +8,41 @@ import * as EST from "estree";
 import { Evaluator } from "marked#declare/node";
 import { Scope } from "marked#variable/scope";
 import { Sandbox } from "../sandbox";
+import { VARIABLE_TYPE } from "marked#declare/variable";
 
-export const expressionEvaluator: Evaluator<'ExpressionStatement'> = async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope): Promise<any> {
-    return await this.execute(node.expression, scope);
-};
+export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
+    async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope): Promise<any> {
 
-export const calleeEvaluator: Evaluator<'CallExpression'> = async function (this: Sandbox, node: EST.CallExpression, scope: Scope): Promise<any> {
-    const func: () => any = await this.execute(node.callee, scope);
-    const args = [];
-    for (const arg of node.arguments) {
-        args.push(await this.execute(arg, scope));
-    }
-    return func.apply(null, args);
-};
+        return await this.execute(node.expression, scope);
+    };
+
+export const calleeEvaluator: Evaluator<'CallExpression'> =
+    async function (this: Sandbox, node: EST.CallExpression, scope: Scope): Promise<any> {
+
+        const func: () => any = await this.execute(node.callee, scope);
+        const args = [];
+        for (const arg of node.arguments) {
+            args.push(await this.execute(arg, scope));
+        }
+
+        return func.apply(null, args);
+    };
+
+export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
+    async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope): Promise<any> {
+        
+        const func = async (...args: any[]): Promise<any> => {
+            const subScope = Scope.fromScope(scope);
+            for (let i = 0; i < node.params.length; i++) {
+                const pattern: EST.Identifier = node.params[i] as EST.Identifier;
+                const value: any = args[i];
+
+                subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
+            }
+
+            const result = await this.execute(node.body, subScope);
+            console.log(result);
+            if (result) return result.result; // fixme
+        };
+        return func;
+    };
