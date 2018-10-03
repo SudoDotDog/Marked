@@ -4,9 +4,9 @@
  * @description Evaluate
  */
 
-import * as EST from "estree";
-import { Scope } from "marked#variable/scope";
+import { Marked } from "marked";
+import { programEvaluator } from "marked#evaluate/symbol";
 
-export const evaluate = (expr: EST.Node, scope: Scope) => {
-
+export const useSymbol = (marked: Marked) => {
+    marked.mount('Program', programEvaluator);
 };

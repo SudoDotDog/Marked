@@ -22,7 +22,7 @@ build:
 	@$(tsc) --p $(build)
 
 run:
-	@ts-node src/index.ts
+	ts-node src/index.ts
 
 tests:
 	@echo "[INFO] Testing with Mocha"
