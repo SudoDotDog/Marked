@@ -21,8 +21,8 @@ build:
 	@echo "[INFO] Building for production"
 	@$(tsc) --p $(build)
 
-run:
-	ts-node src/index.ts
+run: dev
+	@node dist/index.js
 
 tests:
 	@echo "[INFO] Testing with Mocha"

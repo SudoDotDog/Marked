@@ -3,8 +3,23 @@
  * @description Index
  */
 
-import { Marked } from './marked';
+require('./binding');
+import { useSymbol } from 'marked#evaluate/evaluate';
+import { Sandbox } from './sandbox';
 
-const marked = new Marked();
+export const marked = async (script: string): Promise<number> => {
+    const sandbox = new Sandbox();
+    useSymbol(sandbox);
+    try {
+        await sandbox.evaluate(script);
+    } catch (err) {
+        throw err;
+    }
+    return 0;
+};
 
-console.log(marked.evaluate("console.log(1234)"));
+marked("console.log(1234)").then((result) => {
+    console.log(result);
+}).catch((err) => {
+    console.log(err);
+});

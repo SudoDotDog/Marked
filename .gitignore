@@ -18,6 +18,7 @@ lib-cov
 coverage
 
 # temp
+dist
 temp
 
 # nyc test coverage

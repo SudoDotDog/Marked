@@ -13,9 +13,9 @@ import * as Path from "path";
         Path.join(__dirname, '..', 'dist');
 
     ModuleAlias.addAliases({
-        "marked#evaluate/*": Path.join(here, 'evaluate'),
-        "marked#declare/*": Path.join(here, 'declare'),
-        "marked#util/*": Path.join(here, 'util'),
-        "marked#variable/*": Path.join(here, 'variable'),
+        "marked#evaluate": Path.join(here, 'evaluate'),
+        "marked#declare": Path.join(here, 'declare'),
+        "marked#util": Path.join(here, 'util'),
+        "marked#variable": Path.join(here, 'variable'),
     });
 })(process.env.NODE_MODULE_ALIAS_MARKED, process.env.NODE_ENV === 'test');

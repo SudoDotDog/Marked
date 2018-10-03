@@ -4,9 +4,9 @@
  * @description Evaluate
  */
 
-import { Marked } from "marked";
 import { programEvaluator } from "marked#evaluate/symbol";
+import { Sandbox } from "../sandbox";
 
-export const useSymbol = (marked: Marked) => {
-    marked.mount('Program', programEvaluator);
+export const useSymbol = (sandbox: Sandbox) => {
+    sandbox.mount('Program', programEvaluator);
 };
