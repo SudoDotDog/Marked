@@ -4,12 +4,12 @@
  */
 
 require('./binding');
-import { useSymbol } from 'marked#evaluate/evaluate';
+import { useEverything } from 'marked#evaluate/evaluate';
 import { Sandbox } from './sandbox';
 
 export const marked = async (script: string): Promise<number> => {
     const sandbox = new Sandbox();
-    useSymbol(sandbox);
+    useEverything(sandbox);
     try {
         await sandbox.evaluate(script);
     } catch (err) {
@@ -18,8 +18,8 @@ export const marked = async (script: string): Promise<number> => {
     return 0;
 };
 
-marked("console.log(1234)").then((result) => {
-    console.log(result);
+marked("print(1234)").then((result) => {
+    console.log('result:', result);
 }).catch((err) => {
-    console.log(err);
+    console.log('error:', err);
 });

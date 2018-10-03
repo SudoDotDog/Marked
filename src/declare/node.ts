@@ -11,4 +11,4 @@ import { Sandbox } from "../sandbox";
 
 export type EST_TYPE = EST.Node['type'];
 
-export type Evaluator<T extends EST_TYPE> = (this: Sandbox, node: IESTreeType[T], scope: Scope) => any;
+export type Evaluator<T extends EST_TYPE> = (this: Sandbox, node: IESTreeType[T], scope: Scope) => Promise<any>;
