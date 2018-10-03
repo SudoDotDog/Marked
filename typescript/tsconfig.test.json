@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "baseUrl": "../src",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "es2016",
+            "es2017",
+            "es6",
+        ],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "paths": {
+            "marked#evaluate/*": ["evaluate/*"],
+            "marked#declare/*": ["declare/*"],
+            "marked#util/*": ["util/*"],
+            "marked#variable/*": ["variable/*"],
+        },
+        "sourceMap": true,
+        "strict": true,
+        "target": "es6"
+    }
+}

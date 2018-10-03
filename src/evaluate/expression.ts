@@ -4,9 +4,9 @@
  * @description Expression
  */
 
-import * as EST from 'estree';
-import { EXPRESSION_TYPE, EVALUATE_FUNC } from "marked#declare/evaluate";
-import { IExecuter } from 'marked#declare/expression';
+import * as EST from "estree";
+import { EVALUATE_FUNC, EXPRESSION_TYPE } from "marked#declare/evaluate";
+import { IExecuter } from "marked#declare/expression";
 
 export class Executer implements IExecuter {
     private _map: Map<EXPRESSION_TYPE, EVALUATE_FUNC<EST.Node>>;

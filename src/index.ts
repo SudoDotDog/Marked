@@ -1,3 +1,8 @@
+/**
+ * @author WMXPY
+ * @description Index
+ */
+
 import * as Acorn from 'acorn';
 import { Executer } from 'marked#evaluate/expression';
 import { ProgramExecuter } from 'marked#evaluate/program/program';

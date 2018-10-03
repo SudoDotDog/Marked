@@ -1,7 +1,13 @@
 {
     "cSpell.words": [
+        "Dependences",
         "PCXPY",
         "estree",
+        "ifeq",
+        "setx",
         "sudoo"
-    ]
+    ],
+    "tslint.configFile": "typescript/tslint.json",
+    "javascript.preferences.importModuleSpecifier": "auto",
+    "typescript.preferences.importModuleSpecifier": "auto"
 }

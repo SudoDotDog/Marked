@@ -3,8 +3,8 @@
  * @description Binding
  */
 
-import * as ModuleAlias from 'module-alias';
-import * as Path from 'path';
+import * as ModuleAlias from "module-alias";
+import * as Path from "path";
 
 ((MODULE_ALIAS: string | undefined, isTest: boolean) => {
     if (MODULE_ALIAS) return; else process.env.NODE_MODULE_ALIAS_MARKED = 'TRUE';

@@ -4,7 +4,7 @@
  * @description Evaluate
  */
 
-import { Scope } from 'marked#variable/scope';
+import { Scope } from "marked#variable/scope";
 
 export enum EXPRESSION_TYPE {
     PROGRAM = "Program",
