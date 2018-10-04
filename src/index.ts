@@ -6,22 +6,15 @@
 require('./binding');
 import * as FS from 'fs';
 import { useEverything } from 'marked#evaluate/evaluate';
+import { internalPrint, internalSleep } from 'marked#extension/internal';
 import { Sandbox } from './sandbox';
-
-const sleep = (time: any): Promise<any> => {
-    return new Promise<any>((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, time);
-    });
-};
 
 export const marked = async (script: string): Promise<number> => {
     console.time('execute');
     const sandbox = new Sandbox();
     useEverything(sandbox);
-    sandbox.inject('print', console.log);
-    sandbox.inject('sleep', sleep);
+    sandbox.inject('print', internalPrint);
+    sandbox.inject('sleep', internalSleep);
     try {
         await sandbox.evaluate(script);
     } catch (err) {

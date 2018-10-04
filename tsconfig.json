@@ -17,6 +17,7 @@
         "noImplicitThis": true,
         "paths": {
             "marked#evaluate/*": ["evaluate/*"],
+            "marked#extension/*": ["extension/*"],
             "marked#declare/*": ["declare/*"],
             "marked#util/*": ["util/*"],
             "marked#variable/*": ["variable/*"],

@@ -8,6 +8,7 @@ import * as EST from "estree";
 import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
 import { error, ERROR_CODE } from "marked#util/error";
+import { SandList } from "marked#variable/sandlist";
 import { Scope } from "marked#variable/scope";
 import { Sandbox } from "../sandbox";
 
@@ -20,7 +21,7 @@ export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
             mapped.push(evaluated);
         }
 
-        return mapped;
+        return new SandList(mapped);
     };
 
 export const memberEvaluator: Evaluator<'MemberExpression'> =
