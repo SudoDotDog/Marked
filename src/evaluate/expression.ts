@@ -108,17 +108,21 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
         }
 
         const test = async (): Promise<boolean> => {
+
             if (node.test) {
+
                 const result: any = await this.execute(node.test, subScope);
                 return Boolean(result);
             } else return true;
         };
         const update = async (): Promise<void> => {
+
             if (node.update) await this.execute(node.update, subScope);
         };
 
-        loop: for (let limit = 0; limit < 100 && await test(); limit++ , await update()) {
+        loop: for (let limit = 0; (limit < 100 && await test()); limit++) {
 
+            await update();
             const result: any = await this.execute(node.body, subScope);
             if (result instanceof Flag) {
 
