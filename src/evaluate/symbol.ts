@@ -64,3 +64,10 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
         }
         return flag;
     };
+
+export const breakEvaluator: Evaluator<'BreakStatement'> =
+    async function (this: Sandbox, node: EST.BreakStatement, scope: Scope): Promise<Flag> {
+
+        const flag: Flag = Flag.fromBreak();
+        return flag;
+    };

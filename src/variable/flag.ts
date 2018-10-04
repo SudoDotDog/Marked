@@ -12,6 +12,10 @@ export class Flag {
         return new Flag(FLAG_TYPE.RETURN);
     }
 
+    public static fromBreak() {
+        return new Flag(FLAG_TYPE.BREAK);
+    }
+
     private _type: FLAG_TYPE;
     private _value: any | null;
 

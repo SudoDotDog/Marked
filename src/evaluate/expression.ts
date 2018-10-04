@@ -49,18 +49,44 @@ export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
         return await this.execute(node.expression, scope);
     };
 
+export const forStatementEvaluator: Evaluator<'ForStatement'> =
+    async function (this: Sandbox, node: EST.ForStatement, scope: Scope): Promise<any> {
+
+        const subScope: Scope = Scope.fromScope(scope);
+        if (node.init) {
+
+            await this.execute(node.init, subScope);
+        }
+
+        const test = async (): Promise<boolean> => {
+            if (node.test) {
+                const result: any = await this.execute(node.test, subScope);
+                return Boolean(result);
+            } else return true;
+        };
+        const update = async (): Promise<void> => {
+            if (node.update) await this.execute(node.update, subScope);
+        };
+
+        for (let limit = 0; limit < 100 && await test(); limit++ , await update()) {
+            const result: any = await this.execute(node.body, subScope);
+        }
+        return;
+    };
+
 export const ifStatementEvaluator: Evaluator<'IfStatement'> =
     async function (this: Sandbox, node: EST.IfStatement, scope: Scope): Promise<any> {
 
         const statement: boolean = Boolean(await this.execute(node.test, scope));
+        const subScope: Scope = Scope.fromScope(scope);
         if (statement) {
 
-            return await this.execute(node.consequent, scope);
+            return await this.execute(node.consequent, subScope);
         } else {
 
             if (node.alternate) {
 
-                return await this.execute(node.alternate, scope);
+                return await this.execute(node.alternate, subScope);
             }
         }
         return;

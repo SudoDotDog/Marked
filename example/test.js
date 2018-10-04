@@ -2,15 +2,17 @@ print(1234);// test
 
 const a = 10;// test
 
-sandbox "test sandbox"
-
 const b = (c) => {
     if (!c) {
         print(c++ + 1);
     } else {
         sleep(10);
-        print(c++ + 3);
-        print(c);
+        for (let i = 0; i < 3; i++) {
+            print(c++ + 3);
+            print(i);
+
+            break;
+        }
     }
     return c;// test
 };

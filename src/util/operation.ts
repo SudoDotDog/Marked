@@ -35,12 +35,12 @@ export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, rig
         case '+': return (left: any, right: any) => left + right;
         case '-': return (left: any, right: any) => left - right;
         case '/': return (left: any, right: any) => left / right;
-        case '<':
+        case '<': return (left: any, right: any) => left < right;
         case '<<':
         case '<=':
         case '==':
         case '===':
-        case '>':
+        case '>': return (left: any, right: any) => left > right;
         case '>=':
         case '>>':
         case '>>>':
