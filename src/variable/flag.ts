@@ -16,6 +16,10 @@ export class Flag {
         return new Flag(FLAG_TYPE.BREAK);
     }
 
+    public static fromContinue() {
+        return new Flag(FLAG_TYPE.CONTINUE);
+    }
+
     private _type: FLAG_TYPE;
     private _value: any | null;
 
@@ -35,5 +39,13 @@ export class Flag {
 
     public isReturn(): boolean {
         return this._type === FLAG_TYPE.RETURN;
+    }
+
+    public isBreak(): boolean {
+        return this._type === FLAG_TYPE.BREAK;
+    }
+
+    public isContinue(): boolean {
+        return this._type === FLAG_TYPE.CONTINUE;
     }
 }

@@ -6,17 +6,19 @@
 
 import { binaryExpressionEvaluator, unaryExpressionEvaluator, updateExpressionEvaluator } from "marked#evaluate/calculate";
 import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, forStatementEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
-import { blockEvaluator, breakEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
+import { blockEvaluator, breakEvaluator, continueEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
 import { variableDeclarationEvaluator } from "marked#evaluate/variable";
 import { Sandbox } from "../sandbox";
 
 export const useSymbol = (sandbox: Sandbox) => {
 
     sandbox.mount('BlockStatement', blockEvaluator);
-    sandbox.mount('BreakStatement', breakEvaluator);
     sandbox.mount('Identifier', identifierEvaluator);
     sandbox.mount('Literal', literalEvaluator);
     sandbox.mount('Program', programEvaluator);
+
+    sandbox.mount('BreakStatement', breakEvaluator);
+    sandbox.mount('ContinueStatement', continueEvaluator);
     sandbox.mount('ReturnStatement', returnEvaluator);
 };
 

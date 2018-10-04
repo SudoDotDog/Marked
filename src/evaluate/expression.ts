@@ -7,6 +7,7 @@
 import * as EST from "estree";
 import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
+import { error, ERROR_CODE } from "marked#util/error";
 import { Flag } from "marked#variable/flag";
 import { Scope } from "marked#variable/scope";
 import { Sandbox } from "../sandbox";
@@ -68,8 +69,21 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             if (node.update) await this.execute(node.update, subScope);
         };
 
-        for (let limit = 0; limit < 100 && await test(); limit++ , await update()) {
+        loop: for (let limit = 0; limit < 100 && await test(); limit++ , await update()) {
+
             const result: any = await this.execute(node.body, subScope);
+            if (result instanceof Flag) {
+
+                if (result.isBreak) {
+                    break loop;
+                } else if (result.isReturn) {
+                    return result.getValue();
+                } else if (result.isContinue) {
+                    continue loop;
+                } else {
+                    throw error(ERROR_CODE.INTERNAL_ERROR);
+                }
+            }
         }
         return;
     };
