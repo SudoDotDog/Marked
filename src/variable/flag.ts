@@ -28,4 +28,8 @@ export class Flag {
     public getValue(): any | null {
         return this._value;
     }
+
+    public isReturn(): boolean {
+        return this._type === FLAG_TYPE.RETURN;
+    }
 }

@@ -9,15 +9,18 @@ import { useEverything } from 'marked#evaluate/evaluate';
 import { Sandbox } from './sandbox';
 
 export const marked = async (script: string): Promise<number> => {
-
+    console.time('execute');
     const sandbox = new Sandbox();
     useEverything(sandbox);
-    sandbox.inject('print', console.log);
+    sandbox.inject('print', (...a: any[]) => {
+        console.log(...a);
+    });
     try {
         await sandbox.evaluate(script);
     } catch (err) {
         throw err;
     }
+    console.timeEnd('execute');
     return 0;
 };
 

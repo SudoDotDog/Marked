@@ -17,13 +17,15 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
 
         const subScope: Scope = Scope.fromScope(scope);
         for (const child of node.body) {
-            const result = await this.execute(child, subScope); // fixme
-            console.log(result);
-            if (result) {
+
+            const result: Flag = await this.execute(child, subScope);
+            if (result instanceof Flag) {
+
+                const flag: Flag = Flag.fromReturn();
+                flag.setValue(result);
                 return result;
             }
         }
-
         return;
     };
 
@@ -45,6 +47,7 @@ export const programEvaluator: Evaluator<'Program'> =
     async function (this: Sandbox, node: EST.Program, scope: Scope): Promise<any> {
 
         for (const child of node.body) {
+
             await this.execute(child, scope);
         }
         return;
@@ -55,9 +58,9 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
 
         const flag: Flag = Flag.fromReturn();
         if (node.argument) {
+
             const value: any = await this.execute(node.argument, scope);
             flag.setValue(value);
         }
-
         return flag;
     };
