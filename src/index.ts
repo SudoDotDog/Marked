@@ -18,7 +18,8 @@ export const marked = async (script: string): Promise<number> => {
     try {
         await sandbox.evaluate(script);
     } catch (err) {
-        throw err;
+        const securedError: Error = err;
+        console.log('ERROR: ' + securedError.message);
     }
     console.timeEnd('execute');
     return 0;
