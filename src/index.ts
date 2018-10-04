@@ -8,13 +8,20 @@ import * as FS from 'fs';
 import { useEverything } from 'marked#evaluate/evaluate';
 import { Sandbox } from './sandbox';
 
+const sleep = (time: any): Promise<any> => {
+    return new Promise<any>((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, time);
+    });
+};
+
 export const marked = async (script: string): Promise<number> => {
     console.time('execute');
     const sandbox = new Sandbox();
     useEverything(sandbox);
-    sandbox.inject('print', (...a: any[]) => {
-        console.log(...a);
-    });
+    sandbox.inject('print', console.log);
+    sandbox.inject('sleep', sleep);
     try {
         await sandbox.evaluate(script);
     } catch (err) {

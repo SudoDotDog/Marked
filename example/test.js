@@ -6,6 +6,7 @@ const b = (c) => {
     if (!c) {
         print(c++ + 1);
     } else {
+        sleep(5000);
         print(c++ + 2);
         print(c);
     }
@@ -17,3 +18,4 @@ const q = (f) => {
 };
 
 q(b);
+print(1234);
