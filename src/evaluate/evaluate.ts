@@ -7,7 +7,7 @@
 import { binaryExpressionEvaluator, unaryExpressionEvaluator, updateExpressionEvaluator } from "marked#evaluate/calculate";
 import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, forStatementEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
 import { blockEvaluator, breakEvaluator, continueEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
-import { variableDeclarationEvaluator } from "marked#evaluate/variable";
+import { arrayExpressionEvaluator, memberEvaluator, variableDeclarationEvaluator } from "marked#evaluate/variable";
 import { Sandbox } from "../sandbox";
 
 export const useSymbol = (sandbox: Sandbox) => {
@@ -33,6 +33,8 @@ export const useExpression = (sandbox: Sandbox) => {
 
 export const useVariable = (sandbox: Sandbox) => {
 
+    sandbox.mount('ArrayExpression', arrayExpressionEvaluator);
+    sandbox.mount('MemberExpression', memberEvaluator);
     sandbox.mount('VariableDeclaration', variableDeclarationEvaluator);
 };
 

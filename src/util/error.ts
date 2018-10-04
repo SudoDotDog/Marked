@@ -45,13 +45,13 @@ export const errorList: {
 export const error = (code: ERROR_CODE, info?: string, node?: EST.Node): Error => {
     const newError: Error = new Error();
     if (errorList[code]) {
-        newError.message = code + ': ' + errorList[code] + (info ? (' - ' + info) : '' + node || '');
+        newError.message = code + ': ' + errorList[code] + (info ? (' - ' + info) : '' + (node || ''));
         newError.name = errorList[code];
         (newError as any).code = code;
 
         return newError;
     }
-    newError.message = code + ': ' + errorList[9001] + info ? (' - ' + info) : '';
+    newError.message = code + ': ' + errorList[code] + (info ? (' - ' + info) : '' + (node || ''));
     newError.name = errorList[9001];
     (newError as any).code = 9001;
 

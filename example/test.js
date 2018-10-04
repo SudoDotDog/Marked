@@ -1,13 +1,14 @@
 print(1234);// test
 
 const a = 10;// test
-
+const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 const b = (c) => {
     if (!c) {
         print(c++ + 1);
     } else {
         sleep(10);
-        for (let i = 0; i < 3; i++) {
+        print(ll.length);
+        for (let i = 0; i < ll.length; i++) {
             print(c++ + 3);
             print(i);
 
@@ -16,7 +17,7 @@ const b = (c) => {
     }
     return c;// test
 };
-
+print(ll[0]);
 const q = (f) => {
     f(a);
 };
