@@ -6,6 +6,7 @@
         "clazz",
         "estree",
         "ifeq",
+        "sandlist",
         "setx",
         "sudoo",
         "tshook"

@@ -3,6 +3,7 @@ print(1234);// test
 const a = 10;// test
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 print(ll);
+sandbox 10;
 const b = (c) => {
     if (!c) {
         print(c++ + 1);

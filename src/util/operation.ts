@@ -11,12 +11,12 @@ export const getUnaryOperation = (symbol: EST.UnaryOperator): ((value: any) => a
     switch (symbol) {
 
         case '!': return (value: any) => !Boolean(value);
-        case '+':
-        case '-':
+        case '+': return null;
+        case '-': return null;
         case 'delete': return null;
-        case 'typeof':
-        case 'void':
-        case '~':
+        case 'typeof': return null;
+        case 'void': return null;
+        case '~': return null;
         default: return null;
     }
 };
@@ -26,8 +26,8 @@ export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, rig
 
     switch (symbol) {
 
-        case '!=':
-        case '!==': return null;
+        case '!=': return null;
+        case '!==': return (left: any, right: any) => left !== right;
         case '%': return (left: any, right: any) => left % right;
         case '&': return null;
         case '*': return (left: any, right: any) => left * right;
@@ -36,17 +36,17 @@ export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, rig
         case '-': return (left: any, right: any) => left - right;
         case '/': return (left: any, right: any) => left / right;
         case '<': return (left: any, right: any) => left < right;
-        case '<<':
-        case '<=':
-        case '==':
-        case '===':
+        case '<<': return null;
+        case '<=': return (left: any, right: any) => left <= right;
+        case '==': return null;
+        case '===': return (left: any, right: any) => left === right;
         case '>': return (left: any, right: any) => left > right;
-        case '>=':
-        case '>>':
-        case '>>>':
-        case '^':
-        case 'in':
-        case 'instanceof':
+        case '>=': return (left: any, right: any) => left >= right;
+        case '>>': return null;
+        case '>>>': return null;
+        case '^': return null;
+        case 'in': return null;
+        case 'instanceof': return null;
         case '|': return null;
     }
 };
