@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 
-export const getBinaryOperator = (symbol: EST.BinaryOperator): ((left: any, right: any) => any) | null => {
+export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, right: any) => any) | null => {
     switch (symbol) {
         case '!=':
         case '!==': return null;

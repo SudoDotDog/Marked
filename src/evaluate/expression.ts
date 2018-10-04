@@ -11,24 +11,6 @@ import { Flag } from "marked#variable/flag";
 import { Scope } from "marked#variable/scope";
 import { Sandbox } from "../sandbox";
 
-export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
-    async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope): Promise<any> {
-
-        return await this.execute(node.expression, scope);
-    };
-
-export const calleeEvaluator: Evaluator<'CallExpression'> =
-    async function (this: Sandbox, node: EST.CallExpression, scope: Scope): Promise<any> {
-
-        const func: () => any = await this.execute(node.callee, scope);
-        const args = [];
-        for (const arg of node.arguments) {
-            args.push(await this.execute(arg, scope));
-        }
-
-        return func.apply(null, args);
-    };
-
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope): Promise<any> {
 
@@ -47,4 +29,39 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
             }
         };
         return func;
+    };
+
+export const calleeEvaluator: Evaluator<'CallExpression'> =
+    async function (this: Sandbox, node: EST.CallExpression, scope: Scope): Promise<any> {
+
+        const func: () => any = await this.execute(node.callee, scope);
+        const args = [];
+        for (const arg of node.arguments) {
+            args.push(await this.execute(arg, scope));
+        }
+
+        return func.apply(null, args);
+    };
+
+export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
+    async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope): Promise<any> {
+
+        return await this.execute(node.expression, scope);
+    };
+
+export const ifStatementEvaluator: Evaluator<'IfStatement'> =
+    async function (this: Sandbox, node: EST.IfStatement, scope: Scope): Promise<any> {
+
+        const statement: boolean = Boolean(await this.execute(node.test, scope));
+        if (statement) {
+
+            return await this.execute(node.consequent, scope);
+        } else {
+
+            if (node.alternate) {
+
+                return await this.execute(node.alternate, scope);
+            }
+        }
+        return;
     };

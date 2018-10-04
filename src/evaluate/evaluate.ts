@@ -4,8 +4,8 @@
  * @description Evaluate
  */
 
-import { binaryExpressionEvaluator } from "marked#evaluate/calculate";
-import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator } from "marked#evaluate/expression";
+import { binaryExpressionEvaluator, unaryExpressionEvaluator } from "marked#evaluate/calculate";
+import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
 import { blockEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
 import { variableDeclarationEvaluator } from "marked#evaluate/variable";
 import { Sandbox } from "../sandbox";
@@ -24,6 +24,7 @@ export const useExpression = (sandbox: Sandbox) => {
     sandbox.mount('ExpressionStatement', expressionEvaluator);
     sandbox.mount('CallExpression', calleeEvaluator);
     sandbox.mount('ArrowFunctionExpression', arrowFunctionEvaluator);
+    sandbox.mount('IfStatement', ifStatementEvaluator);
 };
 
 export const useVariable = (sandbox: Sandbox) => {
@@ -34,6 +35,7 @@ export const useVariable = (sandbox: Sandbox) => {
 export const useCalculate = (sandbox: Sandbox) => {
 
     sandbox.mount('BinaryExpression', binaryExpressionEvaluator);
+    sandbox.mount('UnaryExpression', unaryExpressionEvaluator);
 };
 
 export const useEverything = (sandbox: Sandbox) => {

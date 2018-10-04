@@ -3,7 +3,11 @@ print(1234);
 const a = 10;
 
 const b = (c) => {
-    print(c + 1);
+    if (!c) {
+        print(++c + 1);
+    } else {
+        print(++c + 2);
+    }
     return c;
 };
 
