@@ -8,6 +8,9 @@ import * as EST from "estree";
 
 export enum ERROR_CODE {
     UNKNOWN_ERROR = 1000,
+    ASSERT_EXIST_ELEMENT_NOT_EXIST = 2065,
+    ASSERT_BOOLEAN_OPPOSITE = 2066,
+    ASSERT_TYPE_NOT_MATCHED = 2067,
     VAR_DECLARATION_NOT_SUPPORT = 3003,
     BINARY_NOT_SUPPORT = 3004,
     UNARY_NOT_SUPPORT = 3005,
@@ -21,6 +24,9 @@ export const errorList: {
     [key: number]: string;
 } = {
     1000: 'Unknown error',
+    2065: 'Assert exist element not exist',
+    2066: 'Assert boolean opposite',
+    2067: 'Assert type not matched',
     3003: 'Declaration with [var] is not supported',
     3004: 'Binary is not supported',
     3005: 'Unary is not supported',
