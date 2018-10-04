@@ -21,6 +21,7 @@ export class Scope {
 
     private _constantMap: Map<string, Variable>;
     private _scopeMap: Map<string, Variable>;
+    private _configs: Map<string, any>;
 
     public constructor(scope?: Scope) {
 
@@ -28,18 +29,12 @@ export class Scope {
 
         this._constantMap = new Map<string, Variable>();
         this._scopeMap = new Map<string, Variable>();
+        this._configs = new Map<string, any>();
     }
 
-    public rummage(name: string): Variable | null {
-        if (this._scopeMap.has(name)) {
-            return this._scopeMap.get(name) as Variable;
-        }
-
-        if (this._constantMap.has(name)) {
-            return this._constantMap.get(name) as Variable;
-        }
-
-        return this._parent ? this._parent.rummage(name) : null;
+    public config(name: string, value: any = true): Scope {
+        this._configs.set(name, value);
+        return this;
     }
 
     public exist(name: string): boolean {
@@ -62,6 +57,18 @@ export class Scope {
         return type === VARIABLE_TYPE.CONSTANT ?
             this._declareConst.bind(this) :
             this._declareLet.bind(this);
+    }
+
+    public rummage(name: string): Variable | null {
+        if (this._scopeMap.has(name)) {
+            return this._scopeMap.get(name) as Variable;
+        }
+
+        if (this._constantMap.has(name)) {
+            return this._constantMap.get(name) as Variable;
+        }
+
+        return this._parent ? this._parent.rummage(name) : null;
     }
 
     protected _declareConst(name: string, value: any): Scope {

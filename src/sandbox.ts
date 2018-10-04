@@ -11,16 +11,27 @@ import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from 'marked#declare/variable';
 import { error, ERROR_CODE } from "marked#util/error";
 import { Scope } from "marked#variable/scope";
+import { markedParser } from './extension/parser';
 
 export class Sandbox {
 
     private _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
     private _rootScope: Scope;
+    private _parser: typeof Acorn.Parser;
+
+    private _configs: Map<string, any>;
 
     public constructor() {
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();
+        this._parser = Acorn.Parser.extend(markedParser as any);
+        this._configs = new Map<string, any>();
+    }
+
+    public config(name: string, value: any = true): Sandbox {
+        this._configs.set(name, value);
+        return this;
     }
 
     public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): Sandbox {
@@ -37,7 +48,7 @@ export class Sandbox {
 
     public async evaluate(script: string): Promise<any> {
 
-        const AST: EST.BaseNode = Acorn.parse(script);
+        const AST: EST.BaseNode = this._parser.parse(script);
         const rootScope: Scope = Scope.fromScope(this._rootScope);
         return await this.execute(AST, rootScope);
     }

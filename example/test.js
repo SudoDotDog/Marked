@@ -1,16 +1,18 @@
-print(1234);
+print(1234);// test
 
-const a = 10;
+const a = 10;// test
+
+sandbox "test sandbox"
 
 const b = (c) => {
     if (!c) {
         print(c++ + 1);
     } else {
-        sleep(5000);
-        print(c++ + 2);
+        sleep(10);
+        print(c++ + 3);
         print(c);
     }
-    return c;
+    return c;// test
 };
 
 const q = (f) => {

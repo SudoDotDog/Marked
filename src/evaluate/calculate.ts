@@ -6,9 +6,9 @@
 
 import * as EST from "estree";
 import { Evaluator } from "marked#declare/node";
-import { getBinaryOperation, getUpdateOperation } from "marked#util/binary";
 import { error, ERROR_CODE } from "marked#util/error";
-import { getUnaryOperation } from "marked#util/unary";
+import { rummageSpecialKeyword } from "marked#util/hack";
+import { getBinaryOperation, getUnaryOperation, getUpdateOperation } from "marked#util/operation";
 import { Scope } from "marked#variable/scope";
 import { Variable } from "marked#variable/variable";
 import { Sandbox } from "../sandbox";
@@ -33,7 +33,9 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
     async function (this: Sandbox, node: EST.UnaryExpression, scope: Scope): Promise<any> {
 
         const evalValue: () => Promise<any> = async () => await this.execute(node.argument, scope);
+        const value: any = await evalValue();
 
+        if (rummageSpecialKeyword(node.operator, value, scope, this)) return value;
         const operation: ((value: any) => any) | null = getUnaryOperation(node.operator);
 
         if (!operation) {
@@ -41,7 +43,7 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
             throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator);
         }
 
-        return operation(await evalValue());
+        return operation(value);
     };
 
 export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> = async function (this: Sandbox, node: EST.UpdateExpression, scope: Scope): Promise<any> {
