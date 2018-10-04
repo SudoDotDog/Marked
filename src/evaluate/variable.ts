@@ -30,7 +30,12 @@ export const memberEvaluator: Evaluator<'MemberExpression'> =
         const computed: boolean = node.computed;
         const object: any = await this.execute(node.object, scope);
         if (computed) {
+
             const member: any = await this.execute(node.property, scope);
+
+            if (object instanceof SandList) {
+                return object.get(member);
+            }
             return await object[member];
         } else {
             return object[(node.property as EST.Identifier).name];

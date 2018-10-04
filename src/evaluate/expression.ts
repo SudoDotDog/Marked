@@ -9,6 +9,7 @@ import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
 import { error, ERROR_CODE } from "marked#util/error";
 import { Flag } from "marked#variable/flag";
+import { SandList } from "marked#variable/sandlist";
 import { Scope } from "marked#variable/scope";
 import { Sandbox } from "../sandbox";
 
@@ -48,6 +49,53 @@ export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
     async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope): Promise<any> {
 
         return await this.execute(node.expression, scope);
+    };
+
+export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
+    async function (this: Sandbox, node: EST.ForOfStatement, scope: Scope): Promise<any> {
+
+        const lists: SandList<any> = await this.execute(node.right, scope);
+
+        if (!(lists instanceof SandList)) {
+            throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST);
+        }
+
+        if (node.left.type !== 'VariableDeclaration') {
+            throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST);
+        }
+
+        loop: for (let i: number = 0; i < lists.length; i++) {
+
+            const subScope: Scope = Scope.fromScope(scope);
+            const current: any = lists.get(i);
+            const declarations: EST.VariableDeclarator[] = node.left.declarations;
+            const left: EST.VariableDeclaration = node.left;
+            const registerFunc = (name: string): void => {
+
+                subScope.register(left.kind as VARIABLE_TYPE)(name, current);
+            };
+
+            declarations.forEach((declaration) => {
+
+                const id: EST.Identifier = declaration.id as EST.Identifier;
+                registerFunc(id.name);
+            });
+
+            const result: any = await this.execute(node.body, subScope);
+            if (result instanceof Flag) {
+
+                if (result.isBreak) {
+                    break loop;
+                } else if (result.isReturn) {
+                    return result.getValue();
+                } else if (result.isContinue) {
+                    continue loop;
+                } else {
+                    throw error(ERROR_CODE.INTERNAL_ERROR);
+                }
+            }
+        }
+        return;
     };
 
 export const forStatementEvaluator: Evaluator<'ForStatement'> =

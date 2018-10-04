@@ -1,18 +1,17 @@
-print(1234);// test
+print(1, 1234);// test
 
 const a = 10;// test
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
-print(ll);
-sandbox 10;
+print(2, ll);
 const b = (c) => {
     if (!c) {
-        print(c++ + 1);
+        print(3, c++ + 1);
     } else {
         sleep(10);
-        print(ll.length);
+        print(4, ll.length);
         for (let i = 0; i < 3; i++) {
-            print(c++ + 3);
-            print(i);
+            print(5, c++ + 3);
+            print(6, i);
 
             break;
         }
@@ -25,4 +24,7 @@ const q = (f) => {
 };
 
 q(b);
+for(let a of ll){
+    print(a);
+}
 print(1234);
