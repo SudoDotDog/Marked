@@ -6,10 +6,11 @@
 
 import * as EST from "estree";
 import { Evaluator } from "marked#declare/node";
-import { getBinaryOperation } from "marked#util/binary";
+import { getBinaryOperation, getUpdateOperation } from "marked#util/binary";
 import { error, ERROR_CODE } from "marked#util/error";
 import { getUnaryOperation } from "marked#util/unary";
 import { Scope } from "marked#variable/scope";
+import { Variable } from "marked#variable/variable";
 import { Sandbox } from "../sandbox";
 
 export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
@@ -42,3 +43,28 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
 
         return operation(await evalValue());
     };
+
+export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> = async function (this: Sandbox, node: EST.UpdateExpression, scope: Scope): Promise<any> {
+
+    const operation: ((value: any) => any) | null = getUpdateOperation(node.operator);
+    if (!operation) {
+
+        throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator);
+    }
+    switch (node.argument.type) {
+
+        case 'Identifier':
+            const variable: Variable | null = scope.rummage(node.argument.name);
+            if (!variable) {
+
+                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.argument.name);
+            }
+
+            const current: any = await this.execute(node.argument, scope);
+            const result: any = operation(current);
+            variable.set(result);
+            return node.prefix ? result : current;
+        default:
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+    }
+};

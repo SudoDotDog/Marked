@@ -4,9 +4,10 @@ const a = 10;
 
 const b = (c) => {
     if (!c) {
-        print(++c + 1);
+        print(c++ + 1);
     } else {
-        print(++c + 2);
+        print(c++ + 2);
+        print(c);
     }
     return c;
 };

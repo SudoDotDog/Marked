@@ -7,7 +7,9 @@
 import * as EST from "estree";
 
 export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, right: any) => any) | null => {
+
     switch (symbol) {
+
         case '!=':
         case '!==': return null;
         case '%': return (left: any, right: any) => left % right;
@@ -33,3 +35,12 @@ export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, rig
     }
 };
 
+export const getUpdateOperation = (symbol: EST.UpdateOperator): ((value: any) => any) | null => {
+
+    switch (symbol) {
+
+        case '++': return (value: any) => value + 1;
+        case '--': return (value: any) => value - 1;
+    }
+    return null;
+};
