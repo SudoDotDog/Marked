@@ -5,7 +5,8 @@
         "estree",
         "ifeq",
         "setx",
-        "sudoo"
+        "sudoo",
+        "tshook"
     ],
     "tslint.configFile": "typescript/tslint.json",
     "javascript.preferences.importModuleSpecifier": "auto",

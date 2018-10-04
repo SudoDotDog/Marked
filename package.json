@@ -1,7 +1,7 @@
 {
   "name": "@sudoo/marked",
   "version": "0.0.0",
-  "description": ":tennis: Code runner in marked territory",
+  "description": ":tennis: JavaScript code runner in marked territory, synchronized.",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha"
