@@ -5,14 +5,14 @@
  */
 
 import * as EST from "estree";
-import { Trace } from "marked#variable/trace";
+import { ITrace } from "marked#declare/variable";
+import { IMockedClass } from "./node";
 
-export class MockTrace extends Trace {
+export class MockTrace implements ITrace, IMockedClass {
 
     private _mockStack: EST.Node[];
 
     public constructor() {
-        super();
 
         this._mockStack = [];
     }
@@ -25,7 +25,7 @@ export class MockTrace extends Trace {
         this._mockStack = [];
     }
 
-    public stack(node: EST.Node): Trace {
+    public stack(node: EST.Node): ITrace {
         this._mockStack.push(node);
         return this;
     }

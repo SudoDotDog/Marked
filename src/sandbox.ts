@@ -8,13 +8,13 @@ require('./binding');
 import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { VARIABLE_TYPE } from 'marked#declare/variable';
+import { ISandbox, IScope, ITrace, VARIABLE_TYPE } from 'marked#declare/variable';
 import { error, ERROR_CODE } from "marked#util/error";
 import { Scope } from "marked#variable/scope";
 import { Trace } from 'marked#variable/trace';
 import { markedParser } from './extension/parser';
 
-export class Sandbox {
+export class Sandbox implements ISandbox {
 
     private _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
     private _rootScope: Scope;
@@ -30,18 +30,19 @@ export class Sandbox {
         this._configs = new Map<string, any>();
     }
 
-    public config(name: string, value: any = true): Sandbox {
-        this._configs.set(name, value);
+    public config(name: string, value?: any): ISandbox {
+
+        this._configs.set(name, value === undefined ? true : value);
         return this;
     }
 
-    public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): Sandbox {
+    public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): ISandbox {
 
         this._map.set(type, evaluator);
         return this;
     }
 
-    public inject(name: string, value: any): Sandbox {
+    public inject(name: string, value: any): ISandbox {
 
         this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, value);
         return this;
@@ -55,7 +56,7 @@ export class Sandbox {
         return await this.execute(AST, rootScope, trace);
     }
 
-    protected async execute(node: EST.BaseNode, scope: Scope, trace: Trace): Promise<any> {
+    protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
         if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type);

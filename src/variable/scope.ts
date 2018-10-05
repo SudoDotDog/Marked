@@ -4,26 +4,29 @@
  * @description Scope
  */
 
-import { VARIABLE_TYPE } from "marked#declare/variable";
+import { IScope, VARIABLE_TYPE } from "marked#declare/variable";
 import { error, ERROR_CODE } from "marked#util/error";
 import { Variable } from "marked#variable/variable";
 
-export class Scope {
-    public static fromScope(scope: Scope) {
+export class Scope implements IScope {
+
+    public static fromScope(scope: Scope): Scope {
+
         return new Scope(scope);
     }
 
-    public static fromRoot() {
+    public static fromRoot(): Scope {
+
         return new Scope();
     }
 
-    private _parent: Scope | null;
+    private _parent: IScope | null;
 
     private _constantMap: Map<string, Variable>;
     private _scopeMap: Map<string, Variable>;
     private _configs: Map<string, any>;
 
-    public constructor(scope?: Scope) {
+    public constructor(scope?: IScope) {
 
         this._parent = scope || null;
 
@@ -32,8 +35,9 @@ export class Scope {
         this._configs = new Map<string, any>();
     }
 
-    public config(name: string, value: any = true): Scope {
-        this._configs.set(name, value);
+    public config(name: string, value?: any): IScope {
+
+        this._configs.set(name, value === undefined ? true : value);
         return this;
     }
 
@@ -48,7 +52,7 @@ export class Scope {
         return false;
     }
 
-    public register(type: VARIABLE_TYPE): (name: string, value: any) => Scope {
+    public register(type: VARIABLE_TYPE): (name: string, value: any) => IScope {
 
         if (type === VARIABLE_TYPE.VARIABLE) {
             throw error(ERROR_CODE.VAR_DECLARATION_NOT_SUPPORT);
@@ -71,7 +75,7 @@ export class Scope {
         return this._parent ? this._parent.rummage(name) : null;
     }
 
-    protected _declareConst(name: string, value: any): Scope {
+    protected _declareConst(name: string, value: any): IScope {
 
         if (this.exist(name)) throw error(ERROR_CODE.DUPLICATED_VARIABLE);
         const variable = new Variable(value);
@@ -79,7 +83,7 @@ export class Scope {
         return this;
     }
 
-    protected _declareLet(name: string, value: any): Scope {
+    protected _declareLet(name: string, value: any): IScope {
 
         if (this.exist(name)) throw error(ERROR_CODE.DUPLICATED_VARIABLE);
         const variable = new Variable(value);

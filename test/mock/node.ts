@@ -12,3 +12,7 @@ export const literal = (value: string | boolean | number | null): EST.Literal =>
         value,
     };
 };
+
+export interface IMockedClass {
+    reset(): void;
+}

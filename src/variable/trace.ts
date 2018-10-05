@@ -5,8 +5,9 @@
  */
 
 import * as EST from "estree";
+import { ITrace } from "marked#declare/variable";
 
-export class Trace {
+export class Trace implements ITrace {
     public static init(): Trace {
         return new Trace();
     }

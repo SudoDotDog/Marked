@@ -7,6 +7,7 @@
 import * as EST from "estree";
 
 export interface IESTreeType {
+
     Identifier: EST.Identifier;
     Literal: EST.Literal;
     Program: EST.Program;
