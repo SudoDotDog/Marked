@@ -11,6 +11,7 @@ import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from 'marked#declare/variable';
 import { error, ERROR_CODE } from "marked#util/error";
 import { Scope } from "marked#variable/scope";
+import { Trace } from 'marked#variable/trace';
 import { markedParser } from './extension/parser';
 
 export class Sandbox {
@@ -50,14 +51,15 @@ export class Sandbox {
 
         const AST: EST.BaseNode = this._parser.parse(script);
         const rootScope: Scope = Scope.fromScope(this._rootScope);
-        return await this.execute(AST, rootScope);
+        const trace: Trace = Trace.init();
+        return await this.execute(AST, rootScope, trace);
     }
 
-    protected async execute(node: EST.BaseNode, scope: Scope): Promise<any> {
+    protected async execute(node: EST.BaseNode, scope: Scope, trace: Trace): Promise<any> {
 
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
         if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type);
 
-        return await executor.bind(this)(node, scope);
+        return await executor.bind(this)(node, scope, trace);
     }
 }

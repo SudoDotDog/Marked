@@ -7,8 +7,9 @@
 import * as EST from "estree";
 import { IESTreeType } from "marked#declare/types";
 import { Scope } from "marked#variable/scope";
+import { Trace } from "marked#variable/trace";
 import { Sandbox } from "../sandbox";
 
 export type EST_TYPE = EST.Node['type'];
 
-export type Evaluator<T extends EST_TYPE> = (this: Sandbox, node: IESTreeType[T], scope: Scope) => Promise<any>;
+export type Evaluator<T extends EST_TYPE> = (this: Sandbox, node: IESTreeType[T], scope: Scope, trace: Trace) => Promise<any>;

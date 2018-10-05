@@ -11,11 +11,13 @@ import { error, ERROR_CODE } from "marked#util/error";
 import { Flag } from "marked#variable/flag";
 import { SandList } from "marked#variable/sandlist";
 import { Scope } from "marked#variable/scope";
+import { Trace } from "marked#variable/trace";
 import { Sandbox } from "../sandbox";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
-    async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {
 
+        const nextTrace: Trace = trace.stack(node);
         const func = async (...args: any[]): Promise<any> => {
 
             const subScope = Scope.fromScope(scope);
@@ -25,7 +27,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
 
                 subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
             }
-            const result: Flag = await this.execute(node.body, subScope);
+            const result: Flag = await this.execute(node.body, subScope, nextTrace);
             if (result) {
                 return result.getValue();
             }
@@ -34,27 +36,30 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
     };
 
 export const calleeEvaluator: Evaluator<'CallExpression'> =
-    async function (this: Sandbox, node: EST.CallExpression, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.CallExpression, scope: Scope, trace: Trace): Promise<any> {
 
-        const func: () => any = await this.execute(node.callee, scope);
+        const nextTrace: Trace = trace.stack(node);
+        const func: () => any = await this.execute(node.callee, scope, nextTrace);
         const args = [];
         for (const arg of node.arguments) {
-            args.push(await this.execute(arg, scope));
+            args.push(await this.execute(arg, scope, nextTrace));
         }
 
         return func.apply(null, args);
     };
 
 export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
-    async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope, trace: Trace): Promise<any> {
 
-        return await this.execute(node.expression, scope);
+        const nextTrace: Trace = trace.stack(node);
+        return await this.execute(node.expression, scope, nextTrace);
     };
 
 export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
-    async function (this: Sandbox, node: EST.ForOfStatement, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.ForOfStatement, scope: Scope, trace: Trace): Promise<any> {
 
-        const lists: SandList<any> = await this.execute(node.right, scope);
+        const nextTrace: Trace = trace.stack(node);
+        const lists: SandList<any> = await this.execute(node.right, scope, nextTrace);
 
         if (!(lists instanceof SandList)) {
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST);
@@ -81,7 +86,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
                 registerFunc(id.name);
             });
 
-            const result: any = await this.execute(node.body, subScope);
+            const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
                 if (result.isBreak) {
@@ -99,31 +104,32 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
     };
 
 export const forStatementEvaluator: Evaluator<'ForStatement'> =
-    async function (this: Sandbox, node: EST.ForStatement, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.ForStatement, scope: Scope, trace: Trace): Promise<any> {
 
+        const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = Scope.fromScope(scope);
         if (node.init) {
 
-            await this.execute(node.init, subScope);
+            await this.execute(node.init, subScope, nextTrace);
         }
 
         const test = async (): Promise<boolean> => {
 
             if (node.test) {
 
-                const result: any = await this.execute(node.test, subScope);
+                const result: any = await this.execute(node.test, subScope, nextTrace);
                 return Boolean(result);
             } else return true;
         };
         const update = async (): Promise<void> => {
 
-            if (node.update) await this.execute(node.update, subScope);
+            if (node.update) await this.execute(node.update, subScope, nextTrace);
         };
 
         loop: for (let limit = 0; (limit < 100 && await test()); limit++) {
 
             await update();
-            const result: any = await this.execute(node.body, subScope);
+            const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
                 if (result.isBreak) {
@@ -141,18 +147,19 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
     };
 
 export const ifStatementEvaluator: Evaluator<'IfStatement'> =
-    async function (this: Sandbox, node: EST.IfStatement, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.IfStatement, scope: Scope, trace: Trace): Promise<any> {
 
-        const statement: boolean = Boolean(await this.execute(node.test, scope));
+        const nextTrace: Trace = trace.stack(node);
+        const statement: boolean = Boolean(await this.execute(node.test, scope, nextTrace));
         const subScope: Scope = Scope.fromScope(scope);
         if (statement) {
 
-            return await this.execute(node.consequent, subScope);
+            return await this.execute(node.consequent, subScope, nextTrace);
         } else {
 
             if (node.alternate) {
 
-                return await this.execute(node.alternate, subScope);
+                return await this.execute(node.alternate, subScope, nextTrace);
             }
         }
         return;

@@ -9,16 +9,18 @@ import { Evaluator } from "marked#declare/node";
 import { error, ERROR_CODE } from "marked#util/error";
 import { Flag } from "marked#variable/flag";
 import { Scope } from "marked#variable/scope";
+import { Trace } from "marked#variable/trace";
 import { Variable } from "marked#variable/variable";
 import { Sandbox } from "../sandbox";
 
 export const blockEvaluator: Evaluator<'BlockStatement'> =
-    async function (this: Sandbox, node: EST.BlockStatement, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.BlockStatement, scope: Scope, trace: Trace): Promise<any> {
 
+        const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = Scope.fromScope(scope);
         for (const child of node.body) {
 
-            const result: Flag = await this.execute(child, subScope);
+            const result: Flag = await this.execute(child, subScope, nextTrace);
             if (result instanceof Flag) {
 
                 const flag: Flag = Flag.fromReturn();
@@ -30,21 +32,21 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
     };
 
 export const breakEvaluator: Evaluator<'BreakStatement'> =
-    async function (this: Sandbox, node: EST.BreakStatement, scope: Scope): Promise<Flag> {
+    async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         const flag: Flag = Flag.fromBreak();
         return flag;
     };
 
 export const continueEvaluator: Evaluator<'ContinueStatement'> =
-    async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope): Promise<Flag> {
+    async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         const flag: Flag = Flag.fromContinue();
         return flag;
     };
 
 export const identifierEvaluator: Evaluator<'Identifier'> =
-    async function (this: Sandbox, node: EST.Identifier, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
 
         const variable: Variable | null = scope.rummage(node.name);
         if (variable) return variable.get();
@@ -52,28 +54,30 @@ export const identifierEvaluator: Evaluator<'Identifier'> =
     };
 
 export const literalEvaluator: Evaluator<'Literal'> =
-    async function (this: Sandbox, node: EST.Literal, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.Literal, scope: Scope, trace: Trace): Promise<any> {
 
         return node.value;
     };
 
 export const programEvaluator: Evaluator<'Program'> =
-    async function (this: Sandbox, node: EST.Program, scope: Scope): Promise<any> {
+    async function (this: Sandbox, node: EST.Program, scope: Scope, trace: Trace): Promise<any> {
 
+        const nextTrace: Trace = trace.stack(node);
         for (const child of node.body) {
 
-            await this.execute(child, scope);
+            await this.execute(child, scope, nextTrace);
         }
         return;
     };
 
 export const returnEvaluator: Evaluator<'ReturnStatement'> =
-    async function (this: Sandbox, node: EST.ReturnStatement, scope: Scope): Promise<Flag> {
+    async function (this: Sandbox, node: EST.ReturnStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
+        const nextTrace: Trace = trace.stack(node);
         const flag: Flag = Flag.fromReturn();
         if (node.argument) {
 
-            const value: any = await this.execute(node.argument, scope);
+            const value: any = await this.execute(node.argument, scope, nextTrace);
             flag.setValue(value);
         }
         return flag;
