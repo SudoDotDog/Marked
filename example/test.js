@@ -1,6 +1,6 @@
-print(1, 1234);// test
+print(1, 1234); // test
 
-const a = 10;// test
+const a = 10; // test
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 print(2, ll);
 const b = (c) => {
@@ -16,7 +16,7 @@ const b = (c) => {
             break;
         }
     }
-    return c;// test
+    return c; // test
 };
 print(ll[0]);
 const q = (f) => {
@@ -24,7 +24,7 @@ const q = (f) => {
 };
 
 q(b);
-for(let a of ll){
+for (let a of ll) {
     print(a);
 }
 print(1234);
