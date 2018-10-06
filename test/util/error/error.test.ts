@@ -4,7 +4,7 @@
  * @description Error Test
  */
 
-require('../../src/binding');
+require('../../../src/binding');
 import { expect } from 'chai';
 import { ERROR_CODE } from 'marked#declare/error';
 import { error } from 'marked#util/error/error';

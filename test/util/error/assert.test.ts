@@ -5,7 +5,7 @@
  */
 
 
-require('../../src/binding');
+require('../../../src/binding');
 import { expect } from 'chai';
 import { ERROR_CODE } from 'marked#declare/error';
 import { assert } from 'marked#util/error/assert';
