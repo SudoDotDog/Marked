@@ -5,8 +5,9 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
-import { error, ERROR_CODE } from "marked#util/error";
+import { error } from "marked#util/error/error";
 import { rummageSpecialKeyword } from "marked#util/hack";
 import { getBinaryOperation, getUnaryOperation, getUpdateOperation } from "marked#util/operation";
 import { Scope } from "marked#variable/scope";

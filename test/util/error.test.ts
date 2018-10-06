@@ -6,7 +6,8 @@
 
 require('../../src/binding');
 import { expect } from 'chai';
-import { error, ERROR_CODE } from 'marked#util/error';
+import { ERROR_CODE } from 'marked#declare/error';
+import { error } from 'marked#util/error/error';
 
 describe('Given an <Error> function', (): void => {
 

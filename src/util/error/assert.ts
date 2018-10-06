@@ -4,7 +4,8 @@
  * @description Assert
  */
 
-import { error, ERROR_CODE } from "./error";
+import { ERROR_CODE } from "marked#declare/error";
+import { error } from "marked#util/error/error";
 
 class Assert<T> {
     private _elements: T[];

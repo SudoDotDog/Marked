@@ -4,8 +4,9 @@
  * @description Scope
  */
 
+import { ERROR_CODE } from "marked#declare/error";
 import { IScope, VARIABLE_TYPE } from "marked#declare/variable";
-import { error, ERROR_CODE } from "marked#util/error";
+import { error } from "marked#util/error/error";
 import { Variable } from "marked#variable/variable";
 
 export class Scope implements IScope {

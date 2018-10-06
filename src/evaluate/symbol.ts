@@ -5,8 +5,9 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
-import { error, ERROR_CODE } from "marked#util/error";
+import { error } from "marked#util/error/error";
 import { Flag } from "marked#variable/flag";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";

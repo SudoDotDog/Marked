@@ -5,9 +5,10 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
-import { error, ERROR_CODE } from "marked#util/error";
+import { error } from "marked#util/error/error";
 import { Flag } from "marked#variable/flag";
 import { SandList } from "marked#variable/sandlist";
 import { Scope } from "marked#variable/scope";
