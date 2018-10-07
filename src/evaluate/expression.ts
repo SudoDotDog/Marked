@@ -40,6 +40,7 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
     async function (this: Sandbox, node: EST.CallExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
+
         const func: () => any = await this.execute(node.callee, scope, nextTrace);
         const args = [];
         for (const arg of node.arguments) {
@@ -49,10 +50,23 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
         return func.apply(null, args);
     };
 
+export const conditionalExpressionEvaluator: Evaluator<'ConditionalExpression'> =
+    async function (this: Sandbox, node: EST.ConditionalExpression, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+
+        const conditional: boolean = await this.execute(node.test, scope, nextTrace);
+
+        return conditional
+            ? await this.execute(node.consequent, scope, nextTrace)
+            : await this.execute(node.alternate, scope, nextTrace);
+    };
+
 export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
     async function (this: Sandbox, node: EST.ExpressionStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
+
         return await this.execute(node.expression, scope, nextTrace);
     };
 
@@ -60,6 +74,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
     async function (this: Sandbox, node: EST.ForOfStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
+
         const lists: SandList<any> = await this.execute(node.right, scope, nextTrace);
 
         if (!(lists instanceof SandList)) {
@@ -109,6 +124,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = Scope.fromScope(scope);
+
         if (node.init) {
 
             await this.execute(node.init, subScope, nextTrace);
