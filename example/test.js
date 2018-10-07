@@ -14,16 +14,14 @@ const b = (c) => {
         print(3, c++ + 1);
     } else {
         sleep(10);
-        print(4, ll.length);
         for (let i = 0; i < 3; i++) {
-            print(5, c++ + 3);
-            print(6, i);
 
             break;
         }
     }
     return c; // test
 };
+print('member compare', ccc.some > 1);
 print(ll[0], 'array');
 const q = (f) => {
     f(a);
