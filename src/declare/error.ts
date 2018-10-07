@@ -35,3 +35,8 @@ export const ERROR_LIST: {
     7102: 'Variable is not defined',
     9001: 'Internal error',
 };
+
+export enum END_SIGNAL {
+    SUCCEED = 0,
+    FAILED = 1,
+}
