@@ -27,6 +27,8 @@ export enum ERROR_CODE {
 
     UNMOUNTED_AST_TYPE = 6001,
 
+    MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED = 6121,
+
     DUPLICATED_VARIABLE = 7005,
 
     VARIABLE_IS_NOT_DEFINED = 7102,
@@ -51,6 +53,7 @@ export const ERROR_LIST: {
     3107: 'Export not default variable is not supported',
     3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
+    6121: 'Member expression value cannot be undefined',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',
     9001: 'Internal error',

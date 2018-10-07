@@ -32,6 +32,11 @@ export class SandMap<T> {
         return this;
     }
 
+    public getRaw(key: string): Variable<T> | undefined {
+
+        return this._map.get(key);
+    }
+
     public toString(): string {
 
         return this._map.toString();

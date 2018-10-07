@@ -31,6 +31,11 @@ export class SandList<T> {
             : undefined;
     }
 
+    public getRaw(key: number): Variable<T> | undefined {
+
+        return this._list[key];
+    }
+
     public toString(): string {
 
         return this._list.toString();

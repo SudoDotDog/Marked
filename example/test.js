@@ -5,8 +5,9 @@ const ccc = {
     b: () => 1,
     'some': 2,
 }
-const some = ++ccc['some'];
-print('some', some);
+
+ccc.some++;
+print('some', ccc.some);
 
 const b = (c) => {
     if (!c || true) {
