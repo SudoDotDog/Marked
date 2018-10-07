@@ -21,7 +21,7 @@ export const marked = async (script: string): Promise<number> => {
         await sandbox.evaluate(script);
     } catch (error) {
         const markedError: MarkedError = error;
-        console.log(markedError);
+        throw markedError;
     }
     console.timeEnd('execute');
     return END_SIGNAL.SUCCEED;

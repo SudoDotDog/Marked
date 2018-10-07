@@ -9,7 +9,7 @@ import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from 'marked#declare/error';
 import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { ISandbox, IScope, ITrace, VARIABLE_TYPE } from 'marked#declare/variable';
+import { IExposed, ISandbox, IScope, ITrace, VARIABLE_TYPE } from 'marked#declare/variable';
 import { error } from "marked#util/error/error";
 import { Scope } from "marked#variable/scope";
 import { Trace } from 'marked#variable/trace';
@@ -22,28 +22,43 @@ export class Sandbox implements ISandbox {
     private _parser: typeof Acorn.Parser;
 
     private _configs: Map<string, any>;
+    private _exposed: Map<string, any>;
 
     public constructor() {
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();
         this._parser = Acorn.Parser.extend(markedParser as any);
+
         this._configs = new Map<string, any>();
+        this._exposed = new Map<string, any>();
     }
 
-    public config(name: string, value?: any): ISandbox {
+    public get exposed(): IExposed {
+        const result: IExposed = {
+            default: this._exposed.get('default'),
+        };
+        return result;
+    }
+
+    public config(name: string, value?: any): Sandbox {
 
         this._configs.set(name, value === undefined ? true : value);
         return this;
     }
 
-    public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): ISandbox {
+    public expose(name: string, value: any): Sandbox {
+        this._exposed.set(name, value);
+        return this;
+    }
+
+    public mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): Sandbox {
 
         this._map.set(type, evaluator);
         return this;
     }
 
-    public inject(name: string, value: any): ISandbox {
+    public inject(name: string, value: any): Sandbox {
 
         this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, value);
         return this;

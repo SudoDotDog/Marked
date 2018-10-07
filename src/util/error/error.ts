@@ -11,6 +11,7 @@ export class MarkedError extends Error {
 
     public code: number;
     public description: string;
+    public message: string;
 
     public info: string | null;
     public node: EST.Node | null;
@@ -21,6 +22,7 @@ export class MarkedError extends Error {
 
         this.code = code;
         this.description = description;
+        this.message = code + ": " + description;
 
         this.info = info || null;
         this.node = node || null;

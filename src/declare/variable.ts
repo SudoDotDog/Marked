@@ -36,10 +36,18 @@ export interface IScope {
     rummage: (name: string) => Variable | null;
 }
 
+export interface IExposed {
+    [key: string]: any;
+    default?: any;
+}
+
 export interface ISandbox {
 
-    config: (name: string, value?: any) => ISandbox;
-    mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): ISandbox;
+    exposed: IExposed;
+
+    config(name: string, value?: any): ISandbox;
+    expose(name: string, value: any): ISandbox;
+    mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): ISandbox;
     inject(name: string, value: any): ISandbox;
     evaluate(script: string): Promise<any>;
 }

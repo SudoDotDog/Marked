@@ -1,7 +1,7 @@
 print(1, 1234); // test
 
 const a = 10; // test
-export const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
+const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 print(2, ll);
 const b = (c) => {
     if (!c) {
