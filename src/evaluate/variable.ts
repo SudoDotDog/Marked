@@ -74,7 +74,7 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
 
             if (property.kind !== 'init')
                 throw error(ERROR_CODE.PROPERTY_KIND_NOT_INIT_NOT_SUPPORT, property.kind, property);
-            map.set(key, this.execute(property.value, scope, nextTrace));
+            map.set(key, await this.execute(property.value, scope, nextTrace));
         }
 
         return map;
@@ -84,17 +84,17 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
     async function (this: Sandbox, node: EST.VariableDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
-        const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
 
+        const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
         for (const declaration of node.declarations) {
 
             const pattern: EST.Pattern = declaration.id;
             const identifier: EST.Identifier = pattern as EST.Identifier;
-            if (scope.exist(identifier.name)) {
+            if (scope.exist(identifier.name))
                 throw error(ERROR_CODE.DUPLICATED_VARIABLE, identifier.name, node);
-            }
-            const value = declaration.init ?
-                await this.execute(declaration.init, scope, nextTrace) : undefined;
+            const value = declaration.init
+                ? await this.execute(declaration.init, scope, nextTrace)
+                : undefined;
 
             scope.register(type)(identifier.name, value);
         }

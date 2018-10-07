@@ -4,12 +4,18 @@
  * @description List
  */
 
+import { Variable } from "marked#variable/variable";
+
 export class SandList<T> {
 
-    private _list: T[];
+    private _list: Array<Variable<T>>;
 
     public constructor(list: T[]) {
-        this._list = list;
+
+        const variableList: Array<Variable<T>>
+            = list.map((value: T) => new Variable<T>(value));
+
+        this._list = variableList;
     }
 
     public get length(): number {
@@ -17,10 +23,16 @@ export class SandList<T> {
     }
 
     public get(key: number): T | undefined {
-        return this._list[key];
+
+        const variable: Variable<T> | undefined = this._list[key];
+
+        return variable
+            ? variable.get()
+            : undefined;
     }
 
     public toString(): string {
+
         return this._list.toString();
     }
 }

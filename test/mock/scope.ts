@@ -13,15 +13,15 @@ import { IMockedClass } from "./node";
 
 export class MockScope implements IScope, IMockedClass {
 
-    private _mockedScopeMap: Map<string, Variable>;
-    private _mockedConstantMap: Map<string, Variable>;
+    private _mockedScopeMap: Map<string, Variable<any>>;
+    private _mockedConstantMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
 
     private _mockedParent: Scope | null;
 
     public constructor(scope?: Scope) {
-        this._mockedConstantMap = new Map<string, Variable>();
-        this._mockedScopeMap = new Map<string, Variable>();
+        this._mockedConstantMap = new Map<string, Variable<any>>();
+        this._mockedScopeMap = new Map<string, Variable<any>>();
         this._configs = new Map<string, any>();
 
         this._mockedParent = scope || null;
@@ -54,17 +54,17 @@ export class MockScope implements IScope, IMockedClass {
     }
 
     public reset() {
-        this._mockedConstantMap = new Map<string, Variable>();
-        this._mockedScopeMap = new Map<string, Variable>();
+        this._mockedConstantMap = new Map<string, Variable<any>>();
+        this._mockedScopeMap = new Map<string, Variable<any>>();
     }
 
-    public rummage(name: string): Variable | null {
+    public rummage(name: string): Variable<any> | null {
         if (this._mockedScopeMap.has(name)) {
-            return this._mockedScopeMap.get(name) as Variable;
+            return this._mockedScopeMap.get(name) as Variable<any>;
         }
 
         if (this._mockedConstantMap.has(name)) {
-            return this._mockedConstantMap.get(name) as Variable;
+            return this._mockedConstantMap.get(name) as Variable<any>;
         }
 
         return this._mockedParent ? this._mockedParent.rummage(name) : null;

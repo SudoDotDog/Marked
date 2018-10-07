@@ -23,16 +23,16 @@ export class Scope implements IScope {
 
     private _parent: IScope | null;
 
-    private _constantMap: Map<string, Variable>;
-    private _scopeMap: Map<string, Variable>;
+    private _constantMap: Map<string, Variable<any>>;
+    private _scopeMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
 
     public constructor(scope?: IScope) {
 
         this._parent = scope || null;
 
-        this._constantMap = new Map<string, Variable>();
-        this._scopeMap = new Map<string, Variable>();
+        this._constantMap = new Map<string, Variable<any>>();
+        this._scopeMap = new Map<string, Variable<any>>();
         this._configs = new Map<string, any>();
     }
 
@@ -64,13 +64,13 @@ export class Scope implements IScope {
             this._declareLet.bind(this);
     }
 
-    public rummage(name: string): Variable | null {
+    public rummage(name: string): Variable<any> | null {
         if (this._scopeMap.has(name)) {
-            return this._scopeMap.get(name) as Variable;
+            return this._scopeMap.get(name) as Variable<any>;
         }
 
         if (this._constantMap.has(name)) {
-            return this._constantMap.get(name) as Variable;
+            return this._constantMap.get(name) as Variable<any>;
         }
 
         return this._parent ? this._parent.rummage(name) : null;

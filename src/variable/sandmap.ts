@@ -4,23 +4,31 @@
  * @description Map
  */
 
+import { Variable } from "marked#variable/variable";
+
 export class SandMap<T> {
 
-    private _map: Map<string, T>;
+    private _map: Map<string, Variable<T>>;
 
     public constructor() {
 
-        this._map = new Map<string, T>();
+        this._map = new Map<string, Variable<T>>();
     }
 
     public get(key: string): T | undefined {
 
-        return this._map.get(key);
+        const variable: Variable<T> | undefined = this._map.get(key);
+
+        return variable
+            ? variable.get()
+            : undefined;
     }
 
     public set(key: string, value: T): SandMap<T> {
 
-        this._map.set(key, value);
+        const variable: Variable<T> = new Variable(value);
+
+        this._map.set(key, variable);
         return this;
     }
 

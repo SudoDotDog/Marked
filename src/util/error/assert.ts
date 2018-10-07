@@ -6,6 +6,7 @@
 
 import { ERROR_CODE } from "marked#declare/error";
 import { error } from "marked#util/error/error";
+import { isNumber, isString } from "util";
 
 class Assert<T> {
     private _elements: T[];
@@ -48,24 +49,48 @@ class Assert<T> {
         return true;
     }
 
-    public true(code: ERROR_CODE = ERROR_CODE.ASSERT_BOOLEAN_OPPOSITE): boolean {
+    public true(code: ERROR_CODE = ERROR_CODE.ASSERT_BOOLEAN_OPPOSITE): Assert<T> {
         const result: boolean = this.eachElement((value: T) => {
             return Boolean(value);
         });
         if (!result) {
             throw error(code);
         }
-        return true;
+        return this;
     }
 
-    public array(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): boolean {
+    public array(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
         const result: boolean = this.eachElement((value: T) => {
             return value instanceof Array;
         });
         if (!result) {
             throw error(code);
         }
-        return true;
+        return this;
+    }
+
+    public number(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
+        const result: boolean = this.eachElement((value: T) => {
+            return isNumber(value);
+        });
+        if (!result) {
+            throw error(code);
+        }
+        return this;
+    }
+
+    public string(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
+        const result: boolean = this.eachElement((value: T) => {
+            return isString(value);
+        });
+        if (!result) {
+            throw error(code);
+        }
+        return this;
+    }
+
+    public firstValue(): T {
+        return this._elements[0];
     }
 
     protected eachElement(func: (value: T) => boolean) {

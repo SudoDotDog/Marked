@@ -33,7 +33,7 @@ export interface IScope {
     config: (name: string, value?: any) => IScope;
     exist: (name: string) => boolean;
     register: (type: VARIABLE_TYPE) => SCOPE_DECLARE_FUNC;
-    rummage: (name: string) => Variable | null;
+    rummage: (name: string) => Variable<any> | null;
 }
 
 export interface IExposed {

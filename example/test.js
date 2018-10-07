@@ -5,7 +5,7 @@ const ccc = {
     b: () => 1,
     'some': 2,
 }
-const some = ccc.some;
+const some = ++ccc['some'];
 print('some', some);
 
 const b = (c) => {
@@ -23,7 +23,7 @@ const b = (c) => {
     }
     return c; // test
 };
-print(ll[0]);
+print(ll[0], 'array');
 const q = (f) => {
     f(a);
 };

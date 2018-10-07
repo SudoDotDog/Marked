@@ -4,18 +4,18 @@
  * @description Variable
  */
 
-export class Variable {
-    private _value: any;
+export class Variable<T> {
+    private _value: T;
 
-    public constructor(value: any) {
+    public constructor(value: T) {
         this._value = value;
     }
 
-    public get(): any {
+    public get(): T {
         return this._value;
     }
 
-    public set(value: any): void {
+    public set(value: T): void {
         this._value = value;
         return;
     }

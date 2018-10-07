@@ -38,9 +38,9 @@ describe('Given an <Assert> function', (): void => {
 
     it('to be a array should work fine', (): void => {
 
-        const result: boolean = assert([]).to.be.array();
+        const result: any[] = assert([]).to.be.array().firstValue();
         // tslint:disable-next-line
-        expect(result).to.be.true;
+        expect(result).to.be.deep.equal([]);
     });
 
     it('to be a array should work fine, when false', (): void => {
@@ -54,7 +54,7 @@ describe('Given an <Assert> function', (): void => {
 
     it('true should be fine if element is true', (): void => {
 
-        const result: boolean = assert(true).to.be.true();
+        const result: boolean = assert(true).to.be.true().firstValue();
         // tslint:disable-next-line
         expect(result).to.be.true;
     });
