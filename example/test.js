@@ -4,7 +4,7 @@ const a = 10; // test
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 print(2, ll);
 const b = (c) => {
-    if (!c) {
+    if (!c || true) {
         print(3, c++ + 1);
     } else {
         sleep(10);

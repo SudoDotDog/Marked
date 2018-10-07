@@ -9,7 +9,7 @@ import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
 import { error } from "marked#util/error/error";
 import { rummageSpecialKeyword } from "marked#util/hack";
-import { getBinaryOperation, getUnaryOperation, getUpdateOperation } from "marked#util/operation";
+import { getBinaryOperation, getLogicalOperation, getUnaryOperation, getUpdateOperation } from "marked#util/operation";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Variable } from "marked#variable/variable";
@@ -27,6 +27,23 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
         if (!operation) {
 
             throw error(ERROR_CODE.BINARY_NOT_SUPPORT, node.operator);
+        }
+
+        return operation(await evalLeft(), await evalRight());
+    };
+
+export const logicalExpressionEvaluator: Evaluator<'LogicalExpression'> =
+    async function (this: Sandbox, node: EST.LogicalExpression, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+        const evalLeft: () => Promise<any> = async () => await this.execute(node.left, scope, nextTrace);
+        const evalRight: () => Promise<any> = async () => await this.execute(node.right, scope, nextTrace);
+
+        const operation: ((left: any, right: any) => any) | null = getLogicalOperation(node.operator);
+
+        if (!operation) {
+
+            throw error(ERROR_CODE.LOGICAL_NOT_SUPPORT, node.operator);
         }
 
         return operation(await evalLeft(), await evalRight());

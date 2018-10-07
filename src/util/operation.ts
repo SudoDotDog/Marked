@@ -21,7 +21,6 @@ export const getUnaryOperation = (symbol: EST.UnaryOperator): ((value: any) => a
     }
 };
 
-
 export const getBinaryOperation = (symbol: EST.BinaryOperator): ((left: any, right: any) => any) | null => {
 
     switch (symbol) {
@@ -57,6 +56,16 @@ export const getUpdateOperation = (symbol: EST.UpdateOperator): ((value: any) =>
 
         case '++': return (value: any) => value + 1;
         case '--': return (value: any) => value - 1;
+    }
+    return null;
+};
+
+export const getLogicalOperation = (symbol: EST.LogicalOperator): ((left: any, right: any) => any) | null => {
+
+    switch (symbol) {
+
+        case '&&': return (left: any, right: any) => left && right;
+        case '||': return (left: any, right: any) => left || right;
     }
     return null;
 };

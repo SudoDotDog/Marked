@@ -16,7 +16,9 @@ export enum ERROR_CODE {
     VAR_DECLARATION_NOT_SUPPORT = 3003,
     BINARY_NOT_SUPPORT = 3004,
     UNARY_NOT_SUPPORT = 3005,
-    EXPORT_NAMED_NOT_SUPPORT = 3006,
+    LOGICAL_NOT_SUPPORT = 3006,
+
+    EXPORT_NAMED_NOT_SUPPORT = 3107,
 
     UNMOUNTED_AST_TYPE = 6001,
 
@@ -38,7 +40,8 @@ export const ERROR_LIST: {
     3003: 'Declaration with [var] is not supported',
     3004: 'Binary is not supported',
     3005: 'Unary is not supported',
-    3006: 'Export not default variable is not supported',
+    3006: 'Logical is not supported',
+    3107: 'Export not default variable is not supported',
     6001: 'Unmounted ast type',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',
