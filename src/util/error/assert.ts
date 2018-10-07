@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace Util_Error
  * @description Assert
  */
 

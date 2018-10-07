@@ -13,12 +13,17 @@ export enum ERROR_CODE {
 
     FOR_OF_LOOP_ONLY_FOR_LIST = 2387,
 
+    ONLY_NUMBER_AVAILABLE_FOR_LIST = 2391,
+    ONLY_STRING_AVAILABLE_FOR_MAP = 2392,
+
     VAR_DECLARATION_NOT_SUPPORT = 3003,
     BINARY_NOT_SUPPORT = 3004,
     UNARY_NOT_SUPPORT = 3005,
     LOGICAL_NOT_SUPPORT = 3006,
 
     EXPORT_NAMED_NOT_SUPPORT = 3107,
+
+    PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
 
     UNMOUNTED_AST_TYPE = 6001,
 
@@ -37,11 +42,14 @@ export const ERROR_LIST: {
     2066: 'Assert boolean opposite',
     2067: 'Assert type not matched',
     2387: 'For of loop only for list',
+    2391: 'Only number is available for list',
+    2392: 'Only string is available for map',
     3003: 'Declaration with [var] is not supported',
     3004: 'Binary is not supported',
     3005: 'Unary is not supported',
     3006: 'Logical is not supported',
     3107: 'Export not default variable is not supported',
+    3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',

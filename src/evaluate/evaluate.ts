@@ -8,7 +8,7 @@ import { binaryExpressionEvaluator, logicalExpressionEvaluator, unaryExpressionE
 import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, forOfStatementEvaluator, forStatementEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
 import { exportsDefaultDeclarationEvaluator, exportsNamedDeclarationEvaluator } from "marked#evaluate/module";
 import { blockEvaluator, breakEvaluator, continueEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
-import { arrayExpressionEvaluator, memberEvaluator, variableDeclarationEvaluator } from "marked#evaluate/variable";
+import { arrayExpressionEvaluator, memberEvaluator, objectExpressionEvaluator, variableDeclarationEvaluator } from "marked#evaluate/variable";
 import { Sandbox } from "../sandbox";
 
 export const useSymbol = (sandbox: Sandbox) => {
@@ -36,6 +36,7 @@ export const useExpression = (sandbox: Sandbox) => {
 export const useVariable = (sandbox: Sandbox) => {
 
     sandbox.mount('ArrayExpression', arrayExpressionEvaluator);
+    sandbox.mount('ObjectExpression', objectExpressionEvaluator);
     sandbox.mount('MemberExpression', memberEvaluator);
     sandbox.mount('VariableDeclaration', variableDeclarationEvaluator);
 };
