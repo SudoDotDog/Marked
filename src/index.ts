@@ -24,6 +24,7 @@ export const marked = async (script: string): Promise<number> => {
         throw markedError;
     }
     console.timeEnd('execute');
+    console.log(sandbox.exposed);
     return END_SIGNAL.SUCCEED;
 };
 

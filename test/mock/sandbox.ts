@@ -7,7 +7,7 @@
 import * as EST from "estree";
 import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { IESTreeType } from "marked#declare/types";
-import { ISandbox, IScope, ITrace } from "marked#declare/variable";
+import { IExposed, ISandbox, IScope, ITrace } from "marked#declare/variable";
 import { IMockedClass } from "./node";
 
 export class MockSandbox implements ISandbox, IMockedClass {
@@ -16,6 +16,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     private _mockMap: Map<any, any>;
 
     private _configs: Map<string, any>;
+    private _exposed: Map<string, any>;
 
     public constructor() {
 
@@ -23,6 +24,14 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._mockMap = new Map<any, any>();
 
         this._configs = new Map<string, any>();
+        this._exposed = new Map<string, any>();
+    }
+
+    public get exposed(): IExposed {
+        const result: IExposed = {
+            default: this._exposed.get('default'),
+        };
+        return result;
     }
 
     public get result(): EST.BaseNode[] {
@@ -32,6 +41,11 @@ export class MockSandbox implements ISandbox, IMockedClass {
     public config(name: string, value?: any): MockSandbox {
 
         this._configs.set(name, value === undefined ? true : value);
+        return this;
+    }
+
+    public expose(name: string, value: any): MockSandbox {
+        this._exposed.set(name, value);
         return this;
     }
 

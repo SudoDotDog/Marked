@@ -22,4 +22,5 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
     async function (this: Sandbox, node: EST.ExportDefaultDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
         const content = await this.execute(node.declaration, scope, trace);
+        this.expose('default', content);
     };

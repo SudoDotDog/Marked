@@ -22,7 +22,7 @@ print(ll[0]);
 const q = (f) => {
     f(a);
 };
-
+export default 1;
 q(b);
 for (let a of ll) {
     print(a);
