@@ -5,6 +5,8 @@
  */
 
 import * as EST from "estree";
+import { SandList } from "marked#variable/sandlist";
+import { SandMap } from "marked#variable/sandmap";
 
 export const validateLiteralOrIdentifier
     = (node: EST.Literal | EST.Identifier): boolean => {
@@ -14,4 +16,9 @@ export const validateLiteralOrIdentifier
             return true;
         }
         return false;
+    };
+
+export const validateObjectIsSandboxStructure
+    = (object: any): boolean => {
+        return ((object instanceof SandList) || (object instanceof SandMap));
     };

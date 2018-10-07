@@ -15,8 +15,8 @@ export class Variable<T> {
         return this._value;
     }
 
-    public set(value: T): void {
+    public set(value: T): T {
         this._value = value;
-        return;
+        return value;
     }
 }

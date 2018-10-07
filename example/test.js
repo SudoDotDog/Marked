@@ -5,17 +5,18 @@ const ccc = {
     b: () => 1,
     'some': 2,
 }
-
+ccc.a = 20;
+a = 20;
 ccc.some++;
-print('some', ccc.some);
+print('some', ccc.some, ccc.a, a);
 
 const b = (c) => {
-    if (!c || true) {
+    if (!c) {
         print(3, c++ + 1);
     } else {
         sleep(10);
         for (let i = 0; i < 3; i++) {
-
+            print(3, c++ + 1);
             break;
         }
     }

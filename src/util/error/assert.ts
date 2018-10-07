@@ -39,14 +39,14 @@ class Assert<T> {
         return this;
     }
 
-    public exist(code: ERROR_CODE = ERROR_CODE.ASSERT_EXIST_ELEMENT_NOT_EXIST): boolean {
+    public exist(code: ERROR_CODE = ERROR_CODE.ASSERT_EXIST_ELEMENT_NOT_EXIST): Assert<T> {
         const result: boolean = this.eachElement((value: T) => {
             return value !== null && value !== undefined;
         });
         if (!result) {
             throw error(code);
         }
-        return true;
+        return this;
     }
 
     public true(code: ERROR_CODE = ERROR_CODE.ASSERT_BOOLEAN_OPPOSITE): Assert<T> {

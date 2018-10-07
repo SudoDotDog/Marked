@@ -10,6 +10,7 @@ import { Evaluator } from "marked#declare/node";
 import { assert } from "marked#util/error/assert";
 import { error } from "marked#util/error/error";
 import { rummageSpecialKeyword } from "marked#util/hack";
+import { validateObjectIsSandboxStructure } from "marked#util/node/validator";
 import { getBinaryOperation, getLogicalOperation, getUnaryOperation, getUpdateOperation } from "marked#util/operation";
 import { SandList } from "marked#variable/sandlist";
 import { SandMap } from "marked#variable/sandmap";
@@ -67,7 +68,7 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
 
         if (!operation) {
 
-            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator);
+            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator, node);
         }
 
         return operation(value);
@@ -105,8 +106,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                 ? await this.execute(argument.property, scope, nextTrace)
                 : (argument.property as EST.Identifier).name;
 
-            if (!(object instanceof SandList) &&
-                !(object instanceof SandMap))
+            if (!validateObjectIsSandboxStructure(object))
                 throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node);
 
             const memberVariable: Variable<any> | undefined = object instanceof SandList

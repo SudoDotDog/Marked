@@ -15,9 +15,9 @@ describe('Given an <Assert> function', (): void => {
 
     it('exist should be fine if element is exist', (): void => {
 
-        const result: boolean = assert(10).to.be.exist();
+        const result: number = assert(10).to.be.exist().firstValue();
         // tslint:disable-next-line
-        expect(result).to.be.true;
+        expect(result).to.be.equal(10);
     });
 
     it('exist should be throw an error if element is not exist', (): void => {
@@ -31,9 +31,9 @@ describe('Given an <Assert> function', (): void => {
 
     it('exist should be fine if element is not exist, but reversed', (): void => {
 
-        const result: boolean = assert(null).to.be.not.exist();
+        const result: null = assert(null).to.be.not.exist().firstValue();
         // tslint:disable-next-line
-        expect(result).to.be.true;
+        expect(result).to.be.null;
     });
 
     it('to be a array should work fine', (): void => {
