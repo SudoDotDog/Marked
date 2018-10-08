@@ -8,17 +8,23 @@ import * as EST from "estree";
 import { ITrace } from "marked#declare/variable";
 
 export class Trace implements ITrace {
+    
     public static init(): Trace {
-        return new Trace();
+        
+        return new Trace(null);
     }
 
-    private readonly _stack: EST.Node[];
+    private readonly _parent: Trace | null;
+    private readonly _node: EST.Node;
 
-    public constructor(stack?: EST.Node[]) {
-        this._stack = stack || [];
+    public constructor(node: EST.Node, parent?: Trace) {
+        
+        this._parent = parent || null;
+        this._node = node;
     }
 
     public stack(node: EST.Node): Trace {
-        return new Trace([...this._stack, node]);
+        
+        return new Trace(node, this);
     }
 }
