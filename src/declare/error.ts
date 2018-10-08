@@ -25,6 +25,7 @@ export enum ERROR_CODE {
     CONSTANT_VARIABLE_CANNOT_BE_EDITED = 3081,
 
     EXPORT_NAMED_NOT_SUPPORT = 3107,
+    EXPORT_TYPE_OTHER_THAN_N_S_B_NOT_SUPPORT = 3108,
 
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
 
@@ -55,6 +56,7 @@ export const ERROR_LIST: {
     3006: 'Logical is not supported',
     3081: 'Constant variable cannot be edited',
     3107: 'Export not default variable is not supported',
+    3108: 'Export is only available for number, string and boolean',
     3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
     6121: 'Member expression value cannot be undefined',
@@ -62,8 +64,3 @@ export const ERROR_LIST: {
     7102: 'Variable is not defined',
     9001: 'Internal error',
 };
-
-export enum END_SIGNAL {
-    SUCCEED = 0,
-    FAILED = 1,
-}

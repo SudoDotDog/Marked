@@ -35,6 +35,7 @@ export class Sandbox implements ISandbox {
     }
 
     public get exposed(): IExposed {
+
         const result: IExposed = {
             default: this._exposed.get('default'),
         };

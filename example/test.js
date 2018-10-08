@@ -12,7 +12,9 @@ ccc.a.a++;
 a = 20;
 ccc.some++;
 print('some', ccc.some, ccc.a.a, a);
-
+// function someFunction() {
+//     return 1;
+// }
 const b = (c) => {
     if (!c) {
         print(3, c++ + 1);
@@ -26,9 +28,9 @@ const b = (c) => {
     return c; // test
 };
 print('member compare', ccc.some > 1);
-print(ll[0], 'array');
+print(ll[0]++, ++ll[0], 'array');
 const q = (f) => {
     f(a);
 };
-export default 1;
+export default a;
 q(b);

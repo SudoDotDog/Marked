@@ -5,13 +5,13 @@
 
 require('./binding');
 import * as FS from 'fs';
-import { END_SIGNAL } from 'marked#declare/error';
+import { END_SIGNAL, IMarkedResult } from 'marked#declare/node';
 import { useEverything } from 'marked#evaluate/evaluate';
 import { internalPrint, internalSleep } from 'marked#extension/internal';
 import { MarkedError } from 'marked#util/error/error';
 import { Sandbox } from './sandbox';
 
-export const marked = async (script: string): Promise<number> => {
+export const marked = async (script: string): Promise<IMarkedResult> => {
     console.time('execute');
     const sandbox = new Sandbox();
     useEverything(sandbox);
@@ -24,8 +24,11 @@ export const marked = async (script: string): Promise<number> => {
         throw markedError;
     }
     console.timeEnd('execute');
-    console.log(sandbox.exposed);
-    return END_SIGNAL.SUCCEED;
+
+    return {
+        signal: END_SIGNAL.SUCCEED,
+        exports: sandbox.exposed,
+    };
 };
 
 marked(FS.readFileSync('example/test.js', 'utf8')).then((result) => {
