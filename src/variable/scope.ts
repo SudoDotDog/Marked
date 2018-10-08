@@ -65,6 +65,7 @@ export class Scope implements IScope {
     }
 
     public rummage(name: string): Variable<any> | null {
+
         if (this._scopeMap.has(name)) {
             return this._scopeMap.get(name) as Variable<any>;
         }
@@ -74,6 +75,19 @@ export class Scope implements IScope {
         }
 
         return this._parent ? this._parent.rummage(name) : null;
+    }
+
+    public validateEditable(name: string): IScope {
+
+        if (this._constantMap.has(name)) {
+            throw error(ERROR_CODE.CONSTANT_VARIABLE_CANNOT_BE_EDITED, name);
+        }
+
+        if (!this._scopeMap.has(name)) {
+            throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
+        }
+
+        return this;
     }
 
     protected _declareConst(name: string, value: any): IScope {

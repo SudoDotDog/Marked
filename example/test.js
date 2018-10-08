@@ -1,14 +1,17 @@
-const a = 10; // test
+let a = 10; // test
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 const ccc = {
-    a: 1,
+    a: {
+        a: 1,
+    },
     b: () => 1,
     'some': 2,
 }
-ccc.a = 20;
+ccc.a.a = 20;
+ccc.a.a++;
 a = 20;
 ccc.some++;
-print('some', ccc.some, ccc.a, a);
+print('some', ccc.some, ccc.a.a, a);
 
 const b = (c) => {
     if (!c) {

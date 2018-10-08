@@ -42,11 +42,12 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
         const variable = await (async ()
             : Promise<Variable<any>> => {
 
-            if (node.left.type === 'Identifier') { // fixme: const can be assigned now
+            if (node.left.type === 'Identifier') {
 
                 const name: string = node.left.name;
-                return assert(scope.rummage(name) as Variable<any>)
-                    .to.be
+                return assert(
+                    scope.validateEditable(name).rummage(name) as Variable<any>,
+                ).to.be
                     .exist(ERROR_CODE.VARIABLE_IS_NOT_DEFINED)
                     .firstValue();
             } else if (node.left.type === 'MemberExpression') {
