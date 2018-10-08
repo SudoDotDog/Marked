@@ -67,10 +67,7 @@ export class Sandbox implements ISandbox {
 
     public async evaluate(script: string): Promise<any> {
 
-        const AST: EST.BaseNode = this._parser.parse(script, {
-            sourceType: 'module',
-        });
-
+        const AST: EST.BaseNode = this.parse(script);
         const rootScope: Scope = Scope.fromScope(this._rootScope);
         const trace: Trace = Trace.init();
         return await this.execute(AST, rootScope, trace);
@@ -82,5 +79,18 @@ export class Sandbox implements ISandbox {
         if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
 
         return await executor.bind(this)(node, scope, trace);
+    }
+
+    protected parse(script: string): EST.BaseNode {
+
+        try {
+            const AST: EST.BaseNode = this._parser.parse(script, {
+                sourceType: 'module',
+            });
+            return AST;
+        } catch (err) {
+            const syntaxError = err as any;
+            throw error(ERROR_CODE.ACORN_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
+        }
     }
 }

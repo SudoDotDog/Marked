@@ -5,7 +5,7 @@
  */
 
 import { binaryExpressionEvaluator, logicalExpressionEvaluator, unaryExpressionEvaluator, updateExpressionEvaluator } from "marked#evaluate/calculate";
-import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, forOfStatementEvaluator, forStatementEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
+import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, forOfStatementEvaluator, forStatementEvaluator, functionDeclarationEvaluator, functionExpressionEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
 import { exportsDefaultDeclarationEvaluator, exportsNamedDeclarationEvaluator } from "marked#evaluate/module";
 import { blockEvaluator, breakEvaluator, continueEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
 import { arrayExpressionEvaluator, assignmentExpressionEvaluator, memberEvaluator, objectExpressionEvaluator, variableDeclarationEvaluator } from "marked#evaluate/variable";
@@ -26,6 +26,9 @@ export const useSymbol = (sandbox: Sandbox) => {
 export const useExpression = (sandbox: Sandbox) => {
 
     sandbox.mount('ArrowFunctionExpression', arrowFunctionEvaluator);
+    sandbox.mount('FunctionDeclaration', functionDeclarationEvaluator);
+    sandbox.mount('FunctionExpression', functionExpressionEvaluator);
+
     sandbox.mount('CallExpression', calleeEvaluator);
     sandbox.mount('ExpressionStatement', expressionEvaluator);
     sandbox.mount('ForOfStatement', forOfStatementEvaluator);

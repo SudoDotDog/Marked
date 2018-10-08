@@ -163,6 +163,42 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
         return;
     };
 
+export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
+    async function (this: Sandbox, node: EST.FunctionExpression, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+        const func = async (...args: any[]): Promise<any> => {
+
+            const subScope = Scope.fromScope(scope);
+            for (let i = 0; i < node.params.length; i++) {
+                const pattern: EST.Identifier = node.params[i] as EST.Identifier;
+                const value: any = args[i];
+
+                subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
+            }
+            const result: Flag = await this.execute(node.body, subScope, nextTrace);
+            if (result) {
+                return result.getValue();
+            }
+        };
+        return func;
+    };
+
+export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
+    async function (this: Sandbox, node: EST.FunctionDeclaration, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+
+        const func: (...args: any[]) => Promise<any>
+            = await functionExpressionEvaluator.bind(this)(node, scope, nextTrace);
+
+        if (!node.id) throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
+        const rawName: string = (node.id as EST.Identifier).name;
+
+        scope.register(VARIABLE_TYPE.CONSTANT)(rawName, func);
+        return func;
+    };
+
 export const ifStatementEvaluator: Evaluator<'IfStatement'> =
     async function (this: Sandbox, node: EST.IfStatement, scope: Scope, trace: Trace): Promise<any> {
 

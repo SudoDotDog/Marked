@@ -12,9 +12,10 @@ ccc.a.a++;
 a = 20;
 ccc.some++;
 print('some', ccc.some, ccc.a.a, a);
-// function someFunction() {
-//     return 1;
-// }
+function someFunction() {
+    return print('some function');
+}
+someFunction();
 const b = (c) => {
     if (!c) {
         print(3, c++ + 1);
