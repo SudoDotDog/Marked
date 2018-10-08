@@ -15,7 +15,7 @@ import { Sandbox } from "sandbox";
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT);
+        throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, void 0, node, trace);
     };
 
 export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclaration'> =

@@ -78,7 +78,7 @@ export class Sandbox implements ISandbox {
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
-        if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type);
+        if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
 
         return await executor.bind(this)(node, scope, trace);
     }

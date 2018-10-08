@@ -78,11 +78,11 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
         const lists: SandList<any> = await this.execute(node.right, scope, nextTrace);
 
         if (!(lists instanceof SandList)) {
-            throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST);
+            throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
 
         if (node.left.type !== 'VariableDeclaration') {
-            throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST);
+            throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
 
         loop: for (let i: number = 0; i < lists.length; i++) {
@@ -112,7 +112,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
                 } else if (result.isContinue) {
                     continue loop;
                 } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR);
+                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
             }
         }
@@ -156,7 +156,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                 } else if (result.isContinue) {
                     continue loop;
                 } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR);
+                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
             }
         }

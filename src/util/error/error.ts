@@ -6,6 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE, ERROR_LIST } from "marked#declare/error";
+import { Trace } from "marked#variable/trace";
 
 export class MarkedError extends Error {
 
@@ -14,9 +15,10 @@ export class MarkedError extends Error {
     public message: string;
 
     public info: string | null;
+    public trace: Trace | null;
     public node: EST.Node | null;
 
-    public constructor(code: number, description: string, info?: string, node?: EST.Node) {
+    public constructor(code: number, description: string, info?: string, node?: EST.Node, trace?: Trace) {
 
         super();
 
@@ -25,15 +27,16 @@ export class MarkedError extends Error {
         this.message = code + ": " + description;
 
         this.info = info || null;
+        this.trace = trace || null;
         this.node = node || null;
     }
 }
 
-export const error = (code: ERROR_CODE, info?: string, node?: EST.Node): MarkedError => {
+export const error = (code: ERROR_CODE, info?: string, node?: EST.Node, trace?: Trace): MarkedError => {
 
     const newError: MarkedError = Boolean(ERROR_LIST[code])
-        ? new MarkedError(code, ERROR_LIST[code], info, node)
-        : new MarkedError(ERROR_CODE.INTERNAL_ERROR, ERROR_LIST[ERROR_CODE.INTERNAL_ERROR], info, node);
+        ? new MarkedError(code, ERROR_LIST[code], info, node, trace)
+        : new MarkedError(ERROR_CODE.INTERNAL_ERROR, ERROR_LIST[ERROR_CODE.INTERNAL_ERROR], info, node, trace);
 
     if (newError.code > 9001) console.log(newError);
     return newError;

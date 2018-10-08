@@ -59,18 +59,18 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
                     : (node.left.property as EST.Identifier).name;
 
                 if (!validateObjectIsSandboxStructure(object))
-                    throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node);
+                    throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node, trace);
 
                 const memberVariable: Variable<any> | undefined = object instanceof SandList
                     ? object.getRaw(assert(member as number).to.be.number(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST).firstValue())
                     : object.getRaw(assert(member as string).to.be.string(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP).firstValue());
 
                 if (!memberVariable)
-                    throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberVariable, node);
+                    throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberVariable, node, trace);
                 return memberVariable;
             } else {
 
-                throw error(ERROR_CODE.INTERNAL_ERROR);
+                throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         })();
 
@@ -78,7 +78,7 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
 
         if (!operation) {
 
-            throw error(ERROR_CODE.ASSIGNMENT_NOT_SUPPORT, node.operator, node);
+            throw error(ERROR_CODE.ASSIGNMENT_NOT_SUPPORT, node.operator, node, trace);
         }
 
         const assignee: any = await this.execute(node.right, scope, nextTrace);
@@ -99,11 +99,11 @@ export const memberEvaluator: Evaluator<'MemberExpression'> =
         if (object instanceof SandList) {
 
             if (isNumber(key)) return object.get(key);
-            else throw error(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST);
+            else throw error(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST, key, node, trace);
         } else if (object instanceof SandMap) {
 
             if (isString(key)) return object.get(key);
-            else throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP);
+            else throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
         } else {
 
             return object[key];
@@ -121,13 +121,13 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
             const keyNode: EST.Literal | EST.Identifier
                 = property.key as EST.Literal | EST.Identifier;
             if (!validateLiteralOrIdentifier(keyNode))
-                throw error(ERROR_CODE.UNKNOWN_ERROR, keyNode.type, keyNode);
+                throw error(ERROR_CODE.UNKNOWN_ERROR, keyNode.type, keyNode, trace);
             const key: string = keyNode.type === 'Literal'
                 ? await this.execute(keyNode, scope, nextTrace)
                 : keyNode.name;
 
             if (property.kind !== 'init')
-                throw error(ERROR_CODE.PROPERTY_KIND_NOT_INIT_NOT_SUPPORT, property.kind, property);
+                throw error(ERROR_CODE.PROPERTY_KIND_NOT_INIT_NOT_SUPPORT, property.kind, property, trace);
             map.set(key, await this.execute(property.value, scope, nextTrace));
         }
 
@@ -145,7 +145,7 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
             const pattern: EST.Pattern = declaration.id;
             const identifier: EST.Identifier = pattern as EST.Identifier;
             if (scope.exist(identifier.name))
-                throw error(ERROR_CODE.DUPLICATED_VARIABLE, identifier.name, node);
+                throw error(ERROR_CODE.DUPLICATED_VARIABLE, identifier.name, node, trace);
             const value = declaration.init
                 ? await this.execute(declaration.init, scope, nextTrace)
                 : undefined;

@@ -51,7 +51,7 @@ export const identifierEvaluator: Evaluator<'Identifier'> =
 
         const variable: Variable<any> | null = scope.rummage(node.name);
         if (variable) return variable.get();
-        throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name, node);
+        throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name, node, trace);
     };
 
 export const literalEvaluator: Evaluator<'Literal'> =

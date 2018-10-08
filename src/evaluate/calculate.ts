@@ -31,7 +31,7 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
 
         if (!operation) {
 
-            throw error(ERROR_CODE.BINARY_NOT_SUPPORT, node.operator);
+            throw error(ERROR_CODE.BINARY_NOT_SUPPORT, node.operator, node, trace);
         }
 
         return operation(await evalLeft(), await evalRight());
@@ -49,7 +49,7 @@ export const logicalExpressionEvaluator: Evaluator<'LogicalExpression'> =
 
         if (!operation) {
 
-            throw error(ERROR_CODE.LOGICAL_NOT_SUPPORT, node.operator);
+            throw error(ERROR_CODE.LOGICAL_NOT_SUPPORT, node.operator, node, trace);
         }
 
         return operation(await evalLeft(), await evalRight());
@@ -68,7 +68,7 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
 
         if (!operation) {
 
-            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator, node);
+            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator, node, trace);
         }
 
         return operation(value);
@@ -82,7 +82,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
         const operation: ((value: any) => any) | null = getUpdateOperation(node.operator);
         if (!operation) {
 
-            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator);
+            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator, node, trace);
         }
 
         if (node.argument.type === 'Identifier') {
@@ -90,7 +90,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             const identifierVariable: Variable<any> | null = scope.rummage(node.argument.name);
             if (!identifierVariable) {
 
-                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.argument.name);
+                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.argument.name, node, trace);
             }
 
             const current: any = await this.execute(node.argument, scope, nextTrace);
@@ -107,7 +107,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                 : (argument.property as EST.Identifier).name;
 
             if (!validateObjectIsSandboxStructure(object))
-                throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node);
+                throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node, trace);
 
             const memberVariable: Variable<any> | undefined = object instanceof SandList
                 ? object.getRaw(assert(member as number).to.be.number(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST).firstValue())
@@ -116,11 +116,11 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                 ? memberVariable.get()
                 : undefined;
             if (!memberValue || !memberVariable)
-                throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberValue, node);
+                throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberValue, node, trace);
 
             const result: any = operation(memberValue);
             memberVariable.set(result);
             return node.prefix ? result : memberValue;
         }
-        throw error(ERROR_CODE.INTERNAL_ERROR);
+        throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
     };
