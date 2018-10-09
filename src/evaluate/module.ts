@@ -7,11 +7,11 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
+import { VARIABLE_TYPE } from "marked#declare/variable";
 import { error } from "marked#util/error/error";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Sandbox } from "sandbox";
-import { VARIABLE_TYPE } from "marked#declare/variable";
 
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {

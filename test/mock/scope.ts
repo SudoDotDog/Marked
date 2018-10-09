@@ -84,6 +84,11 @@ export class MockScope implements IScope, IMockedClass {
         return false;
     }
 
+    public hasParent(): boolean {
+
+        return Boolean(this._mockedParent);
+    }
+
     public register(type: VARIABLE_TYPE): (name: string, value: any) => MockScope {
 
         if (type === VARIABLE_TYPE.VARIABLE) {
