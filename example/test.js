@@ -16,7 +16,10 @@ function someFunction() {
     return print('some function');
 }
 
-print('ccc', ccc.a);
+for(let u in ccc){
+    print('uuu', u);
+}
+
 print('this', this.a);
 
 someFunction();
