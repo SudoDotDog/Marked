@@ -13,6 +13,13 @@ export const literal = (value: string | boolean | number | null): EST.Literal =>
     };
 };
 
+export const identifier = (name: string): EST.Identifier => {
+    return {
+        type: 'Identifier',
+        name,
+    };
+};
+
 export interface IMockedClass {
     reset(): void;
 }

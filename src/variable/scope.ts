@@ -11,23 +11,18 @@ import { Variable } from "marked#variable/variable";
 
 export class Scope implements IScope {
 
-    public static fromScope(scope: Scope): Scope {
-
-        return new Scope(scope);
-    }
-
     public static fromRoot(): Scope {
 
         return new Scope();
     }
 
-    private _parent: IScope | null;
+    private _parent: Scope | null;
 
     private _constantMap: Map<string, Variable<any>>;
     private _scopeMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
 
-    public constructor(scope?: IScope) {
+    public constructor(scope?: Scope) {
 
         this._parent = scope || null;
 
@@ -36,10 +31,14 @@ export class Scope implements IScope {
         this._configs = new Map<string, any>();
     }
 
-    public config(name: string, value?: any): IScope {
+    public config(name: string, value?: any): Scope {
 
         this._configs.set(name, value === undefined ? true : value);
         return this;
+    }
+
+    public child(): Scope {
+        return new Scope(this);
     }
 
     public exist(name: string): boolean {
@@ -53,7 +52,7 @@ export class Scope implements IScope {
         return false;
     }
 
-    public register(type: VARIABLE_TYPE): (name: string, value: any) => IScope {
+    public register(type: VARIABLE_TYPE): (name: string, value: any) => Scope {
 
         if (type === VARIABLE_TYPE.VARIABLE) {
             throw error(ERROR_CODE.VAR_DECLARATION_NOT_SUPPORT);
@@ -77,7 +76,7 @@ export class Scope implements IScope {
         return this._parent ? this._parent.rummage(name) : null;
     }
 
-    public validateEditable(name: string): IScope {
+    public validateEditable(name: string): Scope {
 
         if (this._constantMap.has(name)) {
             throw error(ERROR_CODE.CONSTANT_VARIABLE_CANNOT_BE_EDITED, name);
@@ -90,7 +89,7 @@ export class Scope implements IScope {
         return this;
     }
 
-    protected _declareConst(name: string, value: any): IScope {
+    protected _declareConst(name: string, value: any): Scope {
 
         if (this.exist(name)) throw error(ERROR_CODE.DUPLICATED_VARIABLE);
         const variable = new Variable(value);
@@ -98,7 +97,7 @@ export class Scope implements IScope {
         return this;
     }
 
-    protected _declareLet(name: string, value: any): IScope {
+    protected _declareLet(name: string, value: any): Scope {
 
         if (this.exist(name)) throw error(ERROR_CODE.DUPLICATED_VARIABLE);
         const variable = new Variable(value);

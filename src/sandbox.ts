@@ -68,7 +68,7 @@ export class Sandbox implements ISandbox {
     public async evaluate(script: string): Promise<any> {
 
         const AST: EST.BaseNode = this.parse(script);
-        const rootScope: Scope = Scope.fromScope(this._rootScope);
+        const rootScope: Scope = this._rootScope.child();
         const trace: Trace = Trace.init();
         return await this.execute(AST, rootScope, trace);
     }

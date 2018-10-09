@@ -18,7 +18,7 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
     async function (this: Sandbox, node: EST.BlockStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
-        const subScope: Scope = Scope.fromScope(scope);
+        const subScope: Scope = scope.child();
         for (const child of node.body) {
 
             const result: Flag = await this.execute(child, subScope, nextTrace);

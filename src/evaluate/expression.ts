@@ -22,7 +22,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
         const nextTrace: Trace = trace.stack(node);
         const func = async (...args: any[]): Promise<any> => {
 
-            const subScope = Scope.fromScope(scope);
+            const subScope = scope.child();
             for (let i = 0; i < node.params.length; i++) {
                 const pattern: EST.Identifier = node.params[i] as EST.Identifier;
                 const value: any = args[i];
@@ -88,7 +88,7 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
 
         loop: for (const key of map.map.keys()) {
 
-            const subScope: Scope = Scope.fromScope(scope);
+            const subScope: Scope = scope.child();
             const declarations: EST.VariableDeclarator[] = node.left.declarations;
             const left: EST.VariableDeclaration = node.left;
             const registerFunc = (name: string): void => {
@@ -136,7 +136,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
 
         loop: for (let i: number = 0; i < lists.length; i++) {
 
-            const subScope: Scope = Scope.fromScope(scope);
+            const subScope: Scope = scope.child();
             const current: any = lists.get(i);
             const declarations: EST.VariableDeclarator[] = node.left.declarations;
             const left: EST.VariableDeclaration = node.left;
@@ -172,7 +172,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
     async function (this: Sandbox, node: EST.ForStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
-        const subScope: Scope = Scope.fromScope(scope);
+        const subScope: Scope = scope.child();
 
         if (node.init) {
 
@@ -218,7 +218,7 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
         const nextTrace: Trace = trace.stack(node);
         const func = async (...args: any[]): Promise<any> => {
 
-            const subScope = Scope.fromScope(scope);
+            const subScope = scope.child();
             for (let i = 0; i < node.params.length; i++) {
                 const pattern: EST.Identifier = node.params[i] as EST.Identifier;
                 const value: any = args[i];
@@ -253,7 +253,7 @@ export const ifStatementEvaluator: Evaluator<'IfStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
         const statement: boolean = Boolean(await this.execute(node.test, scope, nextTrace));
-        const subScope: Scope = Scope.fromScope(scope);
+        const subScope: Scope = scope.child();
         if (statement) {
 
             return await this.execute(node.consequent, subScope, nextTrace);

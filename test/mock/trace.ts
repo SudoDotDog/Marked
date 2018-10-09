@@ -17,15 +17,23 @@ export class MockTrace implements ITrace, IMockedClass {
         this._mockStack = [];
     }
 
+    public get length(): number {
+
+        return this._mockStack.length;
+    }
+
     public get result(): EST.Node[] {
+
         return this._mockStack;
     }
 
     public reset() {
+
         this._mockStack = [];
     }
 
-    public stack(node: EST.Node): ITrace {
+    public stack(node: EST.Node): MockTrace {
+
         this._mockStack.push(node);
         return this;
     }
