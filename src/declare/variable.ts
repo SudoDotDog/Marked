@@ -33,6 +33,7 @@ export interface IScope {
 
     config: (name: string, value?: any) => IScope;
     child: () => IScope;
+    hasParent: () => boolean;
     register: (type: VARIABLE_TYPE) => SCOPE_DECLARE_FUNC;
 
     exist: (name: string) => boolean;

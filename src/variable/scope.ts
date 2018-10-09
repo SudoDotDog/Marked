@@ -78,6 +78,14 @@ export class Scope implements IScope {
         return false;
     }
 
+    public hasParent(): boolean {
+
+        if (this._parent) {
+            return Boolean(this._parent.hasParent());
+        }
+        return false;
+    }
+
     public register(type: VARIABLE_TYPE): (name: string, value: any) => Scope {
 
         if (type === VARIABLE_TYPE.VARIABLE) {

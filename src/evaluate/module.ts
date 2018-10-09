@@ -11,18 +11,22 @@ import { error } from "marked#util/error/error";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Sandbox } from "sandbox";
+import { VARIABLE_TYPE } from "marked#declare/variable";
 
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, void 0, node, trace);
+        const nextTrace: Trace = trace.stack(node);
+
+        throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, void 0, node, nextTrace);
     };
 
 export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclaration'> =
     async function (this: Sandbox, node: EST.ExportDefaultDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        const content: any = await this.execute(node.declaration, scope, trace);
+        const nextTrace: Trace = trace.stack(node);
 
+        const content: any = await this.execute(node.declaration, scope, nextTrace);
         if (!(typeof content === 'boolean'
             || typeof content === 'number'
             || typeof content === 'string')) {
@@ -30,4 +34,25 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
         }
 
         this.expose('default', content);
+    };
+
+export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
+    async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
+
+        if (scope.hasParent()) throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace);
+        const nextTrace: Trace = trace.stack(node);
+
+        const source: string = await this.execute(node.source, scope, nextTrace);
+        if (node.specifiers.length !== 1) throw error(ERROR_CODE.UNKNOWN_ERROR, source, node, trace);
+
+        const target = await this.execute(node.specifiers[0], scope, nextTrace);
+        scope.register(VARIABLE_TYPE.CONSTANT)(target, source);
+        return;
+    };
+
+export const importDefaultSpecifierEvaluator: Evaluator<'ImportDefaultSpecifier'> =
+    async function (this: Sandbox, node: EST.ImportDefaultSpecifier, scope: Scope, trace: Trace): Promise<any> {
+
+        const name: string = node.local.name;
+        return name;
     };

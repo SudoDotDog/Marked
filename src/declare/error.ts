@@ -30,6 +30,8 @@ export enum ERROR_CODE {
     EXPORT_NAMED_NOT_SUPPORT = 3107,
     EXPORT_TYPE_OTHER_THAN_N_S_B_NOT_SUPPORT = 3108,
 
+    IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE = 3112,
+
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
 
     UNMOUNTED_AST_TYPE = 6001,
@@ -62,6 +64,7 @@ export const ERROR_LIST: {
     3081: 'Constant variable cannot be edited',
     3107: 'Export not default variable is not supported',
     3108: 'Export is only available for number, string and boolean',
+    3112: 'Import only available in root scope',
     3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
     6121: 'Member expression value cannot be undefined',

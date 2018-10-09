@@ -60,6 +60,9 @@ export const useModule = (sandbox: Sandbox) => {
 
     sandbox.mount('ExportNamedDeclaration', Module_Evaluators.exportsNamedDeclarationEvaluator);
     sandbox.mount('ExportDefaultDeclaration', Module_Evaluators.exportsDefaultDeclarationEvaluator);
+
+    sandbox.mount('ImportDeclaration', Module_Evaluators.importDeclarationEvaluator);
+    sandbox.mount('ImportDefaultSpecifier', Module_Evaluators.importDefaultSpecifierEvaluator);
 };
 
 export const useEverything = (sandbox: Sandbox) => {

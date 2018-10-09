@@ -1,3 +1,5 @@
+import test from 'some'; // trailing
+
 let a = 10; // test
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 const ccc = {
@@ -11,7 +13,7 @@ ccc.a.a = 20;
 ccc.a.a++;
 a = 20;
 ccc.some++;
-print('some', ccc.some, ccc.a.a, a);
+print(test, ccc.some, ccc.a.a, a);
 function someFunction() {
     return print('some function');
 }
