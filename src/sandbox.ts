@@ -23,6 +23,7 @@ export class Sandbox implements ISandbox {
 
     private _configs: Map<string, any>;
     private _exposed: Map<string, any>;
+    private _modules: Map<string, any>;
 
     public constructor() {
 
@@ -32,6 +33,7 @@ export class Sandbox implements ISandbox {
 
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
+        this._modules = new Map<string, any>();
     }
 
     public get exposed(): IExposed {
@@ -53,15 +55,27 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
+    public inject(name: string, value: any): Sandbox {
+
+        this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, value);
+        return this;
+    }
+
+    public module(name: string): any | null {
+
+        return this._modules.get(name) || null;
+    }
+
     public mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): Sandbox {
 
         this._map.set(type, evaluator);
         return this;
     }
 
-    public inject(name: string, value: any): Sandbox {
+    public provide(name: string, value: any): Sandbox {
 
-        this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, value);
+        if (this._modules.has(name)) throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
+        this._modules.set(name, value);
         return this;
     }
 

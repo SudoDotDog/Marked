@@ -17,6 +17,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
 
     private _configs: Map<string, any>;
     private _exposed: Map<string, any>;
+    private _modules: Map<string, any>;
 
     public constructor() {
 
@@ -25,6 +26,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
 
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
+        this._modules = new Map<string, any>();
     }
 
     public get exposed(): IExposed {
@@ -49,14 +51,25 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this;
     }
 
+    public inject(name: string, value: any): MockSandbox {
+
+        return this;
+    }
+
+    public module(name: string): any | null {
+
+        return this._modules.get(name) || null;
+    }
+
     public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): MockSandbox {
 
         this._mockMap.set(type, evaluator);
         return this;
     }
 
-    public inject(name: string, value: any): MockSandbox {
+    public provide(name: string, value: any): MockSandbox {
 
+        this._modules.set(name, value);
         return this;
     }
 

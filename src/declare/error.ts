@@ -35,6 +35,7 @@ export enum ERROR_CODE {
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
 
     UNMOUNTED_AST_TYPE = 6001,
+    DUPLICATED_PROVIDED_MODULE_NAME = 6002,
 
     MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED = 6121,
 
@@ -67,6 +68,7 @@ export const ERROR_LIST: {
     3112: 'Import only available in root scope',
     3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
+    6002: 'Provided module name duplicated',
     6121: 'Member expression value cannot be undefined',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',

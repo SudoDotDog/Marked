@@ -6,8 +6,8 @@
 
 import * as EST from "estree";
 import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { Variable } from "marked#variable/variable";
 import { SandMap } from "marked#variable/sandmap";
+import { Variable } from "marked#variable/variable";
 
 export enum VARIABLE_TYPE {
 
@@ -52,11 +52,14 @@ export interface ISandbox {
 
     exposed: IExposed;
 
+    evaluate: (script: string) => Promise<any>;
+
     config: (name: string, value?: any) => ISandbox;
     expose: (name: string, value: any) => ISandbox;
-    mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => ISandbox;
     inject: (name: string, value: any) => ISandbox;
-    evaluate: (script: string) => Promise<any>;
+    module: (name: string) => any | null;
+    mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => ISandbox;
+    provide: (name: string, value: any) => ISandbox;
 }
 
 export interface ITrace {
