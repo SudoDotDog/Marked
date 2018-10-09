@@ -36,6 +36,7 @@ export enum ERROR_CODE {
 
     UNMOUNTED_AST_TYPE = 6001,
     DUPLICATED_PROVIDED_MODULE_NAME = 6002,
+    MODULE_IS_NOT_PROVIDED = 6003,
 
     MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED = 6121,
 
@@ -69,6 +70,7 @@ export const ERROR_LIST: {
     3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
     6002: 'Provided module name duplicated',
+    6003: 'Module is not provided',
     6121: 'Member expression value cannot be undefined',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',

@@ -43,10 +43,12 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
+        const mod: any | null = this.module(source);
+        if (!Boolean(mod)) throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);
         if (node.specifiers.length !== 1) throw error(ERROR_CODE.UNKNOWN_ERROR, source, node, trace);
 
         const target = await this.execute(node.specifiers[0], scope, nextTrace);
-        scope.register(VARIABLE_TYPE.CONSTANT)(target, source);
+        scope.register(VARIABLE_TYPE.CONSTANT)(target, mod);
         return;
     };
 

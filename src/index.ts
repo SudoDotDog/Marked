@@ -15,8 +15,8 @@ export const marked = async (script: string): Promise<IMarkedResult> => {
     console.time('execute');
     const sandbox = new Sandbox();
     useEverything(sandbox);
-    sandbox.inject('print', internalPrint);
-    sandbox.inject('sleep', internalSleep);
+    sandbox.provide('print', internalPrint);
+    sandbox.provide('sleep', internalSleep);
     try {
         await sandbox.evaluate(script);
     } catch (error) {
