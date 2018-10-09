@@ -9,6 +9,7 @@ import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
 import { error } from "marked#util/error/error";
 import { Flag } from "marked#variable/flag";
+import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Variable } from "marked#variable/variable";
@@ -82,4 +83,11 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
             flag.setValue(value);
         }
         return flag;
+    };
+
+export const thisExpressionEvaluator: Evaluator<'ThisExpression'> =
+    async function (this: Sandbox, node: EST.ThisExpression, scope: Scope, trace: Trace): Promise<SandMap<any>> {
+
+        const thisValue: SandMap<any> = scope.findThis();
+        return thisValue;
     };

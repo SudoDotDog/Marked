@@ -7,7 +7,7 @@
 import { ERROR_CODE } from "marked#declare/error";
 import { IScope, VARIABLE_TYPE } from "marked#declare/variable";
 import { error } from "marked#util/error/error";
-import { Scope } from "marked#variable/scope";
+import { SandMap } from "marked#variable/sandmap";
 import { Variable } from "marked#variable/variable";
 import { IMockedClass } from "./node";
 
@@ -20,6 +20,8 @@ export class MockScope implements IScope, IMockedClass {
 
     private _mockedParent: MockScope | null;
 
+    private _this: SandMap<any> | null;
+
     public constructor(scope?: MockScope) {
 
         this._mockedConstantMap = new Map<string, Variable<any>>();
@@ -28,6 +30,7 @@ export class MockScope implements IScope, IMockedClass {
         this._children = [];
 
         this._mockedParent = scope || null;
+        this._this = null;
     }
 
     public get children(): MockScope[] {
@@ -46,6 +49,26 @@ export class MockScope implements IScope, IMockedClass {
         const subScope = new MockScope(this);
         this._children.push(subScope);
         return subScope;
+    }
+
+    public findThis(): SandMap<any> {
+
+        if (this._this) {
+
+            return this._this;
+        } else {
+
+            if (this._mockedParent) {
+                return this._mockedParent.findThis();
+            }
+            throw error(ERROR_CODE.UNKNOWN_ERROR, 'this');
+        }
+    }
+
+    public initThis(): MockScope {
+
+        this._this = new SandMap<any>();
+        return this;
     }
 
     public exist(name: string): boolean {

@@ -15,9 +15,10 @@ print('some', ccc.some, ccc.a.a, a);
 function someFunction() {
     return print('some function');
 }
-for(let u in ccc){
-    
-}
+
+print('ccc', ccc.a);
+print('this', this.a);
+
 someFunction();
 const b = (c) => {
     if (!c) {

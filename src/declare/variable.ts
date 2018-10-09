@@ -7,6 +7,7 @@
 import * as EST from "estree";
 import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { Variable } from "marked#variable/variable";
+import { SandMap } from "marked#variable/sandmap";
 
 export enum VARIABLE_TYPE {
 
@@ -32,9 +33,13 @@ export interface IScope {
 
     config: (name: string, value?: any) => IScope;
     child: () => IScope;
-    exist: (name: string) => boolean;
     register: (type: VARIABLE_TYPE) => SCOPE_DECLARE_FUNC;
+
+    exist: (name: string) => boolean;
     rummage: (name: string) => Variable<any> | null;
+
+    findThis: () => SandMap<any>;
+    initThis: () => IScope;
 }
 
 export interface IExposed {
@@ -46,11 +51,11 @@ export interface ISandbox {
 
     exposed: IExposed;
 
-    config(name: string, value?: any): ISandbox;
-    expose(name: string, value: any): ISandbox;
-    mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): ISandbox;
-    inject(name: string, value: any): ISandbox;
-    evaluate(script: string): Promise<any>;
+    config: (name: string, value?: any) => ISandbox;
+    expose: (name: string, value: any) => ISandbox;
+    mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => ISandbox;
+    inject: (name: string, value: any) => ISandbox;
+    evaluate: (script: string) => Promise<any>;
 }
 
 export interface ITrace {

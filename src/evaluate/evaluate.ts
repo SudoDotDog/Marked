@@ -17,6 +17,7 @@ export const useSymbol = (sandbox: Sandbox) => {
     sandbox.mount('Identifier', Symbol_Evaluators.identifierEvaluator);
     sandbox.mount('Literal', Symbol_Evaluators.literalEvaluator);
     sandbox.mount('Program', Symbol_Evaluators.programEvaluator);
+    sandbox.mount('ThisExpression', Symbol_Evaluators.thisExpressionEvaluator);
 
     sandbox.mount('BreakStatement', Symbol_Evaluators.breakEvaluator);
     sandbox.mount('ContinueStatement', Symbol_Evaluators.continueEvaluator);

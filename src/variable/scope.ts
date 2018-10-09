@@ -8,12 +8,13 @@ import { ERROR_CODE } from "marked#declare/error";
 import { IScope, VARIABLE_TYPE } from "marked#declare/variable";
 import { error } from "marked#util/error/error";
 import { Variable } from "marked#variable/variable";
+import { SandMap } from "./sandmap";
 
 export class Scope implements IScope {
 
     public static fromRoot(): Scope {
 
-        return new Scope();
+        return new Scope().initThis();
     }
 
     private _parent: Scope | null;
@@ -22,6 +23,8 @@ export class Scope implements IScope {
     private _scopeMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
 
+    private _this: SandMap<any> | null;
+
     public constructor(scope?: Scope) {
 
         this._parent = scope || null;
@@ -29,6 +32,8 @@ export class Scope implements IScope {
         this._constantMap = new Map<string, Variable<any>>();
         this._scopeMap = new Map<string, Variable<any>>();
         this._configs = new Map<string, any>();
+
+        this._this = null;
     }
 
     public config(name: string, value?: any): Scope {
@@ -38,7 +43,28 @@ export class Scope implements IScope {
     }
 
     public child(): Scope {
+
         return new Scope(this);
+    }
+
+    public findThis(): SandMap<any> {
+
+        if (this._this) {
+
+            return this._this;
+        } else {
+
+            if (this._parent) {
+                return this._parent.findThis();
+            }
+            throw error(ERROR_CODE.UNKNOWN_ERROR, 'this');
+        }
+    }
+
+    public initThis(): Scope {
+
+        this._this = new SandMap<any>();
+        return this;
     }
 
     public exist(name: string): boolean {
