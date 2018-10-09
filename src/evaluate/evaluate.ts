@@ -4,59 +4,61 @@
  * @description Evaluate
  */
 
-import { binaryExpressionEvaluator, logicalExpressionEvaluator, unaryExpressionEvaluator, updateExpressionEvaluator } from "marked#evaluate/calculate";
-import { arrowFunctionEvaluator, calleeEvaluator, expressionEvaluator, forOfStatementEvaluator, forStatementEvaluator, functionDeclarationEvaluator, functionExpressionEvaluator, ifStatementEvaluator } from "marked#evaluate/expression";
-import { exportsDefaultDeclarationEvaluator, exportsNamedDeclarationEvaluator } from "marked#evaluate/module";
-import { blockEvaluator, breakEvaluator, continueEvaluator, identifierEvaluator, literalEvaluator, programEvaluator, returnEvaluator } from "marked#evaluate/symbol";
-import { arrayExpressionEvaluator, assignmentExpressionEvaluator, memberEvaluator, objectExpressionEvaluator, variableDeclarationEvaluator } from "marked#evaluate/variable";
+import * as calculate from "marked#evaluate/calculate";
+import * as expression from "marked#evaluate/expression";
+import * as module from "marked#evaluate/module";
+import * as symbol from "marked#evaluate/symbol";
+import * as variable from "marked#evaluate/variable";
 import { Sandbox } from "../sandbox";
 
 export const useSymbol = (sandbox: Sandbox) => {
 
-    sandbox.mount('BlockStatement', blockEvaluator);
-    sandbox.mount('Identifier', identifierEvaluator);
-    sandbox.mount('Literal', literalEvaluator);
-    sandbox.mount('Program', programEvaluator);
+    sandbox.mount('BlockStatement', symbol.blockEvaluator);
+    sandbox.mount('Identifier', symbol.identifierEvaluator);
+    sandbox.mount('Literal', symbol.literalEvaluator);
+    sandbox.mount('Program', symbol.programEvaluator);
 
-    sandbox.mount('BreakStatement', breakEvaluator);
-    sandbox.mount('ContinueStatement', continueEvaluator);
-    sandbox.mount('ReturnStatement', returnEvaluator);
+    sandbox.mount('BreakStatement', symbol.breakEvaluator);
+    sandbox.mount('ContinueStatement', symbol.continueEvaluator);
+    sandbox.mount('ReturnStatement', symbol.returnEvaluator);
 };
 
 export const useExpression = (sandbox: Sandbox) => {
 
-    sandbox.mount('ArrowFunctionExpression', arrowFunctionEvaluator);
-    sandbox.mount('FunctionDeclaration', functionDeclarationEvaluator);
-    sandbox.mount('FunctionExpression', functionExpressionEvaluator);
+    sandbox.mount('ArrowFunctionExpression', expression.arrowFunctionEvaluator);
+    sandbox.mount('FunctionDeclaration', expression.functionDeclarationEvaluator);
+    sandbox.mount('FunctionExpression', expression.functionExpressionEvaluator);
 
-    sandbox.mount('CallExpression', calleeEvaluator);
-    sandbox.mount('ExpressionStatement', expressionEvaluator);
-    sandbox.mount('ForOfStatement', forOfStatementEvaluator);
-    sandbox.mount('ForStatement', forStatementEvaluator);
-    sandbox.mount('IfStatement', ifStatementEvaluator);
+    sandbox.mount('CallExpression', expression.calleeEvaluator);
+    sandbox.mount('ExpressionStatement', expression.expressionEvaluator);
+    sandbox.mount('IfStatement', expression.ifStatementEvaluator);
+
+    sandbox.mount('ForInStatement', expression.forInStatementEvaluator);
+    sandbox.mount('ForOfStatement', expression.forOfStatementEvaluator);
+    sandbox.mount('ForStatement', expression.forStatementEvaluator);
 };
 
 export const useVariable = (sandbox: Sandbox) => {
 
-    sandbox.mount('ArrayExpression', arrayExpressionEvaluator);
-    sandbox.mount('AssignmentExpression', assignmentExpressionEvaluator);
-    sandbox.mount('ObjectExpression', objectExpressionEvaluator);
-    sandbox.mount('MemberExpression', memberEvaluator);
-    sandbox.mount('VariableDeclaration', variableDeclarationEvaluator);
+    sandbox.mount('ArrayExpression', variable.arrayExpressionEvaluator);
+    sandbox.mount('AssignmentExpression', variable.assignmentExpressionEvaluator);
+    sandbox.mount('ObjectExpression', variable.objectExpressionEvaluator);
+    sandbox.mount('MemberExpression', variable.memberEvaluator);
+    sandbox.mount('VariableDeclaration', variable.variableDeclarationEvaluator);
 };
 
 export const useCalculate = (sandbox: Sandbox) => {
 
-    sandbox.mount('BinaryExpression', binaryExpressionEvaluator);
-    sandbox.mount('LogicalExpression', logicalExpressionEvaluator);
-    sandbox.mount('UnaryExpression', unaryExpressionEvaluator);
-    sandbox.mount('UpdateExpression', updateExpressionEvaluator);
+    sandbox.mount('BinaryExpression', calculate.binaryExpressionEvaluator);
+    sandbox.mount('LogicalExpression', calculate.logicalExpressionEvaluator);
+    sandbox.mount('UnaryExpression', calculate.unaryExpressionEvaluator);
+    sandbox.mount('UpdateExpression', calculate.updateExpressionEvaluator);
 };
 
 export const useModule = (sandbox: Sandbox) => {
 
-    sandbox.mount('ExportNamedDeclaration', exportsNamedDeclarationEvaluator);
-    sandbox.mount('ExportDefaultDeclaration', exportsDefaultDeclarationEvaluator);
+    sandbox.mount('ExportNamedDeclaration', module.exportsNamedDeclarationEvaluator);
+    sandbox.mount('ExportDefaultDeclaration', module.exportsDefaultDeclarationEvaluator);
 };
 
 export const useEverything = (sandbox: Sandbox) => {
