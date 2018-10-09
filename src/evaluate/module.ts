@@ -21,7 +21,7 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
 export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclaration'> =
     async function (this: Sandbox, node: EST.ExportDefaultDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        const content = await this.execute(node.declaration, scope, trace);
+        const content: any = await this.execute(node.declaration, scope, trace);
 
         if (!(typeof content === 'boolean'
             || typeof content === 'number'

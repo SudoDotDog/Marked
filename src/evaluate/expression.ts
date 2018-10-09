@@ -22,7 +22,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
         const nextTrace: Trace = trace.stack(node);
         const func = async (...args: any[]): Promise<any> => {
 
-            const subScope = scope.child();
+            const subScope: Scope = scope.child();
             for (let i = 0; i < node.params.length; i++) {
                 const pattern: EST.Identifier = node.params[i] as EST.Identifier;
                 const value: any = args[i];
@@ -216,9 +216,10 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
     async function (this: Sandbox, node: EST.FunctionExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
+
         const func = async (...args: any[]): Promise<any> => {
 
-            const subScope = scope.child();
+            const subScope: Scope = scope.child().initThis();
             for (let i = 0; i < node.params.length; i++) {
                 const pattern: EST.Identifier = node.params[i] as EST.Identifier;
                 const value: any = args[i];
@@ -252,8 +253,9 @@ export const ifStatementEvaluator: Evaluator<'IfStatement'> =
     async function (this: Sandbox, node: EST.IfStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
-        const statement: boolean = Boolean(await this.execute(node.test, scope, nextTrace));
         const subScope: Scope = scope.child();
+
+        const statement: boolean = Boolean(await this.execute(node.test, scope, nextTrace));
         if (statement) {
 
             return await this.execute(node.consequent, subScope, nextTrace);
