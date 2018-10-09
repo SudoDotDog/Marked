@@ -20,6 +20,7 @@ for(let u in ccc){
     print('uuu', u);
 }
 
+this.a = 100;
 print('this', this.a);
 
 someFunction();
