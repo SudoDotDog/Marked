@@ -11,6 +11,7 @@ import { VARIABLE_TYPE } from "marked#declare/variable";
 import { error } from "marked#util/error/error";
 import { Flag } from "marked#variable/flag";
 import { SandList } from "marked#variable/sandlist";
+import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Sandbox } from "../sandbox";
@@ -68,6 +69,54 @@ export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
         const nextTrace: Trace = trace.stack(node);
 
         return await this.execute(node.expression, scope, nextTrace);
+    };
+
+export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
+    async function (this: Sandbox, node: EST.ForInStatement, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+
+        const map: SandMap<any> = await this.execute(node.right, scope, nextTrace);
+
+        if (!(map instanceof SandMap)) {
+            throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
+        }
+
+        if (node.left.type !== 'VariableDeclaration') {
+            throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
+        }
+
+        loop: for (const key of map.map.keys()) {
+
+            const subScope: Scope = Scope.fromScope(scope);
+            const declarations: EST.VariableDeclarator[] = node.left.declarations;
+            const left: EST.VariableDeclaration = node.left;
+            const registerFunc = (name: string): void => {
+
+                subScope.register(left.kind as VARIABLE_TYPE)(name, key);
+            };
+
+            declarations.forEach((declaration) => {
+
+                const id: EST.Identifier = declaration.id as EST.Identifier;
+                registerFunc(id.name);
+            });
+
+            const result: any = await this.execute(node.body, subScope, nextTrace);
+            if (result instanceof Flag) {
+
+                if (result.isBreak) {
+                    break loop;
+                } else if (result.isReturn) {
+                    return result.getValue();
+                } else if (result.isContinue) {
+                    continue loop;
+                } else {
+                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+                }
+            }
+        }
+        return;
     };
 
 export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =

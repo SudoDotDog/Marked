@@ -14,6 +14,7 @@ export enum ERROR_CODE {
     ASSERT_TYPE_NOT_MATCHED = 2067,
 
     FOR_OF_LOOP_ONLY_FOR_LIST = 2387,
+    FOR_IN_LOOP_ONLY_FOR_MAP = 2388,
 
     ONLY_NUMBER_AVAILABLE_FOR_LIST = 2391,
     ONLY_STRING_AVAILABLE_FOR_MAP = 2392,
@@ -51,6 +52,7 @@ export const ERROR_LIST: {
     2066: 'Assert boolean opposite',
     2067: 'Assert type not matched',
     2387: 'For of loop only for list',
+    2388: 'For in loop only for map',
     2391: 'Only number is available for list',
     2392: 'Only string is available for map',
     3003: 'Declaration with [var] is not supported',

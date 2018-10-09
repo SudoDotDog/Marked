@@ -7,7 +7,7 @@
 require('../../src/binding');
 import { expect } from 'chai';
 import * as EST from "estree";
-import { conditionalExpressionEvaluator } from 'marked#evaluate/expression';
+import * as Evaluator_Expressions from 'marked#evaluate/expression';
 import { literal } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';
@@ -37,7 +37,7 @@ describe('Given Expression evaluators', (): void => {
 
             sandbox.when('Literal', (node: EST.Literal) => node.value);
 
-            const result: any = await conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
             expect(result).to.be.equal(10);
         });

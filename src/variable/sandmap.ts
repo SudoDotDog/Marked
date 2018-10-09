@@ -15,6 +15,10 @@ export class SandMap<T> {
         this._map = new Map<string, Variable<T>>();
     }
 
+    public get map(): Map<string, Variable<T>> {
+        return this._map;
+    }
+
     public get(key: string): T | undefined {
 
         const variable: Variable<T> | undefined = this._map.get(key);
