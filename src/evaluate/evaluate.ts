@@ -29,6 +29,7 @@ export const useExpression = (sandbox: Sandbox) => {
     sandbox.mount('ArrowFunctionExpression', Expression_Evaluators.arrowFunctionEvaluator);
     sandbox.mount('FunctionDeclaration', Expression_Evaluators.functionDeclarationEvaluator);
     sandbox.mount('FunctionExpression', Expression_Evaluators.functionExpressionEvaluator);
+    sandbox.mount('SequenceExpression', Expression_Evaluators.sequenceExpressionEvaluator);
 
     sandbox.mount('CallExpression', Expression_Evaluators.calleeEvaluator);
     sandbox.mount('ExpressionStatement', Expression_Evaluators.expressionEvaluator);

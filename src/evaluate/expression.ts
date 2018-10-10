@@ -8,6 +8,7 @@ import * as EST from "estree";
 import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
+import { assert } from "marked#util/error/assert";
 import { error } from "marked#util/error/error";
 import { Flag } from "marked#variable/flag";
 import { SandList } from "marked#variable/sandlist";
@@ -61,6 +62,39 @@ export const conditionalExpressionEvaluator: Evaluator<'ConditionalExpression'> 
         return conditional
             ? await this.execute(node.consequent, scope, nextTrace)
             : await this.execute(node.alternate, scope, nextTrace);
+    };
+
+export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
+    async function (this: Sandbox, node: EST.DoWhileStatement, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+
+        const test: (count: number) => Promise<boolean>
+            = async (count: number) =>
+                count > 0
+                    ? await this.execute(node.test, scope, nextTrace)
+                    : false;
+
+        let limit: number = 50;
+        loop: do {
+
+            const subScope: Scope = scope.child();
+            const result: any = await this.execute(node.body, subScope, nextTrace);
+            if (result instanceof Flag) {
+
+                if (result.isBreak) {
+                    break loop;
+                } else if (result.isReturn) {
+                    return result.getValue();
+                } else if (result.isContinue) {
+                    continue loop;
+                } else {
+                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+                }
+            }
+        } while (await test(limit--));
+
+        return;
     };
 
 export const expressionEvaluator: Evaluator<'ExpressionStatement'> =
@@ -269,6 +303,20 @@ export const ifStatementEvaluator: Evaluator<'IfStatement'> =
         return;
     };
 
+export const sequenceExpressionEvaluator: Evaluator<'SequenceExpression'> =
+    async function (this: Sandbox, node: EST.SequenceExpression, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+
+        const returnStatement: EST.BaseNode
+            = assert(node.expressions.pop() as EST.Node).is.exist().firstValue();
+        for (const statement of node.expressions) {
+            await this.execute(statement, scope, nextTrace);
+        }
+        const result: any = await this.execute(returnStatement, scope, nextTrace);
+        return result;
+    };
+
 export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
     async function (this: Sandbox, node: EST.WhileStatement, scope: Scope, trace: Trace): Promise<any> {
 
@@ -298,39 +346,6 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
                 }
             }
         }
-
-        return;
-    };
-
-export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
-    async function (this: Sandbox, node: EST.DoWhileStatement, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const test: (count: number) => Promise<boolean>
-            = async (count: number) =>
-                count > 0
-                    ? await this.execute(node.test, scope, nextTrace)
-                    : false;
-
-        let limit: number = 50;
-        loop: do {
-
-            const subScope: Scope = scope.child();
-            const result: any = await this.execute(node.body, subScope, nextTrace);
-            if (result instanceof Flag) {
-
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
-            }
-        } while (await test(limit--));
 
         return;
     };

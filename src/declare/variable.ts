@@ -51,6 +51,7 @@ export interface IExposed {
 export interface ISandbox {
 
     exposed: IExposed;
+    count: number;
 
     evaluate: (script: string) => Promise<any>;
 

@@ -29,7 +29,13 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._modules = new Map<string, any>();
     }
 
+    public get count(): number {
+
+        return this._executedList.length;
+    }
+
     public get exposed(): IExposed {
+
         const result: IExposed = {
             default: this._exposed.get('default'),
         };
@@ -37,6 +43,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     }
 
     public get result(): EST.BaseNode[] {
+
         return this._executedList;
     }
 
@@ -74,11 +81,13 @@ export class MockSandbox implements ISandbox, IMockedClass {
     }
 
     public when<T extends EST_TYPE>(type: T, mock: (node: IESTreeType[T]) => any): MockSandbox {
+
         this._mockMap.set(type, mock);
         return this;
     }
 
     public reset(): MockSandbox {
+
         this._mockMap.clear();
         this._executedList = [];
         return this;
@@ -95,6 +104,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
         if (this._mockMap.has(node.type)) {
             return this._mockMap.get(node.type)(node);
         }
+
         return null;
     }
 }

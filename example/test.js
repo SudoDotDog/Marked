@@ -27,7 +27,7 @@ print('while, conditional', a > 10 ? a : false);
 for (let u in ccc) {
     print('uuu', u);
 }
-
+print((() => { return (print(1), 2) })());
 this.a = 100;
 print('this', this.a);
 

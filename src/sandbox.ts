@@ -18,6 +18,7 @@ import { markedParser } from './extension/parser';
 export class Sandbox implements ISandbox {
 
     private _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
+    private _count: number;
     private _rootScope: Scope;
     private _parser: typeof Acorn.Parser;
 
@@ -30,10 +31,16 @@ export class Sandbox implements ISandbox {
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();
         this._parser = Acorn.Parser.extend(markedParser as any);
+        this._count = 0;
 
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
+    }
+
+    public get count(): number {
+
+        return this._count;
     }
 
     public get exposed(): IExposed {
@@ -91,6 +98,7 @@ export class Sandbox implements ISandbox {
 
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
         if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
+        this._count++;
 
         return await executor.bind(this)(node, scope, trace);
     }
