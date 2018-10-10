@@ -53,6 +53,7 @@ export const useVariable = (sandbox: Sandbox) => {
 export const useCalculate = (sandbox: Sandbox) => {
 
     sandbox.mount('BinaryExpression', Calculate_Evaluators.binaryExpressionEvaluator);
+    sandbox.mount('ConditionalExpression', Expression_Evaluators.conditionalExpressionEvaluator);
     sandbox.mount('LogicalExpression', Calculate_Evaluators.logicalExpressionEvaluator);
     sandbox.mount('UnaryExpression', Calculate_Evaluators.unaryExpressionEvaluator);
     sandbox.mount('UpdateExpression', Calculate_Evaluators.updateExpressionEvaluator);

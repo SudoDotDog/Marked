@@ -22,7 +22,7 @@ function someFunction() {
 do {
     a++;
 } while (a < 300);
-print('while', a)
+print('while, conditional', a > 10 ? a : false);
 
 for (let u in ccc) {
     print('uuu', u);
