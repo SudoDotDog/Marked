@@ -19,12 +19,12 @@ function someFunction() {
     return print('some function');
 }
 
-while(a < 300){
+do {
     a++;
-}
+} while (a < 300);
 print('while', a)
 
-for(let u in ccc){
+for (let u in ccc) {
     print('uuu', u);
 }
 
