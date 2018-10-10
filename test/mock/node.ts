@@ -13,6 +13,10 @@ export const literal = (value: string | boolean | number | null): EST.Literal =>
     };
 };
 
+export const literalEvaluator = (node: EST.Literal) => {
+    return node.value;
+};
+
 export const identifier = (name: string): EST.Identifier => {
     return {
         type: 'Identifier',

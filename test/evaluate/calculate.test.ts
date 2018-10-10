@@ -8,7 +8,7 @@ require('../../src/binding');
 import { expect } from 'chai';
 import * as EST from "estree";
 import * as Calculate_Expressions from 'marked#evaluate/calculate';
-import { literal } from '../mock/node';
+import { literal, literalEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';
 import { MockTrace } from '../mock/trace';
@@ -35,13 +35,43 @@ describe('Given Calculation evaluators', (): void => {
                 right: literal(15),
             };
 
-            sandbox.when('Literal', (node: EST.Literal) => {
-                return node.value;
-            });
-
+            sandbox.when('Literal', literalEvaluator);
             const result: any = await Calculate_Expressions.binaryExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
             expect(result).to.be.equal(25);
+        });
+    });
+
+    describe('Given an <ConditionalExpression> evaluator', (): void => {
+
+        it('consequence should be returned of test is true', async (): Promise<void> => {
+
+            const testNode: EST.ConditionalExpression = {
+                type: 'ConditionalExpression',
+                test: literal(true),
+                consequent: literal(true),
+                alternate: literal(false),
+            };
+
+            sandbox.when('Literal', literalEvaluator);
+            const result: any = await Calculate_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.equal(true);
+        });
+
+        it('alternative should be returned of test is false', async (): Promise<void> => {
+
+            const testNode: EST.ConditionalExpression = {
+                type: 'ConditionalExpression',
+                test: literal(false),
+                consequent: literal(true),
+                alternate: literal(false),
+            };
+
+            sandbox.when('Literal', literalEvaluator);
+            const result: any = await Calculate_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.equal(false);
         });
     });
 
@@ -56,10 +86,7 @@ describe('Given Calculation evaluators', (): void => {
                 right: literal(false),
             };
 
-            sandbox.when('Literal', (node: EST.Literal) => {
-                return node.value;
-            });
-
+            sandbox.when('Literal', literalEvaluator);
             const result: any = await Calculate_Expressions.logicalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
             expect(result).to.be.equal(true);
@@ -74,10 +101,7 @@ describe('Given Calculation evaluators', (): void => {
                 right: literal(false),
             };
 
-            sandbox.when('Literal', (node: EST.Literal) => {
-                return node.value;
-            });
-
+            sandbox.when('Literal', literalEvaluator);
             const result: any = await Calculate_Expressions.logicalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
             expect(result).to.be.equal(false);
