@@ -19,6 +19,11 @@ function someFunction() {
     return print('some function');
 }
 
+while(a < 300){
+    a++;
+}
+print('while', a)
+
 for(let u in ccc){
     print('uuu', u);
 }

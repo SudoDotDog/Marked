@@ -37,6 +37,7 @@ export const useExpression = (sandbox: Sandbox) => {
     sandbox.mount('ForInStatement', Expression_Evaluators.forInStatementEvaluator);
     sandbox.mount('ForOfStatement', Expression_Evaluators.forOfStatementEvaluator);
     sandbox.mount('ForStatement', Expression_Evaluators.forStatementEvaluator);
+    sandbox.mount('WhileStatement', Expression_Evaluators.whileStatementEvaluator);
 };
 
 export const useVariable = (sandbox: Sandbox) => {

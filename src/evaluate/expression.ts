@@ -268,3 +268,36 @@ export const ifStatementEvaluator: Evaluator<'IfStatement'> =
         }
         return;
     };
+
+export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
+    async function (this: Sandbox, node: EST.WhileStatement, scope: Scope, trace: Trace): Promise<any> {
+
+        const nextTrace: Trace = trace.stack(node);
+
+        const test: (count: number) => Promise<boolean>
+            = async (count: number) =>
+                count > 0
+                    ? await this.execute(node.test, scope, nextTrace)
+                    : false;
+
+        let limit: number = 50;
+        loop: while (await test(limit--)) {
+
+            const subScope: Scope = scope.child();
+            const result: any = await this.execute(node.body, subScope, nextTrace);
+            if (result instanceof Flag) {
+
+                if (result.isBreak) {
+                    break loop;
+                } else if (result.isReturn) {
+                    return result.getValue();
+                } else if (result.isContinue) {
+                    continue loop;
+                } else {
+                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+                }
+            }
+        }
+
+        return;
+    };
