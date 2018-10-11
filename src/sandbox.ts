@@ -9,8 +9,10 @@ import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from 'marked#declare/error';
 import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { IExposed, ISandbox, IScope, ITrace, OptionName, VARIABLE_TYPE, ISandboxOptions } from 'marked#declare/variable';
+import { IExposed, ISandbox, ISandboxOptions, IScope, ITrace, OptionName, VARIABLE_TYPE } from 'marked#declare/variable';
+import { assert } from 'marked#util/error/assert';
 import { error } from "marked#util/error/error";
+import { getDefaultSandboxOption } from 'marked#util/options';
 import { Scope } from "marked#variable/scope";
 import { Trace } from 'marked#variable/trace';
 import { markedParser } from './extension/parser';
@@ -40,6 +42,10 @@ export class Sandbox implements ISandbox {
         this._modules = new Map<string, any>();
 
         this._options = new Map<OptionName, ISandboxOptions[OptionName]>();
+
+        const defaultSandboxOption: ISandboxOptions = getDefaultSandboxOption();
+        Object.keys(defaultSandboxOption).forEach((key: string) =>
+            this._options.set(key as OptionName, defaultSandboxOption[key as OptionName]));
     }
 
     public get count(): number {
@@ -96,6 +102,16 @@ export class Sandbox implements ISandbox {
         const rootScope: Scope = this._rootScope.child();
         const trace: Trace = Trace.init();
         return await this.execute(AST, rootScope, trace);
+    }
+
+    public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
+        const value: ISandboxOptions[T] | undefined = this._options.get(name);
+        return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
+    }
+
+    public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): Sandbox {
+        this._options.set(name, value);
+        return this;
     }
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {

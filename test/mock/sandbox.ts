@@ -5,9 +5,12 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "marked#declare/error";
 import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { IESTreeType } from "marked#declare/types";
-import { IExposed, ISandbox, IScope, ITrace } from "marked#declare/variable";
+import { IExposed, ISandbox, ISandboxOptions, IScope, ITrace, OptionName } from "marked#declare/variable";
+import { assert } from "marked#util/error/assert";
+import { getDefaultSandboxOption } from "marked#util/options";
 import { IMockedClass } from "./node";
 
 export class MockSandbox implements ISandbox, IMockedClass {
@@ -19,6 +22,8 @@ export class MockSandbox implements ISandbox, IMockedClass {
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
 
+    private _options: Map<OptionName, ISandboxOptions[OptionName]>;
+
     public constructor() {
 
         this._executedList = [];
@@ -27,6 +32,12 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
+
+        this._options = new Map<OptionName, ISandboxOptions[OptionName]>();
+
+        const defaultSandboxOption: ISandboxOptions = getDefaultSandboxOption();
+        Object.keys(defaultSandboxOption).forEach((key: string) =>
+            this._options.set(key as OptionName, defaultSandboxOption[key as OptionName]));
     }
 
     public get count(): number {
@@ -90,6 +101,16 @@ export class MockSandbox implements ISandbox, IMockedClass {
 
         this._mockMap.clear();
         this._executedList = [];
+        return this;
+    }
+
+    public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
+        const value: ISandboxOptions[T] | undefined = this._options.get(name);
+        return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
+    }
+
+    public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): MockSandbox {
+        this._options.set(name, value);
         return this;
     }
 

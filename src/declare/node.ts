@@ -9,7 +9,7 @@ import { IESTreeType } from "marked#declare/types";
 import { IExposed } from "marked#declare/variable";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
-import { Sandbox } from "../sandbox";
+import { Sandbox } from "sandbox";
 
 export type EST_TYPE = EST.Node['type'];
 
