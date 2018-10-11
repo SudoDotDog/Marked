@@ -9,6 +9,18 @@ import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { SandMap } from "marked#variable/sandmap";
 import { Variable } from "marked#variable/variable";
 
+export type Partial<T> = {
+
+    [P in keyof T]?: T[P];
+};
+
+export interface ISandboxOptions {
+
+    maxForLoopLimit: number;
+    maxWhileLoopLimit: number;
+    maxExpression: number;
+}
+
 export enum VARIABLE_TYPE {
 
     CONSTANT = 'const',
@@ -48,6 +60,8 @@ export interface IExposed {
     default?: any;
 }
 
+export type OptionName = keyof ISandboxOptions;
+
 export interface ISandbox {
 
     exposed: IExposed;
@@ -61,6 +75,9 @@ export interface ISandbox {
     module: (name: string) => any | null;
     mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => ISandbox;
     provide: (name: string, value: any) => ISandbox;
+
+    setOption: <T extends OptionName>(name: T, value: ISandboxOptions[T]) => ISandbox;
+    getOption: <T extends OptionName>(name: T) => ISandboxOptions[T];
 }
 
 export interface ITrace {

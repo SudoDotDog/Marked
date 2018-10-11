@@ -9,7 +9,7 @@ import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from 'marked#declare/error';
 import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { IExposed, ISandbox, IScope, ITrace, VARIABLE_TYPE } from 'marked#declare/variable';
+import { IExposed, ISandbox, IScope, ITrace, OptionName, VARIABLE_TYPE, ISandboxOptions } from 'marked#declare/variable';
 import { error } from "marked#util/error/error";
 import { Scope } from "marked#variable/scope";
 import { Trace } from 'marked#variable/trace';
@@ -26,6 +26,8 @@ export class Sandbox implements ISandbox {
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
 
+    private _options: Map<OptionName, ISandboxOptions[OptionName]>;
+
     public constructor() {
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
@@ -36,6 +38,8 @@ export class Sandbox implements ISandbox {
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
+
+        this._options = new Map<OptionName, ISandboxOptions[OptionName]>();
     }
 
     public get count(): number {
