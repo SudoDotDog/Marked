@@ -23,6 +23,7 @@ export const marked = async (script: string): Promise<IMarkedResult> => {
         const markedError: MarkedError = error;
         throw markedError;
     }
+    console.log('Expression count: ' + sandbox.count);
     console.timeEnd('execute');
 
     return {

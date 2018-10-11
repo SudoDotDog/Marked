@@ -10,6 +10,7 @@ import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
 import { assert } from "marked#util/error/assert";
 import { error } from "marked#util/error/error";
+import { LimitCounter } from "marked#util/node/context";
 import { Flag } from "marked#variable/flag";
 import { SandList } from "marked#variable/sandlist";
 import { SandMap } from "marked#variable/sandmap";
@@ -69,14 +70,15 @@ export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const test: (count: number) => Promise<boolean>
-            = async (count: number) =>
-                count > 0
-                    ? await this.execute(node.test, scope, nextTrace)
-                    : false;
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxWhileLoopLimit'));
+        const test: () => Promise<boolean>
+            = async () => await this.execute(node.test, scope, nextTrace);
 
-        let limit: number = 50;
         loop: do {
+
+            if (limitCounter.addAndCheck()) {
+                throw error(ERROR_CODE.MAXIMUM_DO_WHILE_LOOP_LIMITED_EXCEED, void 0, node, trace);
+            }
 
             const subScope: Scope = scope.child();
             const result: any = await this.execute(node.body, subScope, nextTrace);
@@ -92,7 +94,7 @@ export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
                     throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
             }
-        } while (await test(limit--));
+        } while (await test());
 
         return;
     };
@@ -111,6 +113,7 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
         const nextTrace: Trace = trace.stack(node);
 
         const map: SandMap<any> = await this.execute(node.right, scope, nextTrace);
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
 
         if (!(map instanceof SandMap)) {
             throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
@@ -121,6 +124,10 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
         }
 
         loop: for (const key of map.map.keys()) {
+
+            if (limitCounter.addAndCheck()) {
+                throw error(ERROR_CODE.MAXIMUM_FOR_IN_LOOP_LIMIT_EXCEED, limitCounter.amount().toString(), node, trace);
+            }
 
             const subScope: Scope = scope.child();
             const declarations: EST.VariableDeclarator[] = node.left.declarations;
@@ -159,6 +166,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
         const nextTrace: Trace = trace.stack(node);
 
         const lists: SandList<any> = await this.execute(node.right, scope, nextTrace);
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
 
         if (!(lists instanceof SandList)) {
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
@@ -169,6 +177,10 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
         }
 
         loop: for (let i: number = 0; i < lists.length; i++) {
+
+            if (limitCounter.addAndCheck()) {
+                throw error(ERROR_CODE.MAXIMUM_FOR_OF_LOOP_LIMIT_EXCEED, void 0, node, trace);
+            }
 
             const subScope: Scope = scope.child();
             const current: any = lists.get(i);
@@ -208,6 +220,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
         const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = scope.child();
 
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
         if (node.init) {
 
             await this.execute(node.init, subScope, nextTrace);
@@ -226,7 +239,11 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             if (node.update) await this.execute(node.update, subScope, nextTrace);
         };
 
-        loop: for (let limit = 0; (limit < 100 && await test()); limit++) {
+        loop: for (limitCounter.reset(); await test(); limitCounter.add()) {
+
+            if (limitCounter.check()) {
+                throw error(ERROR_CODE.MAXIMUM_FOR_LOOP_LIMIT_EXCEED, void 0, node, trace);
+            }
 
             await update();
             const result: any = await this.execute(node.body, subScope, nextTrace);
@@ -322,14 +339,15 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const test: (count: number) => Promise<boolean>
-            = async (count: number) =>
-                count > 0
-                    ? await this.execute(node.test, scope, nextTrace)
-                    : false;
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxWhileLoopLimit'));
+        const test: () => Promise<boolean>
+            = async () => await this.execute(node.test, scope, nextTrace);
 
-        let limit: number = 50;
-        loop: while (await test(limit--)) {
+        loop: while (await test()) {
+
+            if (limitCounter.addAndCheck()) {
+                throw error(ERROR_CODE.MAXIMUM_WHILE_LOOP_LIMITED_EXCEED, void 0, node, trace);
+            }
 
             const subScope: Scope = scope.child();
             const result: any = await this.execute(node.body, subScope, nextTrace);

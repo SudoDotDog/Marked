@@ -22,7 +22,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
 
-    private _options: Map<OptionName, ISandboxOptions[OptionName]>;
+    private _options: ISandboxOptions;
 
     public constructor() {
 
@@ -33,11 +33,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
 
-        this._options = new Map<OptionName, ISandboxOptions[OptionName]>();
-
-        const defaultSandboxOption: ISandboxOptions = getDefaultSandboxOption();
-        Object.keys(defaultSandboxOption).forEach((key: string) =>
-            this._options.set(key as OptionName, defaultSandboxOption[key as OptionName]));
+        this._options = getDefaultSandboxOption();
     }
 
     public get count(): number {
@@ -105,12 +101,12 @@ export class MockSandbox implements ISandbox, IMockedClass {
     }
 
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
-        const value: ISandboxOptions[T] | undefined = this._options.get(name);
+        const value: ISandboxOptions[T] = this._options[name];
         return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): MockSandbox {
-        this._options.set(name, value);
+        this._options[name] = value;
         return this;
     }
 

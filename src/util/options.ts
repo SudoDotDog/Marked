@@ -7,7 +7,7 @@
 import { ISandboxOptions } from "marked#declare/variable";
 
 export const getDefaultSandboxOption = (): ISandboxOptions => ({
-    maxExpression: 100,
-    maxForLoopLimit: 50,
-    maxWhileLoopLimit: 50,
+    maxExpression: 360,
+    maxForLoopLimit: 42,
+    maxWhileLoopLimit: 42,
 });

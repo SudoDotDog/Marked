@@ -28,7 +28,7 @@ export class Sandbox implements ISandbox {
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
 
-    private _options: Map<OptionName, ISandboxOptions[OptionName]>;
+    private _options: ISandboxOptions;
 
     public constructor() {
 
@@ -41,11 +41,7 @@ export class Sandbox implements ISandbox {
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
 
-        this._options = new Map<OptionName, ISandboxOptions[OptionName]>();
-
-        const defaultSandboxOption: ISandboxOptions = getDefaultSandboxOption();
-        Object.keys(defaultSandboxOption).forEach((key: string) =>
-            this._options.set(key as OptionName, defaultSandboxOption[key as OptionName]));
+        this._options = getDefaultSandboxOption();
     }
 
     public get count(): number {
@@ -105,17 +101,20 @@ export class Sandbox implements ISandbox {
     }
 
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
-        const value: ISandboxOptions[T] | undefined = this._options.get(name);
+        const value: ISandboxOptions[T] = this._options[name];
         return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): Sandbox {
-        this._options.set(name, value);
+        this._options[name] = value;
         return this;
     }
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
+        if (this._count >= this._options.maxExpression) {
+            throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
+        }
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
         if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
         this._count++;

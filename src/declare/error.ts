@@ -9,6 +9,13 @@ export enum ERROR_CODE {
 
     ACORN_ERROR = 1100,
 
+    MAXIMUM_EXPRESSION_LIMIT_EXCEED = 1912,
+    MAXIMUM_FOR_LOOP_LIMIT_EXCEED = 1913,
+    MAXIMUM_FOR_OF_LOOP_LIMIT_EXCEED = 1914,
+    MAXIMUM_FOR_IN_LOOP_LIMIT_EXCEED = 1915,
+    MAXIMUM_WHILE_LOOP_LIMITED_EXCEED = 1916,
+    MAXIMUM_DO_WHILE_LOOP_LIMITED_EXCEED = 1917,
+
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 2065,
     ASSERT_BOOLEAN_OPPOSITE = 2066,
     ASSERT_TYPE_NOT_MATCHED = 2067,
@@ -52,6 +59,12 @@ export const ERROR_LIST: {
 } = {
     1000: 'Unknown error',
     1100: 'Parse error',
+    1912: 'Maximum expression limit exceed',
+    1913: 'Maximum for loop limit exceed',
+    1914: 'Maximum for of loop limit exceed',
+    1915: 'Maximum for in loop limit exceed',
+    1916: 'Maximum while limit exceed',
+    1917: 'Maximum do while limit exceed',
     2065: 'Assert exist element not exist',
     2066: 'Assert boolean opposite',
     2067: 'Assert type not matched',

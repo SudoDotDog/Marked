@@ -21,7 +21,7 @@ function someFunction() {
 
 do {
     a++;
-} while (a < 300);
+} while (a < 25);
 print('while, conditional', a > 10 ? a : false);
 
 for (let u in ccc) {
