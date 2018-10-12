@@ -16,7 +16,6 @@ import { SandList } from "marked#variable/sandlist";
 import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
-import { Variable } from "marked#variable/variable";
 import { Sandbox } from "../sandbox";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =

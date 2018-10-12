@@ -65,6 +65,7 @@ export const programEvaluator: Evaluator<'Program'> =
     async function (this: Sandbox, node: EST.Program, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
+
         for (const child of node.body) {
 
             await this.execute(child, scope, nextTrace);
@@ -76,6 +77,7 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
     async function (this: Sandbox, node: EST.ReturnStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         const nextTrace: Trace = trace.stack(node);
+
         const flag: Flag = Flag.fromReturn();
         if (node.argument) {
 

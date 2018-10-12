@@ -134,14 +134,20 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
 
             const keyNode: EST.Literal | EST.Identifier
                 = property.key as EST.Literal | EST.Identifier;
-            if (!validateLiteralOrIdentifier(keyNode))
+
+            if (!validateLiteralOrIdentifier(keyNode)) {
+
                 throw error(ERROR_CODE.UNKNOWN_ERROR, keyNode.type, keyNode, trace);
+            }
+
             const key: string = keyNode.type === 'Literal'
                 ? await this.execute(keyNode, scope, nextTrace)
                 : keyNode.name;
 
-            if (property.kind !== 'init')
+            if (property.kind !== 'init') {
+
                 throw error(ERROR_CODE.PROPERTY_KIND_NOT_INIT_NOT_SUPPORT, property.kind, property, trace);
+            }
             map.set(key, await this.execute(property.value, scope, nextTrace));
         }
 
@@ -158,8 +164,12 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
 
             const pattern: EST.Pattern = declaration.id;
             const identifier: EST.Identifier = pattern as EST.Identifier;
-            if (scope.exist(identifier.name))
+
+            if (scope.exist(identifier.name)) {
+
                 throw error(ERROR_CODE.DUPLICATED_VARIABLE, identifier.name, node, trace);
+            }
+
             const value = declaration.init
                 ? await this.execute(declaration.init, scope, nextTrace)
                 : undefined;
