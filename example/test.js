@@ -15,7 +15,9 @@ ccc.a.a++;
 a = 20;
 ccc.some++;
 print('some', ccc.some, ccc.a.a, a);
+
 function someFunction() {
+    print('here', ccc.b());
     return print('some function');
 }
 
@@ -27,7 +29,9 @@ print('while, conditional', a > 10 ? a : false);
 for (let u in ccc) {
     print('uuu', u);
 }
-print((() => { return (print(1), 2) })());
+print((() => {
+    return (print(1), 2)
+})());
 this.a = 100;
 print('this', this.a);
 

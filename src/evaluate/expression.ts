@@ -16,6 +16,7 @@ import { SandList } from "marked#variable/sandlist";
 import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
+import { Variable } from "marked#variable/variable";
 import { Sandbox } from "../sandbox";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
@@ -33,6 +34,12 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
             }
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
             if (result) {
+
+                if (typeof result === 'string'
+                    || typeof result === 'number') {
+
+                    return result;
+                }
                 return result.getValue();
             }
         };
@@ -47,10 +54,19 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
         const func: () => any = await this.execute(node.callee, scope, nextTrace);
         const args = [];
         for (const arg of node.arguments) {
+
             args.push(await this.execute(arg, scope, nextTrace));
         }
 
-        return func.apply(null, args);
+        if (node.callee.type === 'MemberExpression') {
+
+            const object = await this.execute(node.callee.object, scope, nextTrace);
+            return func.apply(object, args);
+        } else {
+
+            // console.log(func.toString());
+            return func.apply(null, args);
+        }
     };
 
 export const conditionalExpressionEvaluator: Evaluator<'ConditionalExpression'> =
@@ -278,9 +294,7 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
                 subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
             }
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
-            if (result) {
-                return result.getValue();
-            }
+            if (result) return result.getValue();
         };
         return func;
     };
