@@ -64,7 +64,6 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
             return func.apply(object, args);
         } else {
 
-            // console.log(func.toString());
             return func.apply(null, args);
         }
     };
