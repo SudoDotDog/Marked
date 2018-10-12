@@ -40,6 +40,9 @@ export const useExpression = (sandbox: Sandbox) => {
     sandbox.mount('ForStatement', Expression_Evaluators.forStatementEvaluator);
     sandbox.mount('WhileStatement', Expression_Evaluators.whileStatementEvaluator);
     sandbox.mount('DoWhileStatement', Expression_Evaluators.doWhileStatementEvaluator);
+
+    sandbox.mount('SwitchCase', Expression_Evaluators.switchCaseEvaluator);
+    sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
 };
 
 export const useVariable = (sandbox: Sandbox) => {

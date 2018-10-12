@@ -31,6 +31,7 @@ export enum ERROR_CODE {
     UNARY_NOT_SUPPORT = 3005,
     LOGICAL_NOT_SUPPORT = 3006,
     ASSIGNMENT_NOT_SUPPORT = 3007,
+    UNDEFINED_TEST_NOT_SUPPORT = 3008,
 
     CONSTANT_VARIABLE_CANNOT_BE_EDITED = 3081,
 
@@ -76,6 +77,8 @@ export const ERROR_LIST: {
     3004: 'Binary is not supported',
     3005: 'Unary is not supported',
     3006: 'Logical is not supported',
+    3007: 'Assignment is not supported',
+    3008: 'Undefined test is not supported',
     3081: 'Constant variable cannot be edited',
     3107: 'Export not default variable is not supported',
     3108: 'Export is only available for number, string and boolean',

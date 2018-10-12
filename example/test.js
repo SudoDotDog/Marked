@@ -15,6 +15,14 @@ ccc.a.a++;
 a = 20;
 ccc.some++;
 print('some', ccc.some, ccc.a.a, a);
+const sw = 10;
+switch (sw) {
+    case 10:
+        print(13213);
+        break;
+    case 10:
+        print('never');
+}
 
 function someFunction() {
     print('here', ccc.b());
