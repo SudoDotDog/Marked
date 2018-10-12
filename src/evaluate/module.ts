@@ -11,7 +11,7 @@ import { VARIABLE_TYPE } from "marked#declare/variable";
 import { error } from "marked#util/error/error";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
-import { Sandbox } from "sandbox";
+import { Sandbox } from "marked/sandbox";
 
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {

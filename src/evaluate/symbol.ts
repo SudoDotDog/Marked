@@ -13,7 +13,7 @@ import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Variable } from "marked#variable/variable";
-import { Sandbox } from "../sandbox";
+import { Sandbox } from "../marked/sandbox";
 
 export const blockEvaluator: Evaluator<'BlockStatement'> =
     async function (this: Sandbox, node: EST.BlockStatement, scope: Scope, trace: Trace): Promise<any> {

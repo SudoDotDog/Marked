@@ -18,7 +18,7 @@ import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Variable } from "marked#variable/variable";
 import { isNumber, isString } from "util";
-import { Sandbox } from "../sandbox";
+import { Sandbox } from "../marked/sandbox";
 
 export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
     async function (this: Sandbox, node: EST.ArrayExpression, scope: Scope, trace: Trace): Promise<any> {

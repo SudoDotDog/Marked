@@ -16,7 +16,7 @@ import { SandList } from "marked#variable/sandlist";
 import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
-import { Sandbox } from "../sandbox";
+import { Sandbox } from "../marked/sandbox";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {

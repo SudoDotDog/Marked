@@ -21,6 +21,7 @@
             "marked#evaluate/*": ["evaluate/*"],
             "marked#extension/*": ["extension/*"],
             "marked#declare/*": ["declare/*"],
+            "marked#marked/*": ["marked/*"],
             "marked#util/*": ["util/*"],
             "marked#variable/*": ["variable/*"],
         },

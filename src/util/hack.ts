@@ -6,7 +6,7 @@
 
 import { TokenType } from "acorn";
 import { Scope } from "marked#variable/scope";
-import { Sandbox } from "sandbox";
+import { Sandbox } from "marked/sandbox";
 
 export const insertKeywordToRegExp = (keywords: string, newKeyword: string): string => {
 

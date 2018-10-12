@@ -4,7 +4,7 @@
  * @description Expression
  */
 
-require('./binding');
+require('../binding');
 import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from 'marked#declare/error';
@@ -15,7 +15,7 @@ import { error } from "marked#util/error/error";
 import { getDefaultSandboxOption, getRawCodeLength } from 'marked#util/options';
 import { Scope } from "marked#variable/scope";
 import { Trace } from 'marked#variable/trace';
-import { markedParser } from './extension/parser';
+import { markedParser } from '../extension/parser';
 
 export class Sandbox implements ISandbox {
 

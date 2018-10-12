@@ -9,7 +9,7 @@ import * as Expression_Evaluators from "marked#evaluate/expression";
 import * as Module_Evaluators from "marked#evaluate/module";
 import * as Symbol_Evaluators from "marked#evaluate/symbol";
 import * as Variable_Evaluators from "marked#evaluate/variable";
-import { Sandbox } from "../sandbox";
+import { Sandbox } from "../marked/sandbox";
 
 export const useSymbol = (sandbox: Sandbox) => {
 

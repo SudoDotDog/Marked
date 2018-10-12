@@ -48,7 +48,6 @@ const b = (c) => {
     if (!c) {
         print(3, c++ + 1);
     } else {
-        sleep(10);
         for (let i = 0; i < 3; i++) {
             print(3, c++ + 1);
             break;

@@ -5,6 +5,7 @@
         "RAISEDAT",
         "binop",
         "clazz",
+        "codecov",
         "estree",
         "ifeq",
         "sandlist",
