@@ -37,7 +37,7 @@ export const marked = async (script: string, options?: Partial<ISandboxOptions>)
     };
 };
 
-marked(FS.readFileSync('example/test.js', 'utf8')).then((result) => {
+marked(FS.readFileSync('example/functions.js', 'utf8')).then((result) => {
     console.log('result:', result);
 }).catch((err) => {
     console.log('error:', err);

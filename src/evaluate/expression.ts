@@ -20,7 +20,6 @@ import { Sandbox } from "../marked/sandbox";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {
-
         const nextTrace: Trace = trace.stack(node);
         const func = async (...args: any[]): Promise<any> => {
 
@@ -31,16 +30,19 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
 
                 subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
             }
-            const result: Flag = await this.execute(node.body, subScope, nextTrace);
-            if (result) {
 
-                if (typeof result === 'string'
-                    || typeof result === 'number') {
+            if (node.body.type === 'BlockStatement') {
+                const result: Flag = await this.execute(node.body, subScope, nextTrace);
+                if (result) {
 
-                    return result;
+                    if (!Boolean(result.getValue)) throw error(ERROR_CODE.UNKNOWN_ERROR, result.toString(), node, trace);
+                    return result.getValue();
                 }
-                if (!Boolean(result.getValue)) throw error(ERROR_CODE.UNKNOWN_ERROR, result.toString(), node, trace);
-                return result.getValue();
+            } else {
+                const result: any = await this.execute(node.body, subScope, nextTrace);
+                const flag: Flag = Flag.fromReturn();
+                flag.setValue(result || undefined);
+                return flag.getValue();
             }
         };
         return func;
@@ -280,7 +282,6 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
 
 export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
     async function (this: Sandbox, node: EST.FunctionExpression, scope: Scope, trace: Trace): Promise<any> {
-
         const nextTrace: Trace = trace.stack(node);
 
         const func = async (...args: any[]): Promise<any> => {
@@ -292,6 +293,7 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
 
                 subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
             }
+
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
             if (result) return result.getValue();
         };

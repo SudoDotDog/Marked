@@ -22,7 +22,7 @@ build:
 	@$(tsc) --p $(build)
 
 run: dev
-	@node dist/marked/index.js
+	@node dist/marked/marked.js
 
 tests:
 	@echo "[INFO] Testing with Mocha"
