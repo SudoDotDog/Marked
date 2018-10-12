@@ -12,7 +12,7 @@ import { EST_TYPE, Evaluator } from "marked#declare/node";
 import { IExposed, ISandbox, ISandboxOptions, IScope, ITrace, OptionName, VARIABLE_TYPE } from 'marked#declare/variable';
 import { assert } from 'marked#util/error/assert';
 import { error } from "marked#util/error/error";
-import { getDefaultSandboxOption } from 'marked#util/options';
+import { getDefaultSandboxOption, getRawCodeLength } from 'marked#util/options';
 import { Scope } from "marked#variable/scope";
 import { Trace } from 'marked#variable/trace';
 import { markedParser } from './extension/parser';
@@ -94,6 +94,9 @@ export class Sandbox implements ISandbox {
 
     public async evaluate(script: string): Promise<any> {
 
+        const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
+        if (isCodeLengthExceed) throw error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED);
+
         const AST: EST.BaseNode = this.parse(script);
         const rootScope: Scope = this._rootScope.child();
         const trace: Trace = Trace.init();
@@ -101,11 +104,13 @@ export class Sandbox implements ISandbox {
     }
 
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
+
         const value: ISandboxOptions[T] = this._options[name];
         return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): Sandbox {
+
         this._options[name] = value;
         return this;
     }
@@ -116,6 +121,7 @@ export class Sandbox implements ISandbox {
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
+
         if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
         this._count++;
 
@@ -130,6 +136,7 @@ export class Sandbox implements ISandbox {
             });
             return AST;
         } catch (err) {
+
             const syntaxError = err as any;
             throw error(ERROR_CODE.ACORN_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
         }

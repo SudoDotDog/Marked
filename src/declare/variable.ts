@@ -16,6 +16,7 @@ export type Partial<T> = {
 
 export interface ISandboxOptions {
 
+    maxCodeLength: number;
     maxForLoopLimit: number;
     maxWhileLoopLimit: number;
     maxExpression: number;
@@ -26,10 +27,6 @@ export enum VARIABLE_TYPE {
     CONSTANT = 'const',
     SCOPED = 'let',
     VARIABLE = 'var',
-}
-
-export enum SCOPE_TYPE {
-
 }
 
 export enum FLAG_TYPE {
