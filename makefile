@@ -58,6 +58,5 @@ else
 	@rm -rf coverage
 endif
 
-
 publish:
 	npm publish --access=public

@@ -4,11 +4,10 @@
  */
 
 require('../binding');
-import * as FS from 'fs';
 import { END_SIGNAL, IMarkedResult } from 'marked#declare/node';
 import { ISandboxOptions, OptionName } from 'marked#declare/variable';
 import { useEverything } from 'marked#evaluate/evaluate';
-import { internalPrint, internalSleep } from 'marked#extension/internal';
+import { internalPrint } from 'marked#extension/internal';
 import { MarkedError } from 'marked#util/error/error';
 import { Sandbox } from './sandbox';
 
@@ -18,7 +17,6 @@ export const marked = async (script: string, options?: Partial<ISandboxOptions>)
     useEverything(sandbox);
 
     sandbox.provide('print', internalPrint);
-    sandbox.provide('sleep', internalSleep);
 
     if (options) Object.keys(options).forEach((key: string) =>
         sandbox.setOption(key as OptionName, (options as any)[key]),

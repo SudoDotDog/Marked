@@ -8,5 +8,32 @@
 ## Install
 
 ```bash
-npm install marked --save
+npm install @sudoo/marked --save
+```
+
+## Usage
+
+### High level client
+
+```js
+import { Marked } from '@sudoo/marked'
+
+Marked(`import print from 'print'; print(1)`)
+    .then((result)=>/*handle result*/)
+    .catch((err)=>/*handle error*/);
+```
+
+### Low level client
+
+```js
+import { Sandbox } from '@sudoo/marked'
+
+const sandbox = new Sandbox();
+
+// use evaluator
+// provide internal function
+
+sandbox.evaluate(`import print from 'print'; print(1)`)
+    .then((result)=>/*handle result*/)
+    .catch((err)=>/*handle error*/);
 ```
