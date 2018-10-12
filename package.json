@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": ":tennis: JavaScript code runner in marked territory, synchronized.",
   "main": "dist/index.js",
   "scripts": {
