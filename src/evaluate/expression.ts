@@ -39,6 +39,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
 
                     return result;
                 }
+                if (!Boolean(result.getValue)) throw error(ERROR_CODE.UNKNOWN_ERROR, result.toString(), node, trace);
                 return result.getValue();
             }
         };
