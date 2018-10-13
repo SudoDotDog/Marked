@@ -12,7 +12,7 @@ import { VARIABLE_TYPE } from 'marked#declare/variable';
 import * as Evaluator_Expressions from 'marked#evaluate/expression';
 import { SandMap } from 'marked#variable/sandmap';
 import { Variable } from 'marked#variable/variable';
-import { identifier, literal, literalEvaluator } from '../mock/node';
+import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';
 import { MockTrace } from '../mock/trace';
@@ -36,13 +36,14 @@ describe('Given Expression evaluators', (): void => {
         it('positive test should return operated result', async (): Promise<void> => {
 
             const testNode: EST.ConditionalExpression = {
+
                 type: 'ConditionalExpression',
-                test: literal(true),
-                consequent: literal(10),
-                alternate: literal(15),
+                test: createLiteral(true),
+                consequent: createLiteral(10),
+                alternate: createLiteral(15),
             };
 
-            sandbox.when('Literal', literalEvaluator);
+            sandbox.when('Literal', mockLLiteralEvaluator);
 
             const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
@@ -56,6 +57,7 @@ describe('Given Expression evaluators', (): void => {
 
             const value: string = chance.string();
             const testNode: EST.ForInStatement = {
+
                 type: 'ForInStatement',
                 left: {
                     type: 'VariableDeclaration',
@@ -68,7 +70,7 @@ describe('Given Expression evaluators', (): void => {
                     }],
                     kind: 'const',
                 },
-                right: identifier(value),
+                right: createIdentifier(value),
                 body: {
                     type: 'BlockStatement',
                     body: [],
@@ -93,15 +95,16 @@ describe('Given Expression evaluators', (): void => {
 
             const value: string = chance.string();
             const testNode: EST.SequenceExpression = {
+
                 type: 'SequenceExpression',
                 expressions: [
-                    identifier('hello'),
-                    literal(10),
+                    createIdentifier('hello'),
+                    createLiteral(10),
                 ],
             };
 
             sandbox.when('Identifier', (node: EST.Identifier) => scope.register(VARIABLE_TYPE.CONSTANT)(node.name, value));
-            sandbox.when('Literal', literalEvaluator);
+            sandbox.when('Literal', mockLLiteralEvaluator);
 
             const result: any = await Evaluator_Expressions.sequenceExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
