@@ -6,7 +6,7 @@
 
 require('../../src/binding');
 import { expect } from 'chai';
-import { ISandboxOptions } from 'marked#declare/variable';
+import { ISandboxOptions } from 'marked#declare/sandbox';
 import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from 'marked#util/options';
 
 describe('Given an Options utils', (): void => {

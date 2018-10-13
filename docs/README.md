@@ -18,7 +18,11 @@ npm install @sudoo/marked --save
 ```js
 import { Marked } from '@sudoo/marked'
 
-Marked(`import print from 'print'; print(1)`)
+Marked(`import print from 'print'; print(1)`, {
+    options: // options
+    injects: // inject variable
+    provides: // provide importable variable
+})
     .then((result)=>/*handle result*/)
     .catch((err)=>/*handle error*/);
 ```
