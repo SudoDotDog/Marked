@@ -87,6 +87,7 @@ export const getAssignmentOperation
         : ((variable: Variable<any>, value: any) => any) | null => {
 
         switch (symbol) {
+
             case '%=': return null;
             case '&=': return null;
             case '**=': return null;

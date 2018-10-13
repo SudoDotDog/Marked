@@ -52,6 +52,7 @@ export class Sandbox implements ISandbox {
     public get exposed(): IExposed {
 
         const result: IExposed = {
+
             default: this._exposed.get('default'),
         };
         return result;
@@ -87,7 +88,10 @@ export class Sandbox implements ISandbox {
 
     public provide(name: string, value: any): Sandbox {
 
-        if (this._modules.has(name)) throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
+        if (this._modules.has(name)) {
+
+            throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
+        }
         this._modules.set(name, value);
         return this;
     }
@@ -118,11 +122,15 @@ export class Sandbox implements ISandbox {
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
         if (this._count >= this._options.maxExpression) {
+
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
 
-        if (!executor) throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
+        if (!executor) {
+
+            throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
+        }
         this._count++;
 
         return await executor.bind(this)(node, scope, trace);
@@ -131,6 +139,7 @@ export class Sandbox implements ISandbox {
     protected parse(script: string): EST.BaseNode {
 
         try {
+
             const AST: EST.BaseNode = this._parser.parse(script, {
                 sourceType: 'module',
             });

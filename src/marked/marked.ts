@@ -19,17 +19,19 @@ export const marked = async (script: string, options?: Partial<ISandboxOptions>)
     sandbox.provide('print', internalPrint);
 
     if (options) Object.keys(options).forEach((key: string) =>
-        sandbox.setOption(key as OptionName, (options as any)[key]),
-    );
+        sandbox.setOption(key as OptionName, (options as any)[key]));
 
     try {
+
         await sandbox.evaluate(script);
     } catch (error) {
+
         const markedError: MarkedError = error;
         throw markedError;
     }
 
     return {
+
         signal: END_SIGNAL.SUCCEED,
         exports: sandbox.exposed,
     };

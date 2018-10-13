@@ -19,6 +19,7 @@ export class SandList<T> {
     }
 
     public get length(): number {
+
         return this._list.length;
     }
 

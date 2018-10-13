@@ -23,6 +23,16 @@ export class Trace implements ITrace {
         this._node = node;
     }
 
+    public getNode(): EST.Node | null {
+
+        return this._node;
+    }
+
+    public getParent(): Trace | null {
+
+        return this._parent;
+    }
+
     public stack(node: EST.Node): Trace {
 
         return new Trace(node, this);

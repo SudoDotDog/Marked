@@ -12,6 +12,7 @@ export const internalPrint = (...contents: any[]): void => {
 export const internalSleep = (time: any): Promise<any> => {
 
     return new Promise<any>((resolve) => {
+
         setTimeout(() => {
             resolve();
         }, time);

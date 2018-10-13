@@ -36,7 +36,8 @@ export enum FLAG_TYPE {
     CONTINUE = 'CONTINUE',
 }
 
-export type SCOPE_DECLARE_FUNC = (name: string, value: any) => IScope;
+export type SCOPE_DECLARE_FUNC =
+    (name: string, value: any) => IScope;
 
 export interface IScope {
 
@@ -53,6 +54,7 @@ export interface IScope {
 }
 
 export interface IExposed {
+
     [key: string]: any;
     default?: any;
 }

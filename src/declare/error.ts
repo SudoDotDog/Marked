@@ -5,6 +5,7 @@
  */
 
 export enum ERROR_CODE {
+
     UNKNOWN_ERROR = 1000,
 
     ACORN_ERROR = 1100,
@@ -59,6 +60,7 @@ export enum ERROR_CODE {
 export const ERROR_LIST: {
     [key: number]: string;
 } = {
+
     1000: 'Unknown error',
     1100: 'Parse error',
     1911: 'Maximum code length limit exceed',
