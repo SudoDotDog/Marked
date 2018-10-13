@@ -70,6 +70,8 @@ export const useModule = (sandbox: Sandbox) => {
 
     sandbox.mount('ImportDeclaration', Module_Evaluators.importDeclarationEvaluator);
     sandbox.mount('ImportDefaultSpecifier', Module_Evaluators.importDefaultSpecifierEvaluator);
+    sandbox.mount('ImportNamespaceSpecifier', Module_Evaluators.importNamespaceSpecifierEvaluator);
+    sandbox.mount('ImportSpecifier', Module_Evaluators.importSpecifierEvaluator);
 };
 
 export const useEverything = (sandbox: Sandbox) => {

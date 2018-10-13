@@ -13,12 +13,9 @@ export type Partial<T> = {
 };
 
 export interface IMarkedOptions {
-    injects?: {
-        [key: string]: (...args: any[]) => Promise<any>;
-    };
-    provides?: {
-        [key: string]: (...args: any[]) => Promise<any>;
-    };
+
+    injects?: { [key: string]: any; };
+    provides?: { [key: string]: any; };
     sandbox?: Partial<ISandboxOptions>;
 }
 

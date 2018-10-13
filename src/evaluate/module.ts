@@ -9,6 +9,7 @@ import { ERROR_CODE } from "marked#declare/error";
 import { Evaluator } from "marked#declare/node";
 import { VARIABLE_TYPE } from "marked#declare/variable";
 import { error } from "marked#util/error/error";
+import { SandMap } from "marked#variable/sandmap";
 import { Scope } from "marked#variable/scope";
 import { Trace } from "marked#variable/trace";
 import { Sandbox } from "marked/sandbox";
@@ -45,15 +46,59 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const source: string = await this.execute(node.source, scope, nextTrace);
         const mod: any | null = this.module(source);
         if (!Boolean(mod)) throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);
-        if (node.specifiers.length !== 1) throw error(ERROR_CODE.UNKNOWN_ERROR, source, node, trace);
 
-        const target = await this.execute(node.specifiers[0], scope, nextTrace);
-        scope.register(VARIABLE_TYPE.CONSTANT)(target, mod);
+        for (const specifier of node.specifiers) {
+
+            const target = await this.execute(specifier, scope, nextTrace);
+            const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
+            switch (specifier.type) {
+
+                case 'ImportDefaultSpecifier':
+
+                    register(target, mod);
+                    break;
+                case 'ImportNamespaceSpecifier':
+
+                    if (!(typeof mod === 'object')) {
+
+                        throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, trace);
+                    }
+                    const map: SandMap<any> = new SandMap(mod);
+                    register(target, map);
+                    break;
+                case 'ImportSpecifier':
+
+                    const imported: string = specifier.imported.name;
+                    if (!Boolean(mod[imported])) {
+
+                        throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, trace);
+                    }
+                    register(target, mod[imported]);
+                    break;
+                default:
+
+                    throw error(ERROR_CODE.UNKNOWN_ERROR, (specifier as any).type, node, trace);
+            }
+        }
         return;
     };
 
 export const importDefaultSpecifierEvaluator: Evaluator<'ImportDefaultSpecifier'> =
     async function (this: Sandbox, node: EST.ImportDefaultSpecifier, scope: Scope, trace: Trace): Promise<any> {
+
+        const name: string = node.local.name;
+        return name;
+    };
+
+export const importNamespaceSpecifierEvaluator: Evaluator<'ImportNamespaceSpecifier'> =
+    async function (this: Sandbox, node: EST.ImportNamespaceSpecifier, scope: Scope, trace: Trace): Promise<any> {
+
+        const name: string = node.local.name;
+        return name;
+    };
+
+export const importSpecifierEvaluator: Evaluator<'ImportSpecifier'> =
+    async function (this: Sandbox, node: EST.ImportSpecifier, scope: Scope, trace: Trace): Promise<any> {
 
         const name: string = node.local.name;
         return name;

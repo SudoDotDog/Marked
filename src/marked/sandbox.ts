@@ -28,6 +28,7 @@ export class Sandbox implements ISandbox {
     private _configs: Map<string, any>;
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
+    private _namespaces: Map<string, Map<string, any>>;
 
     private _options: ISandboxOptions;
 
@@ -41,6 +42,7 @@ export class Sandbox implements ISandbox {
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
+        this._namespaces = new Map<string, Map<string, any>>();
 
         this._options = getDefaultSandboxOption();
     }
@@ -84,6 +86,21 @@ export class Sandbox implements ISandbox {
     public mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): Sandbox {
 
         this._map.set(type, evaluator);
+        return this;
+    }
+
+    public namespace(namespace: string, name: string, value: any): Sandbox {
+
+        if (!this._namespaces.has(namespace)) {
+            this._namespaces.set(namespace, new Map<string, any>());
+        }
+
+        const map: Map<string, any> = this._namespaces.get(namespace) as Map<string, any>;
+        if (map.has(name)) {
+
+            throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
+        }
+        map.set(name, value);
         return this;
     }
 

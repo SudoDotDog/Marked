@@ -10,9 +10,12 @@ export class SandMap<T> {
 
     private _map: Map<string, Variable<T>>;
 
-    public constructor() {
+    public constructor(obj?: { [key: string]: any }) {
 
         this._map = new Map<string, Variable<T>>();
+
+        if (obj) Object.keys(obj)
+            .forEach((key: string) => this._map.set(key, obj[key]));
     }
 
     public get map(): Map<string, Variable<T>> {
@@ -43,6 +46,8 @@ export class SandMap<T> {
 
     public toString(): string {
 
-        return this._map.toString();
+        const obj: { [key: string]: any } = {};
+        this._map.forEach((value: any, key: string) => obj[key] = value);
+        return JSON.stringify(obj, null, 2);
     }
 }

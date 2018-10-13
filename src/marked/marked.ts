@@ -7,7 +7,6 @@ require('../binding');
 import { END_SIGNAL, IMarkedResult } from 'marked#declare/node';
 import { IMarkedOptions, OptionName } from 'marked#declare/sandbox';
 import { useEverything } from 'marked#evaluate/evaluate';
-import { internalPrint } from 'marked#extension/internal';
 import { MarkedError } from 'marked#util/error/error';
 import { Sandbox } from './sandbox';
 
@@ -15,12 +14,18 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
 
     const sandbox = new Sandbox();
     useEverything(sandbox);
+    if (options) {
 
-    sandbox.provide('print', internalPrint);
-
-    if (options) Object.keys(options).forEach((key: string) =>
-        sandbox.setOption(key as OptionName, (options as any)[key]));
-
+        if (options.injects)
+            Object.keys(options.injects).forEach((key: string) =>
+                sandbox.inject(key, (options.injects as any)[key]));
+        if (options.provides)
+            Object.keys(options.provides).forEach((key: string) =>
+                sandbox.provide(key, (options.provides as any)[key]));
+        if (options.sandbox)
+            Object.keys(options.sandbox).forEach((key: string) =>
+                sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
+    }
     try {
 
         await sandbox.evaluate(script);
@@ -29,7 +34,6 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
         const markedError: MarkedError = error;
         throw markedError;
     }
-
     return {
 
         signal: END_SIGNAL.SUCCEED,
