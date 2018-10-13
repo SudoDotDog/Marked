@@ -5,13 +5,13 @@
 
 require('../binding');
 import { END_SIGNAL, IMarkedResult } from 'marked#declare/node';
-import { ISandboxOptions, OptionName } from 'marked#declare/variable';
+import { IMarkedOptions, OptionName } from 'marked#declare/sandbox';
 import { useEverything } from 'marked#evaluate/evaluate';
 import { internalPrint } from 'marked#extension/internal';
 import { MarkedError } from 'marked#util/error/error';
 import { Sandbox } from './sandbox';
 
-export const marked = async (script: string, options?: Partial<ISandboxOptions>): Promise<IMarkedResult> => {
+export const marked = async (script: string, options?: IMarkedOptions): Promise<IMarkedResult> => {
 
     const sandbox = new Sandbox();
     useEverything(sandbox);

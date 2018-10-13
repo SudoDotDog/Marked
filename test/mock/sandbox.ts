@@ -7,8 +7,9 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "marked#declare/error";
 import { EST_TYPE, Evaluator } from "marked#declare/node";
+import { ISandbox, ISandboxOptions, OptionName } from "marked#declare/sandbox";
 import { IESTreeType } from "marked#declare/types";
-import { IExposed, ISandbox, ISandboxOptions, IScope, ITrace, OptionName } from "marked#declare/variable";
+import { IExposed, IScope, ITrace } from "marked#declare/variable";
 import { assert } from "marked#util/error/assert";
 import { getDefaultSandboxOption } from "marked#util/options";
 import { IMockedClass } from "./node";
