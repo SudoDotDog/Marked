@@ -58,5 +58,5 @@ else
 	@rm -rf coverage
 endif
 
-publish:
+publish: install build
 	npm publish --access=public
