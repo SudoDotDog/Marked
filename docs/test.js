@@ -1,13 +1,15 @@
 const {
     Marked
-} = require('../../dist/index');
+} = require('../dist/index');
 const fs = require('fs');
 const path = require('path');
-const internals = require('../internals');
+const internals = require('./internals');
 
-Marked(fs.readFileSync(path.join(__dirname, 'imports.js'), 'utf8'), {
+Marked(fs.readFileSync(path.join(__dirname, 'example', 'imports.js'), 'utf8'), {
         provides: {
-            print: internals.internalPrint,
+            print: {
+                default: internals.internalPrint,
+            },
             internal: {
                 number: 5,
                 number2: 8,

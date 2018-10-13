@@ -55,7 +55,11 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
 
                 case 'ImportDefaultSpecifier':
 
-                    register(target, mod);
+                    if (!(typeof mod === 'object' && Boolean(mod.default))) {
+
+                        throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, trace);
+                    }
+                    register(target, mod.default);
                     break;
                 case 'ImportNamespaceSpecifier':
 

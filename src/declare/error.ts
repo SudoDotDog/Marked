@@ -43,6 +43,7 @@ export enum ERROR_CODE {
     IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE = 3112,
     IMPORT_OBJECT_NOT_FOUND = 3113,
     IMPORT_NAMESPACE_IS_NOT_AN_OBJECT = 3114,
+    IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT = 3115,
 
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
 
@@ -91,6 +92,7 @@ export const ERROR_LIST: {
     3112: 'Import only available in root scope',
     3113: 'Import object not found',
     3114: 'Import namespace is not an object',
+    3115: 'Import default object have no default export',
     3151: 'Define get or set to a object is not supported',
     6001: 'Unmounted ast type',
     6002: 'Provided module name duplicated',
