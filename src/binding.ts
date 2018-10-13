@@ -16,6 +16,7 @@ import * as Path from "path";
         "marked#evaluate": Path.join(here, 'evaluate'),
         "marked#extension": Path.join(here, 'extension'),
         "marked#declare": Path.join(here, 'declare'),
+        "marked#marked": Path.join(here, 'marked'),
         "marked#util": Path.join(here, 'util'),
         "marked#variable": Path.join(here, 'variable'),
     });
