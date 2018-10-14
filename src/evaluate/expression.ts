@@ -262,8 +262,8 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                 throw error(ERROR_CODE.MAXIMUM_FOR_LOOP_LIMIT_EXCEED, void 0, node, trace);
             }
 
-            await update();
             const result: any = await this.execute(node.body, subScope, nextTrace);
+            await update();
             if (result instanceof Flag) {
 
                 if (result.isBreak) {

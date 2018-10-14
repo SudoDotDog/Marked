@@ -26,10 +26,10 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         const result: any[] = [];
         const testValue: number = chance.integer();
-        sandbox.inject('b', (content: any) => result.push(content));
+        sandbox.inject('deject', (content: any) => result.push(content));
         sandbox.provide('a', { default: testValue });
 
-        await sandbox.evaluate(`import a from 'a';b(a);`);
+        await sandbox.evaluate(`import a from 'a';deject(a);`);
 
         expect(result).to.be.lengthOf(1);
         expect(result).to.be.deep.equal([testValue]);
@@ -41,10 +41,10 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         const result: any[] = [];
         const testValue: number = chance.integer();
-        sandbox.inject('b', (content: any) => result.push(content));
+        sandbox.inject('deject', (content: any) => result.push(content));
         sandbox.provide('a', { a: testValue });
 
-        await sandbox.evaluate(`import { a } from 'a';b(a);`);
+        await sandbox.evaluate(`import { a } from 'a';deject(a);`);
 
         expect(result).to.be.lengthOf(1);
         expect(result).to.be.deep.equal([testValue]);
@@ -56,10 +56,10 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         const result: any[] = [];
         const testValue: number = chance.integer();
-        sandbox.inject('b', (content: any) => result.push(content));
+        sandbox.inject('deject', (content: any) => result.push(content));
         sandbox.provide('a', { a: testValue });
 
-        await sandbox.evaluate(`import * as a from 'a';b(a.a);`);
+        await sandbox.evaluate(`import * as a from 'a';deject(a.a);`);
 
         expect(result).to.be.lengthOf(1);
         expect(result).to.be.deep.equal([testValue]);
