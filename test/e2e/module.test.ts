@@ -20,7 +20,7 @@ describe('Given Sandbox for Module evaluators', (): void => {
         return sandbox;
     };
 
-    it('should be able to import literals', async (): Promise<void> => {
+    it('should be able to import literals from default', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -33,5 +33,47 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         expect(result).to.be.lengthOf(1);
         expect(result).to.be.deep.equal([testValue]);
+    });
+
+    it('should be able to import literals from declare', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: any[] = [];
+        const testValue: number = chance.integer();
+        sandbox.inject('b', (content: any) => result.push(content));
+        sandbox.provide('a', { a: testValue });
+
+        await sandbox.evaluate(`import { a } from 'a';b(a);`);
+
+        expect(result).to.be.lengthOf(1);
+        expect(result).to.be.deep.equal([testValue]);
+    });
+
+    it('should be able to import literals from namespace', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: any[] = [];
+        const testValue: number = chance.integer();
+        sandbox.inject('b', (content: any) => result.push(content));
+        sandbox.provide('a', { a: testValue });
+
+        await sandbox.evaluate(`import * as a from 'a';b(a.a);`);
+
+        expect(result).to.be.lengthOf(1);
+        expect(result).to.be.deep.equal([testValue]);
+    });
+
+    it('should be able to export default literals', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const testValue: number = chance.integer();
+        sandbox.provide('a', { default: testValue });
+
+        await sandbox.evaluate(`import a from 'a';export default a;`);
+
+        expect(sandbox.exposed.default).to.be.equal(testValue);
     });
 });

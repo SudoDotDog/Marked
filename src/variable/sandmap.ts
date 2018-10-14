@@ -15,7 +15,7 @@ export class SandMap<T> {
         this._map = new Map<string, Variable<T>>();
 
         if (obj) Object.keys(obj)
-            .forEach((key: string) => this._map.set(key, obj[key]));
+            .forEach((key: string) => this.set(key, obj[key]));
     }
 
     public get map(): Map<string, Variable<T>> {
