@@ -118,7 +118,7 @@ class Assert<T> {
 
     protected eachElement(func: (value: T) => boolean) {
 
-        for (let element of this._elements) {
+        for (const element of this._elements) {
 
             const result: boolean = func(element);
             if (this._reverse === result) {

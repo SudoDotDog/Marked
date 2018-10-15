@@ -20,17 +20,18 @@ import { Sandbox } from "../marked/sandbox";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {
+
         const nextTrace: Trace = trace.stack(node);
+
         const func = async (...args: any[]): Promise<any> => {
 
             const subScope: Scope = scope.child();
-            for (let i = 0; i < node.params.length; i++) {
+            node.params.forEach((pattern: EST.Pattern, index: number) => {
+                const identifier: EST.Identifier = pattern as EST.Identifier;
+                const value: any = args[index];
 
-                const pattern: EST.Identifier = node.params[i] as EST.Identifier;
-                const value: any = args[i];
-
-                subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
-            }
+                subScope.register(VARIABLE_TYPE.CONSTANT)(identifier.name, value);
+            });
 
             if (node.body.type === 'BlockStatement') {
 
