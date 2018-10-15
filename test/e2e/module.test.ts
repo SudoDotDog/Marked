@@ -12,7 +12,7 @@ import { Sandbox } from '../../src/marked/sandbox';
 
 describe('Given Sandbox for Module evaluators', (): void => {
 
-    const chance = new Chance('sandbox-module-evaluators');
+    const chance = new Chance('sandbox-module-evaluators-module');
 
     const createSandbox = () => {
         const sandbox: Sandbox = new Sandbox();

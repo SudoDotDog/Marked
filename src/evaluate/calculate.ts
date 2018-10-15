@@ -37,20 +37,6 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
         return operation(await evalLeft(), await evalRight());
     };
 
-export const conditionalExpressionEvaluator: Evaluator<'ConditionalExpression'> =
-    async function (this: Sandbox, node: EST.ConditionalExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const test: boolean = await this.execute(node.test, scope, nextTrace);
-
-        if (test) {
-            return await this.execute(node.consequent, scope, nextTrace);
-        } else {
-            return await this.execute(node.alternate, scope, trace);
-        }
-    };
-
 export const logicalExpressionEvaluator: Evaluator<'LogicalExpression'> =
     async function (this: Sandbox, node: EST.LogicalExpression, scope: Scope, trace: Trace): Promise<any> {
 

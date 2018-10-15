@@ -42,39 +42,6 @@ describe('Given Calculation evaluators', (): void => {
         });
     });
 
-    describe('Given an <ConditionalExpression> evaluator', (): void => {
-
-        it('consequence should be returned of test is true', async (): Promise<void> => {
-
-            const testNode: EST.ConditionalExpression = {
-                type: 'ConditionalExpression',
-                test: createLiteral(true),
-                consequent: createLiteral(true),
-                alternate: createLiteral(false),
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
-
-            expect(result).to.be.equal(true);
-        });
-
-        it('alternative should be returned of test is false', async (): Promise<void> => {
-
-            const testNode: EST.ConditionalExpression = {
-                type: 'ConditionalExpression',
-                test: createLiteral(false),
-                consequent: createLiteral(true),
-                alternate: createLiteral(false),
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
-
-            expect(result).to.be.equal(false);
-        });
-    });
-
     describe('Given an <LogicalExpression> evaluator', (): void => {
 
         it('or operator should return operated result', async (): Promise<void> => {
