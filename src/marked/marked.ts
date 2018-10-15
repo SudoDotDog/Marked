@@ -14,6 +14,7 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
 
     const sandbox = new Sandbox();
     useEverything(sandbox);
+
     if (options) {
 
         if (options.injects)
@@ -34,6 +35,7 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
         const markedError: MarkedError = error;
         throw markedError;
     }
+
     return {
 
         signal: END_SIGNAL.SUCCEED,

@@ -105,6 +105,7 @@ export class Sandbox implements ISandbox {
     public namespace(namespace: string, name: string, value: any): Sandbox {
 
         if (!this._namespaces.has(namespace)) {
+
             this._namespaces.set(namespace, new Map<string, any>());
         }
 
@@ -181,6 +182,7 @@ export class Sandbox implements ISandbox {
         try {
 
             const AST: EST.BaseNode = this._parser.parse(script, {
+
                 sourceType: 'module',
             });
             return AST;

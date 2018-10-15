@@ -27,6 +27,7 @@ export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
 
         const mapped: any[] = [];
         for (const element of node.elements) {
+
             const evaluated: any = await this.execute(element, scope, nextTrace);
             mapped.push(evaluated);
         }
@@ -45,11 +46,10 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
             if (node.left.type === 'Identifier') {
 
                 const name: string = node.left.name;
+
                 return assert(
                     scope.validateEditable(name).rummage(name) as Variable<any>,
-                ).to.be
-                    .exist(ERROR_CODE.VARIABLE_IS_NOT_DEFINED)
-                    .firstValue();
+                ).to.be.exist(ERROR_CODE.VARIABLE_IS_NOT_DEFINED).firstValue();
             } else if (node.left.type === 'MemberExpression') {
 
                 const object: SandList<any> | SandMap<any>
@@ -96,6 +96,7 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
 
         const assignee: any = await this.execute(node.right, scope, nextTrace);
         operation(variable, assignee);
+
         return assignee;
     };
 
@@ -118,10 +119,9 @@ export const memberEvaluator: Evaluator<'MemberExpression'> =
 
             if (isString(key)) return object.get(key);
             else throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
-        } else {
-
-            return object[key];
         }
+
+        return object[key];
     };
 
 export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =

@@ -27,9 +27,11 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
 
                 const flag: Flag = Flag.fromReturn();
                 flag.setValue(result);
+
                 return result;
             }
         }
+
         return;
     };
 
@@ -37,6 +39,7 @@ export const breakEvaluator: Evaluator<'BreakStatement'> =
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         const flag: Flag = Flag.fromBreak();
+
         return flag;
     };
 
@@ -44,6 +47,7 @@ export const continueEvaluator: Evaluator<'ContinueStatement'> =
     async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         const flag: Flag = Flag.fromContinue();
+
         return flag;
     };
 
@@ -70,6 +74,7 @@ export const programEvaluator: Evaluator<'Program'> =
 
             await this.execute(child, scope, nextTrace);
         }
+
         return;
     };
 
@@ -84,6 +89,7 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
             const value: any = await this.execute(node.argument, scope, nextTrace);
             flag.setValue(value);
         }
+
         return flag;
     };
 

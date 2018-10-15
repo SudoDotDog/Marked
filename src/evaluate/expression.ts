@@ -25,6 +25,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
 
             const subScope: Scope = scope.child();
             for (let i = 0; i < node.params.length; i++) {
+
                 const pattern: EST.Identifier = node.params[i] as EST.Identifier;
                 const value: any = args[i];
 
@@ -32,6 +33,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
             }
 
             if (node.body.type === 'BlockStatement') {
+
                 const result: Flag = await this.execute(node.body, subScope, nextTrace);
                 if (result) {
 
@@ -39,12 +41,14 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
                     return result.getValue();
                 }
             } else {
+
                 const result: any = await this.execute(node.body, subScope, nextTrace);
                 const flag: Flag = Flag.fromReturn();
                 flag.setValue(result || undefined);
                 return flag.getValue();
             }
         };
+
         return func;
     };
 
@@ -103,15 +107,10 @@ export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
+                if (result.isBreak) break loop;
+                else if (result.isReturn) return result.getValue();
+                else if (result.isContinue) continue loop;
+                else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         } while (await test());
 
@@ -167,17 +166,13 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
+                if (result.isBreak) break loop;
+                else if (result.isReturn) return result.getValue();
+                else if (result.isContinue) continue loop;
+                else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
+
         return;
     };
 
@@ -190,10 +185,12 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
         const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
 
         if (!(lists instanceof SandList)) {
+
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
 
         if (node.left.type !== 'VariableDeclaration') {
+
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
 
@@ -223,17 +220,13 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
+                if (result.isBreak) break loop;
+                else if (result.isReturn) return result.getValue();
+                else if (result.isContinue) continue loop;
+                else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
+
         return;
     };
 
@@ -255,7 +248,9 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
 
                 const result: any = await this.execute(node.test, subScope, nextTrace);
                 return Boolean(result);
-            } else return true;
+            }
+
+            return true;
         };
         const update = async (): Promise<void> => {
 
@@ -274,15 +269,10 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             await update();
             if (result instanceof Flag) {
 
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
+                if (result.isBreak) break loop;
+                else if (result.isReturn) return result.getValue();
+                else if (result.isContinue) continue loop;
+                else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
         return;
@@ -305,6 +295,7 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
             if (result) return result.getValue();
         };
+
         return func;
     };
 
@@ -351,9 +342,11 @@ export const sequenceExpressionEvaluator: Evaluator<'SequenceExpression'> =
         const returnStatement: EST.BaseNode
             = assert(node.expressions.pop() as EST.Node).is.exist().firstValue();
         for (const statement of node.expressions) {
+
             await this.execute(statement, scope, nextTrace);
         }
         const result: any = await this.execute(returnStatement, scope, nextTrace);
+
         return result;
     };
 
@@ -367,17 +360,14 @@ export const switchCaseEvaluator: Evaluator<'SwitchCase'> =
 
             if (result instanceof Flag) {
 
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
+                if (result.isBreak) break loop;
+                else if (result.isReturn) return result.getValue();
+                else if (result.isContinue) continue loop;
+                else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
+
+        return;
     };
 
 export const switchExpressionEvaluator: Evaluator<'SwitchStatement'> =
@@ -401,18 +391,15 @@ export const switchExpressionEvaluator: Evaluator<'SwitchStatement'> =
 
                 if (result instanceof Flag) {
 
-                    if (result.isBreak) {
-                        break loop;
-                    } else if (result.isReturn) {
-                        return result.getValue();
-                    } else if (result.isContinue) {
-                        continue loop;
-                    } else {
-                        throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                    }
+                    if (result.isBreak) break loop;
+                    else if (result.isReturn) return result.getValue();
+                    else if (result.isContinue) continue loop;
+                    else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
             }
         }
+
+        return;
     };
 
 export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
@@ -436,15 +423,10 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) {
-                    break loop;
-                } else if (result.isReturn) {
-                    return result.getValue();
-                } else if (result.isContinue) {
-                    continue loop;
-                } else {
-                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
-                }
+                if (result.isBreak) break loop;
+                else if (result.isReturn) return result.getValue();
+                else if (result.isContinue) continue loop;
+                else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
 
