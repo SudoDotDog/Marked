@@ -130,7 +130,11 @@ export class Sandbox implements ISandbox {
     public async evaluate(script: string): Promise<any> {
 
         const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
-        if (isCodeLengthExceed) throw error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED);
+        if (isCodeLengthExceed) {
+
+            this.break();
+            throw error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED);
+        }
 
         const AST: EST.BaseNode = this.parse(script);
         const rootScope: Scope = this._rootScope.child();
@@ -158,6 +162,7 @@ export class Sandbox implements ISandbox {
         }
         if (this._count >= this._options.maxExpression) {
 
+            this.break();
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);

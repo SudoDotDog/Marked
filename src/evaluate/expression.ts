@@ -94,6 +94,8 @@ export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
         loop: do {
 
             if (limitCounter.addAndCheck()) {
+
+                this.break();
                 throw error(ERROR_CODE.MAXIMUM_DO_WHILE_LOOP_LIMITED_EXCEED, void 0, node, trace);
             }
 
@@ -143,6 +145,8 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
         loop: for (const key of map.map.keys()) {
 
             if (limitCounter.addAndCheck()) {
+
+                this.break();
                 throw error(ERROR_CODE.MAXIMUM_FOR_IN_LOOP_LIMIT_EXCEED, limitCounter.amount().toString(), node, trace);
             }
 
@@ -196,6 +200,8 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
         loop: for (let i: number = 0; i < lists.length; i++) {
 
             if (limitCounter.addAndCheck()) {
+
+                this.break();
                 throw error(ERROR_CODE.MAXIMUM_FOR_OF_LOOP_LIMIT_EXCEED, void 0, node, trace);
             }
 
@@ -259,6 +265,8 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
         loop: for (limitCounter.reset(); await test(); limitCounter.add()) {
 
             if (limitCounter.check()) {
+
+                this.break();
                 throw error(ERROR_CODE.MAXIMUM_FOR_LOOP_LIMIT_EXCEED, void 0, node, trace);
             }
 
@@ -419,6 +427,8 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
         loop: while (await test()) {
 
             if (limitCounter.addAndCheck()) {
+
+                this.break();
                 throw error(ERROR_CODE.MAXIMUM_WHILE_LOOP_LIMITED_EXCEED, void 0, node, trace);
             }
 
