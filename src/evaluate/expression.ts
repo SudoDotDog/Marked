@@ -286,12 +286,14 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
         const func = async (...args: any[]): Promise<any> => {
 
             const subScope: Scope = scope.child().initThis();
-            for (let i = 0; i < node.params.length; i++) {
-                const pattern: EST.Identifier = node.params[i] as EST.Identifier;
-                const value: any = args[i];
 
-                subScope.register(VARIABLE_TYPE.CONSTANT)(pattern.name, value);
-            }
+            node.params.forEach((pattern: EST.Pattern, index: number) => {
+
+                const identifier: EST.Identifier = pattern as EST.Identifier;
+                const value: any = args[index];
+
+                subScope.register(VARIABLE_TYPE.CONSTANT)(identifier.name, value);
+            });
 
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
             if (result) return result.getValue();
