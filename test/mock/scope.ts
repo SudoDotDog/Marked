@@ -122,6 +122,21 @@ export class MockScope implements IScope, IMockedClass {
         return this._mockedParent ? this._mockedParent.rummage(name) : null;
     }
 
+    public validateEditable(name: string): MockScope {
+
+        if (this._mockedConstantMap.has(name)) {
+
+            throw error(ERROR_CODE.CONSTANT_VARIABLE_CANNOT_BE_EDITED, name);
+        }
+
+        if (!this._mockedScopeMap.has(name)) {
+
+            throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
+        }
+
+        return this;
+    }
+
     protected _declareConst(name: string, value: any): MockScope {
 
         if (this.exist(name)) throw error(ERROR_CODE.DUPLICATED_VARIABLE);

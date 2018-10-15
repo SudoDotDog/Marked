@@ -34,6 +34,7 @@ export interface IScope {
 
     exist: (name: string) => boolean;
     rummage: (name: string) => Variable<any> | null;
+    validateEditable: (name: string) => IScope;
 
     findThis: () => SandMap<any>;
     initThis: () => IScope;
