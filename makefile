@@ -59,4 +59,5 @@ else
 endif
 
 publish: install build
-	npm publish --access=public
+	@echo "[INFO] Publishing package"
+	@npm publish --access=public
