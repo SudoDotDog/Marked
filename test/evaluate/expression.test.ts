@@ -33,21 +33,34 @@ describe('Given Expression evaluators', (): void => {
 
     describe('Given an <ConditionalExpression> evaluator', (): void => {
 
-        it('positive test should return operated result', async (): Promise<void> => {
+        it('consequence should be returned of test is true', async (): Promise<void> => {
 
             const testNode: EST.ConditionalExpression = {
-
                 type: 'ConditionalExpression',
                 test: createLiteral(true),
-                consequent: createLiteral(10),
-                alternate: createLiteral(15),
+                consequent: createLiteral(true),
+                alternate: createLiteral(false),
             };
 
             sandbox.when('Literal', mockLLiteralEvaluator);
-
             const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
-            expect(result).to.be.equal(10);
+            expect(result).to.be.equal(true);
+        });
+
+        it('alternative should be returned of test is false', async (): Promise<void> => {
+
+            const testNode: EST.ConditionalExpression = {
+                type: 'ConditionalExpression',
+                test: createLiteral(false),
+                consequent: createLiteral(true),
+                alternate: createLiteral(false),
+            };
+
+            sandbox.when('Literal', mockLLiteralEvaluator);
+            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.equal(false);
         });
     });
 
