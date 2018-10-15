@@ -25,6 +25,7 @@ export class Sandbox implements ISandbox {
     private _rootScope: Scope;
     private _parser: typeof Acorn.Parser;
 
+    private _broke: boolean;
     private _configs: Map<string, any>;
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
@@ -39,12 +40,18 @@ export class Sandbox implements ISandbox {
         this._parser = Acorn.Parser.extend(markedParser as any);
         this._count = 0;
 
+        this._broke = false;
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
         this._namespaces = new Map<string, Map<string, any>>();
 
         this._options = getDefaultSandboxOption();
+    }
+
+    public get broke(): boolean {
+
+        return this._broke;
     }
 
     public get count(): number {
@@ -59,6 +66,12 @@ export class Sandbox implements ISandbox {
             default: this._exposed.get('default'),
         };
         return result;
+    }
+
+    public break(): Sandbox {
+
+        this._broke = true;
+        return this;
     }
 
     public config(name: string, value?: any): Sandbox {
@@ -139,6 +152,10 @@ export class Sandbox implements ISandbox {
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
+        if (this._broke) {
+
+            throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
+        }
         if (this._count >= this._options.maxExpression) {
 
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);

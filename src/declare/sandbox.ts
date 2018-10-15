@@ -34,6 +34,7 @@ export interface ISandbox {
     exposed: IExposed;
     count: number;
 
+    break: () => ISandbox;
     evaluate: (script: string) => Promise<any>;
 
     config: (name: string, value?: any) => ISandbox;

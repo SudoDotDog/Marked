@@ -19,6 +19,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     private _executedList: EST.BaseNode[];
     private _mockMap: Map<any, any>;
 
+    private _broke: boolean;
     private _configs: Map<string, any>;
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
@@ -30,11 +31,17 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._executedList = [];
         this._mockMap = new Map<any, any>();
 
+        this._broke = false;
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
 
         this._options = getDefaultSandboxOption();
+    }
+
+    public get broke(): boolean {
+
+        return this._broke;
     }
 
     public get count(): number {
@@ -53,6 +60,12 @@ export class MockSandbox implements ISandbox, IMockedClass {
     public get result(): EST.BaseNode[] {
 
         return this._executedList;
+    }
+
+    public break(): MockSandbox {
+
+        this._broke = true;
+        return this;
     }
 
     public config(name: string, value?: any): MockSandbox {
