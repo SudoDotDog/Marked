@@ -104,7 +104,7 @@ describe('Given Variable evaluators', (): void => {
 
             sandbox.when('Literal', mockLLiteralEvaluator);
             sandbox.when('Identifier', (node: EST.Identifier) => {
-
+                console.log(node.name);
                 const rummaged: Variable<any> | null = scope.rummage(node.name);
                 if (rummaged) return rummaged.get();
                 throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name);
@@ -114,8 +114,8 @@ describe('Given Variable evaluators', (): void => {
 
             expect(result).to.be.equal(value);
 
-            // const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
-            // expect(variable).to.be.equal(value + value);
+            const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
+            expect((variable as Variable<SandMap<number>>).get().get(objectName)).to.be.equal(value + value);
         });
     });
 });
