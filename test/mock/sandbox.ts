@@ -127,16 +127,16 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this;
     }
 
-    public async evaluate(script: string): Promise<any> {
+    public async evaluate(script: string): Promise<string> {
 
-        return;
+        return script;
     }
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
         this._executedList.push(node);
         if (this._mockMap.has(node.type)) {
-            return this._mockMap.get(node.type)(node);
+            return this._mockMap.get(node.type)(node, scope, trace);
         }
 
         return null;

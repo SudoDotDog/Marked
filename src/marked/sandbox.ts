@@ -138,9 +138,8 @@ export class Sandbox implements ISandbox {
         }
 
         const AST: EST.BaseNode = this.parse(script);
-        const rootScope: Scope = this._rootScope.child();
         const trace: Trace = Trace.init();
-        return await this.execute(AST, rootScope, trace);
+        return await this.execute(AST, this._rootScope, trace);
     }
 
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
