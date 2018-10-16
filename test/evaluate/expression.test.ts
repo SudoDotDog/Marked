@@ -229,6 +229,7 @@ describe('Given Expression evaluators', (): void => {
         it('should evaluate first and return second', async (): Promise<void> => {
 
             const value: string = chance.string();
+
             const testNode: EST.SequenceExpression = {
 
                 type: 'SequenceExpression',
@@ -251,4 +252,51 @@ describe('Given Expression evaluators', (): void => {
             expect(variable.get()).to.be.equal(value);
         });
     });
+
+    describe('Given an <FunctionDeclare> evaluator', (): void => {
+
+        it('should return a executable function', async (): Promise<void> => {
+
+            const name: string = chance.string();
+            const param: string = chance.string();
+
+            const testNode: EST.FunctionDeclaration = {
+
+                type: 'FunctionDeclaration',
+                id: createIdentifier(name),
+                params: [createIdentifier(param)],
+                body: {
+                    type: 'BlockStatement',
+                    body: [],
+                },
+            };
+
+            sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+
+            const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.instanceof(Function);
+        });
+    });
+
+    // describe('Given an <SwitchStatement> and <SwitchCase> evaluator', (): void => {
+
+    //     it('should be able to handle switch cases', async (): Promise<void> => {
+
+    //         const discriminant: number = chance.integer({ min: 1, max: 3 });
+
+    //         const testNode: EST.SwitchStatement = {
+
+    //             type: 'SwitchStatement',
+    //             discriminant: createLiteral(discriminant),
+    //             cases: [],
+    //         };
+
+    //         sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+
+    //         const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
+
+    //         expect(result).to.be.instanceof(Function);
+    //     });
+    // });
 });
