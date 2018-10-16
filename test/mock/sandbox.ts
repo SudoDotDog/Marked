@@ -75,6 +75,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     }
 
     public expose(name: string, value: any): MockSandbox {
+
         this._exposed.set(name, value);
         return this;
     }
@@ -115,11 +116,13 @@ export class MockSandbox implements ISandbox, IMockedClass {
     }
 
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
+
         const value: ISandboxOptions[T] = this._options[name];
         return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): MockSandbox {
+
         this._options[name] = value;
         return this;
     }

@@ -8,9 +8,12 @@ require('../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
+import { ERROR_CODE } from 'marked#declare/error';
 import { VARIABLE_TYPE } from 'marked#declare/variable';
 import * as Variable_Expressions from 'marked#evaluate/variable';
+import { error } from 'marked#util/error/error';
 import { SandList } from 'marked#variable/sandlist';
+import { SandMap } from 'marked#variable/sandmap';
 import { Variable } from 'marked#variable/variable';
 import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
@@ -75,6 +78,44 @@ describe('Given Variable evaluators', (): void => {
 
             const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
             expect(variable.get()).to.be.equal(value);
+        });
+
+        it('should be able to assign member', async (): Promise<void> => {
+
+            const variableName: string = chance.string();
+            const objectName: string = chance.string();
+            const value: number = chance.integer({ min: 10, max: 50 });
+
+            scope.register(VARIABLE_TYPE.SCOPED)(variableName, new SandMap<number>({
+                [objectName]: value,
+            }));
+            const testNode: EST.AssignmentExpression = {
+
+                type: 'AssignmentExpression',
+                operator: '+=',
+                left: {
+                    type: 'MemberExpression',
+                    object: createIdentifier(variableName),
+                    property: createIdentifier(objectName),
+                    computed: false,
+                },
+                right: createLiteral(value),
+            };
+
+            sandbox.when('Literal', mockLLiteralEvaluator);
+            sandbox.when('Identifier', (node: EST.Identifier) => {
+
+                const rummaged: Variable<any> | null = scope.rummage(node.name);
+                if (rummaged) return rummaged.get();
+                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name);
+            });
+
+            const result = await Variable_Expressions.assignmentExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.equal(value);
+
+            // const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
+            // expect(variable).to.be.equal(value + value);
         });
     });
 });

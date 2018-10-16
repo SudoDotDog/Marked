@@ -60,7 +60,7 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
 
                 if (!validateObjectIsSandboxStructure(object)) {
 
-                    throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node, trace);
+                    throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any), node, trace);
                 }
 
                 const memberVariable: Variable<any> | undefined = object instanceof SandList

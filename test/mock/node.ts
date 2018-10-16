@@ -14,7 +14,13 @@ export const createLiteral = (value: string | boolean | number | null): EST.Lite
 };
 
 export const mockLLiteralEvaluator = (node: EST.Literal) => {
+
     return node.value;
+};
+
+export const mockLIdentifierEvaluator = (node: EST.Identifier) => {
+
+    return node.name;
 };
 
 export const createIdentifier = (name: string): EST.Identifier => {

@@ -1,6 +1,7 @@
 import print from 'print'; // trailing
 
 let a = 10; // test
+
 const ll = [656, 2, 3, 1, 1, 1, 1, 1, 1];
 const ccc = {
     a: {
