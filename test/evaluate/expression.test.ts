@@ -10,6 +10,7 @@ import * as Chance from 'chance';
 import * as EST from "estree";
 import { VARIABLE_TYPE } from 'marked#declare/variable';
 import * as Evaluator_Expressions from 'marked#evaluate/expression';
+import { SandList } from 'marked#variable/sandlist';
 import { SandMap } from 'marked#variable/sandmap';
 import { Variable } from 'marked#variable/variable';
 import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../mock/node';
@@ -90,15 +91,52 @@ describe('Given Expression evaluators', (): void => {
                 },
             };
 
-            sandbox.when('Identifier', (node: EST.Identifier) => new SandMap().set(value, 100));
+            sandbox.when('Identifier', (node: EST.Identifier) => new SandMap<any>().set(value, 100));
 
             await Evaluator_Expressions.forInStatementEvaluator.bind(sandbox)(testNode, scope, trace);
 
             expect(sandbox.count).to.be.equal(2);
             expect(trace).to.be.lengthOf(1);
-
             const variable: Variable<any> = scope.children[0].rummage('left') as Variable<any>;
             expect(variable.get()).to.be.equal(value);
+        });
+    });
+
+    describe('Given an <ForOfStatement> evaluator', (): void => {
+
+        it('should get value one by one', async (): Promise<void> => {
+
+            const value: string = chance.string();
+            const testNode: EST.ForOfStatement = {
+
+                type: 'ForOfStatement',
+                left: {
+                    type: 'VariableDeclaration',
+                    declarations: [{
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 'left',
+                        },
+                    }],
+                    kind: 'const',
+                },
+                right: createIdentifier(value),
+                body: {
+                    type: 'BlockStatement',
+                    body: [],
+                },
+            };
+
+            sandbox.when('Identifier', (node: EST.Identifier) => new SandList<number>([1, 2, 3, 4, 5]));
+
+            await Evaluator_Expressions.forOfStatementEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(sandbox.count).to.be.equal(6);
+            expect(trace).to.be.lengthOf(1);
+            expect(scope.children).to.be.lengthOf(5);
+            scope.children.forEach((child: MockScope, index: number) =>
+                expect((child.rummage('left') as Variable<number>).get()).to.be.equal(index + 1));
         });
     });
 
@@ -125,7 +163,7 @@ describe('Given Expression evaluators', (): void => {
             expect(sandbox.count).to.be.equal(2);
             expect(trace).to.be.lengthOf(1);
 
-            const variable: Variable<any> = scope.children[0].rummage('hello') as Variable<any>;
+            const variable: Variable<any> = scope.rummage('hello') as Variable<any>;
             expect(variable.get()).to.be.equal(value);
         });
     });

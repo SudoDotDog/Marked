@@ -18,6 +18,11 @@ export class SandList<T> {
         this._list = variableList;
     }
 
+    public get list(): T[] {
+
+        return this._list.map((element: Variable<T>): T => element.get());
+    }
+
     public get length(): number {
 
         return this._list.length;

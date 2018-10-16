@@ -105,6 +105,7 @@ export class MockScope implements IScope, IMockedClass {
 
         this._mockedConstantMap = new Map<string, Variable<any>>();
         this._mockedScopeMap = new Map<string, Variable<any>>();
+        this._children = [];
     }
 
     public rummage(name: string): Variable<any> | null {

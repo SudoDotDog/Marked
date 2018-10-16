@@ -195,7 +195,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
 
-        loop: for (let i: number = 0; i < lists.length; i++) {
+        loop: for (const element of lists.list) {
 
             if (limitCounter.addAndCheck()) {
 
@@ -204,7 +204,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
             }
 
             const subScope: Scope = scope.child();
-            const current: any = lists.get(i);
+            const current: any = element;
             const declarations: EST.VariableDeclarator[] = node.left.declarations;
             const left: EST.VariableDeclaration = node.left;
             const registerFunc = (name: string): void => {
