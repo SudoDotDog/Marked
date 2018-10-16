@@ -11,6 +11,7 @@ import * as EST from "estree";
 import { VARIABLE_TYPE } from 'marked#declare/variable';
 import * as Evaluator_Expressions from 'marked#evaluate/expression';
 import { getBinaryOperation } from 'marked#util/operation';
+import { Flag } from 'marked#variable/flag';
 import { SandList } from 'marked#variable/sandlist';
 import { SandMap } from 'marked#variable/sandmap';
 import { Variable } from 'marked#variable/variable';
@@ -279,24 +280,39 @@ describe('Given Expression evaluators', (): void => {
         });
     });
 
-    // describe('Given an <SwitchStatement> and <SwitchCase> evaluator', (): void => {
+    describe('Given an <SwitchStatement> and <SwitchCase> evaluator', (): void => {
 
-    //     it('should be able to handle switch cases', async (): Promise<void> => {
+        it('should be able to handle switch cases', async (): Promise<void> => {
 
-    //         const discriminant: number = chance.integer({ min: 1, max: 3 });
+            const discriminant: number = chance.integer({ min: 1, max: 3 });
 
-    //         const testNode: EST.SwitchStatement = {
+            const result: any[] = [];
+            const testNode: EST.SwitchStatement = {
 
-    //             type: 'SwitchStatement',
-    //             discriminant: createLiteral(discriminant),
-    //             cases: [],
-    //         };
+                type: 'SwitchStatement',
+                discriminant: createLiteral(discriminant),
+                cases: [1, 2, 3].map((value: number): EST.SwitchCase => ({
+                    type: 'SwitchCase',
+                    test: createLiteral(value),
+                    consequent: [{
+                        type: 'MockStatement',
+                        value,
+                    } as any, {
+                        type: 'BreakStatement',
+                    }],
+                })),
+            };
 
-    //         sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+            sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+            sandbox.when('Literal', mockLLiteralEvaluator);
+            sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak());
 
-    //         const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
+            sandbox.when('SwitchCase', Evaluator_Expressions.switchCaseEvaluator);
+            sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
 
-    //         expect(result).to.be.instanceof(Function);
-    //     });
-    // });
+            await Evaluator_Expressions.switchExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.deep.equal([discriminant]);
+        });
+    });
 });

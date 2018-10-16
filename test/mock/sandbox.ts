@@ -102,7 +102,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this;
     }
 
-    public when<T extends EST_TYPE>(type: T, mock: (node: IESTreeType[T]) => any): MockSandbox {
+    public when<T extends EST_TYPE>(type: T, mock: (node: IESTreeType[T], scope?: any, trace?: any) => any): MockSandbox {
 
         this._mockMap.set(type, mock);
         return this;
@@ -136,7 +136,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
 
         this._executedList.push(node);
         if (this._mockMap.has(node.type)) {
-            return this._mockMap.get(node.type)(node, scope, trace);
+            return this._mockMap.get(node.type).bind(this)(node, scope, trace);
         }
 
         return null;
