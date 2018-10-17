@@ -78,6 +78,7 @@ describe('Given Expression evaluators', (): void => {
         it('consequence should be returned of test is true', async (): Promise<void> => {
 
             const testNode: EST.ConditionalExpression = {
+
                 type: 'ConditionalExpression',
                 test: createLiteral(true),
                 consequent: createLiteral(true),
@@ -85,14 +86,15 @@ describe('Given Expression evaluators', (): void => {
             };
 
             sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
+            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
             expect(result).to.be.equal(true);
         });
 
         it('alternative should be returned of test is false', async (): Promise<void> => {
 
             const testNode: EST.ConditionalExpression = {
+
                 type: 'ConditionalExpression',
                 test: createLiteral(false),
                 consequent: createLiteral(true),
@@ -100,8 +102,8 @@ describe('Given Expression evaluators', (): void => {
             };
 
             sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
+            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
             expect(result).to.be.equal(false);
         });
     });
@@ -142,7 +144,6 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Identifier', (node: EST.Identifier) => result.push(node.name));
 
             await Evaluator_Expressions.doWhileStatementEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(sandbox.count).to.be.equal(15);
             expect(trace).to.be.lengthOf(1);
             expect(result).to.be.lengthOf(5);
@@ -171,7 +172,6 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
 
             await Evaluator_Expressions.ifStatementEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(result).to.be.deep.equal([value]);
         });
 
@@ -200,7 +200,6 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
 
             await Evaluator_Expressions.ifStatementEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(result).to.be.deep.equal([sadValue]);
         });
     });
@@ -231,11 +230,11 @@ describe('Given Expression evaluators', (): void => {
                 },
             };
 
-            sandbox.when('Identifier', (node: EST.Identifier) => new SandMap<any>().set(value, 100));
+            sandbox.when('Identifier', (node: EST.Identifier) => new SandMap<any>().set(value, undefined));
 
             await Evaluator_Expressions.forInStatementEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(sandbox.count).to.be.equal(2);
+
             const variable: Variable<any> = scope.children[0].rummage('left') as Variable<any>;
             expect(variable.get()).to.be.equal(value);
         });
@@ -314,7 +313,6 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Identifier', (node: EST.Identifier) => result.push(node.name));
 
             await Evaluator_Expressions.whileStatementEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(sandbox.count).to.be.equal(16);
             expect(result).to.be.lengthOf(5);
         });
@@ -339,7 +337,6 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Literal', mockLLiteralEvaluator);
 
             const result: any = await Evaluator_Expressions.sequenceExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(result).to.be.equal(10);
             expect(sandbox.count).to.be.equal(2);
             expect(trace).to.be.lengthOf(1);
@@ -372,7 +369,6 @@ describe('Given Expression evaluators', (): void => {
                 .forEach(async (element: EST.Statement) => await sandbox.execute(element, scope, trace)));
 
             const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
-
             expect(result).to.be.instanceof(Function);
         });
     });
