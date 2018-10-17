@@ -296,7 +296,6 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
             });
 
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
-            console.log(1231283901, result, node.body);
             if (result) return result.getValue();
         };
 

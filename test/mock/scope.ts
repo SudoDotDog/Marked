@@ -38,6 +38,16 @@ export class MockScope implements IScope, IMockedClass {
         return this._children;
     }
 
+    public get constants(): Map<string, Variable<any>> {
+
+        return this._mockedConstantMap;
+    }
+
+    public get scopes(): Map<string, Variable<any>> {
+
+        return this._mockedScopeMap;
+    }
+
     public config(name: string, value?: any): MockScope {
 
         this._configs.set(name, value || true);
