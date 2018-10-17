@@ -38,6 +38,7 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
 export const breakEvaluator: Evaluator<'BreakStatement'> =
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
+        if (node.label) throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
         const flag: Flag = Flag.fromBreak();
 
         return flag;
@@ -46,6 +47,7 @@ export const breakEvaluator: Evaluator<'BreakStatement'> =
 export const continueEvaluator: Evaluator<'ContinueStatement'> =
     async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
+        if (node.label) throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
         const flag: Flag = Flag.fromContinue();
 
         return flag;

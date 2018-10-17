@@ -108,9 +108,9 @@ export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) break loop;
-                else if (result.isReturn) return result.getValue();
-                else if (result.isContinue) continue loop;
+                if (result.isBreak()) break loop;
+                else if (result.isReturn()) return result.getValue();
+                else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         } while (await test());
@@ -167,9 +167,9 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) break loop;
-                else if (result.isReturn) return result.getValue();
-                else if (result.isContinue) continue loop;
+                if (result.isBreak()) break loop;
+                else if (result.isReturn()) return result.getValue();
+                else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
@@ -221,9 +221,9 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) break loop;
-                else if (result.isReturn) return result.getValue();
-                else if (result.isContinue) continue loop;
+                if (result.isBreak()) break loop;
+                else if (result.isReturn()) return result.getValue();
+                else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
@@ -270,9 +270,9 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             await update();
             if (result instanceof Flag) {
 
-                if (result.isBreak) break loop;
-                else if (result.isReturn) return result.getValue();
-                else if (result.isContinue) continue loop;
+                if (result.isBreak()) break loop;
+                else if (result.isReturn()) return result.getValue();
+                else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
@@ -363,9 +363,9 @@ export const switchCaseEvaluator: Evaluator<'SwitchCase'> =
 
             if (result instanceof Flag) {
 
-                if (result.isBreak) break loop;
-                else if (result.isReturn) return result.getValue();
-                else if (result.isContinue) continue loop;
+                if (result.isBreak()) break loop;
+                else if (result.isReturn()) return result.getValue();
+                else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
@@ -394,9 +394,9 @@ export const switchExpressionEvaluator: Evaluator<'SwitchStatement'> =
 
                 if (result instanceof Flag) {
 
-                    if (result.isBreak) break loop;
-                    else if (result.isReturn) return result.getValue();
-                    else if (result.isContinue) continue loop;
+                    if (result.isBreak()) break loop;
+                    else if (result.isReturn()) return result.getValue();
+                    else if (result.isContinue()) continue loop;
                     else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
             }
@@ -426,9 +426,9 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
             const result: any = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                if (result.isBreak) break loop;
-                else if (result.isReturn) return result.getValue();
-                else if (result.isContinue) continue loop;
+                if (result.isBreak()) break loop;
+                else if (result.isReturn()) return result.getValue();
+                else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
         }
