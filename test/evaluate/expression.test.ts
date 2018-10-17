@@ -329,6 +329,8 @@ describe('Given Expression evaluators', (): void => {
             };
 
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+            sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
+                .forEach(async (element: EST.Statement) => await sandbox.execute(element, scope, trace)));
 
             const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
 
@@ -342,7 +344,9 @@ describe('Given Expression evaluators', (): void => {
 
             const name: string = chance.string();
             const param: string = chance.string();
+            const value: string = chance.string();
 
+            const result: any[] = [];
             const testNode: EST.FunctionExpression = {
 
                 type: 'FunctionExpression',
@@ -350,15 +354,23 @@ describe('Given Expression evaluators', (): void => {
                 params: [createIdentifier(param)],
                 body: {
                     type: 'BlockStatement',
-                    body: [],
+                    body: [{
+                        type: 'MockStatement',
+                        value,
+                    } as any],
                 },
             };
 
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+            sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
+                .forEach(async (element: EST.Statement) => await sandbox.execute(element, scope, trace)));
+            sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
 
-            const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
+            const func: any = await Evaluator_Expressions.functionExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
 
-            expect(result).to.be.instanceof(Function);
+            expect(func).to.be.instanceof(Function);
+            console.log(result);
+            expect(result).to.be.deep.equal({});
         });
     });
 
