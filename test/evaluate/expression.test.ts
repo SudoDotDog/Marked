@@ -110,6 +110,62 @@ describe('Given Expression evaluators', (): void => {
         });
     });
 
+    describe('Given an <IfStatement> evaluator', (): void => {
+
+        it('should be able to handle if statement - happy path', async (): Promise<void> => {
+
+            const value: string = chance.string();
+
+            const result: any[] = [];
+            const testNode: EST.IfStatement = {
+
+                type: 'IfStatement',
+                test: createLiteral(true),
+                consequent: {
+                    type: 'MockStatement',
+                    value,
+                } as any,
+            };
+
+            sandbox.when('Literal', mockLLiteralEvaluator);
+
+            sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
+
+            await Evaluator_Expressions.ifStatementEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.deep.equal([value]);
+        });
+
+        it('should be able to handle if statement - sad path', async (): Promise<void> => {
+
+            const value: string = chance.string();
+            const sadValue: string = chance.string();
+
+            const result: any[] = [];
+            const testNode: EST.IfStatement = {
+
+                type: 'IfStatement',
+                test: createLiteral(false),
+                consequent: {
+                    type: 'MockStatement',
+                    value,
+                } as any,
+                alternate: {
+                    type: 'MockStatement',
+                    value: sadValue,
+                } as any,
+            };
+
+            sandbox.when('Literal', mockLLiteralEvaluator);
+
+            sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
+
+            await Evaluator_Expressions.ifStatementEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.deep.equal([sadValue]);
+        });
+    });
+
     describe('Given an <ForInStatement> evaluator', (): void => {
 
         it('should get keys one by one', async (): Promise<void> => {
@@ -264,6 +320,32 @@ describe('Given Expression evaluators', (): void => {
             const testNode: EST.FunctionDeclaration = {
 
                 type: 'FunctionDeclaration',
+                id: createIdentifier(name),
+                params: [createIdentifier(param)],
+                body: {
+                    type: 'BlockStatement',
+                    body: [],
+                },
+            };
+
+            sandbox.when('Identifier', (node: EST.Identifier) => node.name);
+
+            const result: any = await Evaluator_Expressions.functionDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
+
+            expect(result).to.be.instanceof(Function);
+        });
+    });
+
+    describe('Given an <FunctionExpression> evaluator', (): void => {
+
+        it('should be able to handle function expression', async (): Promise<void> => {
+
+            const name: string = chance.string();
+            const param: string = chance.string();
+
+            const testNode: EST.FunctionExpression = {
+
+                type: 'FunctionExpression',
                 id: createIdentifier(name),
                 params: [createIdentifier(param)],
                 body: {
