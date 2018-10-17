@@ -59,7 +59,7 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
         const nextTrace: Trace = trace.stack(node);
 
         const func: () => any = await this.execute(node.callee, scope, nextTrace);
-        const args = [];
+        const args: any[] = [];
         for (const arg of node.arguments) {
 
             args.push(await this.execute(arg, scope, nextTrace));
@@ -67,11 +67,13 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
 
         if (node.callee.type === 'MemberExpression') {
 
-            const object = await this.execute(node.callee.object, scope, nextTrace);
-            return func.apply(object, args);
+            const object: any = await this.execute(node.callee.object, scope, nextTrace);
+            const result: any = func.apply(object, args);
+            return result;
         } else {
 
-            return func.apply(null, args);
+            const result: any = func.apply(null, args);
+            return result;
         }
     };
 
@@ -222,7 +224,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
             if (result instanceof Flag) {
 
                 if (result.isBreak()) break loop;
-                else if (result.isReturn()) return result.getValue();
+                else if (result.isReturn()) return result;
                 else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
@@ -271,7 +273,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             if (result instanceof Flag) {
 
                 if (result.isBreak()) break loop;
-                else if (result.isReturn()) return result.getValue();
+                else if (result.isReturn()) return result;
                 else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
@@ -364,7 +366,7 @@ export const switchCaseEvaluator: Evaluator<'SwitchCase'> =
             if (result instanceof Flag) {
 
                 if (result.isBreak()) break loop;
-                else if (result.isReturn()) return result.getValue();
+                else if (result.isReturn()) return result;
                 else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }
@@ -395,7 +397,7 @@ export const switchExpressionEvaluator: Evaluator<'SwitchStatement'> =
                 if (result instanceof Flag) {
 
                     if (result.isBreak()) break loop;
-                    else if (result.isReturn()) return result.getValue();
+                    else if (result.isReturn()) return result;
                     else if (result.isContinue()) continue loop;
                     else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
@@ -427,7 +429,7 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
             if (result instanceof Flag) {
 
                 if (result.isBreak()) break loop;
-                else if (result.isReturn()) return result.getValue();
+                else if (result.isReturn()) return result;
                 else if (result.isContinue()) continue loop;
                 else throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
             }

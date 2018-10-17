@@ -33,7 +33,6 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
             sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
 
             await sandbox.evaluate(`for(const a of loop){deject(a);break;}`);
-
             expect(result).to.be.lengthOf(1);
             expect(result).to.be.deep.equal([loopStart]);
         });
@@ -48,9 +47,23 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
             sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
 
             await sandbox.evaluate(`for(const a of loop){deject(a);continue;deject(a);}`);
-
             expect(result).to.be.lengthOf(3);
             expect(result).to.be.deep.equal([loopStart, loopStart + 1, loopStart + 2]);
+        });
+
+        it('return should break loop and return value', async (): Promise<void> => {
+
+            const sandbox: Sandbox = createSandbox();
+            const loopStart: number = chance.integer({ min: 3, max: 5 });
+
+            const result: any[] = [];
+            sandbox.inject('deject', (content: any) => result.push(content));
+            sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
+
+            await sandbox.evaluate(`export default (() => {for(const a of loop){deject(a);return a;}})()`);
+            expect(result).to.be.lengthOf(1);
+            expect(result).to.be.deep.equal([loopStart]);
+            expect(sandbox.exposed.default).to.be.equal(loopStart);
         });
     });
 });

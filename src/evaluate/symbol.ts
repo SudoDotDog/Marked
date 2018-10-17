@@ -27,7 +27,6 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
 
                 const flag: Flag = Flag.fromReturn();
                 flag.setValue(result);
-
                 return result;
             }
         }

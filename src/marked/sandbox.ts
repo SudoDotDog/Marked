@@ -173,7 +173,8 @@ export class Sandbox implements ISandbox {
         }
         this._count++;
 
-        return await executor.bind(this)(node, scope, trace);
+        const result: any = await executor.bind(this)(node, scope, trace);
+        return result;
     }
 
     protected parse(script: string): EST.BaseNode {

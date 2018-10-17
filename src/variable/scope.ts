@@ -124,11 +124,16 @@ export class Scope implements IScope {
             throw error(ERROR_CODE.CONSTANT_VARIABLE_CANNOT_BE_EDITED, name);
         }
 
-        if (!this._scopeMap.has(name)) {
+        if (this._parent) {
 
-            throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
+            this._parent.validateEditable(name);
+        } else {
+
+            if (!this._scopeMap.has(name)) {
+
+                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
+            }
         }
-
         return this;
     }
 
