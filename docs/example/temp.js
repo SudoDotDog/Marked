@@ -1,10 +1,11 @@
 import print from 'print';
 
-const b =  (() => {
+const b = (() => {
     for (const a of [1, 2, 3]) {
-        print(a);
+        a
         return a;
     }
+    return print(a);
 });
 
 const c = b();
