@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { ITrace } from "marked#declare/variable";
+import { ITrace } from "../declare/variable";
 
 export class Trace implements ITrace {
 

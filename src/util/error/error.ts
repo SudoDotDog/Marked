@@ -5,8 +5,8 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE, ERROR_LIST } from "marked#declare/error";
-import { Trace } from "marked#variable/trace";
+import { ERROR_CODE, ERROR_LIST } from "../../declare/error";
+import { Trace } from "../../variable/trace";
 
 export class MarkedError extends Error {
 

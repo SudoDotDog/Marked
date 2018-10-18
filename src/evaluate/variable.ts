@@ -5,20 +5,20 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "marked#declare/error";
-import { Evaluator } from "marked#declare/node";
-import { VARIABLE_TYPE } from "marked#declare/variable";
-import { assert } from "marked#util/error/assert";
-import { error } from "marked#util/error/error";
-import { validateLiteralOrIdentifier, validateObjectIsSandboxStructure } from "marked#util/node/validator";
-import { getAssignmentOperation } from "marked#util/operation";
-import { SandList } from "marked#variable/sandlist";
-import { SandMap } from "marked#variable/sandmap";
-import { Scope } from "marked#variable/scope";
-import { Trace } from "marked#variable/trace";
-import { Variable } from "marked#variable/variable";
 import { isNumber, isString } from "util";
+import { ERROR_CODE } from "../declare/error";
+import { Evaluator } from "../declare/node";
+import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
+import { assert } from "../util/error/assert";
+import { error } from "../util/error/error";
+import { validateLiteralOrIdentifier, validateObjectIsSandboxStructure } from "../util/node/validator";
+import { getAssignmentOperation } from "../util/operation";
+import { SandList } from "../variable/sandlist";
+import { SandMap } from "../variable/sandmap";
+import { Scope } from "../variable/scope";
+import { Trace } from "../variable/trace";
+import { Variable } from "../variable/variable";
 
 export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
     async function (this: Sandbox, node: EST.ArrayExpression, scope: Scope, trace: Trace): Promise<any> {
@@ -79,7 +79,7 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
                         if (!fetted) throw error(ERROR_CODE.UNKNOWN_ERROR, (fetted as any).toString(), node, trace);
                         return fetted;
                     } else {
-                        throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberVariable, node, trace);
+                        throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, (memberVariable as any), node, trace);
                     }
                 }
             } else {

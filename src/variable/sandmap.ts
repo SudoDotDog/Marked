@@ -4,7 +4,7 @@
  * @description Map
  */
 
-import { Variable } from "marked#variable/variable";
+import { Variable } from "../variable/variable";
 
 export class SandMap<T> {
 

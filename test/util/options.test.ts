@@ -4,10 +4,9 @@
  * @description Options Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
-import { ISandboxOptions } from 'marked#declare/sandbox';
-import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from 'marked#util/options';
+import { ISandboxOptions } from '../../src/declare/sandbox';
+import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from '../../src/util/options';
 
 describe('Given an Options utils', (): void => {
 

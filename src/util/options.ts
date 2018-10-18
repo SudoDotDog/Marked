@@ -4,7 +4,7 @@
  * @description Option
  */
 
-import { ISandboxOptions } from "marked#declare/sandbox";
+import { ISandboxOptions } from "../declare/sandbox";
 
 export const getDefaultSandboxOption = (): ISandboxOptions => ({
 

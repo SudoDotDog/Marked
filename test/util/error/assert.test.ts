@@ -4,13 +4,11 @@
  * @description Assert Test
  */
 
-
-require('../../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { ERROR_CODE } from 'marked#declare/error';
-import { assert } from 'marked#util/error/assert';
-import { error } from 'marked#util/error/error';
+import { ERROR_CODE } from '../../../src/declare/error';
+import { assert } from '../../../src/util/error/assert';
+import { error } from '../../../src/util/error/error';
 
 describe('Given an <Assert> function', (): void => {
     const chance: Chance.Chance = new Chance('error-assert');
@@ -28,7 +26,7 @@ describe('Given an <Assert> function', (): void => {
         const value: number = chance.integer();
         const value2: number = chance.integer();
         const test = (): void => {
-           assert(value).and(value2).to.be.number().firstValue();
+            assert(value).and(value2).to.be.number().firstValue();
         };
 
         expect(test).to.be.not.throw();
@@ -39,7 +37,7 @@ describe('Given an <Assert> function', (): void => {
         const value: number = chance.integer();
         const value2: string = chance.string();
         const test = (): void => {
-           assert(value).and(value2 as any).to.be.number().firstValue();
+            assert(value).and(value2 as any).to.be.number().firstValue();
         };
 
         expect(test).to.be.throw(error(ERROR_CODE.ASSERT_TYPE_NOT_MATCHED).message);

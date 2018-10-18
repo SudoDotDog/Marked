@@ -4,10 +4,9 @@
  * @description Error Test
  */
 
-require('../../../src/binding');
 import { expect } from 'chai';
-import { ERROR_CODE } from 'marked#declare/error';
-import { error } from 'marked#util/error/error';
+import { ERROR_CODE } from '../../../src/declare/error';
+import { error } from '../../../src/util/error/error';
 
 describe('Given an <Error> function', (): void => {
 

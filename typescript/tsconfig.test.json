@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": "../src",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "lib": [
@@ -12,14 +11,6 @@
         "moduleResolution": "node",
         "noImplicitAny": true,
         "noImplicitReturns": true,
-        "paths": {
-            "marked#evaluate/*": ["evaluate/*"],
-            "marked#extension/*": ["extension/*"],
-            "marked#declare/*": ["declare/*"],
-            "marked#marked/*": ["marked/*"],
-            "marked#util/*": ["util/*"],
-            "marked#variable/*": ["variable/*"],
-        },
         "sourceMap": true,
         "strict": true,
         "target": "es6"

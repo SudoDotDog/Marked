@@ -5,7 +5,7 @@
  */
 
 import * as Acorn from 'acorn';
-import { createKeywordType, insertKeywordToRegExp } from 'marked#util/hack';
+import { createKeywordType, insertKeywordToRegExp } from '../util/hack';
 
 export const markedParser = (Parser: any) => {
 

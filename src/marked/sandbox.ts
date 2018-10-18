@@ -4,19 +4,18 @@
  * @description Expression
  */
 
-require('../binding');
 import * as Acorn from 'acorn';
 import * as EST from "estree";
-import { ERROR_CODE } from 'marked#declare/error';
-import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { ISandbox, ISandboxOptions, OptionName } from 'marked#declare/sandbox';
-import { IExposed, IScope, ITrace, VARIABLE_TYPE } from 'marked#declare/variable';
-import { assert } from 'marked#util/error/assert';
-import { error } from "marked#util/error/error";
-import { getDefaultSandboxOption, getRawCodeLength } from 'marked#util/options';
-import { Scope } from "marked#variable/scope";
-import { Trace } from 'marked#variable/trace';
+import { ERROR_CODE } from '../declare/error';
+import { EST_TYPE, Evaluator } from "../declare/node";
+import { ISandbox, ISandboxOptions, OptionName } from '../declare/sandbox';
+import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { markedParser } from '../extension/parser';
+import { assert } from '../util/error/assert';
+import { error } from "../util/error/error";
+import { getDefaultSandboxOption, getRawCodeLength } from '../util/options';
+import { Scope } from "../variable/scope";
+import { Trace } from '../variable/trace';
 
 export class Sandbox implements ISandbox {
 

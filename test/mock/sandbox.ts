@@ -5,13 +5,13 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "marked#declare/error";
-import { EST_TYPE, Evaluator } from "marked#declare/node";
-import { ISandbox, ISandboxOptions, OptionName } from "marked#declare/sandbox";
-import { IESTreeType } from "marked#declare/types";
-import { IExposed, IScope, ITrace } from "marked#declare/variable";
-import { assert } from "marked#util/error/assert";
-import { getDefaultSandboxOption } from "marked#util/options";
+import { ERROR_CODE } from "../../src/declare/error";
+import { EST_TYPE, Evaluator } from "../../src/declare/node";
+import { ISandbox, ISandboxOptions, OptionName } from "../../src/declare/sandbox";
+import { IESTreeType } from "../../src/declare/types";
+import { IExposed, IScope, ITrace } from "../../src/declare/variable";
+import { assert } from "../../src/util/error/assert";
+import { getDefaultSandboxOption } from "../../src/util/options";
 import { IMockedClass } from "./node";
 
 export class MockSandbox implements ISandbox, IMockedClass {

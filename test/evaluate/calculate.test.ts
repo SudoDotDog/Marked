@@ -4,10 +4,9 @@
  * @description Calculate Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
 import * as EST from "estree";
-import * as Calculate_Expressions from 'marked#evaluate/calculate';
+import * as Calculate_Expressions from '../../src/evaluate/calculate';
 import { createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';

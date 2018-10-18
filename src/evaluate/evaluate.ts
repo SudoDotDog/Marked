@@ -4,12 +4,12 @@
  * @description Evaluate
  */
 
-import * as Calculate_Evaluators from "marked#evaluate/calculate";
-import * as Expression_Evaluators from "marked#evaluate/expression";
-import * as Module_Evaluators from "marked#evaluate/module";
-import * as Symbol_Evaluators from "marked#evaluate/symbol";
-import * as Variable_Evaluators from "marked#evaluate/variable";
 import { Sandbox } from "../marked/sandbox";
+import * as Calculate_Evaluators from "./calculate";
+import * as Expression_Evaluators from "./expression";
+import * as Module_Evaluators from "./module";
+import * as Symbol_Evaluators from "./symbol";
+import * as Variable_Evaluators from "./variable";
 
 export const useSymbol = (sandbox: Sandbox) => {
 

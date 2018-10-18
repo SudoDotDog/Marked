@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { ITrace } from "marked#declare/variable";
+import { ITrace } from "../../src/declare/variable";
 import { IMockedClass } from "./node";
 
 export class MockTrace implements ITrace, IMockedClass {

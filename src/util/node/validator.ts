@@ -5,8 +5,8 @@
  */
 
 import * as EST from "estree";
-import { SandList } from "marked#variable/sandlist";
-import { SandMap } from "marked#variable/sandmap";
+import { SandList } from "../../variable/sandlist";
+import { SandMap } from "../../variable/sandmap";
 
 export const validateLiteralOrIdentifier
     = (node: EST.Literal | EST.Identifier): boolean => {

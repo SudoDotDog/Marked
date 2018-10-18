@@ -5,15 +5,15 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "marked#declare/error";
-import { Evaluator } from "marked#declare/node";
-import { error } from "marked#util/error/error";
-import { Flag } from "marked#variable/flag";
-import { SandMap } from "marked#variable/sandmap";
-import { Scope } from "marked#variable/scope";
-import { Trace } from "marked#variable/trace";
-import { Variable } from "marked#variable/variable";
+import { ERROR_CODE } from "../declare/error";
+import { Evaluator } from "../declare/node";
 import { Sandbox } from "../marked/sandbox";
+import { error } from "../util/error/error";
+import { Flag } from "../variable/flag";
+import { SandMap } from "../variable/sandmap";
+import { Scope } from "../variable/scope";
+import { Trace } from "../variable/trace";
+import { Variable } from "../variable/variable";
 
 export const blockEvaluator: Evaluator<'BlockStatement'> =
     async function (this: Sandbox, node: EST.BlockStatement, scope: Scope, trace: Trace): Promise<any> {

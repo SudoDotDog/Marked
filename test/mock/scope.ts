@@ -4,11 +4,11 @@
  * @description Scope
  */
 
-import { ERROR_CODE } from "marked#declare/error";
-import { IScope, VARIABLE_TYPE } from "marked#declare/variable";
-import { error } from "marked#util/error/error";
-import { SandMap } from "marked#variable/sandmap";
-import { Variable } from "marked#variable/variable";
+import { ERROR_CODE } from "../../src/declare/error";
+import { IScope, VARIABLE_TYPE } from "../../src/declare/variable";
+import { error } from "../../src/util/error/error";
+import { SandMap } from "../../src/variable/sandmap";
+import { Variable } from "../../src/variable/variable";
 import { IMockedClass } from "./node";
 
 export class MockScope implements IScope, IMockedClass {

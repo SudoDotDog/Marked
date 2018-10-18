@@ -2,7 +2,6 @@
     "compileOnSave": false,
     "compilerOptions": {
         "alwaysStrict": true,
-        "baseUrl": "../src",
         "downlevelIteration": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -17,14 +16,6 @@
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "outDir": "../dist",
-        "paths": {
-            "marked#evaluate/*": ["evaluate/*"],
-            "marked#extension/*": ["extension/*"],
-            "marked#declare/*": ["declare/*"],
-            "marked#marked/*": ["marked/*"],
-            "marked#util/*": ["util/*"],
-            "marked#variable/*": ["variable/*"],
-        },
         "removeComments": true,
         "resolveJsonModule": true,
         "strict": true,

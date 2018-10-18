@@ -4,10 +4,9 @@
  * @description Module Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { useEverything } from 'marked#evaluate/evaluate';
+import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
 
 describe('Given Sandbox for Module evaluators', (): void => {

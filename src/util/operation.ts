@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { Variable } from "marked#variable/variable";
+import { Variable } from "../variable/variable";
 
 export const getUnaryOperation = (symbol: EST.UnaryOperator): ((value: any) => any) | null => {
 

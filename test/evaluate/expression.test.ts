@@ -4,17 +4,16 @@
  * @description Calculate Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import { VARIABLE_TYPE } from 'marked#declare/variable';
-import * as Evaluator_Expressions from 'marked#evaluate/expression';
-import { getBinaryOperation } from 'marked#util/operation';
-import { Flag } from 'marked#variable/flag';
-import { SandList } from 'marked#variable/sandlist';
-import { SandMap } from 'marked#variable/sandmap';
-import { Variable } from 'marked#variable/variable';
+import { VARIABLE_TYPE } from '../../src/declare/variable';
+import * as Evaluator_Expressions from '../../src/evaluate/expression';
+import { getBinaryOperation } from '../../src/util/operation';
+import { Flag } from '../../src/variable/flag';
+import { SandList } from '../../src/variable/sandlist';
+import { SandMap } from '../../src/variable/sandmap';
+import { Variable } from '../../src/variable/variable';
 import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';

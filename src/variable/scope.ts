@@ -4,10 +4,10 @@
  * @description Scope
  */
 
-import { ERROR_CODE } from "marked#declare/error";
-import { IScope, VARIABLE_TYPE } from "marked#declare/variable";
-import { error } from "marked#util/error/error";
-import { Variable } from "marked#variable/variable";
+import { ERROR_CODE } from "../declare/error";
+import { IScope, VARIABLE_TYPE } from "../declare/variable";
+import { error } from "../util/error/error";
+import { Variable } from "../variable/variable";
 import { SandMap } from "./sandmap";
 
 export class Scope implements IScope {

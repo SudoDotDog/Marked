@@ -5,8 +5,8 @@
  */
 
 import * as EST from "estree";
-import { SandMap } from "marked#variable/sandmap";
-import { Variable } from "marked#variable/variable";
+import { SandMap } from "../variable/sandmap";
+import { Variable } from "../variable/variable";
 
 export enum VARIABLE_TYPE {
 

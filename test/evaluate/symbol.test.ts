@@ -4,12 +4,11 @@
  * @description Symbol Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import * as Symbol_Expressions from 'marked#evaluate/symbol';
-import { Flag } from 'marked#variable/flag';
+import * as Symbol_Expressions from '../../src/evaluate/symbol';
+import { Flag } from '../../src/variable/flag';
 import { createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';

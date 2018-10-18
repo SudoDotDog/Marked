@@ -4,12 +4,11 @@
  * @description Symbol Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { useEverything } from 'marked#evaluate/evaluate';
-import { SandList } from 'marked#variable/sandlist';
+import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
+import { SandList } from '../../src/variable/sandlist';
 
 describe('Given Sandbox for Symbol evaluators', (): void => {
 

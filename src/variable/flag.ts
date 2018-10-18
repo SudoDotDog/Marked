@@ -4,7 +4,7 @@
  * @description Flag
  */
 
-import { FLAG_TYPE } from "marked#declare/variable";
+import { FLAG_TYPE } from "../declare/variable";
 
 export class Flag {
 

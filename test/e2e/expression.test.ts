@@ -4,13 +4,12 @@
  * @description Expression Test
  */
 
-require('../../src/binding');
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { useEverything } from 'marked#evaluate/evaluate';
-import { SandList } from 'marked#variable/sandlist';
-import { SandMap } from 'marked#variable/sandmap';
+import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
+import { SandList } from '../../src/variable/sandlist';
+import { SandMap } from '../../src/variable/sandmap';
 
 describe('Given Sandbox for Expression evaluators', (): void => {
 

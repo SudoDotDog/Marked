@@ -5,18 +5,18 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "marked#declare/error";
-import { Evaluator } from "marked#declare/node";
-import { VARIABLE_TYPE } from "marked#declare/variable";
-import { assert } from "marked#util/error/assert";
-import { error } from "marked#util/error/error";
-import { LimitCounter } from "marked#util/node/context";
-import { Flag } from "marked#variable/flag";
-import { SandList } from "marked#variable/sandlist";
-import { SandMap } from "marked#variable/sandmap";
-import { Scope } from "marked#variable/scope";
-import { Trace } from "marked#variable/trace";
+import { ERROR_CODE } from "../declare/error";
+import { Evaluator } from "../declare/node";
+import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
+import { assert } from "../util/error/assert";
+import { error } from "../util/error/error";
+import { LimitCounter } from "../util/node/context";
+import { Flag } from "../variable/flag";
+import { SandList } from "../variable/sandlist";
+import { SandMap } from "../variable/sandmap";
+import { Scope } from "../variable/scope";
+import { Trace } from "../variable/trace";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {

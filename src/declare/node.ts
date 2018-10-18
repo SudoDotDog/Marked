@@ -5,11 +5,11 @@
  */
 
 import * as EST from "estree";
-import { IESTreeType } from "marked#declare/types";
-import { IExposed } from "marked#declare/variable";
-import { Scope } from "marked#variable/scope";
-import { Trace } from "marked#variable/trace";
-import { Sandbox } from "marked/sandbox";
+import { Sandbox } from "../marked/sandbox";
+import { Scope } from "../variable/scope";
+import { Trace } from "../variable/trace";
+import { IESTreeType } from "./types";
+import { IExposed } from "./variable";
 
 export type EST_TYPE = EST.Node['type'];
 

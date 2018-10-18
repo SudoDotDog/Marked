@@ -5,19 +5,19 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "marked#declare/error";
-import { Evaluator } from "marked#declare/node";
-import { assert } from "marked#util/error/assert";
-import { error } from "marked#util/error/error";
-import { rummageSpecialKeyword } from "marked#util/hack";
-import { validateObjectIsSandboxStructure } from "marked#util/node/validator";
-import { getBinaryOperation, getLogicalOperation, getUnaryOperation, getUpdateOperation } from "marked#util/operation";
-import { SandList } from "marked#variable/sandlist";
-import { SandMap } from "marked#variable/sandmap";
-import { Scope } from "marked#variable/scope";
-import { Trace } from "marked#variable/trace";
-import { Variable } from "marked#variable/variable";
+import { ERROR_CODE } from "../declare/error";
+import { Evaluator } from "../declare/node";
 import { Sandbox } from "../marked/sandbox";
+import { assert } from "../util/error/assert";
+import { error } from "../util/error/error";
+import { rummageSpecialKeyword } from "../util/hack";
+import { validateObjectIsSandboxStructure } from "../util/node/validator";
+import { getBinaryOperation, getLogicalOperation, getUnaryOperation, getUpdateOperation } from "../util/operation";
+import { SandList } from "../variable/sandlist";
+import { SandMap } from "../variable/sandmap";
+import { Scope } from "../variable/scope";
+import { Trace } from "../variable/trace";
+import { Variable } from "../variable/variable";
 
 export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
     async function (this: Sandbox, node: EST.BinaryExpression, scope: Scope, trace: Trace): Promise<any> {

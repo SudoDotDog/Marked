@@ -4,9 +4,9 @@
  * @description Assert
  */
 
-import { ERROR_CODE } from "marked#declare/error";
-import { error } from "marked#util/error/error";
 import { isNumber, isString } from "util";
+import { ERROR_CODE } from "../../declare/error";
+import { error } from "../error/error";
 
 class Assert<T> {
 

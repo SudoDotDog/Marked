@@ -3,11 +3,10 @@
  * @description Simple
  */
 
-require('../binding');
-import { END_SIGNAL, IMarkedResult } from 'marked#declare/node';
-import { IMarkedOptions, OptionName } from 'marked#declare/sandbox';
-import { useEverything } from 'marked#evaluate/evaluate';
-import { MarkedError } from 'marked#util/error/error';
+import { END_SIGNAL, IMarkedResult } from '../declare/node';
+import { IMarkedOptions, OptionName } from '../declare/sandbox';
+import { useEverything } from '../evaluate/evaluate';
+import { MarkedError } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
 export const marked = async (script: string, options?: IMarkedOptions): Promise<IMarkedResult> => {
