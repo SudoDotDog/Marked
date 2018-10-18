@@ -53,7 +53,6 @@ ifeq ($(OS), Windows_NT)
 else
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
-	@rm -rf dist_script
 	@rm -rf .nyc_output
 	@rm -rf coverage
 endif
