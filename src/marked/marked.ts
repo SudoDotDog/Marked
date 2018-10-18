@@ -3,13 +3,19 @@
  * @description Simple
  */
 
+import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, IMarkedResult } from '../declare/node';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { useEverything } from '../evaluate/evaluate';
-import { MarkedError } from '../util/error/error';
+import { error, MarkedError } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
 export const marked = async (script: string, options?: IMarkedOptions): Promise<IMarkedResult> => {
+
+    if (!script) {
+
+        throw error(ERROR_CODE.SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED);
+    }
 
     const sandbox = new Sandbox();
     useEverything(sandbox);

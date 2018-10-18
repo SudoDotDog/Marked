@@ -7,6 +7,7 @@
 export enum ERROR_CODE {
 
     UNKNOWN_ERROR = 1000,
+    SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED = 1001,
 
     ACORN_ERROR = 1100,
 
@@ -70,6 +71,7 @@ export const ERROR_LIST: {
 } = {
 
     1000: 'Unknown error',
+    1001: 'Script cannot be null or undefined',
     1100: 'Parse error',
     1911: 'Maximum code length limit exceed',
     1912: 'Maximum expression limit exceed',
