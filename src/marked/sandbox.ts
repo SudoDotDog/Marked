@@ -143,6 +143,7 @@ export class Sandbox implements ISandbox {
             throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
         }
         if (this._count >= this._options.maxExpression) {
+            this.break();
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
 
