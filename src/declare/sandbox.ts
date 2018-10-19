@@ -21,6 +21,7 @@ export interface IMarkedOptions {
 
 export interface ISandboxOptions {
 
+    duration: number;
     maxCodeLength: number;
     maxForLoopLimit: number;
     maxWhileLoopLimit: number;

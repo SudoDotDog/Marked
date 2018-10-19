@@ -16,6 +16,8 @@ describe('Given an Options utils', (): void => {
 
             const result: ISandboxOptions = getDefaultSandboxOption();
             expect(result).to.be.keys(
+
+                'duration',
                 'maxCodeLength',
                 'maxExpression',
                 'maxForLoopLimit',

@@ -13,7 +13,7 @@ import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { markedParser } from '../extension/parser';
 import { assert } from '../util/error/assert';
 import { error } from "../util/error/error";
-import { getDefaultSandboxOption, getRawCodeLength } from '../util/options';
+import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace';
 
@@ -155,21 +155,21 @@ export class Sandbox implements ISandbox {
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
-        if (this._broke) {
+        if (this.getOption('duration') > 0) await awaitableSleep(this.getOption('duration'));
 
+        if (this._broke) {
             throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
         }
         if (this._count >= this._options.maxExpression) {
-
-            this.break();
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
+
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
 
         if (!executor) {
-
             throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
         }
+
         this._count++;
 
         const result: any = await executor.bind(this)(node, scope, trace);
