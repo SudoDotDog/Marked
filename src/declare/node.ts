@@ -6,6 +6,7 @@
 
 import * as EST from "estree";
 import { Sandbox } from "../marked/sandbox";
+import { MarkedError } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 import { IESTreeType } from "./types";
@@ -22,8 +23,16 @@ export enum END_SIGNAL {
     FAILED = 1,
 }
 
-export interface IMarkedResult {
+export interface IMarkedResultSucceed {
 
     exports: IExposed;
-    signal: END_SIGNAL;
+    signal: END_SIGNAL.SUCCEED;
 }
+
+export interface IMarkedResultFailed {
+
+    error: MarkedError;
+    signal: END_SIGNAL.FAILED;
+}
+
+export type MarkedResult = IMarkedResultSucceed | IMarkedResultFailed;

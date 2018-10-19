@@ -4,13 +4,13 @@
  */
 
 import { ERROR_CODE } from '../declare/error';
-import { END_SIGNAL, IMarkedResult } from '../declare/node';
+import { END_SIGNAL, MarkedResult } from '../declare/node';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { useEverything } from '../evaluate/evaluate';
 import { error, MarkedError } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
-export const marked = async (script: string, options?: IMarkedOptions): Promise<IMarkedResult> => {
+export const marked = async (script: string, options?: IMarkedOptions): Promise<MarkedResult> => {
 
     if (!script) {
 
@@ -38,7 +38,11 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
     } catch (error) {
 
         const markedError: MarkedError = error;
-        throw markedError;
+        return {
+
+            signal: END_SIGNAL.FAILED,
+            error: markedError,
+        };
     }
 
     return {
