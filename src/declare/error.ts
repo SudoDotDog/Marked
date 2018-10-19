@@ -51,6 +51,8 @@ export enum ERROR_CODE {
 
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
 
+    NEGATIVE_UNARY_ONLY_AVAILABLE_FOR_VALID_NUMBER = 3310,
+
     UNMOUNTED_AST_TYPE = 6001,
     DUPLICATED_PROVIDED_MODULE_NAME = 6002,
     MODULE_IS_NOT_PROVIDED = 6003,
@@ -103,6 +105,7 @@ export const ERROR_LIST: {
     3114: 'Import namespace is not an object',
     3115: 'Import default object have no default export',
     3151: 'Define get or set to a object is not supported',
+    3310: 'Negative unary only available for valid number',
     6001: 'Unmounted ast type',
     6002: 'Provided module name duplicated',
     6003: 'Module is not provided',
