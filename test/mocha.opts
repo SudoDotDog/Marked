@@ -5,4 +5,4 @@
 
 --recursive
 
-**/*.test.ts
+test/**/*.test.ts
