@@ -18,8 +18,21 @@ export class SandMap<T> {
             .forEach((key: string) => this.set(key, obj[key]));
     }
 
-    public get map(): Map<string, Variable<T>> {
-        return this._map;
+    public get map(): {
+        [key: string]: T;
+    } {
+
+        const map: {
+            [key: string]: T;
+        } = {};
+
+        this._map.forEach((value: Variable<T>, key: string) => map[key] = value.get());
+        return map;
+    }
+
+    public keys(): IterableIterator<string> {
+
+        return this._map.keys();
     }
 
     public get(key: string): T | undefined {

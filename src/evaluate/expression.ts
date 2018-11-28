@@ -144,7 +144,7 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
             throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
         }
 
-        loop: for (const key of map.map.keys()) {
+        loop: for (const key of map.keys()) {
 
             if (limitCounter.addAndCheck()) {
 
