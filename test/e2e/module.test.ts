@@ -75,4 +75,34 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         expect(sandbox.exposed.default).to.be.equal(testValue);
     });
+
+    it('should be able to provide objects', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const testValue: number = chance.integer();
+        sandbox.provide('a', {
+            a: {
+                a: testValue,
+            },
+        });
+
+        await sandbox.evaluate(`import {a} from 'a';export default a.a;`);
+
+        expect(sandbox.exposed.default).to.be.equal(testValue);
+    });
+
+    it('should be able to provide array', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const testValue: number = chance.integer();
+        sandbox.provide('a', {
+            a: [testValue],
+        });
+
+        await sandbox.evaluate(`import {a} from 'a';export default a[0];`);
+
+        expect(sandbox.exposed.default).to.be.equal(testValue);
+    });
 });
