@@ -155,7 +155,7 @@ export class Sandbox implements ISandbox {
 
         this._count++;
 
-        const result: any = await executor.bind(this)(node, scope, trace);
+        const result: any = await executor.bind(this)(node as any, scope as Scope, trace as Trace);
         return result;
     }
 

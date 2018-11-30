@@ -10,9 +10,12 @@ import * as EST from "estree";
 import { ERROR_CODE } from '../../src/declare/error';
 import { VARIABLE_TYPE } from '../../src/declare/variable';
 import * as Variable_Expressions from '../../src/evaluate/variable';
+import { Sandbox } from '../../src/marked/sandbox';
 import { error } from '../../src/util/error/error';
 import { SandList } from '../../src/variable/sandlist';
 import { SandMap } from '../../src/variable/sandmap';
+import { Scope } from '../../src/variable/scope';
+import { Trace } from '../../src/variable/trace';
 import { Variable } from '../../src/variable/variable';
 import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
@@ -48,7 +51,8 @@ describe('Given Variable evaluators', (): void => {
 
             sandbox.when('Literal', mockLLiteralEvaluator);
 
-            const result: any = await Variable_Expressions.arrayExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result: any = await Variable_Expressions.arrayExpressionEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.instanceof(SandList);
             expect(result).to.be.lengthOf(2);
@@ -73,7 +77,8 @@ describe('Given Variable evaluators', (): void => {
 
             sandbox.when('Literal', mockLLiteralEvaluator);
 
-            await Variable_Expressions.assignmentExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            await Variable_Expressions.assignmentExpressionEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
             expect(variable.get()).to.be.equal(value);
@@ -109,7 +114,8 @@ describe('Given Variable evaluators', (): void => {
                 throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name);
             });
 
-            const result = await Variable_Expressions.assignmentExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result = await Variable_Expressions.assignmentExpressionEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.equal(value);
 

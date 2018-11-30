@@ -8,6 +8,9 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
 import * as Module_Expressions from '../../src/evaluate/module';
+import { Sandbox } from '../../src/marked/sandbox';
+import { Scope } from '../../src/variable/scope';
+import { Trace } from '../../src/variable/trace';
 import { createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';
@@ -39,7 +42,8 @@ describe('Given Module evaluators', (): void => {
 
             sandbox.when('Literal', mockLLiteralEvaluator);
 
-            const result: any = await Module_Expressions.exportsDefaultDeclarationEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result: any = await Module_Expressions.exportsDefaultDeclarationEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             // tslint:disable-next-line
             expect(result).to.be.undefined;

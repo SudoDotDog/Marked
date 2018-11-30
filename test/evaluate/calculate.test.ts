@@ -7,6 +7,9 @@
 import { expect } from 'chai';
 import * as EST from "estree";
 import * as Calculate_Expressions from '../../src/evaluate/calculate';
+import { Sandbox } from '../../src/marked/sandbox';
+import { Scope } from '../../src/variable/scope';
+import { Trace } from '../../src/variable/trace';
 import { createLiteral, mockLLiteralEvaluator } from '../mock/node';
 import { MockSandbox } from '../mock/sandbox';
 import { MockScope } from '../mock/scope';
@@ -35,7 +38,8 @@ describe('Given Calculation evaluators', (): void => {
             };
 
             sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.binaryExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result: any = await Calculate_Expressions.binaryExpressionEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.equal(25);
         });
@@ -53,7 +57,8 @@ describe('Given Calculation evaluators', (): void => {
             };
 
             sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.logicalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result: any = await Calculate_Expressions.logicalExpressionEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.equal(true);
         });
@@ -68,7 +73,8 @@ describe('Given Calculation evaluators', (): void => {
             };
 
             sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.logicalExpressionEvaluator.bind(sandbox)(testNode, scope, trace);
+            const result: any = await Calculate_Expressions.logicalExpressionEvaluator
+                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.equal(false);
         });

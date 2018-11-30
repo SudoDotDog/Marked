@@ -68,11 +68,11 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
         if (node.callee.type === 'MemberExpression') {
 
             const object: any = await this.execute(node.callee.object, scope, nextTrace);
-            const result: any = func.apply(object, args);
+            const result: any = func.apply(object, args as any);
             return result;
         } else {
 
-            const result: any = func.apply(null, args);
+            const result: any = func.apply(null, args as any);
             return result;
         }
     };
@@ -310,7 +310,7 @@ export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
         const nextTrace: Trace = trace.stack(node);
 
         const func: (...args: any[]) => Promise<any>
-            = await functionExpressionEvaluator.bind(this)(node, scope, nextTrace);
+            = await functionExpressionEvaluator.bind(this)(node as any, scope, nextTrace);
 
         if (!node.id) throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         const rawName: string = (node.id as EST.Identifier).name;
