@@ -9,8 +9,7 @@ node_js:
 cache: npm
 
 install:
- - npm install
- - npm install --only=dev
+ - make install
  - npm install codecov nyc -g
 
 before_script:

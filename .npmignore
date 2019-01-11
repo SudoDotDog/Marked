@@ -17,6 +17,7 @@ test
 .travis.yml
 .gitignore
 package-lock.json
+yarn.lock
 
 # temp
 .nyc_output

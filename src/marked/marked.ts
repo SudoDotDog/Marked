@@ -3,6 +3,7 @@
  * @description Simple
  */
 
+import { _Map } from '@sudoo/bark';
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, MarkedResult } from '../declare/node';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
@@ -23,13 +24,13 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
     if (options) {
 
         if (options.injects)
-            Object.keys(options.injects).forEach((key: string) =>
+            _Map.keys(options.injects).forEach((key: string) =>
                 sandbox.inject(key, (options.injects as any)[key]));
         if (options.provides)
-            Object.keys(options.provides).forEach((key: string) =>
+            _Map.keys(options.provides).forEach((key: string) =>
                 sandbox.provide(key, (options.provides as any)[key]));
         if (options.sandbox)
-            Object.keys(options.sandbox).forEach((key: string) =>
+            _Map.keys(options.sandbox).forEach((key: string) =>
                 sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
     }
     try {

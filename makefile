@@ -5,13 +5,15 @@ dev := typescript/tsconfig.dev.json
 # NPX functions
 ifeq ($(OS), Windows_NT)
 	tsc := .\node_modules\.bin\tsc
-	mocha := .\node_modules\.bin\mocha
 else
 	tsc := node_modules/.bin/tsc
-	mocha := node_modules/.bin/mocha
 endif
+mocha := node_modules/.bin/mocha
 
-marked: dev
+marked: run
+
+run: dev
+	@node docs/test.js
 
 dev:
 	@echo "[INFO] Building for development"
@@ -20,32 +22,23 @@ dev:
 build:
 	@echo "[INFO] Building for production"
 	@$(tsc) --p $(build)
-
-run: dev
-	@node docs/test.js
-
+	
 tests:
 	@echo "[INFO] Testing with Mocha"
-ifeq ($(OS), Windows_NT)
-	@-setx NODE_ENV test
-else
-	@-export NODE_ENV=test
-endif
-	@$(mocha)
+	@NODE_ENV=test $(mocha)
 
 cov:
 	@echo "[INFO] Testing with Nyc and Mocha"
-ifeq ($(OS), Windows_NT)
-	@-setx NODE_ENV test
-else
-	@-export NODE_ENV=test
-endif
-	@nyc $(mocha)
+	@NODE_ENV=test \
+	nyc $(mocha)
 
 install:
-	@echo "[INFO] Installing Dependences"
-	@npm install
-	@npm install --only=dev
+	@echo "[INFO] Installing dev Dependencies"
+	@yarn install --production=false
+
+install-prod:
+	@echo "[INFO] Installing Dependencies"
+	@yarn install --production=true
 
 clean:
 ifeq ($(OS), Windows_NT)
@@ -57,6 +50,6 @@ else
 	@rm -rf coverage
 endif
 
-publish: install build
+publish: install tests clean build
 	@echo "[INFO] Publishing package"
 	@npm publish --access=public
