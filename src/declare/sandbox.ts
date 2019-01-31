@@ -7,15 +7,10 @@
 import { EST_TYPE, Evaluator } from "./node";
 import { IExposed } from "./variable";
 
-export type Partial<T> = {
-
-    [P in keyof T]?: T[P];
-};
-
 export interface IMarkedOptions {
 
-    injects?: { [key: string]: any; };
-    provides?: { [key: string]: any; };
+    injects?: Record<string, any>;
+    provides?: Record<string, any>;
     sandbox?: Partial<ISandboxOptions>;
 }
 

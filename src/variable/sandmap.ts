@@ -4,14 +4,14 @@
  * @description Map
  */
 
-import { _Map } from "@sudoo/bark";
+import _Map from "@sudoo/bark/map";
 import { Variable } from "../variable/variable";
 
 export class SandMap<T> {
 
     private _map: Map<string, Variable<T>>;
 
-    public constructor(obj?: { [key: string]: any }) {
+    public constructor(obj?: Record<string, any>) {
 
         this._map = new Map<string, Variable<T>>();
 

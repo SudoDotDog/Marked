@@ -3,7 +3,7 @@
  * @description Simple
  */
 
-import { _Map } from '@sudoo/bark';
+import _Map from '@sudoo/bark/map';
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, MarkedResult } from '../declare/node';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
@@ -30,7 +30,7 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
             _Map.keys(options.provides).forEach((key: string) =>
                 sandbox.provide(key, (options.provides as any)[key]));
         if (options.sandbox)
-            _Map.keys(options.sandbox).forEach((key: string) =>
+            _Map.keys(options.sandbox as any).forEach((key: any) =>
                 sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
     }
     try {
