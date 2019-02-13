@@ -28,10 +28,10 @@
   resolved "https://registry.yarnpkg.com/@sudoo/tslint-config/-/tslint-config-1.2.0.tgz#00f02d8b1ec73eedfc9ad89a19293c858f5f6ea2"
   integrity sha512-0kCb5BO9YcG+eE9MLLFz2GAlDdFY9v3xEYQbyouMAC8FedPky+tYB8/2jfvpnKdidF/lQXK7tfrN34EBX1fX8A==
 
-"@types/acorn@^4.0.4":
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/@types/acorn/-/acorn-4.0.4.tgz#b3ee72dcd81d1daeea03fed67d7ca7c2574c313b"
-  integrity sha512-/qLQgGw/hzbpWpEiSrnNDqiVtw7J/wBEfWMWN8HPhOHUMINkL7ggOtj8VSyjfzXlNkoUbStomzKsLEATXcMSzg==
+"@types/acorn@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@types/acorn/-/acorn-4.0.5.tgz#e29fdf884695e77be4e99e67d748f5147255752d"
+  integrity sha512-603sPiZ4GVRHPvn6vNgEAvJewKsy+zwRWYS2MeIMemgoAtcjlw2G3lALxrb9OPA17J28bkB71R33yXlQbUatCA==
   dependencies:
     "@types/estree" "*"
 
@@ -55,15 +55,15 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
   integrity sha512-lAVp+Kj54ui/vLUFxsJTMtWvZraZxum3w3Nwkble2dNuV5VnPA+Mi2oGX9XYJAaIvZi3tn3cbjS/qcJXRb6Bww==
 
-"@types/node@^10.12.20":
-  version "10.12.20"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.20.tgz#f79f959acd3422d0889bd1ead1664bd2d17cd367"
-  integrity sha512-9spv6SklidqxevvZyOUGjZVz4QRXGu2dNaLyXIFzFYZW0AGDykzPRIUFJXTlQXyfzAucddwTcGtJNim8zqSOPA==
+"@types/node@^11.9.3":
+  version "11.9.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.3.tgz#14adbb5ab8cd563f549fbae8dbe92e0b7d6e76cc"
+  integrity sha512-DMiqG51GwES/c4ScBY0u5bDlH44+oY8AeYHjY1SGCWidD7h08o1dfHue/TGK7REmif2KiJzaUskO+Q0eaeZ2fQ==
 
-acorn@^6.0.6:
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.6.tgz#cd75181670d5b99bdb1b1c993941d3a239ab1f56"
-  integrity sha512-5M3G/A4uBSMIlfJ+h9W125vJvPFH/zirISsW5qfxF5YzEvXJCtolLoQvM5yZft0DvMcUrPGKPOlgEu55I6iUtA==
+acorn@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.0.tgz#b0a3be31752c97a0f7013c5f4903b71a05db6818"
+  integrity sha512-MW/FjM+IvU9CgBzjO3UIPCE2pyEwUsoFl+VGdczOPEdxfGFjuKny/gN54mOuX7Qxmb9Rg9MCn2oKiSUeW+pjrw==
 
 ansi-regex@^2.0.0:
   version "2.1.1"

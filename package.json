@@ -22,11 +22,11 @@
   "dependencies": {
     "@sudoo/bark": "^2.0.1",
     "@types/estree": "0.0.39",
-    "acorn": "^6.0.6"
+    "acorn": "^6.1.0"
   },
   "devDependencies": {
-    "@types/acorn": "^4.0.4",
-    "@types/node": "^10.12.20",
+    "@types/acorn": "^4.0.5",
+    "@types/node": "^11.9.3",
     "@sudoo/triforce": "^1.2.0"
   },
   "nyc": {
