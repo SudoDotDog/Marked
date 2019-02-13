@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
-    "@sudoo/bark": "^2.0.1",
+    "@sudoo/bark": "^2.1.0",
     "@types/estree": "0.0.39",
     "acorn": "^6.1.0"
   },
