@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@types/acorn": "^4.0.5",
-    "@types/node": "^11.9.3",
-    "@sudoo/triforce": "^1.2.0"
+    "@types/node": "^11.9.5",
+    "@sudoo/triforce": "^1.4.0"
   },
   "nyc": {
     "extension": [
