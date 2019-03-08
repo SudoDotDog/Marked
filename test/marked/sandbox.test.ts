@@ -17,7 +17,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
     const chance = new Chance('sandbox-configurations');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = new Sandbox();
+        const sandbox: Sandbox = Sandbox.create();
         useEverything(sandbox);
         return sandbox;
     };

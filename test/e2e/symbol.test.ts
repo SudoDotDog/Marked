@@ -15,7 +15,7 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
     const chance = new Chance('sandbox-symbol-evaluators-module');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = new Sandbox();
+        const sandbox: Sandbox = Sandbox.create();
         useEverything(sandbox);
         return sandbox;
     };

@@ -19,19 +19,25 @@ import { Trace } from '../variable/trace';
 
 export class Sandbox implements ISandbox {
 
-    private _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
+    public static create(): Sandbox {
+
+        return new Sandbox();
+    }
+
+    private readonly _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
+    private readonly _rootScope: Scope;
+    private readonly _parser: typeof Acorn.Parser;
+
+    private readonly _configs: Map<string, any>;
+    private readonly _exposed: Map<string, any>;
+    private readonly _modules: Map<string, any>;
+
+    private readonly _options: ISandboxOptions;
+
     private _count: number;
-    private _rootScope: Scope;
-    private _parser: typeof Acorn.Parser;
-
     private _broke: boolean;
-    private _configs: Map<string, any>;
-    private _exposed: Map<string, any>;
-    private _modules: Map<string, any>;
 
-    private _options: ISandboxOptions;
-
-    public constructor() {
+    private constructor() {
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();

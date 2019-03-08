@@ -14,7 +14,7 @@ describe('Given Sandbox for Variable evaluators', (): void => {
     const chance = new Chance('sandbox-variable-evaluators-module');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = new Sandbox();
+        const sandbox: Sandbox = Sandbox.create();
         useEverything(sandbox);
         return sandbox;
     };

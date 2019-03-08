@@ -16,7 +16,7 @@ describe('Given Sandbox for Expression evaluators', (): void => {
     const chance = new Chance('sandbox-module-evaluators-expression');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = new Sandbox();
+        const sandbox: Sandbox = Sandbox.create();
         useEverything(sandbox);
         return sandbox;
     };

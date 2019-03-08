@@ -18,7 +18,7 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
         throw error(ERROR_CODE.SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED);
     }
 
-    const sandbox = new Sandbox();
+    const sandbox: Sandbox = Sandbox.create();
     useEverything(sandbox);
 
     if (options) {
