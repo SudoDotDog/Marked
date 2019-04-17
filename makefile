@@ -3,12 +3,10 @@ build := typescript/tsconfig.build.json
 dev := typescript/tsconfig.dev.json
 
 # NPX functions
-ifeq ($(OS), Windows_NT)
-	tsc := .\node_modules\.bin\tsc
-else
-	tsc := node_modules/.bin/tsc
-endif
+tsc := node_modules/.bin/tsc
 mocha := node_modules/.bin/mocha
+
+.IGNORE: clean-linux
 
 marked: run
 
@@ -17,11 +15,11 @@ run: dev
 
 dev:
 	@echo "[INFO] Building for development"
-	@$(tsc) --p $(dev)
+	@NODE_ENV=development $(tsc) --p $(dev)
 
 build:
 	@echo "[INFO] Building for production"
-	@$(tsc) --p $(build)
+	@NODE_ENV=production $(tsc) --p $(build)
 	
 tests:
 	@echo "[INFO] Testing with Mocha"
@@ -40,15 +38,13 @@ install-prod:
 	@echo "[INFO] Installing Dependencies"
 	@yarn install --production=true
 
-clean:
-ifeq ($(OS), Windows_NT)
-	@echo "[INFO] Skipping"
-else
+clean: clean-linux
+
+clean-linux:
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
 	@rm -rf .nyc_output
 	@rm -rf coverage
-endif
 
 publish: install tests clean build
 	@echo "[INFO] Publishing package"
