@@ -19,9 +19,9 @@
     js-tokens "^4.0.0"
 
 "@sudoo/bark@^2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.5.1.tgz#b898c0c302a2ccf8cb881a57f15474569b91cf32"
-  integrity sha512-vVkZtwRFbx5jtZzyZI8ZcdDEWYJN3H1Tb/PwzoxpPIf8KkzNftQL4VW+9tVfrNiw/MHyY92HWQDjKsY4WONQGQ==
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.6.3.tgz#b617d9c366ac7f99f4e8953fea10fbf52be6b32b"
+  integrity sha512-6Wmbjeqrx3rX7UBdNckj2ZkH+8LAtq9Lc28GhO5UoTrh5xtBQ+TVVAPYULuTd2C3GiOvC1nI9g0MgX7w5rux7Q==
 
 "@sudoo/triforce@^1.6.0":
   version "1.6.0"
