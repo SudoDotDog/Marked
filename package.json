@@ -22,7 +22,7 @@
   "dependencies": {
     "@sudoo/bark": "^2.5.1",
     "@types/estree": "0.0.39",
-    "acorn": "^6.1.1"
+    "acorn": "^7.0.0"
   },
   "devDependencies": {
     "@sudoo/triforce": "^1.6.0",
