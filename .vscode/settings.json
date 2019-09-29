@@ -3,6 +3,7 @@
         "Dependences",
         "PCXPY",
         "RAISEDAT",
+        "WMXPY",
         "binop",
         "clazz",
         "codecov",
