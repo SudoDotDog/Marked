@@ -101,7 +101,7 @@ export class Sandbox implements ISandbox {
 
     public mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): Sandbox {
 
-        this._map.set(type, evaluator);
+        this._map.set(type, evaluator as any);
         return this;
     }
 
