@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
-    "@sudoo/bark": "^2.5.1",
+    "@sudoo/bark": "^2.7.1",
     "@types/estree": "0.0.39",
-    "acorn": "^7.0.0"
+    "acorn": "^7.1.0"
   },
   "devDependencies": {
-    "@sudoo/triforce": "^1.6.0",
+    "@sudoo/triforce": "^1.8.3",
     "@types/acorn": "^4.0.5"
   },
   "nyc": {
