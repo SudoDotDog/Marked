@@ -4,6 +4,7 @@ dev := typescript/tsconfig.dev.json
 
 # NPX functions
 tsc := node_modules/.bin/tsc
+ts_node := node_modules/.bin/ts-node
 mocha := node_modules/.bin/mocha
 
 .IGNORE: clean-linux
