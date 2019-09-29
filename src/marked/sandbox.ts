@@ -143,7 +143,10 @@ export class Sandbox implements ISandbox {
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
-        if (this.getOption('duration') > 0) await awaitableSleep(this.getOption('duration'));
+        if (this.getOption('duration') > 0) {
+
+            await awaitableSleep(this.getOption('duration'));
+        }
 
         if (this._broke) {
             throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
