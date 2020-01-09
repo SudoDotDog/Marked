@@ -70,10 +70,10 @@
   resolved "https://registry.yarnpkg.com/@types/chance/-/chance-1.0.8.tgz#48e0a5648f54487a9128915fe090154fb1a2f348"
   integrity sha512-S1VWROFGexiUYyBFsP0NRjp6PkJ4rKECQ3HQJ0cJKW/2BcNyas9lXATRdnTNnN4CsICjEXTltAalAo8dJQQLKg==
 
-"@types/estree@*", "@types/estree@0.0.41":
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.41.tgz#fd90754150b57432b72bf560530500597ff04421"
-  integrity sha512-rIAmXyJlqw4KEBO7+u9gxZZSQHaCNnIzYrnNmYVpgfJhxTqO0brCX0SYpqUTkVI5mwwUwzmtspLBGBKroMeynA==
+"@types/estree@*", "@types/estree@0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.42.tgz#8d0c1f480339efedb3e46070e22dd63e0430dd11"
+  integrity sha512-K1DPVvnBCPxzD+G51/cxVIoc2X8uUVl1zpJeE6iKcgHMj4+tbat5Xu4TjV7v2QSDbIeAfLi2hIk+u2+s0MlpUQ==
 
 "@types/mocha@5.2.7":
   version "5.2.7"
