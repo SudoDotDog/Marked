@@ -23,15 +23,15 @@
   resolved "https://registry.yarnpkg.com/@sudoo/bark/-/bark-2.7.1.tgz#84b9db0be3aa7b4d6896ced81d9fa9aac96578ef"
   integrity sha512-0zBFbIQAtu3XNJkFPszdljYXXIPXzR63qypfTwFRupmu3gxgfBMtdPShbQebGuGG0KQEmXasGMBQVi2O0jWbbQ==
 
-"@sudoo/io@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@sudoo/io/-/io-1.6.1.tgz#d8d18d17ed61f36eafa6aa7e4b22562f2bd801a5"
-  integrity sha512-dJPWaZocnnDtZL5kaxbpSQD02GxURxaQC6SmQ8FaPGuijv2cnURqVoSwpZmVexkMMymOmTzWEd7NqK+KfgJuAA==
+"@sudoo/io@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@sudoo/io/-/io-1.6.2.tgz#f76b4ed1162467b04dd81600bbe1e5eda3102cf0"
+  integrity sha512-aX9XpyZ7Ebh+1Afix662pmYd0gYNG0D49GIDTvDD9DbkZJvKpzUPEndtmDf6rq2kVzvbOezt0BuQPnexYhgq3w==
   dependencies:
     "@sudoo/bark" "^2.7.1"
-    connor "^2.6.0"
+    connor "^2.6.1"
 
-"@sudoo/triforce@^2.0.4":
+"@sudoo/triforce@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@sudoo/triforce/-/triforce-2.1.0.tgz#6fd673bbf638d97311219ae65f0740dcca1df69a"
   integrity sha512-s3xaz709b07C2pvtweH+l3A4pcW7VHd0GXJUT7BzGIOZIYjuKAHgQ5BSnUQaAiwwno6WsSaodKasbki24VlJWw==
@@ -200,7 +200,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-connor@^2.6.0:
+connor@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/connor/-/connor-2.6.1.tgz#a25bdd3c84a2b79325496e5d18de68be81da5481"
   integrity sha512-V2RiLFaZoDIy1GAXoD7I57c90xVWlgRewMGLyRHhMAMmopHzSnDm2EswUj0n5CdEAxHld6/RI+sxUgUquXftyQ==

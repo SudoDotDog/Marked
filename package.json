@@ -25,8 +25,8 @@
     "acorn": "^7.1.0"
   },
   "devDependencies": {
-    "@sudoo/io": "^1.6.1",
-    "@sudoo/triforce": "^2.0.4",
+    "@sudoo/io": "^1.6.2",
+    "@sudoo/triforce": "^2.1.0",
     "@types/acorn": "^4.0.5"
   },
   "nyc": {
