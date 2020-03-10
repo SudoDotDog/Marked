@@ -25,6 +25,9 @@ app
 # lock
 yarn.lock
 
+# macOS
+.DS_Store
+
 # nyc test coverage
 .nyc_output
 
