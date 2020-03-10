@@ -21,11 +21,11 @@
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
     "@sudoo/bark": "^2.7.2",
-    "acorn": "^7.1.0"
+    "acorn": "^7.1.1"
   },
   "devDependencies": {
-    "@sudoo/io": "^1.6.2",
-    "@sudoo/triforce": "^2.1.0",
+    "@sudoo/io": "^1.7.0",
+    "@sudoo/triforce": "^2.2.1",
     "@types/acorn": "^4.0.5",
     "@types/estree": "0.0.42"
   },
