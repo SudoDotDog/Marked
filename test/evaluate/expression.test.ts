@@ -268,6 +268,7 @@ describe('Given Expression evaluators', (): void => {
                     }],
                     kind: 'const',
                 },
+                await: false,
                 right: createIdentifier(value),
                 body: {
                     type: 'BlockStatement',

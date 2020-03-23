@@ -73,10 +73,14 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
                 } else {
 
                     if (object instanceof SandMap) {
+
                         const securedMember: string = assert(member as string).to.be.string(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP).firstValue();
                         object.set(securedMember, undefined);
                         const fetted: Variable<any> | undefined = object.getRaw(securedMember);
-                        if (!fetted) throw error(ERROR_CODE.UNKNOWN_ERROR, (fetted as any).toString(), node, trace);
+
+                        if (!fetted) {
+                            throw error(ERROR_CODE.UNKNOWN_ERROR, (fetted as any).toString(), node, trace);
+                        }
                         return fetted;
                     } else {
                         throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, (memberVariable as any), node, trace);
@@ -113,12 +117,18 @@ export const memberEvaluator: Evaluator<'MemberExpression'> =
 
         if (object instanceof SandList) {
 
-            if (isNumber(key)) return object.get(key);
-            else throw error(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST, key, node, trace);
+            if (isNumber(key)) {
+                return object.get(key);
+            } else {
+                throw error(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST, key, node, trace);
+            }
         } else if (object instanceof SandMap) {
 
-            if (isString(key)) return object.get(key);
-            else throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
+            if (isString(key)) {
+                return object.get(key);
+            } else {
+                throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
+            }
         }
 
         return object[key];

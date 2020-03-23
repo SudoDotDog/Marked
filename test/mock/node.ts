@@ -13,7 +13,7 @@ export const createLiteral = (value: string | boolean | number | null): EST.Lite
     };
 };
 
-export const mockLLiteralEvaluator = (node: EST.Literal) => {
+export const mockLLiteralEvaluator: any = (node: EST.Literal) => {
 
     return node.value;
 };
