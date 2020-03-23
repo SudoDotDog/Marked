@@ -6,7 +6,9 @@
 
 import * as EST from "estree";
 
-export interface IESTreeType {
+export type EST_TYPE = EST.Node['type'];
+
+export interface IESTreeType extends Record<EST_TYPE, any> {
 
     Identifier: EST.Identifier;
     Literal: EST.Literal;

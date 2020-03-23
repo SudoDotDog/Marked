@@ -132,6 +132,10 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
         const map: SandMap<any> = new SandMap();
         for (const property of node.properties) {
 
+            if (property.type === 'SpreadElement') {
+                throw error(ERROR_CODE.SPREAD_ELEMENT_NOT_SUPPORT, property.type, property, trace);
+            }
+
             const keyNode: EST.Literal | EST.Identifier
                 = property.key as EST.Literal | EST.Identifier;
 

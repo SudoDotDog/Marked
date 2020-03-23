@@ -50,6 +50,7 @@ export enum ERROR_CODE {
     IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT = 3115,
 
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
+    SPREAD_ELEMENT_NOT_SUPPORT = 3152,
 
     NEGATIVE_UNARY_ONLY_AVAILABLE_FOR_VALID_NUMBER = 3310,
 
@@ -105,6 +106,7 @@ export const ERROR_LIST: {
     3114: 'Import namespace is not an object',
     3115: 'Import default object have no default export',
     3151: 'Define get or set to a object is not supported',
+    3152: 'Spread element is not supported',
     3310: 'Negative unary only available for valid number',
     6001: 'Unmounted ast type',
     6002: 'Provided module name duplicated',

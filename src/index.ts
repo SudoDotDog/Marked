@@ -3,8 +3,9 @@
  * @description Index
  */
 
-export { END_SIGNAL, EST_TYPE, Evaluator, MarkedResult } from "./declare/node";
+export { END_SIGNAL, Evaluator, MarkedResult } from "./declare/node";
 export { IMarkedOptions, OptionName } from "./declare/sandbox";
+export { EST_TYPE } from "./declare/types";
 export { IExposed } from "./declare/variable";
 export { marked as Marked } from "./marked/marked";
 export { Sandbox } from "./marked/sandbox";

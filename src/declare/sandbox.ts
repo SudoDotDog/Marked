@@ -4,7 +4,8 @@
  * @description Sandbox
  */
 
-import { EST_TYPE, Evaluator } from "./node";
+import { Evaluator } from "./node";
+import { EST_TYPE } from "./types";
 import { IExposed } from "./variable";
 
 export interface IMarkedOptions {
