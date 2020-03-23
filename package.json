@@ -27,7 +27,7 @@
     "@sudoo/io": "^1.7.0",
     "@sudoo/triforce": "^2.2.1",
     "@types/acorn": "^4.0.5",
-    "@types/estree": "0.0.42"
+    "@types/estree": "0.0.44"
   },
   "nyc": {
     "extension": [
