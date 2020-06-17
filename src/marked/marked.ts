@@ -24,14 +24,14 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
     if (options) {
 
         if (options.injects)
-            _Map.keys(options.injects).forEach((key: string) =>
-                sandbox.inject(key, (options.injects as any)[key]));
+            {_Map.keys(options.injects).forEach((key: string) =>
+                sandbox.inject(key, (options.injects as any)[key]));}
         if (options.provides)
-            _Map.keys(options.provides).forEach((key: string) =>
-                sandbox.provide(key, (options.provides as any)[key]));
+            {_Map.keys(options.provides).forEach((key: string) =>
+                sandbox.provide(key, (options.provides as any)[key]));}
         if (options.sandbox)
-            _Map.keys(options.sandbox as any).forEach((key: any) =>
-                sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
+            {_Map.keys(options.sandbox as any).forEach((key: any) =>
+                sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));}
     }
     try {
 

@@ -38,6 +38,6 @@ export const error = (code: ERROR_CODE, info?: string, node?: EST.Node, trace?: 
         ? new MarkedError(code, ERROR_LIST[code], info, node, trace)
         : new MarkedError(ERROR_CODE.INTERNAL_ERROR, ERROR_LIST[ERROR_CODE.INTERNAL_ERROR], info, node, trace);
 
-    if (newError.code > 9001) console.log(newError);
+    if (newError.code > 9001) {console.log(newError);}
     return newError;
 };

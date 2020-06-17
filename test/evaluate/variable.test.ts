@@ -110,7 +110,7 @@ describe('Given Variable evaluators', (): void => {
             sandbox.when('Identifier', (node: EST.Identifier) => {
 
                 const rummaged: Variable<any> | null = scope.rummage(node.name);
-                if (rummaged) return rummaged.get();
+                if (rummaged) {return rummaged.get();}
                 throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name);
             });
 

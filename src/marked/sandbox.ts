@@ -133,7 +133,7 @@ export class Sandbox implements ISandbox {
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
 
         const value: ISandboxOptions[T] = this._options[name];
-        return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
+        return assert(value).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): Sandbox {
@@ -180,7 +180,7 @@ export class Sandbox implements ISandbox {
             return AST;
         } catch (err) {
 
-            const syntaxError = err as any;
+            const syntaxError = err;
             throw error(ERROR_CODE.ACORN_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
         }
     }

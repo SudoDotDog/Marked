@@ -33,8 +33,8 @@ export class LimitCounter {
 
     public check(): boolean {
 
-        if (this._count > this._limit) return true;
-        else return false;
+        if (this._count > this._limit) {return true;}
+        else {return false;}
     }
 
     public reset(): LimitCounter {

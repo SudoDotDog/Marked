@@ -40,12 +40,12 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
     async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        if (scope.hasParent()) throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace);
+        if (scope.hasParent()) {throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace);}
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
         const mod: any | null = this.module(source);
-        if (!Boolean(mod)) throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);
+        if (!Boolean(mod)) {throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);}
 
         for (const specifier of node.specifiers) {
 

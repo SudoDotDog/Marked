@@ -118,7 +118,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
 
         const value: ISandboxOptions[T] = this._options[name];
-        return assert(value as ISandboxOptions[T]).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
+        return assert(value).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): MockSandbox {

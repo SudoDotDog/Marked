@@ -37,7 +37,7 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
 export const breakEvaluator: Evaluator<'BreakStatement'> =
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
-        if (node.label) throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
+        if (node.label) {throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);}
         const flag: Flag = Flag.fromBreak();
 
         return flag;
@@ -46,7 +46,7 @@ export const breakEvaluator: Evaluator<'BreakStatement'> =
 export const continueEvaluator: Evaluator<'ContinueStatement'> =
     async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
-        if (node.label) throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
+        if (node.label) {throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);}
         const flag: Flag = Flag.fromContinue();
 
         return flag;
@@ -56,7 +56,7 @@ export const identifierEvaluator: Evaluator<'Identifier'> =
     async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
 
         const variable: Variable<any> | null = scope.rummage(node.name);
-        if (variable) return variable.get();
+        if (variable) {return variable.get();}
         throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name, node, trace);
     };
 
