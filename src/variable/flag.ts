@@ -8,17 +8,17 @@ import { FLAG_TYPE } from "../declare/variable";
 
 export class Flag {
 
-    public static fromReturn() {
+    public static fromReturn(): Flag {
 
         return new Flag(FLAG_TYPE.RETURN);
     }
 
-    public static fromBreak() {
+    public static fromBreak(): Flag {
 
         return new Flag(FLAG_TYPE.BREAK);
     }
 
-    public static fromContinue() {
+    public static fromContinue(): Flag {
 
         return new Flag(FLAG_TYPE.CONTINUE);
     }

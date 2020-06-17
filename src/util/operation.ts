@@ -42,6 +42,7 @@ export const getBinaryOperation
             case '&': return null;
             case '*': return (left: any, right: any) => left * right;
             case '**': return null;
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             case '+': return (left: any, right: any) => left + right;
             case '-': return (left: any, right: any) => left - right;
             case '/': return (left: any, right: any) => left / right;
@@ -69,6 +70,7 @@ export const getUpdateOperation
 
         switch (symbol) {
 
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             case '++': return (value: any) => value + 1;
             case '--': return (value: any) => value - 1;
         }
@@ -99,6 +101,7 @@ export const getAssignmentOperation
             case '&=': return null;
             case '**=': return null;
             case '*=': return null;
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             case '+=': return (variable: Variable<any>, value: any) => variable.set(variable.get() + value);
             case '-=': return (variable: Variable<any>, value: any) => variable.set(variable.get() - value);
             case '/=': return null;

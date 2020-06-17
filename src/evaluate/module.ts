@@ -15,6 +15,7 @@ import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
+    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -40,12 +41,12 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
     async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        if (scope.hasParent()) {throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace);}
+        if (scope.hasParent()) { throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace); }
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
         const mod: any | null = this.module(source);
-        if (!Boolean(mod)) {throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);}
+        if (!Boolean(mod)) { throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace); }
 
         for (const specifier of node.specifiers) {
 
@@ -53,7 +54,7 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
             const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
             switch (specifier.type) {
 
-                case 'ImportDefaultSpecifier':
+                case 'ImportDefaultSpecifier': {
 
                     if (!(typeof mod === 'object' && Boolean(mod.default))) {
 
@@ -61,7 +62,8 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
                     }
                     register(target, mod.default);
                     break;
-                case 'ImportNamespaceSpecifier':
+                }
+                case 'ImportNamespaceSpecifier': {
 
                     if (!(typeof mod === 'object')) {
 
@@ -70,7 +72,8 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
                     const map: SandMap<any> = new SandMap(mod);
                     register(target, map);
                     break;
-                case 'ImportSpecifier':
+                }
+                case 'ImportSpecifier': {
 
                     const imported: string = specifier.imported.name;
                     if (!Boolean(mod[imported])) {
@@ -79,15 +82,18 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
                     }
                     register(target, mod[imported]);
                     break;
-                default:
+                }
+                default: {
 
                     throw error(ERROR_CODE.UNKNOWN_ERROR, (specifier as any).type, node, trace);
+                }
             }
         }
         return;
     };
 
 export const importDefaultSpecifierEvaluator: Evaluator<'ImportDefaultSpecifier'> =
+    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.ImportDefaultSpecifier, scope: Scope, trace: Trace): Promise<any> {
 
         const name: string = node.local.name;
@@ -95,6 +101,7 @@ export const importDefaultSpecifierEvaluator: Evaluator<'ImportDefaultSpecifier'
     };
 
 export const importNamespaceSpecifierEvaluator: Evaluator<'ImportNamespaceSpecifier'> =
+    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.ImportNamespaceSpecifier, scope: Scope, trace: Trace): Promise<any> {
 
         const name: string = node.local.name;
@@ -102,6 +109,7 @@ export const importNamespaceSpecifierEvaluator: Evaluator<'ImportNamespaceSpecif
     };
 
 export const importSpecifierEvaluator: Evaluator<'ImportSpecifier'> =
+    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.ImportSpecifier, scope: Scope, trace: Trace): Promise<any> {
 
         const name: string = node.local.name;

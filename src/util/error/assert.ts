@@ -85,6 +85,7 @@ class Assert<T> {
         return this;
     }
 
+    // eslint-disable-next-line id-blacklist
     public number(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
 
         const result: boolean = this.eachElement((value: T) => {
@@ -98,6 +99,7 @@ class Assert<T> {
         return this;
     }
 
+    // eslint-disable-next-line id-blacklist
     public string(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
 
         const result: boolean = this.eachElement((value: T) => {
@@ -130,7 +132,7 @@ class Assert<T> {
     }
 }
 
-export const assert = <T>(element: T) => {
+export const assert = <T>(element: T): Assert<T> => {
 
     return new Assert<T>(element);
 };

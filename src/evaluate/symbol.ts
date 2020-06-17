@@ -35,32 +35,36 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
     };
 
 export const breakEvaluator: Evaluator<'BreakStatement'> =
+    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
-        if (node.label) {throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);}
+        if (node.label) { throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace); }
         const flag: Flag = Flag.fromBreak();
 
         return flag;
     };
 
 export const continueEvaluator: Evaluator<'ContinueStatement'> =
+    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
-        if (node.label) {throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);}
+        if (node.label) { throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace); }
         const flag: Flag = Flag.fromContinue();
 
         return flag;
     };
 
 export const identifierEvaluator: Evaluator<'Identifier'> =
+    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
 
         const variable: Variable<any> | null = scope.rummage(node.name);
-        if (variable) {return variable.get();}
+        if (variable) { return variable.get(); }
         throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name, node, trace);
     };
 
 export const literalEvaluator: Evaluator<'Literal'> =
+    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.Literal, scope: Scope, trace: Trace): Promise<any> {
 
         return node.value;
@@ -95,6 +99,7 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
     };
 
 export const thisExpressionEvaluator: Evaluator<'ThisExpression'> =
+    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.ThisExpression, scope: Scope, trace: Trace): Promise<SandMap<any>> {
 
         const thisValue: SandMap<any> = scope.findThis();

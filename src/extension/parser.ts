@@ -7,7 +7,7 @@
 import * as Acorn from 'acorn';
 import { createKeywordType, insertKeywordToRegExp } from '../util/hack';
 
-export const markedParser = (Parser: any) => {
+export const markedParser = (Parser: any): any => {
 
     return class MarkedParser extends Parser {
 

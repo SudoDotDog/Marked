@@ -8,7 +8,7 @@ import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, MarkedResult } from '../declare/node';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { useEverything } from '../evaluate/evaluate';
-import { error, MarkedError } from '../util/error/error';
+import { error } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
 export const marked = async (script: string, options?: IMarkedOptions): Promise<MarkedResult> => {
@@ -23,22 +23,25 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
 
     if (options) {
 
-        if (options.injects)
-            {_Map.keys(options.injects).forEach((key: string) =>
-                sandbox.inject(key, (options.injects as any)[key]));}
-        if (options.provides)
-            {_Map.keys(options.provides).forEach((key: string) =>
-                sandbox.provide(key, (options.provides as any)[key]));}
-        if (options.sandbox)
-            {_Map.keys(options.sandbox as any).forEach((key: any) =>
-                sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));}
+        if (options.injects) {
+            _Map.keys(options.injects).forEach((key: string) =>
+                sandbox.inject(key, (options.injects as any)[key]));
+        }
+        if (options.provides) {
+            _Map.keys(options.provides).forEach((key: string) =>
+                sandbox.provide(key, (options.provides as any)[key]));
+        }
+        if (options.sandbox) {
+            _Map.keys(options.sandbox as any).forEach((key: any) =>
+                sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
+        }
     }
+
     try {
 
         await sandbox.evaluate(script);
-    } catch (error) {
+    } catch (markedError) {
 
-        const markedError: MarkedError = error;
         return {
 
             signal: END_SIGNAL.FAILED,
