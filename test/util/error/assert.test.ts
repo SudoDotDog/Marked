@@ -57,7 +57,7 @@ describe('Given an <Assert> function', (): void => {
 
         const result: null = assert(null).to.be.not.exist().firstValue();
 
-        // tslint:disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(result).to.be.null;
     });
 
@@ -88,7 +88,8 @@ describe('Given an <Assert> function', (): void => {
     it('true should be fine if element is true', (): void => {
 
         const result: boolean = assert(true).to.be.true().firstValue();
-        // tslint:disable-next-line
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(result).to.be.true;
     });
 

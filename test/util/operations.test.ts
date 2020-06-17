@@ -31,10 +31,11 @@ describe('Given an Operation utils', (): void => {
 
                 if (operation) {
 
+                    // eslint-disable-next-line no-eval
                     expect(operation(left, right)).to.be.equal(eval(`${left} ${operator} ${right}`));
                 } else {
 
-                    // tslint:disable-next-line
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     expect(operation).to.be.null;
                 }
             });
@@ -54,10 +55,11 @@ describe('Given an Operation utils', (): void => {
 
                 if (operation) {
 
+                    // eslint-disable-next-line no-eval
                     expect(operation(element)).to.be.equal(eval(`${operator} ${element}`));
                 } else {
 
-                    // tslint:disable-next-line
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     expect(operation).to.be.null;
                 }
             });
@@ -68,7 +70,6 @@ describe('Given an Operation utils', (): void => {
 
         it('should return correct result', (): void => {
 
-            const element: number = chance.integer({ min: 5, max: 50 });
             const binaryOperators: EST.AssignmentOperator[]
                 = ['%=', '&=', '**=', '*=', '+=', '-=',
                     '/=', '<<=', '=', '>>=', '>>>=', '^=', '|='];
@@ -78,8 +79,8 @@ describe('Given an Operation utils', (): void => {
 
                 if (!operation) {
 
-                     // tslint:disable-next-line
-                     expect(operation).to.be.null;
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    expect(operation).to.be.null;
                 }
             });
         });

@@ -6,6 +6,7 @@
         "RMRF",
         "WMXPY",
         "binop",
+        "camelcase",
         "clazz",
         "codecov",
         "estree",

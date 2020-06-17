@@ -49,7 +49,7 @@ describe('Given an Scope class', (): void => {
 
         expect((scope as any)._scopeMap.get(name).get()).to.be.equal(value);
 
-        // tslint:disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(() => scope.validateEditable(name)).to.be.not.throw;
     });
 });

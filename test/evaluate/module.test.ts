@@ -7,6 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
+// eslint-disable-next-line camelcase
 import * as Module_Expressions from '../../src/evaluate/module';
 import { Sandbox } from '../../src/marked/sandbox';
 import { Scope } from '../../src/variable/scope';
@@ -45,7 +46,7 @@ describe('Given Module evaluators', (): void => {
             const result: any = await Module_Expressions.exportsDefaultDeclarationEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
-            // tslint:disable-next-line
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result).to.be.undefined;
             expect(sandbox.exposed.default).to.be.equal(testValue);
         });

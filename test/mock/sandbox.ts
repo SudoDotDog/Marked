@@ -80,6 +80,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public inject(name: string, value: any): MockSandbox {
 
         return this;
@@ -127,11 +128,13 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this;
     }
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     public async evaluate(script: string): Promise<string> {
 
         return script;
     }
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     public async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
 
         this._executedList.push(node);

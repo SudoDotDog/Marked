@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
 import { VARIABLE_TYPE } from '../../src/declare/variable';
+// eslint-disable-next-line camelcase
 import * as Evaluator_Expressions from '../../src/evaluate/expression';
 import { Sandbox } from '../../src/marked/sandbox';
 import { getBinaryOperation } from '../../src/util/operation';
@@ -61,7 +62,10 @@ describe('Given Expression evaluators', (): void => {
 
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
-                .forEach(async (element: EST.Statement) => await sandbox.execute(element, scope, trace)));
+                .forEach((element: EST.Statement) => {
+                    sandbox.execute(element, scope, trace);
+                }));
+
             sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
 
             const func: any = await Evaluator_Expressions.arrowFunctionEvaluator
@@ -150,6 +154,8 @@ describe('Given Expression evaluators', (): void => {
 
             await Evaluator_Expressions.doWhileStatementEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
+
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(sandbox.count).to.be.equal(15);
             expect(trace).to.be.lengthOf(1);
             expect(result).to.be.lengthOf(5);
@@ -238,6 +244,7 @@ describe('Given Expression evaluators', (): void => {
                 },
             };
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             sandbox.when('Identifier', (node: EST.Identifier) => new SandMap<any>().set(value, undefined));
 
             await Evaluator_Expressions.forInStatementEvaluator
@@ -276,6 +283,7 @@ describe('Given Expression evaluators', (): void => {
                 },
             };
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             sandbox.when('Identifier', (node: EST.Identifier) => new SandList<number>([1, 2, 3, 4, 5]));
 
             await Evaluator_Expressions.forOfStatementEvaluator
@@ -379,7 +387,9 @@ describe('Given Expression evaluators', (): void => {
 
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
-                .forEach(async (element: EST.Statement) => await sandbox.execute(element, scope, trace)));
+                .forEach((element: EST.Statement) => {
+                    sandbox.execute(element, scope, trace)
+                }));
 
             const result: any = await Evaluator_Expressions.functionDeclarationEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
@@ -413,7 +423,9 @@ describe('Given Expression evaluators', (): void => {
 
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
-                .forEach(async (element: EST.Statement) => await sandbox.execute(element, scope, trace)));
+                .forEach((element: EST.Statement) => {
+                    sandbox.execute(element, scope, trace);
+                }));
             sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
 
             const func: any = await Evaluator_Expressions.functionExpressionEvaluator
@@ -453,6 +465,7 @@ describe('Given Expression evaluators', (): void => {
 
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('Literal', mockLLiteralEvaluator);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak());
 
             sandbox.when('SwitchCase', Evaluator_Expressions.switchCaseEvaluator);

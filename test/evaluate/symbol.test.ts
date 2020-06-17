@@ -7,6 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
+// eslint-disable-next-line camelcase
 import * as Symbol_Expressions from '../../src/evaluate/symbol';
 import { Sandbox } from '../../src/marked/sandbox';
 import { Flag } from '../../src/variable/flag';
@@ -45,7 +46,7 @@ describe('Given Symbol evaluators', (): void => {
 
             expect(result).to.be.instanceof(Flag);
 
-            // tslint:disable-next-line
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isBreak()).to.be.true;
         });
     });
@@ -64,7 +65,7 @@ describe('Given Symbol evaluators', (): void => {
 
             expect(result).to.be.instanceof(Flag);
 
-            // tslint:disable-next-line
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isContinue()).to.be.true;
         });
     });
@@ -83,7 +84,7 @@ describe('Given Symbol evaluators', (): void => {
 
             expect(result).to.be.instanceof(Flag);
 
-            // tslint:disable-next-line
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isReturn()).to.be.true;
         });
 
@@ -104,7 +105,7 @@ describe('Given Symbol evaluators', (): void => {
 
             expect(result).to.be.instanceof(Flag);
 
-            // tslint:disable-next-line
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isReturn()).to.be.true;
             expect(result.getValue()).to.be.equal(payload);
         });

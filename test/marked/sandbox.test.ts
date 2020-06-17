@@ -14,6 +14,7 @@ import { error } from '../../src/util/error/error';
 
 describe('Given Sandbox for sandbox option tests', (): void => {
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('sandbox-configurations');
 
     const createSandbox = () => {
@@ -53,7 +54,8 @@ describe('Given Sandbox for sandbox option tests', (): void => {
             fail();
         } catch (err) {
             expect(err.message).to.be.equal(error(ERROR_CODE.SANDBOX_IS_BROKE).message);
-            // tslint:disable-next-line
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(sandbox.broke).to.be.true;
         }
     });

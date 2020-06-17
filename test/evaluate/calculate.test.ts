@@ -6,6 +6,7 @@
 
 import { expect } from 'chai';
 import * as EST from "estree";
+// eslint-disable-next-line camelcase
 import * as Calculate_Expressions from '../../src/evaluate/calculate';
 import { Sandbox } from '../../src/marked/sandbox';
 import { Scope } from '../../src/variable/scope';
@@ -34,6 +35,7 @@ describe('Given Calculation evaluators', (): void => {
                 type: 'BinaryExpression',
                 operator: '+',
                 left: createLiteral(10),
+                // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                 right: createLiteral(15),
             };
 
@@ -41,6 +43,7 @@ describe('Given Calculation evaluators', (): void => {
             const result: any = await Calculate_Expressions.binaryExpressionEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(result).to.be.equal(25);
         });
     });

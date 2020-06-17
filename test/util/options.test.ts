@@ -48,12 +48,16 @@ describe('Given an Options utils', (): void => {
 
             const result: string = getRawCode(testCode);
             expect(result.split('\n')).to.be.lengthOf(1);
+
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(result).to.be.lengthOf(37);
         });
 
         it('should shrink length', (): void => {
 
             const result: number = getRawCodeLength(testCode);
+
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(result).to.be.equal(37);
         });
     });

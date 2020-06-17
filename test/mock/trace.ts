@@ -27,9 +27,10 @@ export class MockTrace implements ITrace, IMockedClass {
         return this._mockStack;
     }
 
-    public reset() {
+    public reset(): this {
 
         this._mockStack = [];
+        return this;
     }
 
     public stack(node: EST.Node): MockTrace {
