@@ -10,6 +10,7 @@
         "codecov",
         "estree",
         "ifeq",
+        "mocharc",
         "sandlist",
         "sandmap",
         "setx",
