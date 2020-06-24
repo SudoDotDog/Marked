@@ -102,6 +102,7 @@ describe('Given Variable evaluators', (): void => {
                     type: 'MemberExpression',
                     object: createIdentifier(variableName),
                     property: createIdentifier(objectName),
+                    optional: false,
                     computed: false,
                 },
                 right: createLiteral(value),
