@@ -388,7 +388,7 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
                 .forEach((element: EST.Statement) => {
-                    sandbox.execute(element, scope, trace)
+                    sandbox.execute(element, scope, trace);
                 }));
 
             const result: any = await Evaluator_Expressions.functionDeclarationEvaluator
