@@ -9,7 +9,6 @@ import * as Chance from 'chance';
 import * as EST from "estree";
 import { ERROR_CODE } from '../../src/declare/error';
 import { VARIABLE_TYPE } from '../../src/declare/variable';
-// eslint-disable-next-line camelcase
 import * as Variable_Expressions from '../../src/evaluate/variable';
 import { Sandbox } from '../../src/marked/sandbox';
 import { error } from '../../src/util/error/error';

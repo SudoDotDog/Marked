@@ -8,7 +8,6 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
 import { VARIABLE_TYPE } from '../../src/declare/variable';
-// eslint-disable-next-line camelcase
 import * as Evaluator_Expressions from '../../src/evaluate/expression';
 import { Sandbox } from '../../src/marked/sandbox';
 import { getBinaryOperation } from '../../src/util/operation';

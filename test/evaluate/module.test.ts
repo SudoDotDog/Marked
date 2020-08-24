@@ -7,7 +7,6 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-// eslint-disable-next-line camelcase
 import * as Module_Expressions from '../../src/evaluate/module';
 import { Sandbox } from '../../src/marked/sandbox';
 import { Scope } from '../../src/variable/scope';

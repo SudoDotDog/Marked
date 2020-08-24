@@ -5,15 +5,10 @@
  */
 
 import { Sandbox } from "../marked/sandbox";
-// eslint-disable-next-line camelcase
 import * as Calculate_Evaluators from "./calculate";
-// eslint-disable-next-line camelcase
 import * as Expression_Evaluators from "./expression";
-// eslint-disable-next-line camelcase
 import * as Module_Evaluators from "./module";
-// eslint-disable-next-line camelcase
 import * as Symbol_Evaluators from "./symbol";
-// eslint-disable-next-line camelcase
 import * as Variable_Evaluators from "./variable";
 
 export const useSymbol = (sandbox: Sandbox): void => {
