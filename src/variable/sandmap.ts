@@ -4,7 +4,6 @@
  * @description Map
  */
 
-import _Map from "@sudoo/bark/map";
 import { Variable } from "../variable/variable";
 
 export class SandMap<T> {
@@ -15,8 +14,12 @@ export class SandMap<T> {
 
         this._map = new Map<string, Variable<T>>();
 
-        if (obj) {_Map.keys(obj)
-            .forEach((key: string) => this.set(key, obj[key]));}
+        if (typeof obj !== 'undefined') {
+
+            Object.keys(obj).forEach((key: string) => {
+                this.set(key, obj[key]);
+            });
+        }
     }
 
     public get map(): {
