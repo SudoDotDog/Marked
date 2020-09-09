@@ -63,8 +63,8 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
         const evalValue: () => Promise<any> = async () => await this.execute(node.argument, scope, nextTrace);
         const value: any = await evalValue();
 
-        if (rummageSpecialKeyword(node.operator, value, scope, this)) {return value;}
-        const operation: ((value: any) => any) | null = getUnaryOperation(node.operator);
+        if (rummageSpecialKeyword(node.operator, value, scope, this)) { return value; }
+        const operation: ((valueArg: any) => any) | null = getUnaryOperation(node.operator);
 
         if (!operation) {
 
@@ -106,8 +106,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                 ? await this.execute(argument.property, scope, nextTrace)
                 : (argument.property as EST.Identifier).name;
 
-            if (!validateObjectIsSandboxStructure(object))
-                {throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node, trace);}
+            if (!validateObjectIsSandboxStructure(object)) { throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node, trace); }
 
             const memberVariable: Variable<any> | undefined = object instanceof SandList
                 ? object.getRaw(assert(member as number).to.be.number(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST).firstValue())
@@ -115,8 +114,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             const memberValue = memberVariable
                 ? memberVariable.get()
                 : undefined;
-            if (!memberValue || !memberVariable)
-                {throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberValue, node, trace);}
+            if (!memberValue || !memberVariable) { throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberValue, node, trace); }
 
             const result: any = operation(memberValue);
             memberVariable.set(result);

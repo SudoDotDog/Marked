@@ -92,7 +92,7 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
             }
         })();
 
-        const operation: ((variable: Variable<any>, value: any) => any) | null = getAssignmentOperation(node.operator);
+        const operation: ((variableArg: Variable<any>, value: any) => any) | null = getAssignmentOperation(node.operator);
         if (!operation) {
 
             throw error(ERROR_CODE.ASSIGNMENT_NOT_SUPPORT, node.operator, node, trace);

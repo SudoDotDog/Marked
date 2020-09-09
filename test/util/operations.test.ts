@@ -27,15 +27,13 @@ describe('Given an Operation utils', (): void => {
                     'instanceof', '|'];
 
             binaryOperators.forEach((operator: EST.BinaryOperator) => {
-                const operation: ((left: any, right: any) => any) | null = getBinaryOperation(operator);
+                const operation: ((leftArg: any, rightArg: any) => any) | null = getBinaryOperation(operator);
 
                 if (operation) {
 
                     // eslint-disable-next-line no-eval
                     expect(operation(left, right)).to.be.equal(eval(`${left} ${operator} ${right}`));
                 } else {
-
-                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     expect(operation).to.be.null;
                 }
             });
@@ -51,15 +49,13 @@ describe('Given an Operation utils', (): void => {
                 = ['!', '+', '-', 'delete', 'typeof', 'void', '~'];
 
             binaryOperators.forEach((operator: EST.UnaryOperator) => {
-                const operation: ((element: any) => any) | null = getUnaryOperation(operator);
+                const operation: ((elementArg: any) => any) | null = getUnaryOperation(operator);
 
                 if (operation) {
 
                     // eslint-disable-next-line no-eval
                     expect(operation(element)).to.be.equal(eval(`${operator} ${element}`));
                 } else {
-
-                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     expect(operation).to.be.null;
                 }
             });
