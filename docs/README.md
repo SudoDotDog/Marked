@@ -9,11 +9,15 @@
 
 ## Install
 
-```bash
+```sh
+yarn add @sudoo/marked
+# Or
 npm install @sudoo/marked --save
 ```
 
 ## Usage
+
+For more examples, see JavaScript files under `docs` folder.
 
 ### High level client
 
