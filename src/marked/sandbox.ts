@@ -176,6 +176,7 @@ export class Sandbox implements ISandbox {
             const AST: EST.BaseNode = this._parser.parse(script, {
 
                 sourceType: 'module',
+                ecmaVersion: 'latest',
             });
             return AST;
         } catch (err) {
