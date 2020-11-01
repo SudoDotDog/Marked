@@ -1,6 +1,6 @@
 # Marked
 
-[![Build Status](https://travis-ci.org/SudoDotDog/Marked.svg?branch=master)](https://travis-ci.org/SudoDotDog/Marked)
+[![Build Status](https://travis-ci.com/SudoDotDog/Marked.svg?branch=master)](https://travis-ci.com/SudoDotDog/Marked)
 [![codecov](https://codecov.io/gh/SudoDotDog/Marked/branch/master/graph/badge.svg)](https://codecov.io/gh/SudoDotDog/Marked)
 [![npm version](https://badge.fury.io/js/%40sudoo%2Fmarked.svg)](https://badge.fury.io/js/%40sudoo%2Fmarked)
 [![downloads](https://img.shields.io/npm/dm/@sudoo/marked.svg)](https://www.npmjs.com/package/@sudoo/marked)
