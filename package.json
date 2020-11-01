@@ -16,11 +16,11 @@
   },
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
-    "acorn": "^8.0.1"
+    "acorn": "^8.0.4"
   },
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
-    "@sudoo/triforce": "^2.8.5",
+    "@sudoo/triforce": "^2.9.6",
     "@types/acorn": "^4.0.5",
     "@types/estree": "0.0.45"
   },
