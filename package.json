@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
-    "@sudoo/triforce": "^2.9.17",
+    "@sudoo/triforce": "^2.9.18",
     "@types/acorn": "^4.0.5",
     "@types/estree": "0.0.46"
   },
