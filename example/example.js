@@ -12,10 +12,6 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
                 console.log(...contents.map((content) => content ? content.toString() : 'undefined'));
             },
         },
-        internal: {
-            number: 5,
-            number2: 8,
-        },
     },
 })
     .then((result) => console.log(result))
