@@ -19,7 +19,6 @@ import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
-    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -39,8 +38,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
                 const result: Flag = await this.execute(node.body, subScope, nextTrace);
                 if (result) {
 
-                    // eslint-disable-next-line @typescript-eslint/unbound-method
-                    if (!Boolean(result.getValue)) {
+                    if (!Boolean(result.getValue.bind(result))) {
                         throw error(ERROR_CODE.UNKNOWN_ERROR, result.toString(), node, trace);
                     }
                     return result.getValue();
@@ -287,7 +285,6 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
     };
 
 export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
-    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.FunctionExpression, scope: Scope, trace: Trace): Promise<any> {
         const nextTrace: Trace = trace.stack(node);
 

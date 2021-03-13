@@ -6,6 +6,7 @@
 
 import { Sandbox } from "../marked/sandbox";
 import * as Calculate_Evaluators from "./calculate";
+import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
 import * as Module_Evaluators from "./module";
 import * as Symbol_Evaluators from "./symbol";
@@ -74,6 +75,11 @@ export const useModule = (sandbox: Sandbox): void => {
     sandbox.mount('ImportSpecifier', Module_Evaluators.importSpecifierEvaluator);
 };
 
+export const useException = (sandbox: Sandbox): void => {
+
+    sandbox.mount('TryStatement', Exception_Evaluators.tryEvaluator);
+};
+
 export const useEverything = (sandbox: Sandbox): void => {
 
     useSymbol(sandbox);
@@ -81,4 +87,5 @@ export const useEverything = (sandbox: Sandbox): void => {
     useVariable(sandbox);
     useCalculate(sandbox);
     useModule(sandbox);
+    useException(sandbox);
 };

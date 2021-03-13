@@ -1,5 +1,7 @@
+import print from 'print';
+
 try {
-    "Hello";
+    print("Hello");
 } catch (reason) {
     "World";
 }

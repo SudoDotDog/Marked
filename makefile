@@ -16,7 +16,7 @@ run: dev
 	@node docs/test.js
 
 example: dev
-	@node example/example.js try-catch
+	@node example/example.js $(SCRIPT)
 
 dev:
 	@echo "[INFO] Building for development"
