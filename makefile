@@ -15,6 +15,9 @@ marked: run
 run: dev
 	@node docs/test.js
 
+example: dev
+	@node example/example.js try-catch
+
 dev:
 	@echo "[INFO] Building for development"
 	@NODE_ENV=development $(tsc) --p $(dev)
