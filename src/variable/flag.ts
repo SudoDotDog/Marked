@@ -23,6 +23,11 @@ export class Flag {
         return new Flag(FLAG_TYPE.CONTINUE);
     }
 
+    public static fromThrow(): Flag {
+
+        return new Flag(FLAG_TYPE.THROW);
+    }
+
     private _type: FLAG_TYPE;
     private _value: any | null;
 
@@ -56,5 +61,10 @@ export class Flag {
     public isContinue(): boolean {
 
         return this._type === FLAG_TYPE.CONTINUE;
+    }
+
+    public isThrow(): boolean {
+
+        return this._type === FLAG_TYPE.THROW;
     }
 }

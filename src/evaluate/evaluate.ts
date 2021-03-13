@@ -78,6 +78,7 @@ export const useModule = (sandbox: Sandbox): void => {
 export const useException = (sandbox: Sandbox): void => {
 
     sandbox.mount('TryStatement', Exception_Evaluators.tryEvaluator);
+    sandbox.mount('ThrowStatement', Exception_Evaluators.throwEvaluator);
 };
 
 export const useEverything = (sandbox: Sandbox): void => {
