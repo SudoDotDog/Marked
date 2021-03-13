@@ -64,6 +64,8 @@ export enum ERROR_CODE {
 
     VARIABLE_IS_NOT_DEFINED = 7102,
 
+    CATCH_NOT_FOUND = 7501,
+
     SANDBOX_IS_BROKE = 7800,
 
     INTERNAL_ERROR = 9001,
@@ -114,6 +116,7 @@ export const ERROR_LIST: {
     6121: 'Member expression value cannot be undefined',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',
+    7501: 'Catch not found',
     7800: 'Sandbox is broke',
     9001: 'Internal error',
 };

@@ -5,8 +5,10 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/node";
 import { Sandbox } from "../marked/sandbox";
+import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
@@ -22,8 +24,12 @@ export const tryEvaluator: Evaluator<'TryStatement'> =
         if (result instanceof Flag) {
 
             if (result.isThrow()) {
-                console.log(result);
-                return null;
+
+                if (!node.handler) {
+                    throw error(ERROR_CODE.CATCH_NOT_FOUND, void 0, node, trace);
+                }
+                const catchResult: any = await this.execute(node.handler, scope, trace);
+                return catchResult;
             }
         }
         return result;
