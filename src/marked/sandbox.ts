@@ -72,6 +72,11 @@ export class Sandbox implements ISandbox {
         return result;
     }
 
+    public get scope(): Scope {
+
+        return this._rootScope;
+    }
+
     public break(): Sandbox {
 
         this._broke = true;
