@@ -1,8 +1,11 @@
 import print from 'print';
 
-try {
-    throw "Hello";
-    print("Hello");
-} catch (reason) {
-    "World";
-}
+const a = () => {
+    try {
+        throw 123;
+    } catch (reason) {
+        "World";
+    }
+};
+
+print(a());

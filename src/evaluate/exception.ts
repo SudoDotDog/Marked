@@ -16,9 +16,17 @@ export const tryEvaluator: Evaluator<'TryStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = scope.child();
-        console.log(await this.execute(node.block, subScope, nextTrace), 1);
 
-        return;
+        const result: any = await this.execute(node.block, subScope, nextTrace);
+
+        if (result instanceof Flag) {
+
+            if (result.isThrow()) {
+                console.log(result);
+                return null;
+            }
+        }
+        return result;
     };
 
 export const throwEvaluator: Evaluator<'ThrowStatement'> =
