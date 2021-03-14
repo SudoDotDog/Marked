@@ -4,7 +4,7 @@
  */
 
 import { ERROR_CODE } from '../declare/error';
-import { END_SIGNAL, MarkedResult } from '../declare/evaluate';
+import { MarkedResult } from '../declare/evaluate';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { useEverything } from '../evaluate/evaluate';
 import { error } from '../util/error/error';
