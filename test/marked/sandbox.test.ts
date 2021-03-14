@@ -4,10 +4,10 @@
  * @description Sandbox Test
  */
 
-import { fail } from 'assert';
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { ERROR_CODE } from '../../src/declare/error';
+import { END_SIGNAL, IMarkedResultFailed } from '../../src/declare/evaluate';
 import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
 import { error } from '../../src/util/error/error';
@@ -28,12 +28,10 @@ describe('Given Sandbox for sandbox option tests', (): void => {
         const sandbox: Sandbox = createSandbox();
         sandbox.setOption('maxCodeLength', 1);
 
-        try {
-            await sandbox.evaluate(`1+1`);
-            fail();
-        } catch (err) {
-            expect(err.message).to.be.equal(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
-        }
+        const result: IMarkedResultFailed = await sandbox.evaluate(`1+1`) as IMarkedResultFailed;
+
+        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+        expect(result.error.message).to.be.equal(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
     });
 
     it('should be able to get expression count', async (): Promise<void> => {
@@ -49,14 +47,9 @@ describe('Given Sandbox for sandbox option tests', (): void => {
         const sandbox: Sandbox = createSandbox();
         sandbox.break();
 
-        try {
-            await sandbox.evaluate(`1+1`);
-            fail();
-        } catch (err) {
-            expect(err.message).to.be.equal(error(ERROR_CODE.SANDBOX_IS_BROKE).message);
+        const result: IMarkedResultFailed = await sandbox.evaluate(`1+1`) as IMarkedResultFailed;
 
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            expect(sandbox.broke).to.be.true;
-        }
+        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+        expect(result.error.message).to.be.equal(error(ERROR_CODE.SANDBOX_IS_BROKE).message);
     });
 });

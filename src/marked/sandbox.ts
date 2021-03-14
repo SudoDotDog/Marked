@@ -160,7 +160,7 @@ export class Sandbox implements ISandbox {
 
         return {
             signal: END_SIGNAL.SUCCEED,
-            exports: this._exposed,
+            exports: this.exposed,
         };
     }
 
