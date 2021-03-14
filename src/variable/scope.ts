@@ -23,6 +23,8 @@ export class Scope implements IScope {
     private _scopeMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
 
+    private _throwValue: Variable<any> | null;
+
     private _this: SandMap<any> | null;
 
     public constructor(scope?: Scope) {
@@ -32,6 +34,8 @@ export class Scope implements IScope {
         this._constantMap = new Map<string, Variable<any>>();
         this._scopeMap = new Map<string, Variable<any>>();
         this._configs = new Map<string, any>();
+
+        this._throwValue = null;
 
         this._this = null;
     }
@@ -135,6 +139,23 @@ export class Scope implements IScope {
             }
         }
         return this;
+    }
+
+    public setThrow(value: any): Scope {
+
+        const variable = new Variable(value);
+        this._throwValue = variable;
+        return this;
+    }
+
+    public hasThrow(): boolean {
+
+        return this._throwValue !== null;
+    }
+
+    public getThrow(): Variable<any> | null {
+
+        return this._throwValue;
     }
 
     protected _declareConst(name: string, value: any): Scope {

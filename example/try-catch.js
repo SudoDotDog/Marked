@@ -4,7 +4,7 @@ const a = () => {
     try {
         throw 123;
     } catch (reason) {
-        "World";
+        return "Caught";
     }
 };
 
