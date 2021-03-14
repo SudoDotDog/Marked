@@ -10,6 +10,7 @@
         "clazz",
         "codecov",
         "estree",
+        "finalizer",
         "ifeq",
         "mocharc",
         "sandlist",

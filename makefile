@@ -16,6 +16,7 @@ run: dev
 	@node docs/test.js
 
 example: dev
+	@echo "[INFO] Running example $(SCRIPT)"
 	@node example/example.js $(SCRIPT)
 
 dev:

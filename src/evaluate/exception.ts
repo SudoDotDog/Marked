@@ -22,6 +22,16 @@ export const tryEvaluator: Evaluator<'TryStatement'> =
 
         const result: any = await this.execute(node.block, subScope, nextTrace);
 
+        const beforeExit = async (): Promise<any> => {
+
+            if (!node.finalizer) {
+                return;
+            }
+
+            const finallyResult: any = await this.execute(node.finalizer, scope, trace);
+            return finallyResult;
+        };
+
         if (result instanceof Flag) {
 
             if (result.isThrow()) {
@@ -33,8 +43,19 @@ export const tryEvaluator: Evaluator<'TryStatement'> =
                 const catchScope: Scope = scope.child();
                 catchScope.setThrow(result.getValue());
                 const catchResult: any = await this.execute(node.handler, catchScope, trace);
+
+                const catchFinallyResult: any = await beforeExit();
+
+                if (catchFinallyResult instanceof Flag) {
+                    return catchFinallyResult;
+                }
                 return catchResult;
             }
+        }
+
+        const passedFinallyResult: any = await beforeExit();
+        if (passedFinallyResult instanceof Flag) {
+            return passedFinallyResult;
         }
         return result;
     };
