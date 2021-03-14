@@ -28,8 +28,11 @@ export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
         const mapped: any[] = [];
         for (const element of node.elements) {
 
-            const evaluated: any = await this.execute(element, scope, nextTrace);
-            mapped.push(evaluated);
+            if (element) {
+
+                const evaluated: any = await this.execute(element, scope, nextTrace);
+                mapped.push(evaluated);
+            }
         }
 
         return new SandList(mapped);
