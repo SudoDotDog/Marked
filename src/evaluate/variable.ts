@@ -7,7 +7,7 @@
 import * as EST from "estree";
 import { isNumber, isString } from "util";
 import { ERROR_CODE } from "../declare/error";
-import { Evaluator } from "../declare/node";
+import { Evaluator } from "../declare/evaluate";
 import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";

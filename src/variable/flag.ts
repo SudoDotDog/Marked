@@ -5,36 +5,45 @@
  */
 
 import { FLAG_TYPE } from "../declare/variable";
+import { Trace } from "./trace";
 
 export class Flag {
 
-    public static fromReturn(): Flag {
+    public static fromReturn(trace: Trace): Flag {
 
-        return new Flag(FLAG_TYPE.RETURN);
+        return new Flag(FLAG_TYPE.RETURN, trace);
     }
 
-    public static fromBreak(): Flag {
+    public static fromBreak(trace: Trace): Flag {
 
-        return new Flag(FLAG_TYPE.BREAK);
+        return new Flag(FLAG_TYPE.BREAK, trace);
     }
 
-    public static fromContinue(): Flag {
+    public static fromContinue(trace: Trace): Flag {
 
-        return new Flag(FLAG_TYPE.CONTINUE);
+        return new Flag(FLAG_TYPE.CONTINUE, trace);
     }
 
-    public static fromThrow(): Flag {
+    public static fromThrow(trace: Trace): Flag {
 
-        return new Flag(FLAG_TYPE.THROW);
+        return new Flag(FLAG_TYPE.THROW, trace);
     }
 
     private _type: FLAG_TYPE;
     private _value: any | null;
 
-    public constructor(type: FLAG_TYPE) {
+    private _trace: Trace;
+
+    public constructor(type: FLAG_TYPE, trace: Trace) {
 
         this._type = type;
         this._value = null;
+
+        this._trace = trace;
+    }
+
+    public get trace(): Trace {
+        return this._trace;
     }
 
     public setValue(value: any): Flag {

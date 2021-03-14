@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
-import { Evaluator } from "../declare/node";
+import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";

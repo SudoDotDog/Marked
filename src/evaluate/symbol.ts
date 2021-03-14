@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
-import { Evaluator } from "../declare/node";
+import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
@@ -25,7 +25,7 @@ export const blockEvaluator: Evaluator<'BlockStatement'> =
             const result: Flag = await this.execute(child, subScope, nextTrace);
             if (result instanceof Flag) {
 
-                const flag: Flag = Flag.fromReturn();
+                const flag: Flag = Flag.fromReturn(trace);
                 flag.setValue(result);
                 return result;
             }
@@ -39,7 +39,7 @@ export const breakEvaluator: Evaluator<'BreakStatement'> =
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         if (node.label) { throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace); }
-        const flag: Flag = Flag.fromBreak();
+        const flag: Flag = Flag.fromBreak(trace);
 
         return flag;
     };
@@ -49,7 +49,7 @@ export const continueEvaluator: Evaluator<'ContinueStatement'> =
     async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         if (node.label) { throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace); }
-        const flag: Flag = Flag.fromContinue();
+        const flag: Flag = Flag.fromContinue(trace);
 
         return flag;
     };
@@ -77,7 +77,12 @@ export const programEvaluator: Evaluator<'Program'> =
 
         for (const child of node.body) {
 
-            await this.execute(child, scope, nextTrace);
+            const result: any = await this.execute(child, scope, nextTrace);
+            if (result instanceof Flag) {
+                if (result.isThrow()) {
+                    return result;
+                }
+            }
         }
 
         return;
@@ -88,7 +93,7 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const flag: Flag = Flag.fromReturn();
+        const flag: Flag = Flag.fromReturn(trace);
         if (node.argument) {
 
             const value: any = await this.execute(node.argument, scope, nextTrace);

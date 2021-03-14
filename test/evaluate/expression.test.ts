@@ -465,7 +465,7 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('Literal', mockLLiteralEvaluator);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak());
+            sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak(Trace.init()));
 
             sandbox.when('SwitchCase', Evaluator_Expressions.switchCaseEvaluator);
             sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));

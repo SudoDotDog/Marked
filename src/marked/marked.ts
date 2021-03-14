@@ -4,7 +4,7 @@
  */
 
 import { ERROR_CODE } from '../declare/error';
-import { END_SIGNAL, MarkedResult } from '../declare/node';
+import { END_SIGNAL, MarkedResult } from '../declare/evaluate';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { useEverything } from '../evaluate/evaluate';
 import { error } from '../util/error/error';
@@ -36,21 +36,5 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
         }
     }
 
-    try {
-
-        await sandbox.evaluate(script);
-    } catch (markedError) {
-
-        return {
-
-            signal: END_SIGNAL.FAILED,
-            error: markedError,
-        };
-    }
-
-    return {
-
-        signal: END_SIGNAL.SUCCEED,
-        exports: sandbox.exposed,
-    };
+    return await sandbox.evaluate(script);
 };

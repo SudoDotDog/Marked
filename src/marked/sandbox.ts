@@ -7,7 +7,7 @@
 import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
-import { Evaluator } from "../declare/node";
+import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { ISandbox, ISandboxOptions, OptionName } from '../declare/sandbox';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
@@ -15,6 +15,7 @@ import { markedParser } from '../extension/parser';
 import { assert } from '../util/error/assert';
 import { error } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
+import { Flag } from '../variable/flag';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace';
 
@@ -121,18 +122,46 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public async evaluate(script: string): Promise<any> {
+    public async evaluate(script: string): Promise<MarkedResult> {
 
         const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
         if (isCodeLengthExceed) {
 
             this.break();
-            throw error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED);
+            return {
+                signal: END_SIGNAL.FAILED,
+                error: error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED),
+            };
         }
 
         const AST: EST.BaseNode = this.parse(script);
         const trace: Trace = Trace.init();
-        return await this.execute(AST, this._rootScope, trace);
+
+        try {
+            const result: any = await this.execute(AST, this._rootScope, trace);
+
+            if (result instanceof Flag) {
+
+                if (result.isThrow()) {
+                    return {
+                        trace: result.trace,
+                        exception: result.getValue(),
+                        signal: END_SIGNAL.EXCEPTION,
+                    };
+                }
+            }
+
+        } catch (reason) {
+            return {
+                signal: END_SIGNAL.FAILED,
+                error: reason,
+            };
+        }
+
+        return {
+            signal: END_SIGNAL.SUCCEED,
+            exports: this._exposed,
+        };
     }
 
     public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {

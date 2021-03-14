@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
-import { Evaluator } from "../declare/node";
+import { Evaluator } from "../declare/evaluate";
 import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";
@@ -46,7 +46,7 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
             } else {
 
                 const result: any = await this.execute(node.body, subScope, nextTrace);
-                const flag: Flag = Flag.fromReturn();
+                const flag: Flag = Flag.fromReturn(trace);
                 flag.setValue(result || undefined);
                 return flag.getValue();
             }

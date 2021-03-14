@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../../src/declare/error";
-import { Evaluator } from "../../src/declare/node";
+import { Evaluator } from "../../src/declare/evaluate";
 import { ISandbox, ISandboxOptions, OptionName } from "../../src/declare/sandbox";
 import { EST_TYPE, IESTreeType } from "../../src/declare/types";
 import { IExposed, IScope, ITrace } from "../../src/declare/variable";

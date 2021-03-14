@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { ERROR_CODE } from '../../src/declare/error';
-import { END_SIGNAL, MarkedResult } from '../../src/declare/node';
+import { END_SIGNAL, MarkedResult } from '../../src/declare/evaluate';
 import { marked } from '../../src/marked/marked';
 import { error } from '../../src/util/error/error';
 

@@ -18,6 +18,7 @@ export enum END_SIGNAL {
 
     SUCCEED = 0,
     FAILED = 1,
+    EXCEPTION = 2,
 }
 
 export interface IMarkedResultSucceed {
@@ -32,4 +33,13 @@ export interface IMarkedResultFailed {
     signal: END_SIGNAL.FAILED;
 }
 
-export type MarkedResult = IMarkedResultSucceed | IMarkedResultFailed;
+export interface IMarkedResultException {
+
+    trace: Trace;
+    exception: any;
+    signal: END_SIGNAL.EXCEPTION;
+}
+
+export type MarkedResult = IMarkedResultSucceed
+    | IMarkedResultFailed
+    | IMarkedResultException;

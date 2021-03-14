@@ -4,7 +4,7 @@
  * @description Sandbox
  */
 
-import { Evaluator } from "./node";
+import { Evaluator } from "./evaluate";
 import { EST_TYPE } from "./types";
 import { IExposed } from "./variable";
 

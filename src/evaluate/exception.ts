@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
-import { Evaluator } from "../declare/node";
+import { Evaluator } from "../declare/evaluate";
 import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
@@ -80,7 +80,7 @@ export const throwEvaluator: Evaluator<'ThrowStatement'> =
         const subScope: Scope = scope.child();
 
         const result: any = await this.execute(node.argument, subScope, nextTrace);
-        const flag: Flag = Flag.fromThrow();
+        const flag: Flag = Flag.fromThrow(trace);
         flag.setValue(result);
 
         return flag;
