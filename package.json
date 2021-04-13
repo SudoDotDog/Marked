@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
-    "acorn": "^8.1.0"
+    "acorn": "^8.1.1"
   },
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
