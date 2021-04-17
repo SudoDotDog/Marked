@@ -5,6 +5,7 @@
  */
 
 import { Evaluator } from "./evaluate";
+import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
 import { IExposed, IScope } from "./variable";
 
@@ -24,7 +25,13 @@ export interface ISandboxOptions {
     maxExpression: number;
 }
 
-export type ModuleResolver = (source: string, sandbox: ISandbox) => void;
+export type ModuleResolveResult = {
+
+    readonly script: string;
+    readonly scriptLocation?: ScriptLocation;
+};
+
+export type ModuleResolver = (source: string, sandbox: ISandbox) => ModuleResolveResult | Promise<ModuleResolveResult>;
 
 export type OptionName = keyof ISandboxOptions;
 
@@ -34,7 +41,7 @@ export interface ISandbox {
     count: number;
 
     break: () => ISandbox;
-    evaluate: (script: string, scriptLocation?: string, scope?: IScope) => Promise<any>;
+    evaluate: (script: string, scriptLocation?: ScriptLocation, scope?: IScope) => Promise<any>;
 
     config: (name: string, value?: any) => ISandbox;
     expose: (name: string, value: any) => ISandbox;

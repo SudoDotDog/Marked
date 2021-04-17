@@ -7,6 +7,7 @@
 import * as EST from "estree";
 import { SandMap } from "../variable/sandmap";
 import { Variable } from "../variable/variable";
+import { ScriptLocation } from "./script-location";
 
 export enum VARIABLE_TYPE {
 
@@ -49,7 +50,7 @@ export interface IExposed {
 
 export interface ITrace {
 
-    scriptLocation?: string;
+    scriptLocation?: ScriptLocation;
 
     getNode(): EST.Node | null;
     getParent(): ITrace | null;

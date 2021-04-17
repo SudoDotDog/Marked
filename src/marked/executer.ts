@@ -6,6 +6,7 @@
 
 import { MarkedResult } from "../declare/evaluate";
 import { IExecuter, ISandbox } from "../declare/sandbox";
+import { ScriptLocation } from "../declare/script-location";
 import { Scope } from "../variable/scope";
 
 export class Executer implements IExecuter {
@@ -31,7 +32,7 @@ export class Executer implements IExecuter {
         return this._parent;
     }
 
-    public async evaluate(script: string, scriptLocation?: string): Promise<MarkedResult> {
+    public async evaluate(script: string, scriptLocation?: ScriptLocation): Promise<MarkedResult> {
 
         return await this._parent.evaluate(script, scriptLocation, this._rootScope);
     }

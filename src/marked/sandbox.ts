@@ -9,6 +9,7 @@ import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { ISandbox, ISandboxOptions, ModuleResolver, OptionName } from '../declare/sandbox';
+import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { markedParser } from '../extension/parser';
@@ -133,7 +134,7 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public async evaluate(script: string, scriptLocation?: string, scope?: IScope): Promise<MarkedResult> {
+    public async evaluate(script: string, scriptLocation?: ScriptLocation, scope?: IScope): Promise<MarkedResult> {
 
         const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
 
