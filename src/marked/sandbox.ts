@@ -8,6 +8,7 @@ import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
+import { ModuleResolver } from '../declare/resolver';
 import { ISandbox, ISandboxOptions, OptionName } from '../declare/sandbox';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
@@ -33,7 +34,8 @@ export class Sandbox implements ISandbox {
     private readonly _configs: Map<string, any>;
     private readonly _exposed: Map<string, any>;
     private readonly _modules: Map<string, any>;
-    // private readonly _resolvers: 
+
+    private readonly _resolvers: ModuleResolver[];
 
     private readonly _options: ISandboxOptions;
 
@@ -51,6 +53,8 @@ export class Sandbox implements ISandbox {
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
+
+        this._resolvers = [];
 
         this._options = getDefaultSandboxOption();
     }
@@ -123,8 +127,9 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public resolver(): Sandbox {
+    public resolver(resolver: ModuleResolver): Sandbox {
 
+        this._resolvers.push(resolver);
         return this;
     }
 
