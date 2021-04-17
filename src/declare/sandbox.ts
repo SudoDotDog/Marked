@@ -5,7 +5,6 @@
  */
 
 import { Evaluator } from "./evaluate";
-import { ModuleResolver } from "./resolver";
 import { EST_TYPE } from "./types";
 import { IExposed } from "./variable";
 
@@ -24,6 +23,8 @@ export interface ISandboxOptions {
     maxWhileLoopLimit: number;
     maxExpression: number;
 }
+
+export type ModuleResolver = () => void;
 
 export type OptionName = keyof ISandboxOptions;
 
@@ -45,4 +46,9 @@ export interface ISandbox {
 
     setOption: <T extends OptionName>(name: T, value: ISandboxOptions[T]) => ISandbox;
     getOption: <T extends OptionName>(name: T) => ISandboxOptions[T];
+}
+
+export interface IExecuter {
+
+    parent: ISandbox;
 }
