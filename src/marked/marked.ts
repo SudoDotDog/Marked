@@ -1,6 +1,7 @@
 /**
  * @author WMXPY
- * @description Simple
+ * @namespace Marked
+ * @description Marked
  */
 
 import { ERROR_CODE } from '../declare/error';
