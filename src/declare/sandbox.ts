@@ -24,7 +24,7 @@ export interface ISandboxOptions {
     maxExpression: number;
 }
 
-export type ModuleResolver = () => void;
+export type ModuleResolver = (source: string, sandbox: ISandbox) => void;
 
 export type OptionName = keyof ISandboxOptions;
 
@@ -34,7 +34,7 @@ export interface ISandbox {
     count: number;
 
     break: () => ISandbox;
-    evaluate: (script: string, scope?: IScope) => Promise<any>;
+    evaluate: (script: string, scriptLocation?: string, scope?: IScope) => Promise<any>;
 
     config: (name: string, value?: any) => ISandbox;
     expose: (name: string, value: any) => ISandbox;

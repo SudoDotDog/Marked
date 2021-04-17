@@ -33,6 +33,16 @@ export class MockTrace implements ITrace, IMockedClass {
         return this;
     }
 
+    public getNode(): null {
+
+        return null;
+    }
+
+    public getParent(): null {
+
+        return null;
+    }
+
     public stack(node: EST.Node): MockTrace {
 
         this._mockStack.push(node);

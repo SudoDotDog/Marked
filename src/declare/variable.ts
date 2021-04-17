@@ -49,5 +49,9 @@ export interface IExposed {
 
 export interface ITrace {
 
+    scriptLocation?: string;
+
+    getNode(): EST.Node | null;
+    getParent(): ITrace | null;
     stack(node: EST.Node): ITrace;
 }

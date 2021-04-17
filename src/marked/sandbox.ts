@@ -133,7 +133,7 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public async evaluate(script: string, scope?: IScope): Promise<MarkedResult> {
+    public async evaluate(script: string, scriptLocation?: string, scope?: IScope): Promise<MarkedResult> {
 
         const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
 
@@ -147,7 +147,7 @@ export class Sandbox implements ISandbox {
         }
 
         const AST: EST.BaseNode = this.parse(script);
-        const trace: Trace = Trace.init();
+        const trace: Trace = Trace.init(scriptLocation);
 
         try {
 
@@ -161,9 +161,9 @@ export class Sandbox implements ISandbox {
                 if (result.isThrow()) {
 
                     return {
+                        signal: END_SIGNAL.EXCEPTION,
                         trace: result.trace,
                         exception: result.getValue(),
-                        signal: END_SIGNAL.EXCEPTION,
                     };
                 }
             }

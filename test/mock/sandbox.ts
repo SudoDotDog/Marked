@@ -7,7 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../../src/declare/error";
 import { Evaluator } from "../../src/declare/evaluate";
-import { ISandbox, ISandboxOptions, OptionName } from "../../src/declare/sandbox";
+import { ISandbox, ISandboxOptions, ModuleResolver, OptionName } from "../../src/declare/sandbox";
 import { EST_TYPE, IESTreeType } from "../../src/declare/types";
 import { IExposed, IScope, ITrace } from "../../src/declare/variable";
 import { assert } from "../../src/util/error/assert";
@@ -24,6 +24,8 @@ export class MockSandbox implements ISandbox, IMockedClass {
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
 
+    private readonly _resolvers: ModuleResolver[];
+
     private _options: ISandboxOptions;
 
     public constructor() {
@@ -35,6 +37,8 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
+
+        this._resolvers = [];
 
         this._options = getDefaultSandboxOption();
     }
@@ -100,6 +104,12 @@ export class MockSandbox implements ISandbox, IMockedClass {
     public provide(name: string, value: any): MockSandbox {
 
         this._modules.set(name, value);
+        return this;
+    }
+
+    public resolver(resolver: ModuleResolver): MockSandbox {
+
+        this._resolvers.push(resolver);
         return this;
     }
 
