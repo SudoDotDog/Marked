@@ -45,8 +45,11 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
-        const mod: any | null = this.module(source);
-        if (!Boolean(mod)) { throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace); }
+        const targetModule: any | null = this.module(source);
+
+        if (!Boolean(targetModule)) {
+            throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);
+        }
 
         for (const specifier of node.specifiers) {
 
@@ -56,31 +59,31 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
 
                 case 'ImportDefaultSpecifier': {
 
-                    if (!(typeof mod === 'object' && Boolean(mod.default))) {
+                    if (!(typeof targetModule === 'object' && Boolean(targetModule.default))) {
 
                         throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, trace);
                     }
-                    register(target, mod.default);
+                    register(target, targetModule.default);
                     break;
                 }
                 case 'ImportNamespaceSpecifier': {
 
-                    if (!(typeof mod === 'object')) {
+                    if (!(typeof targetModule === 'object')) {
 
                         throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, trace);
                     }
-                    const map: SandMap<any> = new SandMap(mod);
+                    const map: SandMap<any> = new SandMap(targetModule);
                     register(target, map);
                     break;
                 }
                 case 'ImportSpecifier': {
 
                     const imported: string = specifier.imported.name;
-                    if (!Boolean(mod[imported])) {
+                    if (!Boolean(targetModule[imported])) {
 
                         throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, trace);
                     }
-                    register(target, mod[imported]);
+                    register(target, targetModule[imported]);
                     break;
                 }
                 default: {
