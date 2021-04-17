@@ -8,7 +8,7 @@ import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
-import { ISandbox, ISandboxOptions, ModuleResolver, OptionName } from '../declare/sandbox';
+import { ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
@@ -193,6 +193,20 @@ export class Sandbox implements ISandbox {
 
         this._options[name] = value;
         return this;
+    }
+
+    protected async resolve(source: string, trace: ITrace): Promise<ModuleResolveResult | null> {
+
+        // TODO
+        for (const resolver of this._resolvers) {
+
+            const result: ModuleResolveResult | null = await Promise.resolve(resolver(source, trace));
+
+            if (result) {
+                return result;
+            }
+        }
+        return null;
     }
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {

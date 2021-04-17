@@ -7,7 +7,7 @@
 import { Evaluator } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
-import { IExposed, IScope } from "./variable";
+import { IExposed, IScope, ITrace } from "./variable";
 
 export interface IMarkedOptions {
 
@@ -31,7 +31,7 @@ export type ModuleResolveResult = {
     readonly scriptLocation?: ScriptLocation;
 };
 
-export type ModuleResolver = (source: string, sandbox: ISandbox) => ModuleResolveResult | Promise<ModuleResolveResult>;
+export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
 
 export type OptionName = keyof ISandboxOptions;
 
