@@ -33,6 +33,7 @@ export class Sandbox implements ISandbox {
     private readonly _configs: Map<string, any>;
     private readonly _exposed: Map<string, any>;
     private readonly _modules: Map<string, any>;
+    // private readonly _resolvers: 
 
     private readonly _options: ISandboxOptions;
 
@@ -119,6 +120,11 @@ export class Sandbox implements ISandbox {
             throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
         }
         this._modules.set(name, value);
+        return this;
+    }
+
+    public resolver(): Sandbox {
+
         return this;
     }
 
