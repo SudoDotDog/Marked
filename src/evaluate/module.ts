@@ -41,7 +41,10 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
     async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        if (scope.hasParent()) { throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace); }
+        if (scope.hasParent()) {
+            throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace);
+        }
+
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
@@ -53,25 +56,26 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
 
         for (const specifier of node.specifiers) {
 
-            const target = await this.execute(specifier, scope, nextTrace);
+            const target: any = await this.execute(specifier, scope, nextTrace);
             const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
+
             switch (specifier.type) {
 
                 case 'ImportDefaultSpecifier': {
 
                     if (!(typeof targetModule === 'object' && Boolean(targetModule.default))) {
-
                         throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, trace);
                     }
+
                     register(target, targetModule.default);
                     break;
                 }
                 case 'ImportNamespaceSpecifier': {
 
                     if (!(typeof targetModule === 'object')) {
-
                         throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, trace);
                     }
+
                     const map: SandMap<any> = new SandMap(targetModule);
                     register(target, map);
                     break;
@@ -80,9 +84,9 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
 
                     const imported: string = specifier.imported.name;
                     if (!Boolean(targetModule[imported])) {
-
                         throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, trace);
                     }
+
                     register(target, targetModule[imported]);
                     break;
                 }
