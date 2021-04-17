@@ -6,7 +6,7 @@
 
 import { Evaluator } from "./evaluate";
 import { EST_TYPE } from "./types";
-import { IExposed } from "./variable";
+import { IExposed, IScope } from "./variable";
 
 export interface IMarkedOptions {
 
@@ -34,7 +34,7 @@ export interface ISandbox {
     count: number;
 
     break: () => ISandbox;
-    evaluate: (script: string) => Promise<any>;
+    evaluate: (script: string, scope?: IScope) => Promise<any>;
 
     config: (name: string, value?: any) => ISandbox;
     expose: (name: string, value: any) => ISandbox;

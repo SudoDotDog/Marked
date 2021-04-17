@@ -26,9 +26,10 @@ export const getRawCode = (script: string): string => {
     return rawCode;
 };
 
-export const getRawCodeLength =
-    (script: string): number =>
-        getRawCode(script).length;
+export const getRawCodeLength = (script: string): number => {
+
+    return getRawCode(script).length;
+};
 
 export const getCommentRemovedCode = (script: string): string => {
 
@@ -38,5 +39,8 @@ export const getCommentRemovedCode = (script: string): string => {
 
 export const awaitableSleep = (time: number): Promise<void> => {
 
-    return new Promise((resolve: () => void) => setTimeout(() => resolve, time));
+    return new Promise((resolve: () => void) => {
+
+        setTimeout(() => resolve, time);
+    });
 };

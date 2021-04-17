@@ -122,6 +122,7 @@ export class Sandbox implements ISandbox {
 
             throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
         }
+
         this._modules.set(name, value);
         return this;
     }
@@ -132,9 +133,10 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public async evaluate(script: string): Promise<MarkedResult> {
+    public async evaluate(script: string, scope?: IScope): Promise<MarkedResult> {
 
         const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
+
         if (isCodeLengthExceed) {
 
             this.break();
@@ -148,11 +150,16 @@ export class Sandbox implements ISandbox {
         const trace: Trace = Trace.init();
 
         try {
-            const result: any = await this.execute(AST, this._rootScope, trace);
+
+            const targetScope: IScope = typeof scope === 'undefined'
+                ? this._rootScope
+                : scope;
+            const result: any = await this.execute(AST, targetScope, trace);
 
             if (result instanceof Flag) {
 
                 if (result.isThrow()) {
+
                     return {
                         trace: result.trace,
                         exception: result.getValue(),
@@ -162,6 +169,7 @@ export class Sandbox implements ISandbox {
             }
 
         } catch (reason) {
+
             return {
                 signal: END_SIGNAL.FAILED,
                 error: reason,
@@ -194,9 +202,12 @@ export class Sandbox implements ISandbox {
         }
 
         if (this._broke) {
+
             throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
         }
+
         if (this._count >= this._options.maxExpression) {
+
             this.break();
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
@@ -204,6 +215,7 @@ export class Sandbox implements ISandbox {
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
 
         if (!executor) {
+
             throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
         }
 
