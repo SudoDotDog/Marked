@@ -29,8 +29,8 @@ export type SCOPE_DECLARE_FUNC =
 
 export interface IExposed {
 
-    [key: string]: any;
     default?: any;
+    named: Map<string, any>;
 }
 
 export interface IScope {

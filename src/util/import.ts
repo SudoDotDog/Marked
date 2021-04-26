@@ -7,7 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
-import { IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
+import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Executer } from "../marked/executer";
 import { Sandbox } from "../marked/sandbox";
 import { SandMap } from "../variable/sandmap";
@@ -67,60 +67,63 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
     return true;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const resolveDynamicImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> {
 
     const targetModule: ModuleResolveResult | null = await this.resolveResource(source, currentTrace);
 
-    if (!targetModule) {
+    if (typeof targetModule !== 'object'
+        || !targetModule) {
         return false;
     }
 
     const executer: IExecuter = Executer.from(this);
     executer.evaluate(targetModule.script, targetModule.scriptLocation);
 
-    // for (const specifier of node.specifiers) {
+    for (const specifier of node.specifiers) {
 
-    //     const target: any = await this.execute(specifier, scope, nextTrace);
-    //     const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
+        const target: any = await this.execute(specifier, scope, nextTrace);
+        const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
 
-    //     switch (specifier.type) {
+        const exposed: IExposed = executer.scope.exposed;
 
-    //         case 'ImportDefaultSpecifier': {
+        switch (specifier.type) {
 
-    //             if (!(typeof targetModule === 'object' && Boolean(targetModule.default))) {
-    //                 throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, currentTrace);
-    //             }
+            case 'ImportDefaultSpecifier': {
 
-    //             register(target, targetModule.default);
-    //             break;
-    //         }
-    //         case 'ImportNamespaceSpecifier': {
+                if (!Boolean(exposed.default)) {
+                    throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, currentTrace);
+                }
 
-    //             if (!(typeof targetModule === 'object')) {
-    //                 throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, currentTrace);
-    //             }
+                register(target, exposed.default);
+                break;
+            }
+            case 'ImportNamespaceSpecifier': {
 
-    //             const map: SandMap<any> = new SandMap(targetModule);
-    //             register(target, map);
-    //             break;
-    //         }
-    //         case 'ImportSpecifier': {
+                const importObject: Record<string, any> = {};
+                exposed.named.forEach((value: any, key: string) => {
+                    importObject[key] = value;
+                });
 
-    //             const imported: string = specifier.imported.name;
-    //             if (!Boolean(targetModule[imported])) {
-    //                 throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
-    //             }
+                const map: SandMap<any> = new SandMap(importObject);
+                register(target, map);
+                break;
+            }
+            case 'ImportSpecifier': {
 
-    //             register(target, targetModule[imported]);
-    //             break;
-    //         }
-    //         default: {
+                const imported: string = specifier.imported.name;
+                if (!exposed.named.has(imported)) {
+                    throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
+                }
 
-    //             throw error(ERROR_CODE.UNKNOWN_ERROR, (specifier as any).type, node, currentTrace);
-    //         }
-    //     }
-    // }
+                register(target, exposed.named.get(imported));
+                break;
+            }
+            default: {
+
+                throw error(ERROR_CODE.UNKNOWN_ERROR, (specifier as any).type, node, currentTrace);
+            }
+        }
+    }
 
     return true;
 };

@@ -49,6 +49,7 @@ export class Scope implements IScope {
         const result: IExposed = {
 
             default: this._exposed.get('default'),
+            named: this._exposed,
         };
         return result;
     }

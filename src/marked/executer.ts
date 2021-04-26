@@ -32,6 +32,11 @@ export class Executer implements IExecuter {
         return this._parent;
     }
 
+    public get scope(): Scope {
+
+        return this._rootScope;
+    }
+
     public async evaluate(script: string, scriptLocation?: ScriptLocation): Promise<MarkedResult> {
 
         return await this._parent.evaluate(script, scriptLocation, this._rootScope);

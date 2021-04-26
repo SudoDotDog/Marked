@@ -56,6 +56,7 @@ export interface ISandbox {
 export interface IExecuter {
 
     parent: ISandbox;
+    scope: IScope;
 
     evaluate: (script: string, scriptLocation?: ScriptLocation) => Promise<MarkedResult>;
 }
