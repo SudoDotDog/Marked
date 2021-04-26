@@ -14,7 +14,13 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
         },
     },
     resolvers: [
-        (...args) => console.log(args),
+        (source, trace) => {
+            const script = fs.readFileSync(path.join(__dirname, '..', 'example', 'import', 'source.js'), 'utf8');
+            return {
+                script,
+                scriptLocation: null,
+            };
+        },
     ],
 })
     .then((result) => console.log(result))

@@ -15,8 +15,8 @@ export interface IMarkedOptions {
 
     injects?: Record<string, any>;
     provides?: Record<string, any>;
-    sandbox?: Partial<ISandboxOptions>;
     resolvers?: ModuleResolver[];
+    sandbox?: Partial<ISandboxOptions>;
 }
 
 export interface ISandboxOptions {

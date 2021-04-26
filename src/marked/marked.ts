@@ -31,6 +31,11 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
             Object.keys(options.provides).forEach((key: string) =>
                 sandbox.provide(key, (options.provides as any)[key]));
         }
+        if (options.resolvers) {
+            for (const resolver of options.resolvers) {
+                sandbox.resolver(resolver);
+            }
+        }
         if (options.sandbox) {
             Object.keys(options.sandbox as any).forEach((key: any) =>
                 sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
