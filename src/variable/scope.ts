@@ -19,6 +19,7 @@ export class Scope implements IScope {
 
     private _parent: Scope | null;
 
+    private _defaultExposed: any;
     private readonly _exposed: Map<string, any>;
 
     private _constantMap: Map<string, Variable<any>>;
@@ -33,6 +34,7 @@ export class Scope implements IScope {
 
         this._parent = scope || null;
 
+        this._defaultExposed = undefined;
         this._exposed = new Map<string, any>();
 
         this._constantMap = new Map<string, Variable<any>>();
@@ -52,7 +54,7 @@ export class Scope implements IScope {
 
         const result: IExposed = {
 
-            default: this._exposed.get('default'),
+            default: this._defaultExposed,
             named: this._exposed,
         };
         return result;
@@ -176,6 +178,17 @@ export class Scope implements IScope {
         }
 
         this._exposed.set(name, value);
+        return this;
+    }
+
+    public exposeDefault(value: any): Scope {
+
+        if (this.hasParent()) {
+            this.ensureParent().exposeDefault(value);
+            return this;
+        }
+
+        this._defaultExposed = value;
         return this;
     }
 
