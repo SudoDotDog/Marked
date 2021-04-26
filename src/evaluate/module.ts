@@ -49,8 +49,11 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const source: string = await this.execute(node.source, scope, nextTrace);
         const bindResolveImport = resolveImport.bind(this);
 
-        await bindResolveImport(source, node, scope, trace, nextTrace);
+        const result: boolean = await bindResolveImport(source, node, scope, trace, nextTrace);
 
+        if (!result) {
+            throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);
+        }
         return;
     };
 
