@@ -77,7 +77,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
     }
 
     const executer: IExecuter = Executer.from(this);
-    executer.evaluate(targetModule.script, targetModule.scriptLocation);
+    await executer.evaluate(targetModule.script, targetModule.scriptLocation);
 
     for (const specifier of node.specifiers) {
 

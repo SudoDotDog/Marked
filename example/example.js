@@ -1,5 +1,6 @@
 const {
-    Marked
+    Marked,
+    ScriptLocation,
 } = require('../app/index');
 const fs = require('fs');
 const path = require('path');
@@ -18,7 +19,7 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
             const script = fs.readFileSync(path.join(__dirname, '..', 'example', 'import', 'source.js'), 'utf8');
             return {
                 script,
-                scriptLocation: null,
+                scriptLocation: ScriptLocation.create('file', 'source'),
             };
         },
     ],

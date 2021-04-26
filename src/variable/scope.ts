@@ -46,6 +46,10 @@ export class Scope implements IScope {
 
     public get exposed(): IExposed {
 
+        if (this.hasParent()) {
+            return this.ensureParent().exposed;
+        }
+
         const result: IExposed = {
 
             default: this._exposed.get('default'),
@@ -108,6 +112,15 @@ export class Scope implements IScope {
         return false;
     }
 
+    public ensureParent(): Scope {
+
+        if (this._parent) {
+
+            return this._parent;
+        }
+        throw error(ERROR_CODE.INTERNAL_ERROR);
+    }
+
     public register(type: VARIABLE_TYPE): (name: string, value: any) => Scope {
 
         if (type === VARIABLE_TYPE.VARIABLE) {
@@ -156,6 +169,11 @@ export class Scope implements IScope {
     }
 
     public expose(name: string, value: any): Scope {
+
+        if (this.hasParent()) {
+            this.ensureParent().expose(name, value);
+            return this;
+        }
 
         this._exposed.set(name, value);
         return this;

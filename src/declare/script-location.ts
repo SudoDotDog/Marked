@@ -40,4 +40,9 @@ export class ScriptLocation {
 
         return `${this._protocol}://${this._location}`;
     }
+
+    public toString(): string {
+
+        return this.hash();
+    }
 }
