@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 import { ERROR_CODE, ERROR_LIST } from "../../declare/error";
-import { Trace } from "../../variable/trace";
+import { ITrace } from "../../declare/variable";
 
 export class MarkedError extends Error {
 
@@ -15,10 +15,10 @@ export class MarkedError extends Error {
     public message: string;
 
     public info: string | null;
-    public trace: Trace | null;
+    public trace: ITrace | null;
     public node: EST.Node | null;
 
-    public constructor(code: number, description: string, info?: string, node?: EST.Node, trace?: Trace) {
+    public constructor(code: number, description: string, info?: string, node?: EST.Node, trace?: ITrace) {
 
         super();
 
@@ -32,7 +32,7 @@ export class MarkedError extends Error {
     }
 }
 
-export const error = (code: ERROR_CODE, info?: string, node?: EST.Node, trace?: Trace): MarkedError => {
+export const error = (code: ERROR_CODE, info?: string, node?: EST.Node, trace?: ITrace): MarkedError => {
 
     const newError: MarkedError = Boolean(ERROR_LIST[code])
         ? new MarkedError(code, ERROR_LIST[code], info, node, trace)
