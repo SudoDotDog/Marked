@@ -7,7 +7,7 @@
 import { Evaluator, MarkedResult } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
-import { IExposed, IScope, ITrace } from "./variable";
+import { IScope, ITrace } from "./variable";
 
 export interface IMarkedOptions {
 
@@ -37,14 +37,12 @@ export type OptionName = keyof ISandboxOptions;
 
 export interface ISandbox {
 
-    exposed: IExposed;
     count: number;
 
     break: () => ISandbox;
     evaluate: (script: string, scriptLocation?: ScriptLocation, scope?: IScope) => Promise<any>;
 
     config: (name: string, value?: any) => ISandbox;
-    expose: (name: string, value: any) => ISandbox;
     inject: (name: string, value: any) => ISandbox;
     module: (name: string) => any | null;
     mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => ISandbox;

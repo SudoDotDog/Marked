@@ -72,7 +72,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
 
     const targetModule: ModuleResolveResult | null = await this.resolveResource(source, currentTrace);
 
-    if (!Boolean(targetModule)) {
+    if (!targetModule) {
         return false;
     }
 

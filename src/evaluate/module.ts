@@ -34,7 +34,7 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
             throw error(ERROR_CODE.EXPORT_TYPE_OTHER_THAN_N_S_B_NOT_SUPPORT, typeof content, node, trace);
         }
 
-        this.expose('default', content);
+        scope.expose('default', content);
     };
 
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =

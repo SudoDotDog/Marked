@@ -11,7 +11,7 @@ import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
-import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
+import { IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { markedParser } from '../extension/parser';
 import { assert } from '../util/error/assert';
 import { error } from "../util/error/error";
@@ -33,7 +33,6 @@ export class Sandbox implements ISandbox {
     private readonly _parser: typeof Acorn.Parser;
 
     private readonly _configs: Map<string, any>;
-    private readonly _exposed: Map<string, any>;
     private readonly _modules: Map<string, any>;
 
     private readonly _resolvers: ModuleResolver[];
@@ -49,17 +48,17 @@ export class Sandbox implements ISandbox {
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();
         this._parser = Acorn.Parser.extend(markedParser as any);
-        this._count = 0;
 
-        this._broke = false;
         this._configs = new Map<string, any>();
-        this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
 
         this._resolvers = [];
         this._cachedExecuter = new Map<string, IExecuter>();
 
         this._options = getDefaultSandboxOption();
+
+        this._count = 0;
+        this._broke = false;
     }
 
     public get broke(): boolean {
@@ -70,15 +69,6 @@ export class Sandbox implements ISandbox {
     public get count(): number {
 
         return this._count;
-    }
-
-    public get exposed(): IExposed {
-
-        const result: IExposed = {
-
-            default: this._exposed.get('default'),
-        };
-        return result;
     }
 
     public get scope(): Scope {
@@ -95,11 +85,6 @@ export class Sandbox implements ISandbox {
     public config(name: string, value?: any): Sandbox {
 
         this._configs.set(name, value === undefined ? true : value);
-        return this;
-    }
-
-    public expose(name: string, value: any): Sandbox {
-        this._exposed.set(name, value);
         return this;
     }
 
@@ -181,7 +166,7 @@ export class Sandbox implements ISandbox {
 
         return {
             signal: END_SIGNAL.SUCCEED,
-            exports: this.exposed,
+            exports: this._rootScope.exposed,
         };
     }
 

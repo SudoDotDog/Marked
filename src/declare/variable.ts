@@ -27,7 +27,15 @@ export enum FLAG_TYPE {
 export type SCOPE_DECLARE_FUNC =
     (name: string, value: any) => IScope;
 
+export interface IExposed {
+
+    [key: string]: any;
+    default?: any;
+}
+
 export interface IScope {
+
+    exposed: IExposed;
 
     config: (name: string, value?: any) => IScope;
     child: () => IScope;
@@ -37,15 +45,10 @@ export interface IScope {
     exist: (name: string) => boolean;
     rummage: (name: string) => Variable<any> | null;
     validateEditable: (name: string) => IScope;
+    expose: (name: string, value: any) => IScope;
 
     findThis: () => SandMap<any>;
     initThis: () => IScope;
-}
-
-export interface IExposed {
-
-    [key: string]: any;
-    default?: any;
 }
 
 export interface ITrace {

@@ -5,7 +5,7 @@
  */
 
 import { ERROR_CODE } from "../declare/error";
-import { IScope, VARIABLE_TYPE } from "../declare/variable";
+import { IExposed, IScope, VARIABLE_TYPE } from "../declare/variable";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
 import { SandMap } from "./sandmap";
@@ -19,6 +19,8 @@ export class Scope implements IScope {
 
     private _parent: Scope | null;
 
+    private readonly _exposed: Map<string, any>;
+
     private _constantMap: Map<string, Variable<any>>;
     private _scopeMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
@@ -31,6 +33,8 @@ export class Scope implements IScope {
 
         this._parent = scope || null;
 
+        this._exposed = new Map<string, any>();
+
         this._constantMap = new Map<string, Variable<any>>();
         this._scopeMap = new Map<string, Variable<any>>();
         this._configs = new Map<string, any>();
@@ -38,6 +42,15 @@ export class Scope implements IScope {
         this._throwValue = null;
 
         this._this = null;
+    }
+
+    public get exposed(): IExposed {
+
+        const result: IExposed = {
+
+            default: this._exposed.get('default'),
+        };
+        return result;
     }
 
     public config(name: string, value?: any): Scope {
@@ -138,6 +151,12 @@ export class Scope implements IScope {
                 throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
             }
         }
+        return this;
+    }
+
+    public expose(name: string, value: any): Scope {
+
+        this._exposed.set(name, value);
         return this;
     }
 
