@@ -16,11 +16,23 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
     },
     resolvers: [
         (source, trace) => {
-            const script = fs.readFileSync(path.join(__dirname, '..', 'example', 'import', 'source.js'), 'utf8');
-            return {
-                script,
-                scriptLocation: ScriptLocation.create('file', 'source'),
-            };
+
+            switch (source) {
+                case './source': {
+                    const script = fs.readFileSync(path.join(__dirname, '..', 'example', 'import', 'source.js'), 'utf8');
+                    return {
+                        script,
+                        scriptLocation: ScriptLocation.create('file', 'source'),
+                    };
+                }
+                case './third': {
+                    const script = fs.readFileSync(path.join(__dirname, '..', 'example', 'import', 'third.js'), 'utf8');
+                    return {
+                        script,
+                        scriptLocation: ScriptLocation.create('file', 'third'),
+                    };
+                }
+            }
         },
     ],
 })
