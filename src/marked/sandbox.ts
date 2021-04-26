@@ -36,6 +36,7 @@ export class Sandbox implements ISandbox {
     private readonly _modules: Map<string, any>;
 
     private readonly _resolvers: ModuleResolver[];
+    private readonly _cached: Map<string, any>;
 
     private readonly _options: ISandboxOptions;
 
@@ -55,6 +56,7 @@ export class Sandbox implements ISandbox {
         this._modules = new Map<string, any>();
 
         this._resolvers = [];
+        this._cached = new Map<string, any>();
 
         this._options = getDefaultSandboxOption();
     }

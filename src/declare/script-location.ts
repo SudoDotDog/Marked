@@ -29,4 +29,15 @@ export class ScriptLocation {
 
         return this._location;
     }
+
+    public compare(targetLocation: ScriptLocation): boolean {
+
+        return this._protocol === targetLocation.protocol
+            && this._location === targetLocation.location;
+    }
+
+    public hash(): string {
+
+        return `${this._protocol}://${this._location}`;
+    }
 }
