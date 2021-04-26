@@ -47,7 +47,7 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
-        
+
         const bindResolveImport = resolveImport.bind(this);
         const result: boolean = await bindResolveImport(source, node, scope, trace, nextTrace);
 
