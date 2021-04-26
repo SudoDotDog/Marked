@@ -6,14 +6,14 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
-import { ISandbox } from "../declare/sandbox";
 import { IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
+import { Sandbox } from "../marked/sandbox";
 import { SandMap } from "../variable/sandmap";
 import { error } from "./error/error";
 
-const resolveModuleImport = async (source: string, node: EST.ImportDeclaration, sandbox: ISandbox, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> => {
+const resolveModuleImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> {
 
-    const targetModule: any | null = sandbox.module(source);
+    const targetModule: any | null = this.module(source);
 
     if (!Boolean(targetModule)) {
         return false;
@@ -21,7 +21,7 @@ const resolveModuleImport = async (source: string, node: EST.ImportDeclaration, 
 
     for (const specifier of node.specifiers) {
 
-        const target: any = await (sandbox as any).execute(specifier, scope, nextTrace);
+        const target: any = await this.execute(specifier, scope, nextTrace);
         const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
 
         switch (specifier.type) {
@@ -65,7 +65,8 @@ const resolveModuleImport = async (source: string, node: EST.ImportDeclaration, 
     return true;
 };
 
-export const resolveImport = async (source: string, node: EST.ImportDeclaration, sandbox: ISandbox, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> => {
+export const resolveImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> {
 
-    return await resolveModuleImport(source, node, sandbox, scope, currentTrace, nextTrace);
+    const bindResolveModuleImport = resolveModuleImport.bind(this);
+    return await bindResolveModuleImport(source, node, scope, currentTrace, nextTrace);
 };
