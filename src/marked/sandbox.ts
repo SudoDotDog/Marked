@@ -171,7 +171,6 @@ export class Sandbox implements ISandbox {
                     };
                 }
             }
-
         } catch (reason) {
 
             return {
@@ -211,7 +210,7 @@ export class Sandbox implements ISandbox {
         return null;
     }
 
-    protected async executeResource(resolveResult: ModuleResolveResult): Promise<IExecuter> {
+    protected async executeResource(resolveResult: ModuleResolveResult): Promise<IExecuter | null> {
 
         const hash: string = resolveResult.scriptLocation.hash();
         if (this._cachedExecuter.has(hash)) {
@@ -220,7 +219,11 @@ export class Sandbox implements ISandbox {
         }
 
         const executer: Executer = Executer.from(this);
+        const result: MarkedResult = await executer.evaluate(resolveResult.script, resolveResult.scriptLocation);
 
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            return null;
+        }
         return executer;
     }
 

@@ -4,7 +4,7 @@
  * @description Sandbox
  */
 
-import { Evaluator } from "./evaluate";
+import { Evaluator, MarkedResult } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
 import { IExposed, IScope, ITrace } from "./variable";
@@ -58,4 +58,6 @@ export interface ISandbox {
 export interface IExecuter {
 
     parent: ISandbox;
+
+    evaluate: (script: string, scriptLocation?: ScriptLocation) => Promise<MarkedResult>;
 }
