@@ -8,7 +8,7 @@ import * as Acorn from 'acorn';
 import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
-import { ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName } from '../declare/sandbox';
+import { IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
@@ -19,6 +19,7 @@ import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../ut
 import { Flag } from '../variable/flag';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace';
+import { Executer } from './executer';
 
 export class Sandbox implements ISandbox {
 
@@ -36,7 +37,7 @@ export class Sandbox implements ISandbox {
     private readonly _modules: Map<string, any>;
 
     private readonly _resolvers: ModuleResolver[];
-    private readonly _cached: Map<string, any>;
+    private readonly _cachedExecuter: Map<string, IExecuter>;
 
     private readonly _options: ISandboxOptions;
 
@@ -56,7 +57,7 @@ export class Sandbox implements ISandbox {
         this._modules = new Map<string, any>();
 
         this._resolvers = [];
-        this._cached = new Map<string, any>();
+        this._cachedExecuter = new Map<string, IExecuter>();
 
         this._options = getDefaultSandboxOption();
     }
@@ -197,9 +198,8 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    protected async resolve(source: string, trace: ITrace): Promise<ModuleResolveResult | null> {
+    protected async resolveResource(source: string, trace: ITrace): Promise<ModuleResolveResult | null> {
 
-        // TODO
         for (const resolver of this._resolvers) {
 
             const result: ModuleResolveResult | null = await Promise.resolve(resolver(source, trace));
@@ -209,6 +209,19 @@ export class Sandbox implements ISandbox {
             }
         }
         return null;
+    }
+
+    protected async executeResource(resolveResult: ModuleResolveResult): Promise<IExecuter> {
+
+        const hash: string = resolveResult.scriptLocation.hash();
+        if (this._cachedExecuter.has(hash)) {
+
+            return this._cachedExecuter.get(hash) as IExecuter;
+        }
+
+        const executer: Executer = Executer.from(this);
+
+        return executer;
     }
 
     protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {

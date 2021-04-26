@@ -28,7 +28,7 @@ export interface ISandboxOptions {
 export type ModuleResolveResult = {
 
     readonly script: string;
-    readonly scriptLocation?: ScriptLocation;
+    readonly scriptLocation: ScriptLocation;
 };
 
 export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
