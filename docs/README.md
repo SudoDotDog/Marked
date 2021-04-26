@@ -27,7 +27,13 @@ import { Marked } from '@sudoo/marked'
 Marked(`import print from 'print'; print(1)`, {
     options: // options
     injects: // inject variable
-    provides: // provide importable variable
+    provides: {
+        print: {
+            default: (...contents) => {
+                console.log(...contents.map((content) => content ? content.toString() : 'undefined'));
+            },
+        },
+    },
 })
     .then((result)=>/*handle result*/)
     .catch((err)=>/*handle error*/);
@@ -43,7 +49,13 @@ const sandbox = Sandbox.create();
 // use evaluator
 // provide internal function
 
-sandbox.evaluate(`import print from 'print'; print(1)`)
+sandbox
+    .provide('print', {
+        default: (...contents) => {
+            console.log(...contents.map((content) => content ? content.toString() : 'undefined'));
+        },
+    })
+    .evaluate(`import print from 'print'; print(1)`)
     .then((result)=>/*handle result*/)
     .catch((err)=>/*handle error*/);
 ```
