@@ -7,10 +7,9 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/evaluate";
-import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
-import { SandMap } from "../variable/sandmap";
+import { resolveImport } from "../util/import";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
@@ -48,54 +47,8 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const nextTrace: Trace = trace.stack(node);
 
         const source: string = await this.execute(node.source, scope, nextTrace);
-        const targetModule: any | null = this.module(source);
+        await resolveImport(source, node, this, scope, trace, nextTrace);
 
-        if (!Boolean(targetModule)) {
-            throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);
-        }
-
-        for (const specifier of node.specifiers) {
-
-            const target: any = await this.execute(specifier, scope, nextTrace);
-            const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
-
-            switch (specifier.type) {
-
-                case 'ImportDefaultSpecifier': {
-
-                    if (!(typeof targetModule === 'object' && Boolean(targetModule.default))) {
-                        throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, trace);
-                    }
-
-                    register(target, targetModule.default);
-                    break;
-                }
-                case 'ImportNamespaceSpecifier': {
-
-                    if (!(typeof targetModule === 'object')) {
-                        throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, trace);
-                    }
-
-                    const map: SandMap<any> = new SandMap(targetModule);
-                    register(target, map);
-                    break;
-                }
-                case 'ImportSpecifier': {
-
-                    const imported: string = specifier.imported.name;
-                    if (!Boolean(targetModule[imported])) {
-                        throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, trace);
-                    }
-
-                    register(target, targetModule[imported]);
-                    break;
-                }
-                default: {
-
-                    throw error(ERROR_CODE.UNKNOWN_ERROR, (specifier as any).type, node, trace);
-                }
-            }
-        }
         return;
     };
 
