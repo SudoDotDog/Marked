@@ -6,14 +6,16 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
+import { END_SIGNAL, MarkedResult } from "../declare/evaluate";
 import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Executer } from "../marked/executer";
 import { Sandbox } from "../marked/sandbox";
+import { Flag } from "../variable/flag";
 import { SandMap } from "../variable/sandmap";
 import { error } from "./error/error";
 
-const resolveModuleImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> {
+const resolveModuleImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean | Flag> {
 
     const targetModule: any | null = this.module(source);
 
@@ -67,7 +69,7 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
     return true;
 };
 
-const resolveDynamicImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> {
+const resolveDynamicImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean | Flag> {
 
     const targetModule: ModuleResolveResult | null = await this.resolveResource(source, currentTrace);
 
@@ -77,7 +79,13 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
     }
 
     const executer: IExecuter = Executer.from(this);
-    await executer.evaluate(targetModule.script, targetModule.scriptLocation);
+    const evaluateResult: MarkedResult = await executer.evaluate(targetModule.script, targetModule.scriptLocation);
+
+    if (evaluateResult.signal !== END_SIGNAL.SUCCEED) {
+
+        const flag: Flag = Flag.fromThrow(currentTrace);
+        return flag;
+    }
 
     for (const specifier of node.specifiers) {
 
@@ -128,10 +136,14 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
     return true;
 };
 
-export const resolveImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean> {
+export const resolveImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean | Flag> {
 
     const bindResolveModuleImport = resolveModuleImport.bind(this);
-    const result: boolean = await bindResolveModuleImport(source, node, scope, currentTrace, nextTrace);
+    const result: boolean | Flag = await bindResolveModuleImport(source, node, scope, currentTrace, nextTrace);
+
+    if (result instanceof Flag) {
+        return result;
+    }
 
     if (result) {
         return result;

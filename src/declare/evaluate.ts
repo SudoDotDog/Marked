@@ -9,7 +9,7 @@ import { MarkedError } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 import { EST_TYPE, IESTreeType } from "./types";
-import { IExposed } from "./variable";
+import { IExposed, ITrace } from "./variable";
 
 export type Evaluator<T extends EST_TYPE> =
     (this: Sandbox, node: IESTreeType[T], scope: Scope, trace: Trace) => Promise<any>;
@@ -35,7 +35,7 @@ export interface IMarkedResultFailed {
 
 export interface IMarkedResultException {
 
-    trace: Trace;
+    trace: ITrace;
     exception: any;
     signal: END_SIGNAL.EXCEPTION;
 }

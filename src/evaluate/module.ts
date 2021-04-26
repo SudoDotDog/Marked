@@ -10,6 +10,7 @@ import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { resolveImport } from "../util/import";
+import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
@@ -49,7 +50,11 @@ export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
         const source: string = await this.execute(node.source, scope, nextTrace);
 
         const bindResolveImport = resolveImport.bind(this);
-        const result: boolean = await bindResolveImport(source, node, scope, trace, nextTrace);
+        const result: boolean | Flag = await bindResolveImport(source, node, scope, trace, nextTrace);
+
+        if (result instanceof Flag) {
+            return result;
+        }
 
         if (!result) {
             throw error(ERROR_CODE.MODULE_IS_NOT_PROVIDED, source, node, trace);

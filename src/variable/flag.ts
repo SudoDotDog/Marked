@@ -4,27 +4,26 @@
  * @description Flag
  */
 
-import { FLAG_TYPE } from "../declare/variable";
-import { Trace } from "./trace";
+import { FLAG_TYPE, ITrace } from "../declare/variable";
 
 export class Flag {
 
-    public static fromReturn(trace: Trace): Flag {
+    public static fromReturn(trace: ITrace): Flag {
 
         return new Flag(FLAG_TYPE.RETURN, trace);
     }
 
-    public static fromBreak(trace: Trace): Flag {
+    public static fromBreak(trace: ITrace): Flag {
 
         return new Flag(FLAG_TYPE.BREAK, trace);
     }
 
-    public static fromContinue(trace: Trace): Flag {
+    public static fromContinue(trace: ITrace): Flag {
 
         return new Flag(FLAG_TYPE.CONTINUE, trace);
     }
 
-    public static fromThrow(trace: Trace): Flag {
+    public static fromThrow(trace: ITrace): Flag {
 
         return new Flag(FLAG_TYPE.THROW, trace);
     }
@@ -32,9 +31,9 @@ export class Flag {
     private _type: FLAG_TYPE;
     private _value: any | null;
 
-    private _trace: Trace;
+    private _trace: ITrace;
 
-    public constructor(type: FLAG_TYPE, trace: Trace) {
+    public constructor(type: FLAG_TYPE, trace: ITrace) {
 
         this._type = type;
         this._value = null;
@@ -42,7 +41,7 @@ export class Flag {
         this._trace = trace;
     }
 
-    public get trace(): Trace {
+    public get trace(): ITrace {
         return this._trace;
     }
 
