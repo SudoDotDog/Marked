@@ -13,6 +13,9 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
             },
         },
     },
+    resolvers: [
+        (...args) => console.log(args),
+    ],
 })
     .then((result) => console.log(result))
     .catch((err) => console.log(err));

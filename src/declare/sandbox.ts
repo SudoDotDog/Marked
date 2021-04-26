@@ -9,11 +9,14 @@ import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
 import { IScope, ITrace } from "./variable";
 
+export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
+
 export interface IMarkedOptions {
 
     injects?: Record<string, any>;
     provides?: Record<string, any>;
     sandbox?: Partial<ISandboxOptions>;
+    resolvers?: ModuleResolver[];
 }
 
 export interface ISandboxOptions {
@@ -30,8 +33,6 @@ export type ModuleResolveResult = {
     readonly script: string;
     readonly scriptLocation: ScriptLocation;
 };
-
-export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
 
 export type OptionName = keyof ISandboxOptions;
 
