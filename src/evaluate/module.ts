@@ -70,12 +70,6 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
         const nextTrace: Trace = trace.stack(node);
 
         const content: any = await this.execute(node.declaration, scope, nextTrace);
-        if (!(typeof content === 'boolean'
-            || typeof content === 'number'
-            || typeof content === 'string')) {
-            throw error(ERROR_CODE.EXPORT_TYPE_OTHER_THAN_N_S_B_NOT_SUPPORT, typeof content, node, trace);
-        }
-
         scope.exposeDefault(content);
     };
 
