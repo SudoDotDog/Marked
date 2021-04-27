@@ -31,7 +31,6 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                     if (declaration.id.type === 'Identifier') {
 
                         const id: string = declaration.id.name;
-
                         if (scope.exist(id)) {
 
                             throw error(ERROR_CODE.DUPLICATED_VARIABLE, id, node, trace);
@@ -45,7 +44,7 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                         scope.expose(id, value);
                     } else {
 
-                        throw error(ERROR_CODE.UNDEFINED_TEST_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
                     }
                 }
             } else {

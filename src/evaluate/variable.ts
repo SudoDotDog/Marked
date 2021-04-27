@@ -178,19 +178,23 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
         const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
         for (const declaration of node.declarations) {
 
-            const pattern: EST.Pattern = declaration.id;
-            const identifier: EST.Identifier = pattern as EST.Identifier;
+            if (declaration.id.type === 'Identifier') {
 
-            if (scope.exist(identifier.name)) {
+                const id: string = declaration.id.name;
+                if (scope.exist(id)) {
 
-                throw error(ERROR_CODE.DUPLICATED_VARIABLE, identifier.name, node, trace);
+                    throw error(ERROR_CODE.DUPLICATED_VARIABLE, id, node, trace);
+                }
+
+                const value = declaration.init
+                    ? await this.execute(declaration.init, scope, nextTrace)
+                    : undefined;
+
+                scope.register(type)(id, value);
+            } else {
+
+                throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
             }
-
-            const value = declaration.init
-                ? await this.execute(declaration.init, scope, nextTrace)
-                : undefined;
-
-            scope.register(type)(identifier.name, value);
         }
 
         return;
