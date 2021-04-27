@@ -53,10 +53,16 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this._executedList.length;
     }
 
+    public get scope(): any {
+
+        return undefined as any;
+    }
+
     public get exposed(): IExposed {
 
         const result: IExposed = {
             default: this._exposed.get('default'),
+            named: new Map(),
         };
         return result;
     }

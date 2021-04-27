@@ -11,7 +11,7 @@ import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
-import { IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
+import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { markedParser } from '../extension/parser';
 import { assert } from '../util/error/assert';
 import { error } from "../util/error/error";
@@ -74,6 +74,11 @@ export class Sandbox implements ISandbox {
     public get scope(): Scope {
 
         return this._rootScope;
+    }
+
+    public get exposed(): IExposed {
+
+        return this._rootScope.exposed;
     }
 
     public break(): Sandbox {

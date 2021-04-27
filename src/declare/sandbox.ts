@@ -7,7 +7,7 @@
 import { Evaluator, MarkedResult } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
-import { IScope, ITrace } from "./variable";
+import { IExposed, IScope, ITrace } from "./variable";
 
 export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
 
@@ -39,6 +39,8 @@ export type OptionName = keyof ISandboxOptions;
 export interface ISandbox {
 
     count: number;
+    scope: IScope;
+    exposed: IExposed;
 
     break: () => ISandbox;
     evaluate: (script: string, scriptLocation?: ScriptLocation, scope?: IScope) => Promise<any>;
@@ -58,6 +60,7 @@ export interface IExecuter {
 
     parent: ISandbox;
     scope: IScope;
+    exposed: IExposed;
 
     evaluate: (script: string, scriptLocation?: ScriptLocation) => Promise<MarkedResult>;
 }
