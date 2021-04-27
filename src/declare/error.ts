@@ -62,6 +62,9 @@ export enum ERROR_CODE {
 
     MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED = 6121,
 
+    DECLARATION_INIT_TYPE_NOT_MATCHED = 6201,
+    DECLARATION_INIT_SIZE_NOT_MATCHED = 6202,
+
     DUPLICATED_VARIABLE = 7005,
 
     VARIABLE_IS_NOT_DEFINED = 7102,
@@ -118,6 +121,8 @@ export const ERROR_LIST: {
     6002: 'Provided module name duplicated',
     6003: 'Module is not provided',
     6121: 'Member expression value cannot be undefined',
+    6201: 'Declaration init type not matched',
+    6202: 'Declaration init size not matched',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',
     7501: 'Catch not found',

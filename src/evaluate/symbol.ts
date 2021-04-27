@@ -38,7 +38,10 @@ export const breakEvaluator: Evaluator<'BreakStatement'> =
     // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
-        if (node.label) { throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace); }
+        if (node.label) {
+
+            throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
+        }
         const flag: Flag = Flag.fromBreak(trace);
 
         return flag;

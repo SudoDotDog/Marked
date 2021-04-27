@@ -197,13 +197,46 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
                         throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
                     }
 
+                    if (declaration.init.type !== 'ArrayExpression') {
+
+                        throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, trace);
+                    }
+
+                    if (declaration.init.elements.length !== declaration.id.elements.length) {
+
+                        throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.elements.length.toString(), node, trace);
+                    }
+
+                    const bindRegisterScopeVariable = registerScopeVariable.bind(this);
+                    for (let i = 0; i < declaration.id.elements.length; i++) {
+
+                        const pattern = declaration.id.elements[i];
+                        if (!pattern) {
+
+                            throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
+                        }
+                        if (pattern.type !== 'Identifier') {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, trace);
+                        }
+                        const id: string = pattern.name;
+
+                        const initPattern = declaration.init.elements[i];
+                        if (initPattern
+                            && initPattern.type === 'SpreadElement') {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, trace);
+                        }
+
+                        await bindRegisterScopeVariable(node, type, id, initPattern as EST.Expression, scope, trace, nextTrace);
+                    }
                     break;
                 }
                 default: {
 
                     console.log(declaration);
 
-                    throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                    throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, node, trace);
                 }
             }
         }
