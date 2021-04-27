@@ -6,5 +6,11 @@ export default a;
 
 let counter = 0;
 
-export const b = () => counter++;
-export const c = () => (print(counter), counter);
+export const b = () => {
+    counter++;
+    print('counter added to:', counter);
+};
+export const c = () => {
+    print('counter from c:', counter);
+    return counter;
+};
