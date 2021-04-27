@@ -32,6 +32,13 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
                         scriptLocation: ScriptLocation.create('file', 'third'),
                     };
                 }
+                case './cache': {
+                    const script = fs.readFileSync(path.join(__dirname, '..', 'example', 'import', 'cache.js'), 'utf8');
+                    return {
+                        script,
+                        scriptLocation: ScriptLocation.create('file', 'cache'),
+                    };
+                }
             }
         },
     ],
