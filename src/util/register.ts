@@ -49,6 +49,8 @@ export const declareVariableStack = async function (
 ): Promise<DeclareVariableElement[]> {
 
     const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
+
+    const results: DeclareVariableElement[] = [];
     for (const declaration of node.declarations) {
 
         switch (declaration.id.type) {
@@ -59,7 +61,9 @@ export const declareVariableStack = async function (
                 const bindRegisterScopeVariable = registerScopeVariable.bind(this);
 
                 const result: any = await bindRegisterScopeVariable(node, type, id, declaration.init, scope, currentTrace, nextTrace);
-                return [{ id, value: result }];
+                results.push({ id, value: result });
+
+                break;
             }
             case 'ArrayPattern': {
 
@@ -78,7 +82,7 @@ export const declareVariableStack = async function (
                     throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.elements.length.toString(), node, currentTrace);
                 }
 
-                const results: DeclareVariableElement[] = [];
+
                 const bindRegisterScopeVariable = registerScopeVariable.bind(this);
                 for (let i = 0; i < declaration.id.elements.length; i++) {
 
@@ -103,7 +107,7 @@ export const declareVariableStack = async function (
                     const value: any = await bindRegisterScopeVariable(node, type, id, initPattern as EST.Expression, scope, currentTrace, nextTrace);
                     results.push({ id, value });
                 }
-                return results;
+                break;
             }
             case 'ObjectPattern': {
 
@@ -123,7 +127,6 @@ export const declareVariableStack = async function (
                     throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.properties.length.toString(), node, currentTrace);
                 }
 
-                const results: DeclareVariableElement[] = [];
                 const bindRegisterScopeVariable = registerScopeVariable.bind(this);
                 for (let i = 0; i < declaration.id.properties.length; i++) {
 
@@ -156,7 +159,7 @@ export const declareVariableStack = async function (
                     const value = await bindRegisterScopeVariable(node, type, id, initPattern.value, scope, currentTrace, nextTrace);
                     results.push({ id, value });
                 }
-                return results;
+                break;
             }
             default: {
 
@@ -164,5 +167,5 @@ export const declareVariableStack = async function (
             }
         }
     }
-    return [];
+    return results;
 };
