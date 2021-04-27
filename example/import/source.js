@@ -4,4 +4,7 @@ import A from "./third";
 const a = 10 + A;
 export default a;
 
-export const b = () => print("Hello");
+let counter = 0;
+
+export const b = () => counter++;
+export const c = () => print(counter);
