@@ -179,19 +179,33 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
         const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
         for (const declaration of node.declarations) {
 
-            if (declaration.id.type === 'Identifier') {
+            switch (declaration.id.type) {
 
-                const id: string = declaration.id.name;
-                const bindRegisterScopeVariable = registerScopeVariable.bind(this);
+                case 'Identifier': {
 
-                await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
-            } else {
+                    const id: string = declaration.id.name;
+                    const bindRegisterScopeVariable = registerScopeVariable.bind(this);
 
-                console.log(node);
+                    await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
 
-                throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                    break;
+                }
+                case 'ArrayPattern': {
+
+                    if (!declaration.init) {
+
+                        throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
+                    }
+
+                    break;
+                }
+                default: {
+
+                    console.log(declaration);
+
+                    throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                }
             }
         }
-
         return;
     };

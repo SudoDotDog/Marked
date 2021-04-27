@@ -29,16 +29,22 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                 const type: VARIABLE_TYPE = node.declaration.kind as VARIABLE_TYPE;
                 for (const declaration of node.declaration.declarations) {
 
-                    if (declaration.id.type === 'Identifier') {
+                    switch (declaration.id.type) {
 
-                        const id: string = declaration.id.name;
-                        const bindRegisterScopeVariable = registerScopeVariable.bind(this);
+                        case 'Identifier': {
 
-                        const value: any = await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
-                        scope.expose(id, value);
-                    } else {
+                            const id: string = declaration.id.name;
+                            const bindRegisterScopeVariable = registerScopeVariable.bind(this);
 
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                            const value: any = await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
+                            scope.expose(id, value);
+
+                            break;
+                        }
+                        default: {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                        }
                     }
                 }
             } else {

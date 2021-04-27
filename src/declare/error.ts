@@ -36,6 +36,7 @@ export enum ERROR_CODE {
     ASSIGNMENT_NOT_SUPPORT = 3007,
     UNDEFINED_TEST_NOT_SUPPORT = 3008,
     BESIDES_DECLARATION_NOT_SUPPORT = 3009,
+    UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT = 3010,
 
     BREAK_LABEL_IS_NOT_SUPPORT = 3061,
     CONTINUE_LABEL_IS_NOT_SUPPORT = 3062,
@@ -100,6 +101,7 @@ export const ERROR_LIST: {
     3007: 'Assignment is not supported',
     3008: 'Undefined test is not supported',
     3009: 'Besides declaration not supported',
+    3010: 'Undefined besides declaration not supported',
     3061: 'Break label is not supported',
     3062: 'Continue label is not supported',
     3081: 'Constant variable cannot be edited',
