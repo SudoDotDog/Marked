@@ -6,10 +6,8 @@
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
-import { END_SIGNAL, MarkedResult } from "../declare/evaluate";
 import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
-import { Executer } from "../marked/executer";
 import { Sandbox } from "../marked/sandbox";
 import { Flag } from "../variable/flag";
 import { SandMap } from "../variable/sandmap";
@@ -78,10 +76,8 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
         return false;
     }
 
-    const executer: IExecuter = Executer.from(this);
-    const evaluateResult: MarkedResult = await executer.evaluate(targetModule.script, targetModule.scriptLocation);
-
-    if (evaluateResult.signal !== END_SIGNAL.SUCCEED) {
+    const executer: IExecuter | null = await this.executeResource(targetModule);
+    if (!executer) {
 
         const flag: Flag = Flag.fromThrow(currentTrace);
         return flag;

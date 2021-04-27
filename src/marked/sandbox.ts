@@ -214,6 +214,8 @@ export class Sandbox implements ISandbox {
         if (result.signal !== END_SIGNAL.SUCCEED) {
             return null;
         }
+
+        this._cachedExecuter.set(hash, executer);
         return executer;
     }
 
