@@ -7,11 +7,10 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/evaluate";
-import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { resolveImport } from "../util/import";
-import { registerScopeVariable } from "../util/register";
+import { DeclareVariableElement, declareVariableStack } from "../util/register";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
@@ -26,30 +25,15 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
 
             if (node.declaration.type === 'VariableDeclaration') {
 
-                const type: VARIABLE_TYPE = node.declaration.kind as VARIABLE_TYPE;
-                for (const declaration of node.declaration.declarations) {
+                const bindDeclareVariableStack = declareVariableStack.bind(this);
+                const declareResults: DeclareVariableElement[] = await bindDeclareVariableStack(node.declaration, scope, trace, nextTrace);
 
-                    switch (declaration.id.type) {
-
-                        case 'Identifier': {
-
-                            const id: string = declaration.id.name;
-                            const bindRegisterScopeVariable = registerScopeVariable.bind(this);
-
-                            const value: any = await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
-                            scope.expose(id, value);
-
-                            break;
-                        }
-                        default: {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
-                        }
-                    }
+                for (const result of declareResults) {
+                    scope.expose(result.id, result.value);
                 }
             } else {
 
-                throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, node.declaration.type, node, nextTrace);
+                throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, node.declaration.type, node, nextTrace);
             }
         } else { // Node have no declaration
 
