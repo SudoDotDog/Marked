@@ -20,7 +20,22 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
 
         const nextTrace: Trace = trace.stack(node);
 
-        console.log(node);
+        if (node.declaration) {
+
+            if (node.declaration.type === 'VariableDeclaration') {
+
+                for (const declaration of node.declaration.declarations) {
+
+                    const id: string = await this.execute(declaration.id, scope, nextTrace);
+                    console.log(id);
+                }
+
+                console.log(node.declaration.declarations);
+            } else {
+
+                throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, node.declaration.type, node, nextTrace);
+            }
+        }
 
         throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, void 0, node, nextTrace);
     };
