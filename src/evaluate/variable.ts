@@ -13,6 +13,7 @@ import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateLiteralOrIdentifier, validateObjectIsSandboxStructure } from "../util/node/validator";
 import { getAssignmentOperation } from "../util/operation";
+import { registerScopeVariable } from "../util/register";
 import { SandList } from "../variable/sandlist";
 import { SandMap } from "../variable/sandmap";
 import { Scope } from "../variable/scope";
@@ -181,17 +182,12 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
             if (declaration.id.type === 'Identifier') {
 
                 const id: string = declaration.id.name;
-                if (scope.exist(id)) {
+                const bindRegisterScopeVariable = registerScopeVariable.bind(this);
 
-                    throw error(ERROR_CODE.DUPLICATED_VARIABLE, id, node, trace);
-                }
-
-                const value = declaration.init
-                    ? await this.execute(declaration.init, scope, nextTrace)
-                    : undefined;
-
-                scope.register(type)(id, value);
+                await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
             } else {
+
+                console.log(node);
 
                 throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
             }

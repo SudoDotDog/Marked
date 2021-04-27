@@ -11,6 +11,7 @@ import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { resolveImport } from "../util/import";
+import { registerScopeVariable } from "../util/register";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
@@ -31,16 +32,9 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                     if (declaration.id.type === 'Identifier') {
 
                         const id: string = declaration.id.name;
-                        if (scope.exist(id)) {
+                        const bindRegisterScopeVariable = registerScopeVariable.bind(this);
 
-                            throw error(ERROR_CODE.DUPLICATED_VARIABLE, id, node, trace);
-                        }
-
-                        const value = declaration.init
-                            ? await this.execute(declaration.init, scope, nextTrace)
-                            : undefined;
-
-                        scope.register(type)(id, value);
+                        const value: any = await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
                         scope.expose(id, value);
                     } else {
 
