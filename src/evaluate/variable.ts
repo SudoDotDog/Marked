@@ -234,7 +234,53 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
                 }
                 case 'ObjectPattern': {
 
-                    console.log(declaration.id);
+                    if (!declaration.init) {
+
+                        throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
+                    }
+
+
+                    if (declaration.init.type !== 'ObjectExpression') {
+
+                        throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, trace);
+                    }
+
+                    if (declaration.init.properties.length !== declaration.id.properties.length) {
+
+                        throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.properties.length.toString(), node, trace);
+                    }
+
+                    const bindRegisterScopeVariable = registerScopeVariable.bind(this);
+                    for (let i = 0; i < declaration.id.properties.length; i++) {
+
+                        const pattern = declaration.id.properties[i];
+                        if (!pattern) {
+
+                            throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
+                        }
+                        if (pattern.type !== 'Property') {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, trace);
+                        }
+                        if (pattern.key.type !== 'Identifier') {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.key.type, node, trace);
+                        }
+
+                        const id: string = pattern.key.name;
+
+                        const initPattern = declaration.init.properties[i];
+                        if (!initPattern) {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
+                        }
+                        if (initPattern.type !== 'Property') {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, trace);
+                        }
+
+                        await bindRegisterScopeVariable(node, type, id, initPattern.value, scope, trace, nextTrace);
+                    }
                     break;
                 }
                 default: {

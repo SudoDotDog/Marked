@@ -15,7 +15,7 @@ export const registerScopeVariable = async function (
     node: EST.Node,
     variableType: VARIABLE_TYPE,
     id: string,
-    expression: EST.Expression | null | undefined,
+    expression: EST.Node | null | undefined,
     scope: IScope,
     currentTrace: ITrace,
     nextTrace: ITrace,
