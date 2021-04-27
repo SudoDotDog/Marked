@@ -234,8 +234,6 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
                 }
                 default: {
 
-                    console.log(declaration);
-
                     throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, node, trace);
                 }
             }
