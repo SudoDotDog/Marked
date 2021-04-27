@@ -7,13 +7,12 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/evaluate";
-import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateLiteralOrIdentifier, validateObjectIsSandboxStructure } from "../util/node/validator";
 import { getAssignmentOperation } from "../util/operation";
-import { registerScopeVariable } from "../util/register";
+import { declareVariableStack } from "../util/register";
 import { SandList } from "../variable/sandlist";
 import { SandMap } from "../variable/sandmap";
 import { Scope } from "../variable/scope";
@@ -176,118 +175,6 @@ export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
-        for (const declaration of node.declarations) {
-
-            switch (declaration.id.type) {
-
-                case 'Identifier': {
-
-                    const id: string = declaration.id.name;
-                    const bindRegisterScopeVariable = registerScopeVariable.bind(this);
-
-                    await bindRegisterScopeVariable(node, type, id, declaration.init, scope, trace, nextTrace);
-
-                    break;
-                }
-                case 'ArrayPattern': {
-
-                    if (!declaration.init) {
-
-                        throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
-                    }
-
-                    if (declaration.init.type !== 'ArrayExpression') {
-
-                        throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, trace);
-                    }
-
-                    if (declaration.init.elements.length !== declaration.id.elements.length) {
-
-                        throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.elements.length.toString(), node, trace);
-                    }
-
-                    const bindRegisterScopeVariable = registerScopeVariable.bind(this);
-                    for (let i = 0; i < declaration.id.elements.length; i++) {
-
-                        const pattern = declaration.id.elements[i];
-                        if (!pattern) {
-
-                            throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
-                        }
-                        if (pattern.type !== 'Identifier') {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, trace);
-                        }
-                        const id: string = pattern.name;
-
-                        const initPattern = declaration.init.elements[i];
-                        if (initPattern
-                            && initPattern.type === 'SpreadElement') {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, trace);
-                        }
-
-                        await bindRegisterScopeVariable(node, type, id, initPattern as EST.Expression, scope, trace, nextTrace);
-                    }
-                    break;
-                }
-                case 'ObjectPattern': {
-
-                    if (!declaration.init) {
-
-                        throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
-                    }
-
-
-                    if (declaration.init.type !== 'ObjectExpression') {
-
-                        throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, trace);
-                    }
-
-                    if (declaration.init.properties.length !== declaration.id.properties.length) {
-
-                        throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.properties.length.toString(), node, trace);
-                    }
-
-                    const bindRegisterScopeVariable = registerScopeVariable.bind(this);
-                    for (let i = 0; i < declaration.id.properties.length; i++) {
-
-                        const pattern = declaration.id.properties[i];
-                        if (!pattern) {
-
-                            throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
-                        }
-                        if (pattern.type !== 'Property') {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, trace);
-                        }
-                        if (pattern.key.type !== 'Identifier') {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.key.type, node, trace);
-                        }
-
-                        const id: string = pattern.key.name;
-
-                        const initPattern = declaration.init.properties[i];
-                        if (!initPattern) {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, trace);
-                        }
-                        if (initPattern.type !== 'Property') {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, trace);
-                        }
-
-                        await bindRegisterScopeVariable(node, type, id, initPattern.value, scope, trace, nextTrace);
-                    }
-                    break;
-                }
-                default: {
-
-                    throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, declaration.id.type, node, trace);
-                }
-            }
-        }
-        return;
+        const bindDeclareVariableStack = declareVariableStack.bind(this);
+        await bindDeclareVariableStack(node, scope, trace, nextTrace);
     };

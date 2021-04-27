@@ -7,4 +7,4 @@ export default a;
 let counter = 0;
 
 export const b = () => counter++;
-export const c = () => print(counter);
+export const c = () => (print(counter), counter);
