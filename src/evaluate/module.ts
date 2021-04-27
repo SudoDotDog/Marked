@@ -20,6 +20,8 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
 
         const nextTrace: Trace = trace.stack(node);
 
+        console.log(node);
+
         throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, void 0, node, nextTrace);
     };
 
