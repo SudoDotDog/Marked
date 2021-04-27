@@ -21,7 +21,7 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
 
         const nextTrace: Trace = trace.stack(node);
 
-        if (node.declaration) {
+        if (node.declaration) { // Node has a declaration
 
             if (node.declaration.type === 'VariableDeclaration') {
 
@@ -50,13 +50,19 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                 }
             } else {
 
-                console.log(node);
-
                 throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, node.declaration.type, node, nextTrace);
             }
-        }
+        } else { // Node have no declaration
 
-        throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, void 0, node, nextTrace);
+            for (const specifier of node.specifiers) {
+
+                const id: string = specifier.exported.name;
+                const value: any = await this.execute(specifier.local, scope, nextTrace);
+
+                scope.expose(id, value);
+            }
+        }
+        return;
     };
 
 export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclaration'> =
