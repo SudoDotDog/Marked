@@ -45,9 +45,8 @@ describe('Given Module evaluators', (): void => {
             const result: any = await Module_Expressions.exportsDefaultDeclarationEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result).to.be.undefined;
-            expect(sandbox.exposed.default).to.be.equal(testValue);
+            expect(scope.exposed.default).to.be.equal(testValue);
         });
     });
 });

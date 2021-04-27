@@ -5,13 +5,16 @@
  */
 
 import { ERROR_CODE } from "../../src/declare/error";
-import { IScope, VARIABLE_TYPE } from "../../src/declare/variable";
+import { IExposed, IScope, VARIABLE_TYPE } from "../../src/declare/variable";
 import { error } from "../../src/util/error/error";
 import { SandMap } from "../../src/variable/sandmap";
 import { Variable } from "../../src/variable/variable";
 import { IMockedClass } from "./node";
 
 export class MockScope implements IScope, IMockedClass {
+
+    private _defaultExposed: any;
+    private readonly _exposed: Map<string, any>;
 
     private _mockedScopeMap: Map<string, Variable<any>>;
     private _mockedConstantMap: Map<string, Variable<any>>;
@@ -23,6 +26,9 @@ export class MockScope implements IScope, IMockedClass {
     private _this: SandMap<any> | null;
 
     public constructor(scope?: MockScope) {
+
+        this._defaultExposed = undefined;
+        this._exposed = new Map<string, any>();
 
         this._mockedConstantMap = new Map<string, Variable<any>>();
         this._mockedScopeMap = new Map<string, Variable<any>>();
@@ -46,6 +52,16 @@ export class MockScope implements IScope, IMockedClass {
     public get scopes(): Map<string, Variable<any>> {
 
         return this._mockedScopeMap;
+    }
+
+    public get exposed(): IExposed {
+
+        const result: IExposed = {
+
+            default: this._defaultExposed,
+            named: this._exposed,
+        };
+        return result;
     }
 
     public config(name: string, value?: any): MockScope {
@@ -146,6 +162,18 @@ export class MockScope implements IScope, IMockedClass {
             throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
         }
 
+        return this;
+    }
+
+    public expose(name: string, value: any): MockScope {
+
+        this._exposed.set(name, value);
+        return this;
+    }
+
+    public exposeDefault(value: any): MockScope {
+
+        this._defaultExposed = value;
         return this;
     }
 

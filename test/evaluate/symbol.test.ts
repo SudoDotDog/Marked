@@ -44,8 +44,6 @@ describe('Given Symbol evaluators', (): void => {
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.instanceof(Flag);
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isBreak()).to.be.true;
         });
     });
@@ -63,8 +61,6 @@ describe('Given Symbol evaluators', (): void => {
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.instanceof(Flag);
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isContinue()).to.be.true;
         });
     });
@@ -82,8 +78,6 @@ describe('Given Symbol evaluators', (): void => {
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.instanceof(Flag);
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isReturn()).to.be.true;
         });
 
@@ -103,8 +97,6 @@ describe('Given Symbol evaluators', (): void => {
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
 
             expect(result).to.be.instanceof(Flag);
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(result.isReturn()).to.be.true;
             expect(result.getValue()).to.be.equal(payload);
         });

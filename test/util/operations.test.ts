@@ -74,8 +74,6 @@ describe('Given an Operation utils', (): void => {
                 const operation: any = getAssignmentOperation(operator);
 
                 if (!operation) {
-
-                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     expect(operation).to.be.null;
                 }
             });

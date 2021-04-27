@@ -48,8 +48,6 @@ describe('Given an Scope class', (): void => {
         scope.register(VARIABLE_TYPE.SCOPED)(name, value);
 
         expect((scope as any)._scopeMap.get(name).get()).to.be.equal(value);
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(() => scope.validateEditable(name)).to.be.not.throw;
     });
 });
