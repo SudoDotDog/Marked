@@ -7,6 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/evaluate";
+import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { resolveImport } from "../util/import";
@@ -24,14 +25,32 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
 
             if (node.declaration.type === 'VariableDeclaration') {
 
+                const type: VARIABLE_TYPE = node.declaration.kind as VARIABLE_TYPE;
                 for (const declaration of node.declaration.declarations) {
 
-                    const id: string = await this.execute(declaration.id, scope, nextTrace);
-                    console.log(id);
-                }
+                    if (declaration.id.type === 'Identifier') {
 
-                console.log(node.declaration.declarations);
+                        const id: string = declaration.id.name;
+
+                        if (scope.exist(id)) {
+
+                            throw error(ERROR_CODE.DUPLICATED_VARIABLE, id, node, trace);
+                        }
+
+                        const value = declaration.init
+                            ? await this.execute(declaration.init, scope, nextTrace)
+                            : undefined;
+
+                        scope.register(type)(id, value);
+                        scope.expose(id, value);
+                    } else {
+
+                        throw error(ERROR_CODE.UNDEFINED_TEST_NOT_SUPPORT, declaration.id.type, declaration.id, trace);
+                    }
+                }
             } else {
+
+                console.log(node);
 
                 throw error(ERROR_CODE.EXPORT_NAMED_NOT_SUPPORT, node.declaration.type, node, nextTrace);
             }
