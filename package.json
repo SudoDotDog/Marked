@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": ":tennis: JavaScript code runner in marked territory, synchronized.",
   "repository": {
     "type": "git",
