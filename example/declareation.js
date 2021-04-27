@@ -1,3 +1,5 @@
+import print from 'print'; // trailing
+
 const [a, b, c] = [1, 2, 3];
 
 const { d, e, f } = {
@@ -6,4 +8,10 @@ const { d, e, f } = {
     e: 6,
 };
 
-export { a, b, c, d, e, f };
+let g;
+let h, i;
+
+print(h);
+print(i);
+
+export { a, b, c, d, e, f, g };
