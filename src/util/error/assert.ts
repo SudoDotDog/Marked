@@ -4,7 +4,6 @@
  * @description Assert
  */
 
-import { isNumber, isString } from "util";
 import { ERROR_CODE } from "../../declare/error";
 import { error } from "../error/error";
 
@@ -90,7 +89,7 @@ class Assert<T> {
 
         const result: boolean = this.eachElement((value: T) => {
 
-            return isNumber(value);
+            return typeof value === 'number';
         });
         if (!result) {
 
@@ -104,7 +103,7 @@ class Assert<T> {
 
         const result: boolean = this.eachElement((value: T) => {
 
-            return isString(value);
+            return typeof value === 'string';
         });
         if (!result) {
 

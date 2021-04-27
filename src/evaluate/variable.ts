@@ -5,7 +5,6 @@
  */
 
 import * as EST from "estree";
-import { isNumber, isString } from "util";
 import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/evaluate";
 import { VARIABLE_TYPE } from "../declare/variable";
@@ -120,14 +119,14 @@ export const memberEvaluator: Evaluator<'MemberExpression'> =
 
         if (object instanceof SandList) {
 
-            if (isNumber(key)) {
+            if (typeof key === 'number') {
                 return object.get(key);
             } else {
                 throw error(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST, key, node, trace);
             }
         } else if (object instanceof SandMap) {
 
-            if (isString(key)) {
+            if (typeof key === 'string') {
                 return object.get(key);
             } else {
                 throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
