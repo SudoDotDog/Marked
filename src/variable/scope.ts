@@ -8,6 +8,7 @@ import { ERROR_CODE } from "../declare/error";
 import { IExposed, IScope, VARIABLE_TYPE } from "../declare/variable";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
+import { extractSandToNative } from "./parse";
 import { SandMap } from "./sandmap";
 
 export class Scope implements IScope {
@@ -52,10 +53,15 @@ export class Scope implements IScope {
             return this.ensureParent().exposed;
         }
 
+        const namedObject: Record<string, any> = {};
+        for (const key of this._exposed.keys()) {
+            namedObject[key] = this._exposed.get(key);
+        }
+
         const result: IExposed = {
 
             default: this._defaultExposed,
-            named: this._exposed,
+            named: namedObject,
         };
         return result;
     }
@@ -177,7 +183,8 @@ export class Scope implements IScope {
             return this;
         }
 
-        this._exposed.set(name, value);
+        const extractedValue: any = extractSandToNative(value);
+        this._exposed.set(name, extractedValue);
         return this;
     }
 
@@ -188,7 +195,8 @@ export class Scope implements IScope {
             return this;
         }
 
-        this._defaultExposed = value;
+        const extractedValue: any = extractSandToNative(value);
+        this._defaultExposed = extractedValue;
         return this;
     }
 

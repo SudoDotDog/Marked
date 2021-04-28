@@ -30,7 +30,7 @@ export type SCOPE_DECLARE_FUNC =
 export interface IExposed {
 
     default?: any;
-    named: Map<string, any>;
+    named: Record<string, any>;
 }
 
 export interface IScope {

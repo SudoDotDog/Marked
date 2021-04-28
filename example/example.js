@@ -8,8 +8,7 @@ const path = require('path');
 Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}.js`), 'utf8'), {
     provides: {
         print: {
-            default: (...contents) => {
-
+            default: function (...contents) {
                 console.log('EXAMPLE /', ...contents);
             },
         },
