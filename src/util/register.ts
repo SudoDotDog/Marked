@@ -100,21 +100,29 @@ export const declareVariableStack = async function (
 
                         throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
                     }
-                    if (pattern.type !== 'Identifier') {
 
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, currentTrace);
+                    switch (pattern.type) {
+
+                        case 'Identifier': {
+
+                            const id: string = pattern.name;
+
+                            const initPattern = declaration.init.elements[i];
+                            if (initPattern
+                                && initPattern.type === 'SpreadElement') {
+
+                                throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, currentTrace);
+                            }
+
+                            const value: any = await bindRegisterScopeVariable(node, type, id, initPattern as EST.Expression, scope, currentTrace, nextTrace);
+                            results.push({ id, value });
+                            break;
+                        }
+                        default: {
+
+                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, currentTrace);
+                        }
                     }
-                    const id: string = pattern.name;
-
-                    const initPattern = declaration.init.elements[i];
-                    if (initPattern
-                        && initPattern.type === 'SpreadElement') {
-
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, currentTrace);
-                    }
-
-                    const value: any = await bindRegisterScopeVariable(node, type, id, initPattern as EST.Expression, scope, currentTrace, nextTrace);
-                    results.push({ id, value });
                 }
                 break;
             }
