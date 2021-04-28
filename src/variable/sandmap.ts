@@ -50,7 +50,7 @@ export class SandMap<T> {
 
     public set(key: string, value: T): SandMap<T> {
 
-        const variable: Variable<T> = new Variable(value);
+        const variable: Variable<T> = Variable.mutable(value);
 
         this._map.set(key, variable);
         return this;

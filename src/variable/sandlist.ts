@@ -13,7 +13,7 @@ export class SandList<T> {
     public constructor(list: T[]) {
 
         const variableList: Array<Variable<T>>
-            = list.map((value: T) => new Variable<T>(value));
+            = list.map((value: T) => Variable.mutable(value));
 
         this._list = variableList;
     }

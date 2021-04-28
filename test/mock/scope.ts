@@ -180,7 +180,7 @@ export class MockScope implements IScope, IMockedClass {
     protected _declareConst(name: string, value: any): MockScope {
 
         if (this.exist(name)) { throw error(ERROR_CODE.DUPLICATED_VARIABLE); }
-        const variable = new Variable(value);
+        const variable = Variable.immutable(value);
         this._mockedConstantMap.set(name, variable);
         return this;
     }
@@ -188,7 +188,7 @@ export class MockScope implements IScope, IMockedClass {
     protected _declareLet(name: string, value: any): MockScope {
 
         if (this.exist(name)) { throw error(ERROR_CODE.DUPLICATED_VARIABLE); }
-        const variable = new Variable(value);
+        const variable = Variable.mutable(value);
         this._mockedScopeMap.set(name, variable);
         return this;
     }
