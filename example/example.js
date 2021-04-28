@@ -10,7 +10,8 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
         print: {
             default: (...contents) => {
 
-                console.log('EXAMPLE/', ...contents.map((content) => content ? content.toString() : 'undefined'));
+                console.log('EXAMPLE/', ...contents.map((content) => typeof content === 'undefined'
+                    || content === null ? 'undefined' : content.toString()));
             },
         },
         object: {
