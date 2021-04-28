@@ -8,7 +8,6 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
-import { SandList } from '../../src/variable/sandlist';
 
 describe('Given Sandbox for Symbol evaluators', (): void => {
 
@@ -29,7 +28,7 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
 
             const result: any[] = [];
             sandbox.inject('deject', (content: any) => result.push(content));
-            sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
+            sandbox.inject('loop', [loopStart, loopStart + 1, loopStart + 2]);
 
             await sandbox.evaluate(`for(const a of loop){deject(a);break;}`);
             expect(result).to.be.lengthOf(1);
@@ -43,7 +42,7 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
 
             const result: any[] = [];
             sandbox.inject('deject', (content: any) => result.push(content));
-            sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
+            sandbox.inject('loop', [loopStart, loopStart + 1, loopStart + 2]);
 
             await sandbox.evaluate(`for(const a of loop){deject(a);continue;deject(a);}`);
             expect(result).to.be.lengthOf(3);
@@ -57,7 +56,7 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
 
             const result: any[] = [];
             sandbox.inject('deject', (content: any) => result.push(content));
-            sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
+            sandbox.inject('loop', [loopStart, loopStart + 1, loopStart + 2]);
 
             await sandbox.evaluate(`export default (() => {for(const a of loop){deject(a);return a;}})()`);
 

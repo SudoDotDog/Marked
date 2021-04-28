@@ -8,8 +8,6 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
-import { SandList } from '../../src/variable/sandlist';
-import { SandMap } from '../../src/variable/sandmap';
 
 describe('Given Sandbox for Expression evaluators', (): void => {
 
