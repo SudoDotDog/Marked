@@ -1,12 +1,18 @@
 const [a, b, c] = [1, 2, 3];
-
 const { d, e, f } = {
-    c: 4,
-    d: 5,
-    e: 6,
+    d: 4,
+    e: 5,
+    f: 6,
 };
 
 let g;
-let h, i;
+let h = 7, z;
 
-export { a, b, c, d, e, f, g, h, i };
+const [i, ...j] = [8, 9, 9];
+// const { k, ...l } = {
+//     k: 10,
+//     y: 11,
+//     z: 11,
+// };
+
+export { a, b, c, d, e, f, g, h, i, j, z };

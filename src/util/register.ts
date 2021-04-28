@@ -77,8 +77,17 @@ export const declareVariableStack = async function (
                     throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, currentTrace);
                 }
 
-                if (declaration.init.elements.length !== declaration.id.elements.length) {
+                elementSizeCheck: if (declaration.init.elements.length !== declaration.id.elements.length) {
 
+                    nonIdentifierCheck: for (const eachElement of declaration.id.elements) {
+
+                        if (!eachElement) {
+                            break nonIdentifierCheck;
+                        }
+                        if (eachElement.type !== 'Identifier') {
+                            break elementSizeCheck;
+                        }
+                    }
                     throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.elements.length.toString(), node, currentTrace);
                 }
 
