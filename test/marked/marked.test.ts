@@ -23,7 +23,7 @@ describe('Given Marked function', (): void => {
         expect(result).to.be.deep.equal({
             exports: {
                 default: value,
-                named: new Map(),
+                named: {},
             },
             signal: END_SIGNAL.SUCCEED,
         });
@@ -45,7 +45,7 @@ describe('Given Marked function', (): void => {
         expect(result).to.be.deep.equal({
             exports: {
                 default: provideValue,
-                named: new Map(),
+                named: {},
             },
             signal: END_SIGNAL.SUCCEED,
         });
@@ -65,7 +65,7 @@ describe('Given Marked function', (): void => {
         expect(result).to.be.deep.equal({
             exports: {
                 default: injectValue,
-                named: new Map(),
+                named: {},
             },
             signal: END_SIGNAL.SUCCEED,
         });

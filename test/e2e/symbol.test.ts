@@ -60,6 +60,7 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
             sandbox.inject('loop', new SandList([loopStart, loopStart + 1, loopStart + 2]));
 
             await sandbox.evaluate(`export default (() => {for(const a of loop){deject(a);return a;}})()`);
+
             expect(result).to.be.lengthOf(1);
             expect(result).to.be.deep.equal([loopStart]);
             expect(sandbox.exposed.default).to.be.equal(loopStart);

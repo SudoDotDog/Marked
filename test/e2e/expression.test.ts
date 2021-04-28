@@ -66,13 +66,15 @@ describe('Given Sandbox for Expression evaluators', (): void => {
         const sandbox: Sandbox = createSandbox();
 
         const result: any[] = [];
-        const map: SandMap<number> = new SandMap({
+        const map: Record<string, number> = {
             a: 1,
             b: 2,
             c: 3,
-        });
+        };
         sandbox.inject('map', map);
-        sandbox.inject('deject', (content: any) => result.push(content));
+        sandbox.inject('deject', (content: any) => {
+            result.push(content);
+        });
 
         await sandbox.evaluate(`for(const a in map){deject(a);}`);
 
@@ -85,11 +87,12 @@ describe('Given Sandbox for Expression evaluators', (): void => {
         const sandbox: Sandbox = createSandbox();
 
         const result: any[] = [];
-        const map: SandList<number> = new SandList([1, 2, 3]);
-        sandbox.inject('map', map);
+        const list: number[] = [1, 2, 3];
+
+        sandbox.inject('list', list);
         sandbox.inject('deject', (content: any) => result.push(content));
 
-        await sandbox.evaluate(`for(const a of map){deject(a);}`);
+        await sandbox.evaluate(`for(const a of list){deject(a);}`);
 
         expect(result).to.be.lengthOf(3);
         expect(result).to.be.deep.equal([1, 2, 3]);
