@@ -301,7 +301,9 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
             });
 
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
-            if (result) { return result.getValue(); }
+            if (result instanceof Flag) {
+                return result.getValue();
+            }
         };
 
         return func;
@@ -315,7 +317,10 @@ export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
         const func: (...args: any[]) => Promise<any>
             = await functionExpressionEvaluator.bind(this)(node as any, scope, nextTrace);
 
-        if (!node.id) { throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace); }
+        if (!node.id) {
+            throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
+        }
+
         const rawName: string = (node.id).name;
 
         scope.register(VARIABLE_TYPE.CONSTANT)(rawName, func);

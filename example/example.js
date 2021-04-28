@@ -15,10 +15,10 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
         },
         object: {
             default: {
-                test: "Test",
+                test: "Test-Default",
             },
             test: {
-                test: "Test",
+                test: "Test-Named",
             },
         },
     },

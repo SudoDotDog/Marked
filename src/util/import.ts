@@ -35,7 +35,10 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
                     throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, currentTrace);
                 }
 
-                register(target, targetModule.default);
+                const moduleContent: any = targetModule.default;
+                const parsedContent = parseNativeToSand(moduleContent);
+
+                register(target, parsedContent);
                 break;
             }
             case 'ImportNamespaceSpecifier': {
@@ -55,7 +58,7 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
                 }
 
-                const moduleContent = targetModule[imported];
+                const moduleContent: any = targetModule[imported];
                 const parsedContent = parseNativeToSand(moduleContent);
 
                 register(target, parsedContent);
