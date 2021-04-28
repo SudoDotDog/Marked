@@ -13,6 +13,11 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
                 console.log('EXAMPLE/', ...contents.map((content) => content ? content.toString() : 'undefined'));
             },
         },
+        object: {
+            test: {
+                test: "Test",
+            },
+        },
     },
     resolvers: [
         (source, trace) => {
