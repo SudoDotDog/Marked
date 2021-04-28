@@ -17,6 +17,7 @@ import { assert } from '../util/error/assert';
 import { error } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
 import { Flag } from '../variable/flag';
+import { parseNativeToSand } from '../variable/parse';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace';
 import { Executer } from './executer';
@@ -95,7 +96,8 @@ export class Sandbox implements ISandbox {
 
     public inject(name: string, value: any): Sandbox {
 
-        this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, value);
+        const parsedContent = parseNativeToSand(value);
+        this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, parsedContent);
         return this;
     }
 

@@ -23,6 +23,11 @@ Marked(fs.readFileSync(path.join(__dirname, '..', 'example', `${process.argv[2]}
             },
         },
     },
+    injects: {
+        injectTest: {
+            test: "Test-Inject",
+        },
+    },
     resolvers: [
         (source, trace) => {
 
