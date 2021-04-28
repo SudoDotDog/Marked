@@ -194,7 +194,7 @@ export class Scope implements IScope {
 
     public setThrow(value: any): Scope {
 
-        const variable = new Variable(value);
+        const variable = Variable.immutable(value);
         this._throwValue = variable;
         return this;
     }
@@ -215,7 +215,7 @@ export class Scope implements IScope {
 
             throw error(ERROR_CODE.DUPLICATED_VARIABLE);
         }
-        const variable = new Variable(value);
+        const variable = Variable.immutable(value);
         this._constantMap.set(name, variable);
         return this;
     }
@@ -226,7 +226,7 @@ export class Scope implements IScope {
 
             throw error(ERROR_CODE.DUPLICATED_VARIABLE);
         }
-        const variable = new Variable(value);
+        const variable = Variable.mutable(value);
         this._scopeMap.set(name, variable);
         return this;
     }

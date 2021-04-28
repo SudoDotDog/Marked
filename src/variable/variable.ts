@@ -4,12 +4,28 @@
  * @description Variable
  */
 
-export class Variable<T> {
-    private _value: T;
+import { ERROR_CODE } from "../declare/error";
+import { error } from "../util/error/error";
 
-    public constructor(value: T) {
+export class Variable<T> {
+
+    public static mutable<T>(value: T): Variable<T> {
+
+        return new Variable<T>(value, true);
+    }
+
+    public static immutable<T>(value: T): Variable<T> {
+
+        return new Variable<T>(value, false);
+    }
+
+    private _value: T;
+    private readonly _mutable: boolean;
+
+    private constructor(value: T, mutable: boolean) {
 
         this._value = value;
+        this._mutable = mutable;
     }
 
     public get(): T {
@@ -18,6 +34,10 @@ export class Variable<T> {
     }
 
     public set(value: T): T {
+
+        if (!this._mutable) {
+            throw error(ERROR_CODE.IMMUTABLE_VARIABLE_CANNOT_BE_EDITED);
+        }
 
         this._value = value;
         return value;
