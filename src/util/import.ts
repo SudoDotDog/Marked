@@ -10,6 +10,7 @@ import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { Flag } from "../variable/flag";
+import { parseNativeToSand } from "../variable/parse";
 import { SandMap } from "../variable/sandmap";
 import { error } from "./error/error";
 
@@ -54,7 +55,10 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
                 }
 
-                register(target, targetModule[imported]);
+                const moduleContent = targetModule[imported];
+                const parsedContent = parseNativeToSand(moduleContent);
+
+                register(target, parsedContent);
                 break;
             }
             default: {

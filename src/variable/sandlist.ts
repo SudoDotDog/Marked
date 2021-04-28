@@ -10,7 +10,7 @@ export class SandList<T> {
 
     private _list: Array<Variable<T>>;
 
-    public constructor(list: T[]) {
+    public constructor(list: T[] = []) {
 
         const variableList: Array<Variable<T>> = list.map((value: T) => {
 
@@ -28,6 +28,14 @@ export class SandList<T> {
     public get length(): number {
 
         return this._list.length;
+    }
+
+    public push(value: T): this {
+
+        const variable: Variable<T> = Variable.mutable(value);
+
+        this._list.push(variable);
+        return this;
     }
 
     public get(key: number): T | undefined {
