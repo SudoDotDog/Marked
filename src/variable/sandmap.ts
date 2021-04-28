@@ -34,9 +34,9 @@ export class SandMap<T> {
         return map;
     }
 
-    public keys(): IterableIterator<string> {
+    public keys(): string[] {
 
-        return this._map.keys();
+        return [...this._map.keys()];
     }
 
     public get(key: string): T | undefined {
