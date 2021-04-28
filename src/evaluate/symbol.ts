@@ -62,7 +62,10 @@ export const identifierEvaluator: Evaluator<'Identifier'> =
     async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
 
         const variable: Variable<any> | null = scope.rummage(node.name);
-        if (variable) { return variable.get(); }
+        if (variable) {
+            return variable.get();
+        }
+
         throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name, node, trace);
     };
 

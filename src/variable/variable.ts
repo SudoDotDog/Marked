@@ -4,9 +4,6 @@
  * @description Variable
  */
 
-import { ERROR_CODE } from "../declare/error";
-import { error } from "../util/error/error";
-
 export class Variable<T> {
 
     public static mutable<T>(value: T): Variable<T> {
@@ -28,16 +25,16 @@ export class Variable<T> {
         this._mutable = mutable;
     }
 
+    public get mutable(): boolean {
+        return this._mutable;
+    }
+
     public get(): T {
 
         return this._value;
     }
 
     public set(value: T): T {
-
-        if (!this._mutable) {
-            throw error(ERROR_CODE.IMMUTABLE_VARIABLE_CANNOT_BE_EDITED);
-        }
 
         this._value = value;
         return value;

@@ -1,5 +1,6 @@
 import print from 'print';
-import defaultTest, { test } from 'object';
 
-print(test);
-print(defaultTest);
+for (let i = 0; i < 3; i++) {
+    print(i);
+    break;
+}

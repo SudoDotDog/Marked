@@ -49,7 +49,7 @@ const b = (c) => {
         print(3, c++ + 1);
     } else {
         for (let i = 0; i < 3; i++) {
-            print(3, c++ + 1);
+            print(i, 3, c++ + 1);
             break;
         }
     }
