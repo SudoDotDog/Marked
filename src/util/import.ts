@@ -47,8 +47,9 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, currentTrace);
                 }
 
-                const map: SandMap<any> = new SandMap(targetModule);
-                register(target, map);
+                const parsedContent = parseNativeToSand(targetModule);
+
+                register(target, parsedContent);
                 break;
             }
             case 'ImportSpecifier': {
