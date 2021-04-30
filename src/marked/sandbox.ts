@@ -142,10 +142,10 @@ export class Sandbox implements ISandbox {
             };
         }
 
-        const AST: EST.BaseNode = this.parse(script);
-        const trace: Trace = Trace.init(scriptLocation);
-
         try {
+
+            const AST: EST.BaseNode = this.parse(script);
+            const trace: Trace = Trace.init(scriptLocation);
 
             const targetScope: IScope = typeof scope === 'undefined'
                 ? this._rootScope
