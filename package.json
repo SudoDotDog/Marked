@@ -21,7 +21,7 @@
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
     "@sudoo/triforce": "^2.9.27",
-    "@types/acorn": "^4.0.5",
+    "@types/acorn": "^4.0.6",
     "@types/estree": "0.0.50"
   },
   "nyc": {
