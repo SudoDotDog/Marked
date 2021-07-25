@@ -1,0 +1,45 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+        node-version:
+          - 14
+          - 16
+        architecture:
+          - x64
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          architecture: ${{ matrix.architecture }}
+      - name: Install Dependencies
+        run: |
+          make install
+          npm install nyc -g
+      - name: Lint
+        run: |
+          make lint
+      - name: Build
+        run: |
+          make build
+      - name: Test
+        run: |
+          make cov
+      - name: Codecov
+        uses: codecov/codecov-action@v1

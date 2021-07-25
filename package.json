@@ -1,7 +1,7 @@
 {
   "name": "@sudoo/marked",
   "version": "1.8.3",
-  "description": ":tennis: JavaScript code runner in marked territory, synchronized.",
+  "description": "JavaScript code runner in marked territory, synchronized.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SudoDotDog/Marked.git"
