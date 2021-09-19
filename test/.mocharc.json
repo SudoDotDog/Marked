@@ -2,7 +2,5 @@
     "spec": [
         "test/**/*.test.ts"
     ],
-    "extends": [
-        "@sudoo/mocha-config"
-    ]
+    "extends": "@sudoo/mocha-config"
 }
