@@ -268,7 +268,7 @@ export class Sandbox implements ISandbox {
             return AST;
         } catch (err) {
 
-            const syntaxError = err;
+            const syntaxError: any = err;
             throw error(ERROR_CODE.ACORN_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
         }
     }
