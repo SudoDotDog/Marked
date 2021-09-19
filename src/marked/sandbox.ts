@@ -14,7 +14,7 @@ import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { markedParser } from '../extension/parser';
 import { assert } from '../util/error/assert';
-import { error } from "../util/error/error";
+import { error, MarkedError } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
 import { Flag } from '../variable/flag';
 import { parseNativeToSand } from '../variable/parse';
@@ -167,7 +167,7 @@ export class Sandbox implements ISandbox {
 
             return {
                 signal: END_SIGNAL.FAILED,
-                error: reason,
+                error: reason as any as MarkedError,
             };
         }
 
