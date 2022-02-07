@@ -23,7 +23,7 @@
     "@sudoo/license": "^1.1.0",
     "@sudoo/triforce": "^2.16.1",
     "@types/acorn": "^4.0.6",
-    "@types/estree": "0.0.50"
+    "@types/estree": "0.0.51"
   },
   "nyc": {
     "extension": [
