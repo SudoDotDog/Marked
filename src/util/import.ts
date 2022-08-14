@@ -111,9 +111,11 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
             }
             case 'ImportNamespaceSpecifier': {
 
+                const namedKeys: string[] = Object.keys(exposed.named);
+
                 const importObject: Record<string, any> = {};
-                exposed.named.forEach((value: any, key: string) => {
-                    importObject[key] = value;
+                namedKeys.forEach((key: string) => {
+                    importObject[key] = exposed.named[key];
                 });
 
                 const map: SandMap<any> = new SandMap(importObject);
@@ -122,12 +124,19 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
             }
             case 'ImportSpecifier': {
 
+                const namedMap: Map<string, any> = new Map();
+                const namedKeys: string[] = Object.keys(exposed.named);
+
+                for (const namedKey of namedKeys) {
+                    namedMap.set(namedKey, exposed.named[namedKey]);
+                }
+
                 const imported: string = specifier.imported.name;
-                if (!exposed.named.has(imported)) {
+                if (!namedMap.has(imported)) {
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
                 }
 
-                register(target, exposed.named.get(imported));
+                register(target, namedMap.get(imported));
                 break;
             }
             default: {
