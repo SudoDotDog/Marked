@@ -21,6 +21,6 @@
         "tshook"
     ],
     "eslint.options": {
-        "configFile": "./typescript/.eslintrc.json"
+        "overrideConfigFile": "./typescript/.eslintrc.json"
     }
 }

@@ -30,16 +30,16 @@ jobs:
           architecture: ${{ matrix.architecture }}
       - name: Install Dependencies
         run: |
-          make install
-          npm install nyc -g
+          npm install @sudoo/build-cli -g
+          sudoo-build install
       - name: Lint
         run: |
-          make lint
+          sudoo-build lint
       - name: Build
         run: |
-          make build
+          sudoo-build build
       - name: Test
         run: |
-          make cov
+          sudoo-build coverage
       - name: Codecov
         uses: codecov/codecov-action@v1
