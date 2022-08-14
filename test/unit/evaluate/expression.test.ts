@@ -7,20 +7,20 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import { VARIABLE_TYPE } from '../../src/declare/variable';
-import * as Evaluator_Expressions from '../../src/evaluate/expression';
-import { Sandbox } from '../../src/marked/sandbox';
-import { getBinaryOperation } from '../../src/util/operation';
-import { Flag } from '../../src/variable/flag';
-import { SandList } from '../../src/variable/sandlist';
-import { SandMap } from '../../src/variable/sandmap';
-import { Scope } from '../../src/variable/scope';
-import { Trace } from '../../src/variable/trace';
-import { Variable } from '../../src/variable/variable';
-import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../mock/node';
-import { MockSandbox } from '../mock/sandbox';
-import { MockScope } from '../mock/scope';
-import { MockTrace } from '../mock/trace';
+import { VARIABLE_TYPE } from '../../../src/declare/variable';
+import * as Evaluator_Expressions from '../../../src/evaluate/expression';
+import { Sandbox } from '../../../src/marked/sandbox';
+import { getBinaryOperation } from '../../../src/util/operation';
+import { Flag } from '../../../src/variable/flag';
+import { SandList } from '../../../src/variable/sandlist';
+import { SandMap } from '../../../src/variable/sandmap';
+import { Scope } from '../../../src/variable/scope';
+import { Trace } from '../../../src/variable/trace';
+import { Variable } from '../../../src/variable/variable';
+import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../../mock/node';
+import { MockSandbox } from '../../mock/sandbox';
+import { MockScope } from '../../mock/scope';
+import { MockTrace } from '../../mock/trace';
 
 describe('Given Expression evaluators', (): void => {
 

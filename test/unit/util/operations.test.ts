@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import { getAssignmentOperation, getBinaryOperation, getUnaryOperation } from '../../src/util/operation';
+import { getAssignmentOperation, getBinaryOperation, getUnaryOperation } from '../../../src/util/operation';
 
 describe('Given an Operation utils', (): void => {
 

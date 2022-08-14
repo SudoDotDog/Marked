@@ -6,10 +6,10 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { ERROR_CODE } from '../../src/declare/error';
-import { VARIABLE_TYPE } from '../../src/declare/variable';
-import { error } from '../../src/util/error/error';
-import { Scope } from '../../src/variable/scope';
+import { ERROR_CODE } from '../../../src/declare/error';
+import { VARIABLE_TYPE } from '../../../src/declare/variable';
+import { error } from '../../../src/util/error/error';
+import { Scope } from '../../../src/variable/scope';
 
 describe('Given an Scope class', (): void => {
 

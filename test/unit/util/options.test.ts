@@ -5,8 +5,8 @@
  */
 
 import { expect } from 'chai';
-import { ISandboxOptions } from '../../src/declare/sandbox';
-import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from '../../src/util/options';
+import { ISandboxOptions } from '../../../src/declare/sandbox';
+import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from '../../../src/util/options';
 
 describe('Given an Options utils', (): void => {
 

@@ -6,9 +6,9 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { ERROR_CODE } from '../../../src/declare/error';
-import { assert } from '../../../src/util/error/assert';
-import { error } from '../../../src/util/error/error';
+import { ERROR_CODE } from '../../../../src/declare/error';
+import { assert } from '../../../../src/util/error/assert';
+import { error } from '../../../../src/util/error/error';
 
 describe('Given an <Assert> function', (): void => {
     const chance: Chance.Chance = new Chance('error-assert');
