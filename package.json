@@ -1,7 +1,7 @@
 {
   "name": "@sudoo/marked",
   "version": "1.8.4",
-  "description": "JavaScript code runner in marked territory, synchronized.",
+  "description": "JavaScript code runner in JavaScript, safe with marked territory, asynchronous",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SudoDotDog/Marked.git"
@@ -19,8 +19,6 @@
     "acorn": "^8.8.0"
   },
   "devDependencies": {
-    "@sudoo/build-utils": "^1.0.0",
-    "@sudoo/license": "^2.1.0",
     "@sudoo/triforce": "^3.7.0",
     "@types/acorn": "^6.0.0",
     "@types/estree": "1.0.0"
