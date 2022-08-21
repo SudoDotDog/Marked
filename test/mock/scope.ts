@@ -7,7 +7,7 @@
 import { ERROR_CODE } from "../../src/declare/error";
 import { IExposed, IScope, VARIABLE_TYPE } from "../../src/declare/variable";
 import { error } from "../../src/util/error/error";
-import { SandMap } from "../../src/variable/sandmap";
+import { SandMap } from "../../src/variable/sand-map";
 import { Variable } from "../../src/variable/variable";
 import { IMockedClass } from "./node";
 

@@ -10,7 +10,7 @@ import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
-import { SandMap } from "../variable/sandmap";
+import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 import { Variable } from "../variable/variable";

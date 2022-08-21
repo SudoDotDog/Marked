@@ -6,29 +6,11 @@
 
 import { ERROR_CODE } from "../declare/error";
 import { error } from "../util/error/error";
-import { SandList } from "./sandlist";
-import { SandMap } from "./sandmap";
+import { SandFunction } from "./sand-function";
+import { SandList } from "./sand-list";
+import { SandMap } from "./sand-map";
 
 export const extractSandToNative = (target: any): any => {
-
-    if (typeof target === 'string') {
-        return target;
-    }
-    if (typeof target === 'number') {
-        return target;
-    }
-    if (typeof target === 'boolean') {
-        return target;
-    }
-    if (typeof target === 'function') {
-        return target;
-    }
-    if (typeof target === 'undefined') {
-        return target;
-    }
-    if (target === null) {
-        return target;
-    }
 
     if (target instanceof SandList) {
 
@@ -54,7 +36,12 @@ export const extractSandToNative = (target: any): any => {
         return result;
     }
 
-    throw error(ERROR_CODE.INTERNAL_ERROR, 'Invalid Type');
+    if (target instanceof SandFunction) {
+
+        return target.function;
+    }
+
+    return target;
 };
 
 export const parseNativeToSand = (target: any): string | number | boolean | ((...args: any[]) => any) | SandMap<any> | SandList<any> => {

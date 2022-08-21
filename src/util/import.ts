@@ -11,7 +11,7 @@ import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { Flag } from "../variable/flag";
 import { parseNativeToSand } from "../variable/parse";
-import { SandMap } from "../variable/sandmap";
+import { SandMap } from "../variable/sand-map";
 import { error } from "./error/error";
 
 const resolveModuleImport = async function (this: Sandbox, source: string, node: EST.ImportDeclaration, scope: IScope, currentTrace: ITrace, nextTrace: ITrace): Promise<boolean | Flag> {

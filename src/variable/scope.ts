@@ -9,7 +9,7 @@ import { IExposed, IScope, VARIABLE_TYPE } from "../declare/variable";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
 import { extractSandToNative } from "./parse";
-import { SandMap } from "./sandmap";
+import { SandMap } from "./sand-map";
 
 export class Scope implements IScope {
 

@@ -13,6 +13,7 @@ export { Executer } from "./marked/executer";
 export { marked as Marked } from "./marked/marked";
 export { Sandbox } from "./marked/sandbox";
 export { MarkedError } from "./util/error/error";
-export { SandList } from "./variable/sandlist";
-export { SandMap } from "./variable/sandmap";
+export { SandFunction } from "./variable/sand-function";
+export { SandList } from "./variable/sand-list";
+export { SandMap } from "./variable/sand-map";
 

@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { SandMap } from "../variable/sandmap";
+import { SandMap } from "../variable/sand-map";
 import { Variable } from "../variable/variable";
 import { ScriptLocation } from "./script-location";
 

@@ -13,9 +13,9 @@ import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { LimitCounter } from "../util/node/context";
 import { Flag } from "../variable/flag";
-import { SandFunction } from "../variable/function";
-import { SandList } from "../variable/sandlist";
-import { SandMap } from "../variable/sandmap";
+import { SandFunction } from "../variable/sand-function";
+import { SandList } from "../variable/sand-list";
+import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 

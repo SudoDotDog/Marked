@@ -4,7 +4,7 @@
  * @description List
  */
 
-import { Variable } from "../variable/variable";
+import { Variable } from "./variable";
 
 export class SandList<T> {
 
