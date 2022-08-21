@@ -44,6 +44,9 @@ export class Sandbox implements ISandbox {
     private _count: number;
     private _broke: boolean;
 
+    private _usingAdditionalArgument: boolean;
+    private _additionalArgument?: any;
+
     private constructor() {
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
@@ -60,26 +63,30 @@ export class Sandbox implements ISandbox {
 
         this._count = 0;
         this._broke = false;
+
+        this._usingAdditionalArgument = false;
+        this._additionalArgument = undefined;
     }
 
     public get broke(): boolean {
-
         return this._broke;
     }
-
     public get count(): number {
-
         return this._count;
     }
 
     public get scope(): Scope {
-
         return this._rootScope;
     }
-
     public get exposed(): IExposed {
-
         return this._rootScope.exposed;
+    }
+
+    public get usingAdditionalArgument(): boolean {
+        return this._usingAdditionalArgument;
+    }
+    public get additionalArgument(): any {
+        return this._additionalArgument;
     }
 
     public break(): Sandbox {
@@ -186,6 +193,13 @@ export class Sandbox implements ISandbox {
     public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): Sandbox {
 
         this._options[name] = value;
+        return this;
+    }
+
+    public setAdditionalArgument(value: any): Sandbox {
+
+        this._usingAdditionalArgument = true;
+        this._additionalArgument = value;
         return this;
     }
 
