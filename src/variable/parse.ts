@@ -23,6 +23,12 @@ export const extractSandToNative = (target: any): any => {
     if (typeof target === 'function') {
         return target;
     }
+    if (typeof target === 'undefined') {
+        return target;
+    }
+    if (target === null) {
+        return target;
+    }
 
     if (target instanceof SandList) {
 

@@ -42,12 +42,27 @@ describe('Given Sandbox for sandbox option tests', (): void => {
         expect(sandbox.count).to.be.equal(9);
     });
 
-    it('should be able to use additional argument', async (): Promise<void> => {
+    it('should be able to use additional argument - no additional for marked', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
         sandbox.setAdditionalArgument(10);
 
         const result: MarkedResult = await sandbox.evaluate(`const getTen = () => 10;export default getTen();`);
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Failed');
+        }
+
+        expect(result.exports.default).to.be.equal(10);
+    });
+
+    it('should be able to use additional argument - additional for native', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setAdditionalArgument(10);
+        sandbox.inject('getTen', (additionalArg: number) => additionalArg);
+
+        const result: MarkedResult = await sandbox.evaluate(`export default getTen();`);
 
         if (result.signal !== END_SIGNAL.SUCCEED) {
             throw new Error('Failed');

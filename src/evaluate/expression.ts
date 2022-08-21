@@ -70,7 +70,7 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
             args.push(await this.execute(arg, scope, nextTrace));
         }
 
-        if (func instanceof SandFunction) {
+        if (!(func instanceof SandFunction)) {
             if (this.usingAdditionalArgument) {
                 args.unshift(this.additionalArgument);
             }
