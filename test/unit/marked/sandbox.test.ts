@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { ERROR_CODE } from '../../../src/declare/error';
-import { END_SIGNAL, IMarkedResultFailed } from '../../../src/declare/evaluate';
+import { END_SIGNAL, IMarkedResultFailed, MarkedResult } from '../../../src/declare/evaluate';
 import { useEverything } from '../../../src/evaluate/evaluate';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { error } from '../../../src/util/error/error';
@@ -40,6 +40,20 @@ describe('Given Sandbox for sandbox option tests', (): void => {
 
         await sandbox.evaluate(`1+2+3+4`);
         expect(sandbox.count).to.be.equal(9);
+    });
+
+    it('should be able to use additional argument', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setAdditionalArgument(10);
+
+        const result: MarkedResult = await sandbox.evaluate(`const getTen = () => 10;export default getTen();`);
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Failed');
+        }
+
+        expect(result.exports.default).to.be.equal(10);
     });
 
     it('should be able to break running', async (): Promise<void> => {

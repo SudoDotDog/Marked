@@ -13,13 +13,14 @@ import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { LimitCounter } from "../util/node/context";
 import { Flag } from "../variable/flag";
+import { SandFunction } from "../variable/function";
 import { SandList } from "../variable/sandlist";
 import { SandMap } from "../variable/sandmap";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
 export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
-    async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<any> {
+    async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<SandFunction> {
 
         const nextTrace: Trace = trace.stack(node);
 
@@ -52,7 +53,8 @@ export const arrowFunctionEvaluator: Evaluator<'ArrowFunctionExpression'> =
             }
         };
 
-        return func;
+        const sandFunction: SandFunction = new SandFunction(func);
+        return sandFunction;
     };
 
 export const calleeEvaluator: Evaluator<'CallExpression'> =
@@ -60,22 +62,34 @@ export const calleeEvaluator: Evaluator<'CallExpression'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const func: () => any = await this.execute(node.callee, scope, nextTrace);
+        const func: SandFunction | (() => any) =
+            await this.execute(node.callee, scope, nextTrace);
+
         const args: any[] = [];
         for (const arg of node.arguments) {
-
             args.push(await this.execute(arg, scope, nextTrace));
         }
+
+        if (func instanceof SandFunction) {
+            if (this.usingAdditionalArgument) {
+                args.unshift(this.additionalArgument);
+            }
+        }
+
+        const settledFunction: () => any =
+            func instanceof SandFunction
+                ? func.function
+                : func;
 
         if (node.callee.type === 'MemberExpression') {
 
             const object: any = await this.execute(node.callee.object, scope, nextTrace);
-            const result: any = func.apply(object, args as any);
+            const result: any = settledFunction.apply(object, args as any);
             return result;
         } else {
 
             // eslint-disable-next-line prefer-spread
-            const result: any = func.apply(null, args as any);
+            const result: any = settledFunction.apply(null, args as any);
             return result;
         }
     };

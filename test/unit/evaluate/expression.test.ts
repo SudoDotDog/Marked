@@ -12,6 +12,7 @@ import * as Evaluator_Expressions from '../../../src/evaluate/expression';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { getBinaryOperation } from '../../../src/util/operation';
 import { Flag } from '../../../src/variable/flag';
+import { SandFunction } from '../../../src/variable/function';
 import { SandList } from '../../../src/variable/sandlist';
 import { SandMap } from '../../../src/variable/sandmap';
 import { Scope } from '../../../src/variable/scope';
@@ -69,9 +70,9 @@ describe('Given Expression evaluators', (): void => {
 
             const func: any = await Evaluator_Expressions.arrowFunctionEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(func).to.be.instanceof(Function);
+            expect(func).to.be.instanceof(SandFunction);
 
-            func(argument);
+            func.function(argument);
             expect(result).to.be.deep.equal([value]);
 
             const mockedChildScope: MockScope = scope.children[0];
