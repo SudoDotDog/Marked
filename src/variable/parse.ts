@@ -6,7 +6,6 @@
 
 import { ERROR_CODE } from "../declare/error";
 import { error } from "../util/error/error";
-import { SandFunction } from "./sand-function";
 import { SandList } from "./sand-list";
 import { SandMap } from "./sand-map";
 
@@ -35,12 +34,6 @@ export const extractSandToNative = (target: any): any => {
 
         return result;
     }
-
-    if (target instanceof SandFunction) {
-
-        return target.function;
-    }
-
     return target;
 };
 
