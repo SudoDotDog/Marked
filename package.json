@@ -19,7 +19,7 @@
     "acorn": "^8.8.0"
   },
   "devDependencies": {
-    "@sudoo/triforce": "^3.7.0",
+    "@sudoo/triforce": "^3.8.0",
     "@types/acorn": "^6.0.0",
     "@types/estree": "1.0.0"
   },
