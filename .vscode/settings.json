@@ -1,24 +1,25 @@
 {
     "cSpell.words": [
-        "Dependences",
-        "PCXPY",
-        "RAISEDAT",
-        "RMRF",
-        "WMXPY",
         "binop",
         "camelcase",
         "clazz",
         "codecov",
+        "Dependences",
         "estree",
         "finalizer",
         "ifeq",
         "mocharc",
+        "PCXPY",
+        "quasis",
+        "RAISEDAT",
+        "RMRF",
         "sandlist",
         "sandmap",
         "setx",
         "sudoo",
         "triforce",
-        "tshook"
+        "tshook",
+        "WMXPY"
     ],
     "eslint.options": {
         "overrideConfigFile": "./typescript/.eslintrc.json"
