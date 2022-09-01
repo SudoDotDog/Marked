@@ -60,24 +60,6 @@ describe('Given Sandbox for Calculate evaluators', (): void => {
         expect(result[0]).to.be.equal(false);
     });
 
-    describe('Given a complex unary expression', (): void => {
-
-        it('should be able to handle reverse operation - object', async (): Promise<void> => {
-
-            const sandbox: Sandbox = createSandbox();
-
-            const result: any[] = [];
-            const value: boolean = chance.bool();
-            sandbox.inject('number', value);
-            sandbox.inject('deject', (content: any) => result.push(content));
-
-            await sandbox.evaluate(`deject(!${value.toString()});`);
-
-            expect(result).to.be.lengthOf(1);
-            expect(result[0]).to.be.equal(!value);
-        });
-    });
-
     describe('Given a complex update expression', (): void => {
 
         it('should be able handle basic update expression - suffix', async (): Promise<void> => {

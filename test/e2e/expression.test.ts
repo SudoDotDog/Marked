@@ -108,4 +108,17 @@ describe('Given Sandbox for Expression evaluators', (): void => {
         expect(result).to.be.lengthOf(3);
         expect(result).to.be.deep.equal([1, 2, 3]);
     });
+
+    it('should be able to handle for in typescript', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: any[] = [];
+        sandbox.inject('deject', (content: any) => result.push(content));
+
+        await sandbox.evaluate(`for(let i:number=1;i<4;i++){deject(i);}`);
+
+        expect(result).to.be.lengthOf(3);
+        expect(result).to.be.deep.equal([1, 2, 3]);
+    });
 });

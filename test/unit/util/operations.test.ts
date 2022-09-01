@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import { getAssignmentOperation, getBinaryOperation, getUnaryOperation } from '../../../src/util/operation';
+import { getAssignmentOperation, getBinaryOperation } from '../../../src/util/operation';
 
 describe('Given an Operation utils', (): void => {
 
@@ -33,28 +33,6 @@ describe('Given an Operation utils', (): void => {
 
                     // eslint-disable-next-line no-eval
                     expect(operation(left, right)).to.be.equal(eval(`${left} ${operator} ${right}`));
-                } else {
-                    expect(operation).to.be.null;
-                }
-            });
-        });
-    });
-
-    describe('test unary operations', (): void => {
-
-        it('should return correct result', (): void => {
-
-            const element: number = chance.integer({ min: 5, max: 50 });
-            const binaryOperators: EST.UnaryOperator[]
-                = ['!', '+', '-', 'delete', 'typeof', 'void', '~'];
-
-            binaryOperators.forEach((operator: EST.UnaryOperator) => {
-                const operation: ((elementArg: any) => any) | null = getUnaryOperation(operator);
-
-                if (operation) {
-
-                    // eslint-disable-next-line no-eval
-                    expect(operation(element)).to.be.equal(eval(`${operator} ${element}`));
                 } else {
                     expect(operation).to.be.null;
                 }
