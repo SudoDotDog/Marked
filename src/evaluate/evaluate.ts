@@ -6,10 +6,13 @@
 
 import { Sandbox } from "../marked/sandbox";
 import * as Calculate_Evaluators from "./calculate";
+import { mountEmptyStatement } from "./empty-statement";
 import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
 import * as Module_Evaluators from "./module";
 import * as Symbol_Evaluators from "./symbol";
+import { mountTemplateLiteral } from "./template-literal";
+import { mountUnaryExpression } from "./unary-expression";
 import * as Variable_Evaluators from "./variable";
 
 export const useSymbol = (sandbox: Sandbox): void => {
@@ -60,7 +63,6 @@ export const useCalculate = (sandbox: Sandbox): void => {
 
     sandbox.mount('BinaryExpression', Calculate_Evaluators.binaryExpressionEvaluator);
     sandbox.mount('LogicalExpression', Calculate_Evaluators.logicalExpressionEvaluator);
-    sandbox.mount('UnaryExpression', Calculate_Evaluators.unaryExpressionEvaluator);
     sandbox.mount('UpdateExpression', Calculate_Evaluators.updateExpressionEvaluator);
 };
 
@@ -90,4 +92,8 @@ export const useEverything = (sandbox: Sandbox): void => {
     useCalculate(sandbox);
     useModule(sandbox);
     useException(sandbox);
+
+    mountEmptyStatement(sandbox);
+    mountTemplateLiteral(sandbox);
+    mountUnaryExpression(sandbox);
 };

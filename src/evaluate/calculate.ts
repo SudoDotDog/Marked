@@ -10,9 +10,8 @@ import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
-import { rummageSpecialKeyword } from "../util/hack";
 import { validateObjectIsSandboxStructure } from "../util/node/validator";
-import { getBinaryOperation, getLogicalOperation, getUnaryOperation, getUpdateOperation } from "../util/operation";
+import { getBinaryOperation, getLogicalOperation, getUpdateOperation } from "../util/operation";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
@@ -53,25 +52,6 @@ export const logicalExpressionEvaluator: Evaluator<'LogicalExpression'> =
         }
 
         return operation(await evalLeft(), await evalRight());
-    };
-
-export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
-    async function (this: Sandbox, node: EST.UnaryExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const evalValue: () => Promise<any> = async () => await this.execute(node.argument, scope, nextTrace);
-        const value: any = await evalValue();
-
-        if (rummageSpecialKeyword(node.operator, value, scope, this)) { return value; }
-        const operation: ((valueArg: any) => any) | null = getUnaryOperation(node.operator);
-
-        if (!operation) {
-
-            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator, node, trace);
-        }
-
-        return operation(value);
     };
 
 export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =

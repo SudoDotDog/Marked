@@ -61,6 +61,10 @@ export const identifierEvaluator: Evaluator<'Identifier'> =
     // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
 
+        if (node.name === 'undefined') {
+            return undefined;
+        }
+
         const variable: Variable<any> | null = scope.rummage(node.name);
         if (variable) {
             return variable.get();
