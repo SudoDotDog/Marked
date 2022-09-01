@@ -7,7 +7,6 @@
 import { ERROR_CODE } from '../declare/error';
 import { MarkedResult } from '../declare/evaluate';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
-import { useEverything } from '../evaluate/evaluate';
 import { error } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
@@ -18,8 +17,7 @@ export const marked = async (script: string, options?: IMarkedOptions): Promise<
         throw error(ERROR_CODE.SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED);
     }
 
-    const sandbox: Sandbox = Sandbox.create();
-    useEverything(sandbox);
+    const sandbox: Sandbox = Sandbox.fromAllEvaluators();
 
     if (options) {
 

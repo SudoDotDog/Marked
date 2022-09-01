@@ -7,7 +7,6 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -17,8 +16,7 @@ describe('Given Sandbox for Empty Statement', (): void => {
     const chance = new Chance('sandbox-empty-statement');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = Sandbox.create();
-        useEverything(sandbox);
+        const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 

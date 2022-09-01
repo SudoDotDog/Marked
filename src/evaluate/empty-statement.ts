@@ -6,11 +6,12 @@
 
 import * as EST from "estree";
 import { Evaluator } from "../declare/evaluate";
+import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
-export const mountEmptyStatement = (sandbox: Sandbox): void => {
+export const mountEmptyStatement = (sandbox: ISandbox): void => {
 
     sandbox.mount('EmptyStatement', emptyStatementEvaluator);
 };

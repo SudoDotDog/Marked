@@ -4,7 +4,7 @@
  * @description Evaluate
  */
 
-import { Sandbox } from "../marked/sandbox";
+import { ISandbox } from "../declare/sandbox";
 import * as Calculate_Evaluators from "./calculate";
 import { mountEmptyStatement } from "./empty-statement";
 import * as Exception_Evaluators from "./exception";
@@ -15,7 +15,7 @@ import { mountTemplateLiteral } from "./template-literal";
 import { mountUnaryExpression } from "./unary-expression";
 import * as Variable_Evaluators from "./variable";
 
-export const useSymbol = (sandbox: Sandbox): void => {
+export const useSymbol = (sandbox: ISandbox): void => {
 
     sandbox.mount('BlockStatement', Symbol_Evaluators.blockEvaluator);
     sandbox.mount('Identifier', Symbol_Evaluators.identifierEvaluator);
@@ -28,7 +28,7 @@ export const useSymbol = (sandbox: Sandbox): void => {
     sandbox.mount('ReturnStatement', Symbol_Evaluators.returnEvaluator);
 };
 
-export const useExpression = (sandbox: Sandbox): void => {
+export const useExpression = (sandbox: ISandbox): void => {
 
     sandbox.mount('ArrowFunctionExpression', Expression_Evaluators.arrowFunctionEvaluator);
     sandbox.mount('ConditionalExpression', Expression_Evaluators.conditionalExpressionEvaluator);
@@ -50,7 +50,7 @@ export const useExpression = (sandbox: Sandbox): void => {
     sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
 };
 
-export const useVariable = (sandbox: Sandbox): void => {
+export const useVariable = (sandbox: ISandbox): void => {
 
     sandbox.mount('ArrayExpression', Variable_Evaluators.arrayExpressionEvaluator);
     sandbox.mount('AssignmentExpression', Variable_Evaluators.assignmentExpressionEvaluator);
@@ -59,14 +59,14 @@ export const useVariable = (sandbox: Sandbox): void => {
     sandbox.mount('VariableDeclaration', Variable_Evaluators.variableDeclarationEvaluator);
 };
 
-export const useCalculate = (sandbox: Sandbox): void => {
+export const useCalculate = (sandbox: ISandbox): void => {
 
     sandbox.mount('BinaryExpression', Calculate_Evaluators.binaryExpressionEvaluator);
     sandbox.mount('LogicalExpression', Calculate_Evaluators.logicalExpressionEvaluator);
     sandbox.mount('UpdateExpression', Calculate_Evaluators.updateExpressionEvaluator);
 };
 
-export const useModule = (sandbox: Sandbox): void => {
+export const useModule = (sandbox: ISandbox): void => {
 
     sandbox.mount('ExportNamedDeclaration', Module_Evaluators.exportsNamedDeclarationEvaluator);
     sandbox.mount('ExportDefaultDeclaration', Module_Evaluators.exportsDefaultDeclarationEvaluator);
@@ -77,14 +77,14 @@ export const useModule = (sandbox: Sandbox): void => {
     sandbox.mount('ImportSpecifier', Module_Evaluators.importSpecifierEvaluator);
 };
 
-export const useException = (sandbox: Sandbox): void => {
+export const useException = (sandbox: ISandbox): void => {
 
     sandbox.mount('TryStatement', Exception_Evaluators.tryEvaluator);
     sandbox.mount('ThrowStatement', Exception_Evaluators.throwEvaluator);
     sandbox.mount('CatchClause', Exception_Evaluators.catchEvaluator);
 };
 
-export const useEverything = (sandbox: Sandbox): void => {
+export const useEverything = (sandbox: ISandbox): void => {
 
     useSymbol(sandbox);
     useExpression(sandbox);

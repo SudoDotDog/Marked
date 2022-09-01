@@ -44,10 +44,7 @@ Marked(`import print from 'print'; print(1)`, {
 ```js
 import { Sandbox } from '@sudoo/marked'
 
-const sandbox = Sandbox.create();
-
-// use evaluator
-// provide internal function
+const sandbox = Sandbox.fromAllEvaluators();
 
 sandbox
     .provide('print', {

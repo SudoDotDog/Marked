@@ -6,7 +6,6 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
 
 describe('Given Sandbox for Variable evaluators', (): void => {
@@ -14,8 +13,7 @@ describe('Given Sandbox for Variable evaluators', (): void => {
     const chance = new Chance('sandbox-variable-evaluators-module');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = Sandbox.create();
-        useEverything(sandbox);
+        const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 

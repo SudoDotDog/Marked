@@ -7,6 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { Evaluator } from "../declare/evaluate";
+import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { getUnaryOperation } from "../operation/unary";
 import { error } from "../util/error/error";
@@ -14,7 +15,7 @@ import { rummageSpecialKeyword } from "../util/hack";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace";
 
-export const mountUnaryExpression = (sandbox: Sandbox): void => {
+export const mountUnaryExpression = (sandbox: ISandbox): void => {
 
     sandbox.mount('UnaryExpression', unaryExpressionEvaluator);
 };

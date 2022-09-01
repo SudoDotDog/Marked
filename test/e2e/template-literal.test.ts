@@ -7,7 +7,6 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { useEverything } from '../../src/evaluate/evaluate';
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -16,8 +15,7 @@ describe('Given Sandbox for Template Literal', (): void => {
     const chance = new Chance('sandbox-template-literal');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = Sandbox.create();
-        useEverything(sandbox);
+        const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 

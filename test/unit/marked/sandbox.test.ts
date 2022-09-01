@@ -8,7 +8,6 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { ERROR_CODE } from '../../../src/declare/error';
 import { END_SIGNAL, IMarkedResultFailed, MarkedResult } from '../../../src/declare/evaluate';
-import { useEverything } from '../../../src/evaluate/evaluate';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { error } from '../../../src/util/error/error';
 
@@ -18,8 +17,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
     const chance = new Chance('sandbox-configurations');
 
     const createSandbox = () => {
-        const sandbox: Sandbox = Sandbox.create();
-        useEverything(sandbox);
+        const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 

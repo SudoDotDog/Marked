@@ -12,6 +12,7 @@ import { IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResu
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
+import { useEverything } from '../evaluate/evaluate';
 import { assert } from '../util/error/assert';
 import { error, MarkedError } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
@@ -23,9 +24,17 @@ import { Executer } from './executer';
 
 export class Sandbox implements ISandbox {
 
-    public static create(): Sandbox {
+    public static fromScratch(): Sandbox {
 
         return new Sandbox();
+    }
+
+    public static fromAllEvaluators(): Sandbox {
+
+        const sandbox: Sandbox = Sandbox.fromScratch();
+        useEverything(sandbox);
+
+        return sandbox;
     }
 
     private readonly _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
