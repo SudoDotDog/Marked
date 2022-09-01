@@ -4,7 +4,7 @@
  * @description Sandbox
  */
 
-import * as Acorn from 'acorn';
+import { parse } from '@typescript-eslint/typescript-estree';
 import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
@@ -12,7 +12,6 @@ import { IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResu
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
-import { markedParser } from '../extension/parser';
 import { assert } from '../util/error/assert';
 import { error, MarkedError } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
@@ -31,7 +30,6 @@ export class Sandbox implements ISandbox {
 
     private readonly _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
     private readonly _rootScope: Scope;
-    private readonly _parser: typeof Acorn.Parser;
 
     private readonly _configs: Map<string, any>;
     private readonly _modules: Map<string, any>;
@@ -51,7 +49,6 @@ export class Sandbox implements ISandbox {
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();
-        this._parser = Acorn.Parser.extend(markedParser as any);
 
         this._configs = new Map<string, any>();
         this._modules = new Map<string, any>();
@@ -270,20 +267,20 @@ export class Sandbox implements ISandbox {
 
         try {
 
-            const AST: EST.BaseNode = this._parser.parse(script, {
+            const AST: EST.BaseNode = parse(script, {
 
-                locations: true,
-                allowReturnOutsideFunction: false,
-                allowAwaitOutsideFunction: false,
-                allowHashBang: false,
-                sourceType: 'module',
-                ecmaVersion: 'latest',
+                comment: true,
+                errorOnUnknownASTType: true,
+                jsx: true,
+                loc: true,
+                range: false,
+                tokens: true,
             });
             return AST;
         } catch (err) {
 
             const syntaxError: any = err;
-            throw error(ERROR_CODE.ACORN_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
+            throw error(ERROR_CODE.PARSE_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
         }
     }
 }

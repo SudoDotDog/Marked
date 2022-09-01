@@ -37,7 +37,14 @@ export const extractSandToNative = (target: any): any => {
     return target;
 };
 
-export const parseNativeToSand = (target: any): string | number | boolean | ((...args: any[]) => any) | SandMap<any> | SandList<any> => {
+export const parseNativeToSand = (target: any): string | number | boolean | undefined | null | ((...args: any[]) => any) | SandMap<any> | SandList<any> => {
+
+    if (typeof target === 'undefined') {
+        return undefined;
+    }
+    if (target === null) {
+        return null;
+    }
 
     if (typeof target === 'string') {
         return target;

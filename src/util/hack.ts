@@ -4,7 +4,6 @@
  * @description Hack
  */
 
-import { TokenType } from "acorn";
 import { Sandbox } from "../marked/sandbox";
 import { Scope } from "../variable/scope";
 
@@ -16,23 +15,6 @@ export const insertKeywordToRegExp = (keywords: string, newKeyword: string): str
 
     const newRegexp: string = '^(?:' + currentArray.join('|') + ')$';
     return newRegexp;
-};
-
-export const createKeywordType = (keyword: string): TokenType => {
-
-    return {
-
-        label: keyword,
-        keyword,
-        beforeExpr: false,
-        startsExpr: false,
-        isLoop: false,
-        isAssign: false,
-        prefix: true,
-        postfix: false,
-        binop: null as any,
-        updateContext: null as any,
-    };
 };
 
 export const rummageSpecialKeyword = (keyword: string, value: any, scope: Scope, sandbox: Sandbox): boolean => {
