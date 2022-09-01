@@ -3,7 +3,7 @@
  * @description Index
  */
 
-export { END_SIGNAL, Evaluator, MarkedResult } from "./declare/evaluate";
+export { END_SIGNAL, Evaluator, IMarkedResultException, IMarkedResultFailed, IMarkedResultSucceed, MarkedResult } from "./declare/evaluate";
 export { IMarkedOptions, ModuleResolveResult, OptionName } from "./declare/sandbox";
 export { ScriptLocation } from "./declare/script-location";
 export { EST_TYPE } from "./declare/types";
