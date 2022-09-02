@@ -16,4 +16,8 @@ export class SandFunction {
     public get function(): (...args: any[]) => any {
         return this._function;
     }
+
+    public execute(...args: any[]): any {
+        return this._function(...args);
+    }
 }

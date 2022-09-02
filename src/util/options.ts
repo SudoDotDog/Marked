@@ -5,6 +5,7 @@
  */
 
 import { ISandboxOptions } from "../declare/sandbox";
+import { New_Line_Character } from "../host/declare";
 
 export const getDefaultSandboxOption = (): ISandboxOptions => ({
 
@@ -19,7 +20,7 @@ export const getRawCode = (script: string): string => {
 
     const rawCode: string =
         getCommentRemovedCode(script)
-            .split('\n')
+            .split(New_Line_Character)
             .map((str: string) => str.trim())
             .filter((str: string) => Boolean(str))
             .join('');
