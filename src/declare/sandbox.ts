@@ -15,6 +15,9 @@ export type ModuleResolveResult = {
     readonly scriptLocation: ScriptLocation;
 };
 
+export type SandboxLanguage = 'typescript' | 'javascript';
+export const defaultSandboxLanguage: SandboxLanguage = 'javascript';
+
 export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
 
 export interface IMarkedOptions {
@@ -23,6 +26,7 @@ export interface IMarkedOptions {
     provides?: Record<string, any>;
     resolvers?: ModuleResolver[];
     sandbox?: Partial<ISandboxOptions>;
+    language?: SandboxLanguage;
 }
 
 export interface ISandboxOptions {

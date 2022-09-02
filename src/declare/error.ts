@@ -10,6 +10,7 @@ export enum ERROR_CODE {
     SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED = 1001,
 
     PARSE_ERROR = 1100,
+    TYPESCRIPT_COMPILE_ERROR = 1101,
 
     MAXIMUM_CODE_LENGTH_LIMIT_EXCEED = 1911,
     MAXIMUM_EXPRESSION_LIMIT_EXCEED = 1912,
@@ -57,6 +58,8 @@ export enum ERROR_CODE {
 
     NEGATIVE_UNARY_ONLY_AVAILABLE_FOR_VALID_NUMBER = 3310,
 
+    UNKNOWN_LANGUAGE = 4050,
+
     UNMOUNTED_AST_TYPE = 6001,
     DUPLICATED_PROVIDED_MODULE_NAME = 6002,
     MODULE_IS_NOT_PROVIDED = 6003,
@@ -84,6 +87,7 @@ export const ERROR_LIST: {
     1000: 'Unknown error',
     1001: 'Script cannot be null or undefined',
     1100: 'Parse error',
+    1101: 'Typescript compile error',
     1911: 'Maximum code length limit exceed',
     1912: 'Maximum expression limit exceed',
     1913: 'Maximum for loop limit exceed',
@@ -119,6 +123,7 @@ export const ERROR_LIST: {
     3151: 'Define get or set to a object is not supported',
     3152: 'Spread element is not supported',
     3310: 'Negative unary only available for valid number',
+    4050: 'Unknown language',
     6001: 'Unmounted ast type',
     6002: 'Provided module name duplicated',
     6003: 'Module is not provided',

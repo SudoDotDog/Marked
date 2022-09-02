@@ -10,14 +10,17 @@ import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { error } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
-export const marked = async (script: string, options?: IMarkedOptions): Promise<MarkedResult> => {
+export const marked = async (
+    script: string,
+    options?: IMarkedOptions,
+): Promise<MarkedResult> => {
 
     if (!script) {
 
         throw error(ERROR_CODE.SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED);
     }
 
-    const sandbox: Sandbox = Sandbox.fromAllEvaluators();
+    const sandbox: Sandbox = Sandbox.fromAllEvaluators(options?.language);
 
     if (options) {
 

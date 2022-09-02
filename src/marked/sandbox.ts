@@ -4,15 +4,16 @@
  * @description Sandbox
  */
 
-import { parse } from '@typescript-eslint/typescript-estree';
 import * as EST from "estree";
 import { ERROR_CODE } from '../declare/error';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
-import { IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName } from '../declare/sandbox';
+import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { useEverything } from '../evaluate/evaluate';
+import { parseCodeToESTree } from '../parse/parse-estree';
+import { transpileTypeScriptCode } from "../parse/transpile-typescript";
 import { assert } from '../util/error/assert';
 import { error, MarkedError } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
@@ -24,18 +25,24 @@ import { Executer } from './executer';
 
 export class Sandbox implements ISandbox {
 
-    public static fromScratch(): Sandbox {
+    public static fromScratch(
+        language: SandboxLanguage = defaultSandboxLanguage,
+    ): Sandbox {
 
-        return new Sandbox();
+        return new Sandbox(language);
     }
 
-    public static fromAllEvaluators(): Sandbox {
+    public static fromAllEvaluators(
+        language: SandboxLanguage = defaultSandboxLanguage,
+    ): Sandbox {
 
-        const sandbox: Sandbox = Sandbox.fromScratch();
+        const sandbox: Sandbox = new Sandbox(language);
         useEverything(sandbox);
 
         return sandbox;
     }
+
+    private readonly _language: SandboxLanguage;
 
     private readonly _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
     private readonly _rootScope: Scope;
@@ -54,7 +61,9 @@ export class Sandbox implements ISandbox {
     private _usingAdditionalArgument: boolean;
     private _additionalArgument?: any;
 
-    private constructor() {
+    private constructor(language: SandboxLanguage) {
+
+        this._language = language;
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
         this._rootScope = Scope.fromRoot();
@@ -142,7 +151,11 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public async evaluate(script: string, scriptLocation?: ScriptLocation, scope?: IScope): Promise<MarkedResult> {
+    public async evaluate(
+        script: string,
+        scriptLocation?: ScriptLocation,
+        scope?: IScope,
+    ): Promise<MarkedResult> {
 
         const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
 
@@ -157,7 +170,7 @@ export class Sandbox implements ISandbox {
 
         try {
 
-            const AST: EST.BaseNode = this.parse(script);
+            const AST: EST.BaseNode = await this.parse(script);
             const trace: Trace = Trace.init(scriptLocation);
 
             const targetScope: IScope = typeof scope === 'undefined'
@@ -272,24 +285,38 @@ export class Sandbox implements ISandbox {
         return result;
     }
 
-    protected parse(script: string): EST.BaseNode {
+    protected async parse(script: string): Promise<EST.BaseNode> {
+
+        if (this._language === 'javascript') {
+            return await this._parseJavaScript(script);
+        } else if (this._language === 'typescript') {
+            return await this._parseTypeScript(script);
+        }
+
+        throw error(ERROR_CODE.UNKNOWN_LANGUAGE);
+    }
+
+    private async _parseJavaScript(script: string): Promise<EST.BaseNode> {
 
         try {
 
-            const AST: EST.BaseNode = parse(script, {
-
-                comment: true,
-                errorOnUnknownASTType: true,
-                jsx: true,
-                loc: true,
-                range: false,
-                tokens: true,
-            });
-            return AST;
+            return await parseCodeToESTree(script);
         } catch (err) {
 
             const syntaxError: any = err;
             throw error(ERROR_CODE.PARSE_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
+        }
+    }
+
+    private async _parseTypeScript(script: string): Promise<EST.BaseNode> {
+
+        try {
+
+            const typeScriptCode: string = await transpileTypeScriptCode(script);
+            return await this._parseJavaScript(typeScriptCode);
+        } catch (err) {
+
+            throw error(ERROR_CODE.TYPESCRIPT_COMPILE_ERROR);
         }
     }
 }
