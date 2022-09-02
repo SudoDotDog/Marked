@@ -16,13 +16,13 @@
   },
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
-    "acorn": "^8.8.0",
-    "typescript": "^4.8.2"
+    "acorn": "8.8.0",
+    "typescript": "4.8.2"
   },
   "devDependencies": {
     "@sudoo/triforce": "^3.8.0",
     "@types/acorn": "^6.0.0",
-    "@types/estree": "1.0.0"
+    "@types/estree": "^1.0.0"
   },
   "nyc": {
     "extension": [
