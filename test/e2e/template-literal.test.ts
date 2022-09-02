@@ -10,7 +10,7 @@ import * as Chance from 'chance';
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
-describe('Given Sandbox for Template Literal', (): void => {
+describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
     const chance = new Chance('sandbox-template-literal');
 

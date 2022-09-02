@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { Sandbox } from '../../src/marked/sandbox';
 
-describe('Given Sandbox for Unary Expression', (): void => {
+describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
     const chance = new Chance('sandbox-unary-expression');
 

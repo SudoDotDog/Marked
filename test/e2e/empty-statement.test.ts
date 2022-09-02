@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Evaluate
- * @description Template Literal
+ * @description Empty Statement
  * @override E2E Test
  */
 
@@ -10,7 +10,7 @@ import * as Chance from 'chance';
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
-describe('Given Sandbox for Empty Statement', (): void => {
+describe('Given Sandbox for <EmptyStatement> Cases', (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('sandbox-empty-statement');

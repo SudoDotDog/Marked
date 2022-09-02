@@ -6,30 +6,17 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { Sandbox } from '../../src/marked/sandbox';
+import { defaultSandboxLanguage, Sandbox, SandboxLanguage } from '../../src';
 
 describe('Given Sandbox for Expression evaluators', (): void => {
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('sandbox-module-evaluators-expression');
 
-    const createSandbox = () => {
-        const sandbox: Sandbox = Sandbox.fromAllEvaluators();
+    const createSandbox = (language: SandboxLanguage = defaultSandboxLanguage) => {
+        const sandbox: Sandbox = Sandbox.fromAllEvaluators(language);
         return sandbox;
     };
-
-    it('should be able to handle arrow function declare and apply', async (): Promise<void> => {
-
-        const sandbox: Sandbox = createSandbox();
-
-        const result: any[] = [];
-        const value: number = chance.integer({ max: 10, min: 1 });
-        sandbox.inject('deject', (content: any) => result.push(content));
-
-        await sandbox.evaluate(`const a=()=>${value};deject(a());`);
-
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal(value);
-    });
 
     it('should be able to handle conditional expression - happy path', async (): Promise<void> => {
 
@@ -109,7 +96,7 @@ describe('Given Sandbox for Expression evaluators', (): void => {
 
     it('should be able to handle for in typescript', async (): Promise<void> => {
 
-        const sandbox: Sandbox = createSandbox();
+        const sandbox: Sandbox = createSandbox('typescript');
 
         const result: any[] = [];
         sandbox.inject('deject', (content: any) => result.push(content));
