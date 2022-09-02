@@ -7,7 +7,7 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { Sandbox } from '../../src/marked/sandbox';
+import { Sandbox } from '../../src';
 
 describe('Given Sandbox for <ArrowFunctionExpression> Cases', (): void => {
 
@@ -31,7 +31,6 @@ describe('Given Sandbox for <ArrowFunctionExpression> Cases', (): void => {
         expect(result).to.be.lengthOf(1);
         expect(result[0]).to.be.equal(value);
     });
-
 
     it('should be able to handle arrow function declare and apply with arguments', async (): Promise<void> => {
 

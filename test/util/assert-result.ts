@@ -11,9 +11,10 @@ export const assertSucceedMarkedResult: (
     result: MarkedResult,
 ) => asserts result is IMarkedResultSucceed = (
     result: MarkedResult,
-    ): asserts result is IMarkedResultSucceed => {
+): asserts result is IMarkedResultSucceed => {
 
         if (result.signal !== END_SIGNAL.SUCCEED) {
+            console.log(result);
             throw new Error('Invalid marked result');
         }
         return;
