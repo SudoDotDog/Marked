@@ -31,6 +31,7 @@ export const emitTypeScriptDeclaration = async (
             skipLibCheck: true,
             skipDefaultLibCheck: true,
             target: TS.ScriptTarget.ESNext,
+            newLine: TS.NewLineKind.LineFeed,
         },
         host,
     });

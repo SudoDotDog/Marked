@@ -15,6 +15,7 @@ export const transpileTypeScriptCode = async (sourceCode: string): Promise<strin
             {
                 module: TS.ModuleKind.ESNext,
                 target: TS.ScriptTarget.ESNext,
+                newLine: TS.NewLineKind.LineFeed,
                 strict: false,
                 alwaysStrict: false,
                 skipLibCheck: true,
