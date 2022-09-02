@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked",
-  "version": "2.0.0",
+  "version": "3.4.2",
   "description": "JavaScript code runner in JavaScript, safe with marked territory, asynchronous",
   "repository": {
     "type": "git",
@@ -16,10 +16,12 @@
   },
   "homepage": "https://github.com/SudoDotDog/Marked#readme",
   "dependencies": {
-    "@typescript-eslint/typescript-estree": "^5.36.1"
+    "acorn": "^8.8.0",
+    "typescript": "^4.8.2"
   },
   "devDependencies": {
     "@sudoo/triforce": "^3.8.0",
+    "@types/acorn": "^6.0.0",
     "@types/estree": "1.0.0"
   },
   "nyc": {
