@@ -30,6 +30,9 @@ export enum ERROR_CODE {
     ONLY_NUMBER_AVAILABLE_FOR_LIST = 2391,
     ONLY_STRING_AVAILABLE_FOR_MAP = 2392,
 
+    MAP_ARGUMENT_SHOULD_BE_A_FUNCTION = 2410,
+    FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION = 2411,
+
     VAR_DECLARATION_NOT_SUPPORT = 3003,
     BINARY_NOT_SUPPORT = 3004,
     UNARY_NOT_SUPPORT = 3005,
@@ -102,6 +105,8 @@ export const ERROR_LIST: {
     2388: 'For in loop only for map',
     2391: 'Only number is available for list',
     2392: 'Only string is available for map',
+    2410: 'Map argument should be a function',
+    2411: 'Filter argument should be a function',
     3003: 'Declaration with [var] is not supported',
     3004: 'Binary is not supported',
     3005: 'Unary is not supported',

@@ -57,4 +57,28 @@ describe('Given Integration Built-In Types (Array) Cases', (): void => {
 
         expect(result.exports.default).to.be.equal(1);
     });
+
+    it('should be able to map array value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: string = chance.string();
+
+        const result: MarkedResult = await sandbox.evaluate(`const s=["${value}"];export default s.map((item) => item + "PLUS");`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal([`${value}PLUS`]);
+    });
+
+    it('should be able to filter array value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate(`const s=[1,2,3,4];export default s.filter((item) => item >= 2);`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal([2, 3, 4]);
+    });
 });

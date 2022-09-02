@@ -6,6 +6,13 @@
 
 export class SandFunction {
 
+    public static deject(func: SandFunction | ((...args: any[]) => any)): (...args: any[]) => any {
+        if (func instanceof SandFunction) {
+            return func.function;
+        }
+        return func;
+    }
+
     private _function: (...args: any[]) => any;
 
     public constructor(func: (...args: any[]) => any) {
