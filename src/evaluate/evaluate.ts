@@ -12,6 +12,7 @@ import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
 import { mountFunctionDeclaration } from "./function-declaration";
 import { mountFunctionExpression } from "./function-expression";
+import { mountMemberExpressionEvaluator } from "./member-expression";
 import * as Module_Evaluators from "./module";
 import * as Symbol_Evaluators from "./symbol";
 import { mountTemplateLiteral } from "./template-literal";
@@ -55,7 +56,6 @@ export const useVariable = (sandbox: ISandbox): void => {
     sandbox.mount('ArrayExpression', Variable_Evaluators.arrayExpressionEvaluator);
     sandbox.mount('AssignmentExpression', Variable_Evaluators.assignmentExpressionEvaluator);
     sandbox.mount('ObjectExpression', Variable_Evaluators.objectExpressionEvaluator);
-    sandbox.mount('MemberExpression', Variable_Evaluators.memberEvaluator);
     sandbox.mount('VariableDeclaration', Variable_Evaluators.variableDeclarationEvaluator);
 };
 
@@ -97,6 +97,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountEmptyStatement(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
+    mountMemberExpressionEvaluator(sandbox);
     mountTemplateLiteral(sandbox);
     mountUnaryExpression(sandbox);
 };

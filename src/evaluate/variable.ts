@@ -106,36 +106,6 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
         return assignee;
     };
 
-export const memberEvaluator: Evaluator<'MemberExpression'> =
-    async function (this: Sandbox, node: EST.MemberExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const computed: boolean = node.computed;
-        const object: any = await this.execute(node.object, scope, nextTrace);
-        const key: string | number = computed
-            ? await this.execute(node.property, scope, nextTrace)
-            : (node.property as EST.Identifier).name;
-
-        if (object instanceof SandList) {
-
-            if (typeof key === 'number') {
-                return object.get(key);
-            } else {
-                throw error(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST, key, node, trace);
-            }
-        } else if (object instanceof SandMap) {
-
-            if (typeof key === 'string') {
-                return object.get(key);
-            } else {
-                throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
-            }
-        }
-
-        return object[key];
-    };
-
 export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
     async function (this: Sandbox, node: EST.ObjectExpression, scope: Scope, trace: Trace): Promise<any> {
 
