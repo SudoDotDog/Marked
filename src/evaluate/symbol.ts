@@ -51,7 +51,10 @@ export const continueEvaluator: Evaluator<'ContinueStatement'> =
     // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
-        if (node.label) { throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace); }
+        if (node.label) {
+
+            throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
+        }
         const flag: Flag = Flag.fromContinue(trace);
 
         return flag;

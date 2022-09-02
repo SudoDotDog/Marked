@@ -12,7 +12,6 @@ import * as Evaluator_Expressions from '../../../src/evaluate/expression';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { getBinaryOperation } from '../../../src/util/operation';
 import { Flag } from '../../../src/variable/flag';
-import { SandFunction } from '../../../src/variable/sand-function';
 import { SandList } from '../../../src/variable/sand-list';
 import { SandMap } from '../../../src/variable/sand-map';
 import { Scope } from '../../../src/variable/scope';
@@ -35,49 +34,6 @@ describe('Given Expression evaluators', (): void => {
         sandbox.reset();
         scope.reset();
         trace.reset();
-    });
-
-    describe('Given an <ArrowFunctionExpression> evaluator', (): void => {
-
-        it('should be able to handle function expression', async (): Promise<void> => {
-
-            const param: string = chance.string();
-            const value: string = chance.string();
-            const argument: string = chance.string();
-
-            const result: any[] = [];
-            const testNode: EST.ArrowFunctionExpression = {
-
-                type: 'ArrowFunctionExpression',
-                expression: false,
-                params: [createIdentifier(param)],
-                body: {
-                    type: 'BlockStatement',
-                    body: [{
-                        type: 'MockStatement',
-                        value,
-                    } as any],
-                },
-            };
-
-            sandbox.when('Identifier', (node: EST.Identifier) => node.name);
-            sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
-                .forEach((element: EST.Statement) => {
-                    sandbox.execute(element, scope, trace);
-                }));
-
-            sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
-
-            const func: any = await Evaluator_Expressions.arrowFunctionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(func).to.be.instanceof(SandFunction);
-
-            func.function(argument);
-            expect(result).to.be.deep.equal([value]);
-
-            const mockedChildScope: MockScope = scope.children[0];
-            expect((mockedChildScope.constants.get(param) as any).get()).to.be.equal(argument);
-        });
     });
 
     describe('Given an <ConditionalExpression> evaluator', (): void => {
@@ -364,79 +320,6 @@ describe('Given Expression evaluators', (): void => {
 
             const variable: Variable<any> = scope.rummage('hello') as Variable<any>;
             expect(variable.get()).to.be.equal(value);
-        });
-    });
-
-    describe('Given an <FunctionDeclare> evaluator', (): void => {
-
-        it('should return a executable function', async (): Promise<void> => {
-
-            const name: string = chance.string();
-            const param: string = chance.string();
-
-            const testNode: EST.FunctionDeclaration = {
-
-                type: 'FunctionDeclaration',
-                id: createIdentifier(name),
-                params: [createIdentifier(param)],
-                body: {
-                    type: 'BlockStatement',
-                    body: [],
-                },
-            };
-
-            sandbox.when('Identifier', (node: EST.Identifier) => node.name);
-            sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
-                .forEach((element: EST.Statement) => {
-                    sandbox.execute(element, scope, trace);
-                }));
-
-            const result: any = await Evaluator_Expressions.functionDeclarationEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(result).to.be.instanceof(Function);
-        });
-    });
-
-    describe('Given an <FunctionExpression> evaluator', (): void => {
-
-        it('should be able to handle function expression', async (): Promise<void> => {
-
-            const name: string = chance.string();
-            const param: string = chance.string();
-            const value: string = chance.string();
-            const argument: string = chance.string();
-
-            const result: any[] = [];
-            const testNode: EST.FunctionExpression = {
-
-                type: 'FunctionExpression',
-                id: createIdentifier(name),
-                params: [createIdentifier(param)],
-                body: {
-                    type: 'BlockStatement',
-                    body: [{
-                        type: 'MockStatement',
-                        value,
-                    } as any],
-                },
-            };
-
-            sandbox.when('Identifier', (node: EST.Identifier) => node.name);
-            sandbox.when('BlockStatement', (node: EST.BlockStatement) => node.body
-                .forEach((element: EST.Statement) => {
-                    sandbox.execute(element, scope, trace);
-                }));
-            sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));
-
-            const func: any = await Evaluator_Expressions.functionExpressionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(func).to.be.instanceof(Function);
-
-            func(argument);
-            expect(result).to.be.deep.equal([value]);
-
-            const mockedChildScope: MockScope = scope.children[0];
-            expect((mockedChildScope.constants.get(param) as any).get()).to.be.equal(argument);
         });
     });
 

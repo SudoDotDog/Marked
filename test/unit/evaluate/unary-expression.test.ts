@@ -14,7 +14,7 @@ import { MockScope } from '../../mock/scope';
 import { MockTrace } from '../../mock/trace';
 import { createExecuteWithMock } from '../../util/execute-with-mock';
 
-describe('Given Unary Expression Evaluators', (): void => {
+describe('Given <UnaryExpression> Evaluators', (): void => {
 
     const sandbox: MockSandbox = new MockSandbox();
     const scope: MockScope = new MockScope();

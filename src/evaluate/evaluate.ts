@@ -5,10 +5,13 @@
  */
 
 import { ISandbox } from "../declare/sandbox";
+import { mountArrowFunctionExpression } from "./arrow-function-expression";
 import * as Calculate_Evaluators from "./calculate";
 import { mountEmptyStatement } from "./empty-statement";
 import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
+import { mountFunctionDeclaration } from "./function-declaration";
+import { mountFunctionExpression } from "./function-expression";
 import * as Module_Evaluators from "./module";
 import * as Symbol_Evaluators from "./symbol";
 import { mountTemplateLiteral } from "./template-literal";
@@ -30,10 +33,7 @@ export const useSymbol = (sandbox: ISandbox): void => {
 
 export const useExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ArrowFunctionExpression', Expression_Evaluators.arrowFunctionEvaluator);
     sandbox.mount('ConditionalExpression', Expression_Evaluators.conditionalExpressionEvaluator);
-    sandbox.mount('FunctionDeclaration', Expression_Evaluators.functionDeclarationEvaluator);
-    sandbox.mount('FunctionExpression', Expression_Evaluators.functionExpressionEvaluator);
     sandbox.mount('SequenceExpression', Expression_Evaluators.sequenceExpressionEvaluator);
 
     sandbox.mount('CallExpression', Expression_Evaluators.calleeEvaluator);
@@ -93,7 +93,10 @@ export const useEverything = (sandbox: ISandbox): void => {
     useModule(sandbox);
     useException(sandbox);
 
+    mountArrowFunctionExpression(sandbox);
     mountEmptyStatement(sandbox);
+    mountFunctionDeclaration(sandbox);
+    mountFunctionExpression(sandbox);
     mountTemplateLiteral(sandbox);
     mountUnaryExpression(sandbox);
 };
