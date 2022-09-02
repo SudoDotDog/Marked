@@ -6,6 +6,7 @@
 
 import { expect } from 'chai';
 import { ISandboxOptions } from '../../../src/declare/sandbox';
+import { New_Line_Character } from '../../../src/host/declare';
 import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from '../../../src/util/options';
 
 describe('Given an Options utils', (): void => {
@@ -36,18 +37,18 @@ describe('Given an Options utils', (): void => {
             `add something`,
             `*/`,
             `b()`,
-        ].join('\n');
+        ].join(New_Line_Character);
 
         it('should remove comments', (): void => {
 
             const result: string = getCommentRemovedCode(testCode);
-            expect(result.split('\n')).to.be.lengthOf(4);
+            expect(result.split(New_Line_Character)).to.be.lengthOf(4);
         });
 
         it('should merge code to one line', (): void => {
 
             const result: string = getRawCode(testCode);
-            expect(result.split('\n')).to.be.lengthOf(1);
+            expect(result.split(New_Line_Character)).to.be.lengthOf(1);
 
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(result).to.be.lengthOf(37);
