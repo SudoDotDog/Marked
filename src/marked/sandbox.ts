@@ -238,6 +238,12 @@ export class Sandbox implements ISandbox {
         this._brokeFlag = flag;
     }
 
+    protected recoverFromBreak(): void {
+
+        this._broke = false;
+        this._brokeFlag = null;
+    }
+
     protected async resolveResource(source: string, trace: ITrace): Promise<ModuleResolveResult | null> {
 
         for (const resolver of this._resolvers) {

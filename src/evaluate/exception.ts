@@ -13,6 +13,7 @@ import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
+import { Variable } from "../variable/variable";
 
 export const tryEvaluator: Evaluator<'TryStatement'> =
     async function (this: Sandbox, node: EST.TryStatement, scope: Scope, trace: Trace): Promise<any> {
@@ -39,6 +40,8 @@ export const tryEvaluator: Evaluator<'TryStatement'> =
                 if (!node.handler) {
                     throw error(ERROR_CODE.CATCH_NOT_FOUND, void 0, node, trace);
                 }
+
+                this.recoverFromBreak();
 
                 const catchScope: Scope = scope.child();
                 catchScope.setThrow(result.getValue());
@@ -67,7 +70,12 @@ export const catchEvaluator: Evaluator<'CatchClause'> =
         const subScope: Scope = scope.child();
 
         const identifier: EST.Identifier = node.param as EST.Identifier;
-        subScope.register(VARIABLE_TYPE.CONSTANT)(identifier.name, scope.getThrow());
+
+        const throwObject: Variable<any> | null = scope.getThrow();
+        if (!(throwObject instanceof Variable)) {
+            throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+        }
+        subScope.register(VARIABLE_TYPE.CONSTANT)(identifier.name, throwObject.get());
 
         const result: any = await this.execute(node.body, subScope, nextTrace);
         return result;
