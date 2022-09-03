@@ -21,6 +21,7 @@ import { mountMethodDefinition } from "./method-definition";
 import * as Module_Evaluators from "./module";
 import { mountNewExpression } from "./new-expression";
 import { mountPropertyDefinition } from "./property-definition";
+import { mountSpreadElement } from "./spread-element";
 import * as Symbol_Evaluators from "./symbol";
 import { mountTemplateLiteral } from "./template-literal";
 import { mountThisExpression } from "./this-expression";
@@ -110,6 +111,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountMethodDefinition(sandbox);
     mountNewExpression(sandbox);
     mountPropertyDefinition(sandbox);
+    mountSpreadElement(sandbox);
     mountTemplateLiteral(sandbox);
     mountThisExpression(sandbox);
     mountThrowStatement(sandbox);

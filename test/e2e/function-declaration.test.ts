@@ -32,7 +32,6 @@ describe('Given Sandbox for <FunctionDeclaration> Cases', (): void => {
         expect(result[0]).to.be.equal(value);
     });
 
-
     it('should be able to handle function declaration and apply with arguments', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
