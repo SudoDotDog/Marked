@@ -17,7 +17,9 @@ export * from "./parse/emit/source";
 export * from "./parse/emit/source-and-declaration";
 export * from "./parse/format/typescript";
 export { MarkedError } from "./util/error/error";
-export { SandFunction } from "./variable/sand-function";
+export { SandClass } from "./variable/sand-class/sand-class";
+export { SandClassInstance } from "./variable/sand-class/sand-class-instance";
+export { SandFunction } from "./variable/sand-function/sand-function";
 export { SandList } from "./variable/sand-list";
 export { SandMap } from "./variable/sand-map";
 

@@ -39,6 +39,11 @@ export class SandMap<T> {
         return [...this._map.keys()];
     }
 
+    public has(key: string): boolean {
+
+        return this._map.has(key);
+    }
+
     public get(key: string): T | undefined {
 
         const variable: Variable<T> | undefined = this._map.get(key);

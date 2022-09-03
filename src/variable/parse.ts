@@ -7,7 +7,7 @@
 import { ERROR_CODE } from "../declare/error";
 import { error } from "../util/error/error";
 import { SandClass } from "./sand-class/sand-class";
-import { SandFunction } from "./sand-function";
+import { SandFunction } from "./sand-function/sand-function";
 import { SandList } from "./sand-list";
 import { SandMap } from "./sand-map";
 

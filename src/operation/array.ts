@@ -6,7 +6,7 @@
 
 import { ERROR_CODE } from "../declare/error";
 import { error } from "../util/error/error";
-import { SandFunction } from "../variable/sand-function";
+import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
 
 export const GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL = Symbol('GET_ARRAY_MEMBER_NOT_FOUND');

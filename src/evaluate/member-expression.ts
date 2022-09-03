@@ -28,6 +28,8 @@ export const mountMemberExpressionEvaluator = (sandbox: ISandbox): void => {
 export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
     async function (this: Sandbox, node: EST.MemberExpression, scope: Scope, trace: Trace): Promise<any> {
 
+        console.log('MemberExpression', node, scope, trace);
+
         const nextTrace: Trace = trace.stack(node);
 
         const computed: boolean = node.computed;

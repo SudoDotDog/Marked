@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
- * @namespace Variable
- * @description Function
+ * @namespace Variable_SandFunction
+ * @description Sand Function
  */
 
 export class SandFunction {
@@ -15,9 +15,17 @@ export class SandFunction {
 
     private readonly _function: (...args: any[]) => any;
 
+    private _thisValue: any | null;
+
     public constructor(func: (...args: any[]) => any) {
 
         this._function = func;
+
+        this._thisValue = null;
+    }
+
+    public get thisValue(): any | null {
+        return this._thisValue;
     }
 
     public get function(): (...args: any[]) => any {
@@ -26,5 +34,13 @@ export class SandFunction {
 
     public execute(...args: any[]): any {
         return this._function(...args);
+    }
+
+    public bindThisValue(thisValue: any): SandFunction {
+
+        const bind: SandFunction = new SandFunction(this._function);
+        bind._thisValue = thisValue;
+
+        return bind;
     }
 }

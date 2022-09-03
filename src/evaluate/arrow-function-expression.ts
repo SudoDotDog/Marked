@@ -12,7 +12,7 @@ import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
-import { SandFunction } from "../variable/sand-function";
+import { SandFunction } from "../variable/sand-function/sand-function";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 

@@ -21,6 +21,8 @@ export const thisExpressionEvaluator: Evaluator<'ThisExpression'> =
     // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.ThisExpression, scope: Scope, trace: Trace): Promise<SandMap<any>> {
 
+        console.log('ThisExpression', node, scope, trace);
+
         const thisValue: SandMap<any> = scope.findThis();
         return thisValue;
     };

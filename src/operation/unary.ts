@@ -7,7 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error";
 import { error } from "../util/error/error";
-import { SandFunction } from "../variable/sand-function";
+import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
 
 export const getUnaryOperation = (symbol: EST.UnaryOperator): ((value: any) => any) | null => {

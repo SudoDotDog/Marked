@@ -22,7 +22,7 @@ export class SandClassInstance {
 
         this._targetClass = targetClass;
 
-        this._body = this._initialize(targetClass);
+        this._body = new SandMap();
     }
 
     public get targetClass(): SandClass {
@@ -32,9 +32,12 @@ export class SandClassInstance {
         return this._body;
     }
 
-    private _initialize(targetClass: SandClass): SandMap<any> {
+    public lookFor(key: string): any {
 
-        const targetMap: SandMap<any> = targetClass.body;
-        return targetMap.clone();
+        if (this._body.has(key)) {
+            return this._body.get(key);
+        }
+
+        return this._targetClass.body.get(key);
     }
 }

@@ -11,7 +11,7 @@ import { ISandbox } from "../declare/sandbox";
 import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
-import { SandFunction } from "../variable/sand-function";
+import { SandFunction } from "../variable/sand-function/sand-function";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { functionExpressionEvaluator } from "./function-expression";

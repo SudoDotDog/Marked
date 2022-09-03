@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
 import { functionDeclarationEvaluator } from '../../../src/evaluate/function-declaration';
-import { SandFunction } from '../../../src/variable/sand-function';
+import { SandFunction } from '../../../src/variable/sand-function/sand-function';
 import { createIdentifier } from '../../mock/node';
 import { MockSandbox } from '../../mock/sandbox';
 import { MockScope } from '../../mock/scope';

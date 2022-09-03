@@ -23,6 +23,8 @@ export const mountNewExpression = (sandbox: ISandbox): void => {
 export const newStatementEvaluator: Evaluator<'NewExpression'> =
     async function (this: Sandbox, node: EST.NewExpression, scope: Scope, trace: Trace): Promise<SandClassInstance> {
 
+        console.log('NewExpression', node, scope, trace);
+
         const targetClass: any = await this.execute(node.callee, scope, trace);
         if (!(targetClass instanceof SandClass)) {
 
