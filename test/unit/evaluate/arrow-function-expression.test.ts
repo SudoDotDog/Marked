@@ -64,7 +64,7 @@ describe('Given <ArrowFunctionExpression> Evaluators', (): void => {
 
         expect(func).to.be.instanceof(SandFunction);
 
-        func.function(argument);
+        func.execute(argument);
         expect(result).to.be.deep.equal([value]);
 
         const mockedChildScope: MockScope = scope.children[0];

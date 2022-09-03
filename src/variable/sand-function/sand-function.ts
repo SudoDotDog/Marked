@@ -6,23 +6,26 @@
 
 export class SandFunction {
 
-    public static deject(func: SandFunction | ((...args: any[]) => any)): (...args: any[]) => any {
+    public static wrapFunction(
+        func: ((...args: any[]) => any) | SandFunction,
+    ): SandFunction {
+
         if (func instanceof SandFunction) {
-            return func.function;
+            return func;
         }
-        return func;
+        return SandFunction.create(func);
     }
 
-    public static create(func: (...args: any[]) => any): SandFunction {
+    public static create(func: (thisValue: any, ...args: any[]) => any): SandFunction {
 
         return new SandFunction(func);
     }
 
-    private readonly _function: (...args: any[]) => any;
+    private readonly _function: (thisValue: any, ...args: any[]) => any;
 
     private _thisValue: any | null;
 
-    private constructor(func: (...args: any[]) => any) {
+    private constructor(func: (thisValue: any, ...args: any[]) => any) {
 
         this._function = func;
 
@@ -31,10 +34,6 @@ export class SandFunction {
 
     public get thisValue(): any | null {
         return this._thisValue;
-    }
-
-    public get function(): (...args: any[]) => any {
-        return this._function;
     }
 
     public execute(...args: any[]): any {

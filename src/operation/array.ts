@@ -22,17 +22,18 @@ export const getArrayMember = (list: SandList<any>, key: string): any => {
         case 'map': {
             return async (func: ((element: any, index: number) => any) | SandFunction) => {
 
-                const dejected: (element: any, index: number) => any = SandFunction.deject(func);
-
-                if (typeof dejected !== 'function') {
+                if (!(func instanceof SandFunction)
+                    && typeof func !== 'function') {
                     throw error(ERROR_CODE.MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
+
+                const sandFunction: SandFunction = SandFunction.wrapFunction(func);
 
                 const result: any[] = [];
                 for (let i = 0; i < list.length; i++) {
 
                     const currentResult: any =
-                        await Promise.resolve(dejected(list.get(i), i));
+                        await Promise.resolve(sandFunction.execute(list.get(i), i));
                     result.push(currentResult);
                 }
                 return result;
@@ -42,17 +43,18 @@ export const getArrayMember = (list: SandList<any>, key: string): any => {
 
             return async (func: ((element: any, index: number) => Promise<boolean>) | SandFunction) => {
 
-                const dejected: (element: any, index: number) => Promise<boolean> = SandFunction.deject(func);
-
-                if (typeof dejected !== 'function') {
-                    throw error(ERROR_CODE.FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION);
+                if (!(func instanceof SandFunction)
+                    && typeof func !== 'function') {
+                    throw error(ERROR_CODE.MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
+
+                const sandFunction: SandFunction = SandFunction.wrapFunction(func);
 
                 const result: any[] = [];
                 for (let i = 0; i < list.length; i++) {
 
                     const currentResult: boolean =
-                        await Promise.resolve(dejected(list.get(i), i));
+                        await Promise.resolve(sandFunction.execute(list.get(i), i));
 
                     if (currentResult) {
                         result.push(list.get(i));
