@@ -79,7 +79,7 @@ describe('Given Integration Class (This) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.message).to.be.equal("Cannot read properties of undefined (reading 'value')");
+        expect(typeof result.error.message).to.be.equal('string');
     });
 
     it('should be able to get this property from class standalone method', async (): Promise<void> => {
