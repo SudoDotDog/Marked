@@ -21,6 +21,7 @@ import { mountMemberExpressionEvaluator } from "./member-expression";
 import { mountMethodDefinition } from "./method-definition";
 import * as Module_Evaluators from "./module";
 import { mountNewExpression } from "./new-expression";
+import { mountObjectExpression } from "./object-expression";
 import { mountPropertyDefinition } from "./property-definition";
 import { mountSpreadElement } from "./spread-element";
 import * as Symbol_Evaluators from "./symbol";
@@ -62,7 +63,6 @@ export const useExpression = (sandbox: ISandbox): void => {
 export const useVariable = (sandbox: ISandbox): void => {
 
     sandbox.mount('AssignmentExpression', Variable_Evaluators.assignmentExpressionEvaluator);
-    sandbox.mount('ObjectExpression', Variable_Evaluators.objectExpressionEvaluator);
     sandbox.mount('VariableDeclaration', Variable_Evaluators.variableDeclarationEvaluator);
 };
 
@@ -111,6 +111,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountMemberExpressionEvaluator(sandbox);
     mountMethodDefinition(sandbox);
     mountNewExpression(sandbox);
+    mountObjectExpression(sandbox);
     mountPropertyDefinition(sandbox);
     mountSpreadElement(sandbox);
     mountTemplateLiteral(sandbox);
