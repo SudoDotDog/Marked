@@ -11,7 +11,7 @@ import * as Symbol_Expressions from '../../../src/evaluate/symbol';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { Flag } from '../../../src/variable/flag';
 import { Scope } from '../../../src/variable/scope';
-import { Trace } from '../../../src/variable/trace';
+import { Trace } from '../../../src/variable/trace/trace';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
 import { MockSandbox } from '../../mock/sandbox';
 import { MockScope } from '../../mock/scope';

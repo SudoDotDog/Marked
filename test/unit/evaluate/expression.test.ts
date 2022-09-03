@@ -15,7 +15,7 @@ import { Flag } from '../../../src/variable/flag';
 import { SandList } from '../../../src/variable/sand-list';
 import { SandMap } from '../../../src/variable/sand-map';
 import { Scope } from '../../../src/variable/scope';
-import { Trace } from '../../../src/variable/trace';
+import { Trace } from '../../../src/variable/trace/trace';
 import { Variable } from '../../../src/variable/variable';
 import { createIdentifier, createLiteral, mockLLiteralEvaluator } from '../../mock/node';
 import { MockSandbox } from '../../mock/sandbox';

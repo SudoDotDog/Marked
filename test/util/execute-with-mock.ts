@@ -9,7 +9,7 @@ import * as EST from "estree";
 import { Evaluator } from "../../src/declare/evaluate";
 import { Sandbox } from "../../src/marked/sandbox";
 import { Scope } from "../../src/variable/scope";
-import { Trace } from "../../src/variable/trace";
+import { Trace } from "../../src/variable/trace/trace";
 import { MockSandbox } from "../mock/sandbox";
 import { MockScope } from "../mock/scope";
 import { MockTrace } from "../mock/trace";
