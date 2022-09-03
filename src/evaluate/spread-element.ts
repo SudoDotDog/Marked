@@ -17,7 +17,9 @@ export const mountSpreadElement = (sandbox: ISandbox): void => {
 };
 
 export const spreadElementEvaluator: Evaluator<'SpreadElement'> =
-    async function (this: Sandbox, _node: EST.SpreadElement, _scope: Scope, _trace: Trace): Promise<any> {
+    async function (this: Sandbox, node: EST.SpreadElement, scope: Scope, trace: Trace): Promise<any> {
 
-        return null;
+        const argumentValue: any = await this.execute(node.argument, scope, trace);
+
+        return argumentValue;
     };

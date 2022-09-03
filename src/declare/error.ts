@@ -93,6 +93,8 @@ export enum ERROR_CODE {
 
     CANNOT_CALL_MEMBER_FUNCTION_OF_UNDEFINED = 8001,
 
+    CANNOT_SPREAD_OTHER_THAN_ARRAY = 8101,
+
     INTERNAL_ERROR = 9001,
 }
 
@@ -159,5 +161,7 @@ export const ERROR_LIST: {
     7301: 'Property should be identifier',
     7501: 'Catch not found',
     7800: 'Sandbox is broke',
+    8001: 'Cannot call member function of undefined',
+    8101: 'Cannot spread other than array',
     9001: 'Internal error',
 };

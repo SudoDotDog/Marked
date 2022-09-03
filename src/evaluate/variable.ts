@@ -19,24 +19,6 @@ import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { Variable } from "../variable/variable";
 
-export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
-    async function (this: Sandbox, node: EST.ArrayExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const mapped: any[] = [];
-        for (const element of node.elements) {
-
-            if (element) {
-
-                const evaluated: any = await this.execute(element, scope, nextTrace);
-                mapped.push(evaluated);
-            }
-        }
-
-        return new SandList(mapped);
-    };
-
 export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
     async function (this: Sandbox, node: EST.AssignmentExpression, scope: Scope, trace: Trace): Promise<any> {
 

@@ -39,6 +39,8 @@ export const error = (code: ERROR_CODE, info?: string, node?: EST.Node, trace?: 
         : new MarkedError(ERROR_CODE.INTERNAL_ERROR, ERROR_LIST[ERROR_CODE.INTERNAL_ERROR], info, node, trace);
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (newError.code > 9001) { console.log(newError); }
+    if (newError.code > 9001) {
+        console.log(newError);
+    }
     return newError;
 };

@@ -5,6 +5,7 @@
  */
 
 import { ISandbox } from "../declare/sandbox";
+import { mountArrayExpression } from "./array-expression";
 import { mountArrowFunctionExpression } from "./arrow-function-expression";
 import { mountBlockStatement } from "./block-statement";
 import * as Calculate_Evaluators from "./calculate";
@@ -60,7 +61,6 @@ export const useExpression = (sandbox: ISandbox): void => {
 
 export const useVariable = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ArrayExpression', Variable_Evaluators.arrayExpressionEvaluator);
     sandbox.mount('AssignmentExpression', Variable_Evaluators.assignmentExpressionEvaluator);
     sandbox.mount('ObjectExpression', Variable_Evaluators.objectExpressionEvaluator);
     sandbox.mount('VariableDeclaration', Variable_Evaluators.variableDeclarationEvaluator);
@@ -99,6 +99,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     useModule(sandbox);
     useException(sandbox);
 
+    mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
     mountBlockStatement(sandbox);
     mountCallExpression(sandbox);

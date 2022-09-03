@@ -19,19 +19,30 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to handle array init with single spread element', async (): Promise<void> => {
+    it('should be able to handle array init with single spread element', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
-        const middle: any[] = [];
         const value: number = chance.integer({ max: 10, min: 1 });
-        sandbox.inject('deject', (content: any) => middle.push(content));
-
         const result = await sandbox.evaluate(`const origin=[${value}];export default [...origin];`);
 
         assertSucceedMarkedResult(result);
 
-        expect(middle).to.be.lengthOf(1);
-        expect(middle[0]).to.be.equal([value]);
+        expect(result.exports.default).to.be.deep.equal([value]);
+    });
+
+
+    it('should be able to handle array init with single spread element - injected list', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ max: 10, min: 1 });
+        sandbox.inject('list', [value]);
+
+        const result = await sandbox.evaluate(`export default [...list];`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal([value]);
     });
 });

@@ -12,7 +12,6 @@ import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import * as Variable_Expressions from '../../../src/evaluate/variable';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { error } from '../../../src/util/error/error';
-import { SandList } from '../../../src/variable/sand-list';
 import { SandMap } from '../../../src/variable/sand-map';
 import { Scope } from '../../../src/variable/scope';
 import { Trace } from '../../../src/variable/trace/trace';
@@ -34,29 +33,6 @@ describe('Given Variable evaluators', (): void => {
         sandbox.reset();
         scope.reset();
         trace.reset();
-    });
-
-    describe('Given an <ArrayExpression> evaluator', (): void => {
-
-        it('should return a sandlist instance', async (): Promise<void> => {
-
-            const testNode: EST.ArrayExpression = {
-
-                type: 'ArrayExpression',
-                elements: [
-                    createLiteral(chance.string()),
-                    createLiteral(chance.string()),
-                ],
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-
-            const result: any = await Variable_Expressions.arrayExpressionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            expect(result).to.be.instanceof(SandList);
-            expect(result).to.be.lengthOf(2);
-        });
     });
 
     describe('Given an <AssignmentExpression> evaluator', (): void => {
