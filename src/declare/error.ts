@@ -61,7 +61,6 @@ export enum ERROR_CODE {
     IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT = 3115,
 
     PROPERTY_KIND_NOT_INIT_NOT_SUPPORT = 3151,
-    SPREAD_ELEMENT_NOT_SUPPORT = 3152,
 
     NEGATIVE_UNARY_ONLY_AVAILABLE_FOR_VALID_NUMBER = 3310,
 
@@ -94,6 +93,7 @@ export enum ERROR_CODE {
     CANNOT_CALL_MEMBER_FUNCTION_OF_UNDEFINED = 8001,
 
     CANNOT_SPREAD_OTHER_THAN_ARRAY = 8101,
+    CANNOT_SPREAD_OTHER_THAN_MAP = 8102,
 
     INTERNAL_ERROR = 9001,
 }
@@ -144,7 +144,6 @@ export const ERROR_LIST: {
     3114: 'Import namespace is not an object',
     3115: 'Import default object have no default export',
     3151: 'Define get or set to a object is not supported',
-    3152: 'Spread element is not supported',
     3310: 'Negative unary only available for valid number',
     4050: 'Unknown language',
     6001: 'Unmounted ast type',
@@ -163,5 +162,6 @@ export const ERROR_LIST: {
     7800: 'Sandbox is broke',
     8001: 'Cannot call member function of undefined',
     8101: 'Cannot spread other than array',
+    8102: 'Cannot spread other than map',
     9001: 'Internal error',
 };

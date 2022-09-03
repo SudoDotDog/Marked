@@ -26,10 +26,17 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
         const nextTrace: Trace = trace.stack(node);
 
         const map: SandMap<any> = new SandMap();
-        for (const property of node.properties) {
+        outer: for (const property of node.properties) {
 
             if (property.type === 'SpreadElement') {
-                throw error(ERROR_CODE.SPREAD_ELEMENT_NOT_SUPPORT, property.type, property, trace);
+                const spreadArgument: any = await this.execute(property.argument, scope, nextTrace);
+
+                if (!(spreadArgument instanceof SandMap)) {
+                    throw error(ERROR_CODE.CANNOT_SPREAD_OTHER_THAN_MAP, typeof spreadArgument, property, nextTrace);
+                } else {
+                    map.concat(spreadArgument);
+                }
+                continue outer;
             }
 
             const keyNode: EST.Literal | EST.Identifier

@@ -53,11 +53,19 @@ export class SandMap<T> {
             : undefined;
     }
 
-    public set(key: string, value: T): SandMap<T> {
+    public set(key: string, value: T): this {
 
         const variable: Variable<T> = Variable.mutable(value);
 
         this._map.set(key, variable);
+        return this;
+    }
+
+    public concat(map: SandMap<T>): this {
+
+        map.keys().forEach((key: string) => {
+            this.set(key, map.get(key) as any);
+        });
         return this;
     }
 
