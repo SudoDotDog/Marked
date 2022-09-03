@@ -83,4 +83,22 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
 
         expect(result.exception).to.be.equal(message);
     });
+
+    it('should be able to handle deep function level throw', async (): Promise<void> => {
+
+        const message: string = chance.string();
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const t=()=>{deject(1);throw "${message}";deject(2);};const r=t()+t();`);
+
+        assertExceptionMarkedResult(result);
+
+        expect(result.exception).to.be.equal(message);
+        expect(middle).to.have.lengthOf(1);
+        expect(middle[0]).to.be.equal(1);
+    });
 });
