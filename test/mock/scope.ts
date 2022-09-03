@@ -97,6 +97,12 @@ export class MockScope implements IScope, IMockedClass {
         return this;
     }
 
+    public replaceThis(thisValue: any): MockScope {
+
+        this._this = thisValue;
+        return this;
+    }
+
     public exist(name: string): boolean {
 
         if (this._mockedScopeMap.has(name)) {

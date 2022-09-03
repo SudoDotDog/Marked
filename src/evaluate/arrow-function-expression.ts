@@ -12,6 +12,7 @@ import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
+import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -26,9 +27,13 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
 
         const nextTrace: Trace = trace.stack(node);
 
-        const func = async (...args: any[]): Promise<any> => {
+        const func = async (thisValue: any, ...args: any[]): Promise<any> => {
 
             const subScope: Scope = scope.child();
+
+            if (thisValue instanceof SandClassInstance) {
+                subScope.replaceThis(thisValue.combineBody());
+            }
 
             node.params.forEach((pattern: EST.Pattern, index: number) => {
                 const identifier: EST.Identifier = pattern as EST.Identifier;
@@ -56,6 +61,6 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
             }
         };
 
-        const sandFunction: SandFunction = new SandFunction(func);
+        const sandFunction: SandFunction = SandFunction.create(func);
         return sandFunction;
     };

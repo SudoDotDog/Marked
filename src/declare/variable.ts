@@ -50,6 +50,7 @@ export interface IScope {
 
     findThis: () => SandMap<any>;
     initThis: () => IScope;
+    replaceThis: (value: any) => IScope;
 }
 
 export interface ITrace {

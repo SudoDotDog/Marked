@@ -13,11 +13,16 @@ export class SandFunction {
         return func;
     }
 
+    public static create(func: (...args: any[]) => any): SandFunction {
+
+        return new SandFunction(func);
+    }
+
     private readonly _function: (...args: any[]) => any;
 
     private _thisValue: any | null;
 
-    public constructor(func: (...args: any[]) => any) {
+    private constructor(func: (...args: any[]) => any) {
 
         this._function = func;
 
@@ -33,7 +38,7 @@ export class SandFunction {
     }
 
     public execute(...args: any[]): any {
-        return this._function(...args);
+        return this._function(this.thisValue, ...args);
     }
 
     public bindThisValue(thisValue: any): SandFunction {

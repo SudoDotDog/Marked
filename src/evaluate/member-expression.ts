@@ -12,6 +12,7 @@ import { Sandbox } from "../marked/sandbox";
 import { getArrayMember, GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL } from "../operation/array";
 import { memberExpressionClass } from "../operation/member-expression/class";
 import { memberExpressionClassInstance } from "../operation/member-expression/class-instance";
+import { executeMemberExpressionObject } from "../operation/member-expression/execute-object";
 import { error } from "../util/error/error";
 import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
@@ -28,12 +29,13 @@ export const mountMemberExpressionEvaluator = (sandbox: ISandbox): void => {
 export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
     async function (this: Sandbox, node: EST.MemberExpression, scope: Scope, trace: Trace): Promise<any> {
 
-        console.log('MemberExpression', node, scope, trace);
-
         const nextTrace: Trace = trace.stack(node);
 
         const computed: boolean = node.computed;
-        const object: any = await this.execute(node.object, scope, nextTrace);
+
+        const bindExecuteMemberExpressionObject =
+            executeMemberExpressionObject.bind(this);
+        const object: any = await bindExecuteMemberExpressionObject(node.object, scope, nextTrace);
         const key: string | number = computed
             ? await this.execute(node.property, scope, nextTrace)
             : (node.property as EST.Identifier).name;

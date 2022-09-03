@@ -10,6 +10,7 @@ import { ISandbox } from "../declare/sandbox";
 import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { Flag } from "../variable/flag";
+import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -21,11 +22,16 @@ export const mountFunctionExpression = (sandbox: ISandbox): void => {
 
 export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
     async function (this: Sandbox, node: EST.FunctionExpression, scope: Scope, trace: Trace): Promise<SandFunction> {
+
         const nextTrace: Trace = trace.stack(node);
 
-        const func = async (...args: any[]): Promise<any> => {
+        const func = async (thisValue: any, ...args: any[]): Promise<any> => {
 
             const subScope: Scope = scope.child().initThis();
+
+            if (thisValue instanceof SandClassInstance) {
+                subScope.replaceThis(thisValue.combineBody());
+            }
 
             node.params.forEach((pattern: EST.Pattern, index: number) => {
 
@@ -41,6 +47,6 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
             }
         };
 
-        const sandFunction: SandFunction = new SandFunction(func);
+        const sandFunction: SandFunction = SandFunction.create(func);
         return sandFunction;
     };

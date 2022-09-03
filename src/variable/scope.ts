@@ -98,6 +98,12 @@ export class Scope implements IScope {
         return this;
     }
 
+    public replaceThis(thisValue: SandMap<any>): this {
+
+        this._this = thisValue;
+        return this;
+    }
+
     public exist(name: string): boolean {
 
         if (this._scopeMap.has(name)) {

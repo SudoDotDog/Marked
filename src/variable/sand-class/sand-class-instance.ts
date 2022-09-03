@@ -40,4 +40,17 @@ export class SandClassInstance {
 
         return this._targetClass.body.get(key);
     }
+
+    public combineBody(): SandMap<any> {
+
+        const result: SandMap<any> = new SandMap();
+
+        for (const key of this._targetClass.body.keys()) {
+            result.set(key, this._targetClass.body.get(key));
+        }
+        for (const key of this._body.keys()) {
+            result.set(key, this._body.get(key));
+        }
+        return result;
+    }
 }

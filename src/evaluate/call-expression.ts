@@ -24,7 +24,7 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const func: SandFunction | (() => any) =
+        const func: SandFunction | ((...callArgs: any[]) => any) =
             await this.execute(node.callee, scope, nextTrace);
 
         if (typeof func === 'undefined') {
@@ -45,11 +45,9 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
             }
         }
 
-        const settledFunction: (...targetFunctionArgs: any[]) => any =
-            func instanceof SandFunction
-                ? func.function
-                : func;
-
-        const result: any = settledFunction(...args);
-        return result;
+        if (func instanceof SandFunction) {
+            return await func.execute(...args);
+        } else {
+            return await func(...args);
+        }
     };

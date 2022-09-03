@@ -19,7 +19,7 @@ describe('Given Integration Class (This) Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to get this property from class', async (): Promise<void> => {
+    it('should be able to get this property from class', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
