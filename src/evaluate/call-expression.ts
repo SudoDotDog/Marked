@@ -22,8 +22,6 @@ export const mountCallExpression = (sandbox: ISandbox): void => {
 export const callExpressionEvaluator: Evaluator<'CallExpression'> =
     async function (this: Sandbox, node: EST.CallExpression, scope: Scope, trace: Trace): Promise<any> {
 
-        console.log('call expression', node);
-
         const nextTrace: Trace = trace.stack(node);
 
         const func: SandFunction | (() => any) =
@@ -47,20 +45,11 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
             }
         }
 
-        const settledFunction: () => any =
+        const settledFunction: (...targetFunctionArgs: any[]) => any =
             func instanceof SandFunction
                 ? func.function
                 : func;
 
-        if (node.callee.type === 'MemberExpression') {
-
-            const object: any = await this.execute(node.callee.object, scope, nextTrace);
-            const result: any = settledFunction.apply(object, args as any);
-            return result;
-        } else {
-
-            // eslint-disable-next-line prefer-spread
-            const result: any = settledFunction.apply(null, args as any);
-            return result;
-        }
+        const result: any = settledFunction(...args);
+        return result;
     };

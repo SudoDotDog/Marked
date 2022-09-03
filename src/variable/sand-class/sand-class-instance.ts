@@ -22,7 +22,7 @@ export class SandClassInstance {
 
         this._targetClass = targetClass;
 
-        this._body = targetClass.body.clone();
+        this._body = this._initialize(targetClass);
     }
 
     public get targetClass(): SandClass {
@@ -30,5 +30,11 @@ export class SandClassInstance {
     }
     public get body(): SandMap<any> {
         return this._body;
+    }
+
+    private _initialize(targetClass: SandClass): SandMap<any> {
+
+        const targetMap: SandMap<any> = targetClass.body;
+        return targetMap.clone();
     }
 }

@@ -10,6 +10,7 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
+import { SandFunction } from "../variable/sand-function";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { TraceClass } from "../variable/trace/trace-class";
@@ -32,6 +33,10 @@ export const methodDefinitionEvaluation: Evaluator<'MethodDefinition'> =
 
         const key: string = node.key.name;
         const value: any = await this.execute(node.value as any, scope, trace);
+
+        if (!(value instanceof SandFunction)) {
+            throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+        }
 
         trace.sandClass.body.set(key, value);
 
