@@ -20,7 +20,7 @@ import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../ut
 import { Flag } from '../variable/flag';
 import { parseNativeToSand } from '../variable/parse';
 import { Scope } from "../variable/scope";
-import { Trace } from '../variable/trace';
+import { Trace } from '../variable/trace/trace';
 import { Executer } from './executer';
 
 export class Sandbox implements ISandbox {

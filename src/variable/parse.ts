@@ -6,10 +6,22 @@
 
 import { ERROR_CODE } from "../declare/error";
 import { error } from "../util/error/error";
+import { SandClass } from "./sand-class/sand-class";
+import { SandFunction } from "./sand-function";
 import { SandList } from "./sand-list";
 import { SandMap } from "./sand-map";
 
 export const extractSandToNative = (target: any): any => {
+
+    if (target instanceof SandClass) {
+
+        throw error(ERROR_CODE.CANNOT_TRANSFER_CLASS_TO_NATIVE);
+    }
+
+    if (target instanceof SandFunction) {
+
+        throw error(ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE);
+    }
 
     if (target instanceof SandList) {
 

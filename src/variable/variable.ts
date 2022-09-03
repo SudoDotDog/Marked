@@ -39,4 +39,9 @@ export class Variable<T> {
         this._value = value;
         return value;
     }
+
+    public clone(): Variable<T> {
+
+        return new Variable<T>(this._value, this._mutable);
+    }
 }

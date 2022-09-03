@@ -61,6 +61,15 @@ export class SandMap<T> {
         return this._map.get(key);
     }
 
+    public clone(): SandMap<T> {
+
+        const map: SandMap<T> = new SandMap<T>();
+        this._map.forEach((value: Variable<T>, key: string) => {
+            map.set(key, value.get());
+        });
+        return map;
+    }
+
     public toString(): string {
 
         const obj: { [key: string]: any } = {};

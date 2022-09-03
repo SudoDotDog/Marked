@@ -1,12 +1,12 @@
 /**
  * @author WMXPY
- * @namespace Variable
+ * @namespace Variable_Trace
  * @description Trace
  */
 
 import * as EST from "estree";
-import { ScriptLocation } from "../declare/script-location";
-import { ITrace } from "../declare/variable";
+import { ScriptLocation } from "../../declare/script-location";
+import { ITrace } from "../../declare/variable";
 
 export class Trace implements ITrace {
 
@@ -15,12 +15,12 @@ export class Trace implements ITrace {
         return new Trace(null, undefined, scriptLocation);
     }
 
-    private readonly _parent: Trace | null;
-    private readonly _node: EST.Node | null;
+    protected readonly _parent: Trace | null;
+    protected readonly _node: EST.Node | null;
 
-    private readonly _scriptLocation?: ScriptLocation;
+    protected readonly _scriptLocation?: ScriptLocation;
 
-    public constructor(node: EST.Node | null, parent?: Trace, scriptLocation?: ScriptLocation) {
+    protected constructor(node: EST.Node | null, parent?: Trace, scriptLocation?: ScriptLocation) {
 
         this._parent = parent || null;
         this._node = node;

@@ -7,7 +7,7 @@
 import { Sandbox } from "../marked/sandbox";
 import { MarkedError } from "../util/error/error";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 import { EST_TYPE, IESTreeType } from "./types";
 import { IExposed, ITrace } from "./variable";
 

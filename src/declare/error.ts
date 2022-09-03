@@ -24,11 +24,15 @@ export enum ERROR_CODE {
     ASSERT_BOOLEAN_OPPOSITE = 2066,
     ASSERT_TYPE_NOT_MATCHED = 2067,
 
+    NEW_STATEMENT_SHOULD_CALL_ON_CLASS_ONLY = 2100,
+
     FOR_OF_LOOP_ONLY_FOR_LIST = 2387,
     FOR_IN_LOOP_ONLY_FOR_MAP = 2388,
 
     ONLY_NUMBER_AVAILABLE_FOR_LIST = 2391,
     ONLY_STRING_AVAILABLE_FOR_MAP = 2392,
+    ONLY_STRING_AVAILABLE_FOR_CLASS = 2393,
+    ONLY_STRING_AVAILABLE_FOR_CLASS_INSTANCE = 2394,
 
     MAP_ARGUMENT_SHOULD_BE_A_FUNCTION = 2410,
     FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION = 2411,
@@ -67,6 +71,9 @@ export enum ERROR_CODE {
     DUPLICATED_PROVIDED_MODULE_NAME = 6002,
     MODULE_IS_NOT_PROVIDED = 6003,
 
+    CANNOT_TRANSFER_CLASS_TO_NATIVE = 6100,
+    CANNOT_TRANSFER_FUNCTION_TO_NATIVE = 6101,
+
     MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED = 6121,
 
     DECLARATION_INIT_TYPE_NOT_MATCHED = 6201,
@@ -76,9 +83,15 @@ export enum ERROR_CODE {
 
     VARIABLE_IS_NOT_DEFINED = 7102,
 
+    TRACE_SHOULD_BE_CLASS_TRACE = 7201,
+
+    PROPERTY_SHOULD_BE_IDENTIFIER = 7301,
+
     CATCH_NOT_FOUND = 7501,
 
     SANDBOX_IS_BROKE = 7800,
+
+    CANNOT_CALL_MEMBER_FUNCTION_OF_UNDEFINED = 8001,
 
     INTERNAL_ERROR = 9001,
 }
@@ -101,10 +114,13 @@ export const ERROR_LIST: {
     2065: 'Assert exist element not exist',
     2066: 'Assert boolean opposite',
     2067: 'Assert type not matched',
+    2100: 'New statement should call on class only',
     2387: 'For of loop only for list',
     2388: 'For in loop only for map',
     2391: 'Only number is available for list',
     2392: 'Only string is available for map',
+    2393: 'Only string is available for class',
+    2394: 'Only string is available for class instance',
     2410: 'Map argument should be a function',
     2411: 'Filter argument should be a function',
     3003: 'Declaration with [var] is not supported',
@@ -132,11 +148,15 @@ export const ERROR_LIST: {
     6001: 'Unmounted ast type',
     6002: 'Provided module name duplicated',
     6003: 'Module is not provided',
+    6100: 'Cannot transfer class to native',
+    6101: 'Cannot transfer function to native',
     6121: 'Member expression value cannot be undefined',
     6201: 'Declaration init type not matched',
     6202: 'Declaration init size not matched',
     7005: 'Duplicated variable declaration',
     7102: 'Variable is not defined',
+    7201: 'Trace should be class trace',
+    7301: 'Property should be identifier',
     7501: 'Catch not found',
     7800: 'Sandbox is broke',
     9001: 'Internal error',

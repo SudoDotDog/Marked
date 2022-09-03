@@ -13,7 +13,7 @@ export class SandFunction {
         return func;
     }
 
-    private _function: (...args: any[]) => any;
+    private readonly _function: (...args: any[]) => any;
 
     public constructor(func: (...args: any[]) => any) {
 
