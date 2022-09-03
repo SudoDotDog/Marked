@@ -6,7 +6,7 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { ERROR_CODE } from '../../../../src/declare/error';
+import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { assert } from '../../../../src/util/error/assert';
 import { error } from '../../../../src/util/error/error';
 

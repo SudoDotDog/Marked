@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error";
+import { ERROR_CODE } from "../declare/error-code";
 import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";

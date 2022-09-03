@@ -4,7 +4,7 @@
  * @description Parse
  */
 
-import { ERROR_CODE } from "../declare/error";
+import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
 import { SandClass } from "./sand-class/sand-class";
 import { SandFunction } from "./sand-function/sand-function";

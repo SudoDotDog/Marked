@@ -4,7 +4,7 @@
  * @description Assert
  */
 
-import { ERROR_CODE } from "../../declare/error";
+import { ERROR_CODE } from "../../declare/error-code";
 import { error } from "../error/error";
 
 class Assert<T> {

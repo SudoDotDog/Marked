@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../../src/declare/error";
+import { ERROR_CODE } from "../../src/declare/error-code";
 import { Evaluator } from "../../src/declare/evaluate";
 import { ISandbox, ISandboxOptions, ModuleResolver, OptionName } from "../../src/declare/sandbox";
 import { EST_TYPE, IESTreeType } from "../../src/declare/types";

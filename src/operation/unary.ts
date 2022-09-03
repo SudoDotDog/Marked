@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error";
+import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";

@@ -5,7 +5,8 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE, ERROR_LIST } from "../../declare/error";
+import { ERROR_CODE } from "../../declare/error-code";
+import { ERROR_LIST } from "../../declare/error-list";
 import { ITrace } from "../../declare/variable";
 
 export class MarkedError extends Error {

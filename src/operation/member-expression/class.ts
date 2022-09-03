@@ -4,7 +4,7 @@
  * @description Class
  */
 
-import { ERROR_CODE } from "../../declare/error";
+import { ERROR_CODE } from "../../declare/error-code";
 import { error } from "../../util/error/error";
 import { SandClass } from "../../variable/sand-class/sand-class";
 

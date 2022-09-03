@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import { ERROR_CODE } from '../../../../src/declare/error';
+import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { error } from '../../../../src/util/error/error';
 
 describe('Given an <Error> function', (): void => {

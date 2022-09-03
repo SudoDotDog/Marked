@@ -4,7 +4,7 @@
  * @description Scope
  */
 
-import { ERROR_CODE } from "../../src/declare/error";
+import { ERROR_CODE } from "../../src/declare/error-code";
 import { IExposed, IScope, VARIABLE_TYPE } from "../../src/declare/variable";
 import { error } from "../../src/util/error/error";
 import { SandMap } from "../../src/variable/sand-map";

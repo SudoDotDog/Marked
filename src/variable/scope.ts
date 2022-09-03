@@ -4,7 +4,7 @@
  * @description Scope
  */
 
-import { ERROR_CODE } from "../declare/error";
+import { ERROR_CODE } from "../declare/error-code";
 import { IExposed, IScope, VARIABLE_TYPE } from "../declare/variable";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";

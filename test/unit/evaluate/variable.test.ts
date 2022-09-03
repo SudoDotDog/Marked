@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import { ERROR_CODE } from '../../../src/declare/error';
+import { ERROR_CODE } from '../../../src/declare/error-code';
 import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import * as Variable_Expressions from '../../../src/evaluate/variable';
 import { Sandbox } from '../../../src/marked/sandbox';

@@ -5,7 +5,7 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from '../declare/error';
+import { ERROR_CODE } from '../declare/error-code';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';

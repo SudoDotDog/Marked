@@ -4,7 +4,7 @@
  * @description Marked
  */
 
-import { ERROR_CODE } from '../declare/error';
+import { ERROR_CODE } from '../declare/error-code';
 import { MarkedResult } from '../declare/evaluate';
 import { IMarkedOptions, OptionName } from '../declare/sandbox';
 import { error } from '../util/error/error';
