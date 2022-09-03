@@ -23,6 +23,7 @@ import { mountPropertyDefinition } from "./property-definition";
 import * as Symbol_Evaluators from "./symbol";
 import { mountTemplateLiteral } from "./template-literal";
 import { mountThisExpression } from "./this-expression";
+import { mountThrowStatement } from "./throw-statement";
 import { mountUnaryExpression } from "./unary-expression";
 import * as Variable_Evaluators from "./variable";
 
@@ -85,7 +86,6 @@ export const useModule = (sandbox: ISandbox): void => {
 export const useException = (sandbox: ISandbox): void => {
 
     sandbox.mount('TryStatement', Exception_Evaluators.tryEvaluator);
-    sandbox.mount('ThrowStatement', Exception_Evaluators.throwEvaluator);
     sandbox.mount('CatchClause', Exception_Evaluators.catchEvaluator);
 };
 
@@ -111,5 +111,6 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountPropertyDefinition(sandbox);
     mountTemplateLiteral(sandbox);
     mountThisExpression(sandbox);
+    mountThrowStatement(sandbox);
     mountUnaryExpression(sandbox);
 };

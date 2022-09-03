@@ -18,5 +18,7 @@ export const parseCodeToESTree = async (sourceCode: string): Promise<EST.BaseNod
         sourceType: 'module',
         ecmaVersion: 'latest',
     });
+
+    console.log(JSON.stringify(AST, null, 2));
     return AST;
 };

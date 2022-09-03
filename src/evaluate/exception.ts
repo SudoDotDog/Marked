@@ -72,16 +72,3 @@ export const catchEvaluator: Evaluator<'CatchClause'> =
         const result: any = await this.execute(node.body, subScope, nextTrace);
         return result;
     };
-
-export const throwEvaluator: Evaluator<'ThrowStatement'> =
-    async function (this: Sandbox, node: EST.ThrowStatement, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-        const subScope: Scope = scope.child();
-
-        const result: any = await this.execute(node.argument, subScope, nextTrace);
-        const flag: Flag = Flag.fromThrow(trace);
-        flag.setValue(result);
-
-        return flag;
-    };
