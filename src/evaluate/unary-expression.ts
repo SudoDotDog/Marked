@@ -13,7 +13,7 @@ import { getUnaryOperation } from "../operation/unary";
 import { error } from "../util/error/error";
 import { rummageSpecialKeyword } from "../util/hack";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 
 export const mountUnaryExpression = (sandbox: ISandbox): void => {
 

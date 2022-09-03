@@ -16,7 +16,7 @@ import { getAssignmentOperation } from "../util/operation";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 import { Variable } from "../variable/variable";
 
 export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =

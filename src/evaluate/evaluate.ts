@@ -7,15 +7,22 @@
 import { ISandbox } from "../declare/sandbox";
 import { mountArrowFunctionExpression } from "./arrow-function-expression";
 import * as Calculate_Evaluators from "./calculate";
+import { mountCallExpression } from "./call-expression";
+import { mountClassBody } from "./class-body";
+import { mountClassDeclaration } from "./class-declaration";
 import { mountEmptyStatement } from "./empty-statement";
 import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
 import { mountFunctionDeclaration } from "./function-declaration";
 import { mountFunctionExpression } from "./function-expression";
 import { mountMemberExpressionEvaluator } from "./member-expression";
+import { mountMethodDefinition } from "./method-definition";
 import * as Module_Evaluators from "./module";
+import { mountNewExpression } from "./new-expression";
+import { mountPropertyDefinition } from "./property-definition";
 import * as Symbol_Evaluators from "./symbol";
 import { mountTemplateLiteral } from "./template-literal";
+import { mountThisExpression } from "./this-expression";
 import { mountUnaryExpression } from "./unary-expression";
 import * as Variable_Evaluators from "./variable";
 
@@ -25,7 +32,6 @@ export const useSymbol = (sandbox: ISandbox): void => {
     sandbox.mount('Identifier', Symbol_Evaluators.identifierEvaluator);
     sandbox.mount('Literal', Symbol_Evaluators.literalEvaluator);
     sandbox.mount('Program', Symbol_Evaluators.programEvaluator);
-    sandbox.mount('ThisExpression', Symbol_Evaluators.thisExpressionEvaluator);
 
     sandbox.mount('BreakStatement', Symbol_Evaluators.breakEvaluator);
     sandbox.mount('ContinueStatement', Symbol_Evaluators.continueEvaluator);
@@ -37,7 +43,6 @@ export const useExpression = (sandbox: ISandbox): void => {
     sandbox.mount('ConditionalExpression', Expression_Evaluators.conditionalExpressionEvaluator);
     sandbox.mount('SequenceExpression', Expression_Evaluators.sequenceExpressionEvaluator);
 
-    sandbox.mount('CallExpression', Expression_Evaluators.calleeEvaluator);
     sandbox.mount('ExpressionStatement', Expression_Evaluators.expressionEvaluator);
     sandbox.mount('IfStatement', Expression_Evaluators.ifStatementEvaluator);
 
@@ -94,10 +99,17 @@ export const useEverything = (sandbox: ISandbox): void => {
     useException(sandbox);
 
     mountArrowFunctionExpression(sandbox);
+    mountCallExpression(sandbox);
+    mountClassBody(sandbox);
+    mountClassDeclaration(sandbox);
     mountEmptyStatement(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
     mountMemberExpressionEvaluator(sandbox);
+    mountMethodDefinition(sandbox);
+    mountNewExpression(sandbox);
+    mountPropertyDefinition(sandbox);
     mountTemplateLiteral(sandbox);
+    mountThisExpression(sandbox);
     mountUnaryExpression(sandbox);
 };

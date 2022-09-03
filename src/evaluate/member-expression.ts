@@ -10,11 +10,15 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { getArrayMember, GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL } from "../operation/array";
+import { memberExpressionClass } from "../operation/member-expression/class";
+import { memberExpressionClassInstance } from "../operation/member-expression/class-instance";
 import { error } from "../util/error/error";
+import { SandClass } from "../variable/sand-class/sand-class";
+import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 
 export const mountMemberExpressionEvaluator = (sandbox: ISandbox): void => {
 
@@ -24,13 +28,19 @@ export const mountMemberExpressionEvaluator = (sandbox: ISandbox): void => {
 export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
     async function (this: Sandbox, node: EST.MemberExpression, scope: Scope, trace: Trace): Promise<any> {
 
+        console.log('member expression', node);
+
         const nextTrace: Trace = trace.stack(node);
+
+        console.log((scope as any)._constantMap);
 
         const computed: boolean = node.computed;
         const object: any = await this.execute(node.object, scope, nextTrace);
         const key: string | number = computed
             ? await this.execute(node.property, scope, nextTrace)
             : (node.property as EST.Identifier).name;
+
+        console.log(object, key);
 
         if (object instanceof SandList) {
 
@@ -54,6 +64,12 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
             }
 
             throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP, key.toString(), node, trace);
+        } else if (object instanceof SandClass) {
+
+            return memberExpressionClass(object, key);
+        } else if (object instanceof SandClassInstance) {
+
+            return memberExpressionClassInstance(object, key);
         }
 
         return object[key];

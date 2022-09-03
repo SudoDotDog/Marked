@@ -13,7 +13,7 @@ import { error } from "../util/error/error";
 import { resolveImport } from "../util/import";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
     // eslint-disable-next-line @typescript-eslint/require-await

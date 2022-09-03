@@ -13,48 +13,10 @@ import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { LimitCounter } from "../util/node/context";
 import { Flag } from "../variable/flag";
-import { SandFunction } from "../variable/sand-function";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
-
-export const calleeEvaluator: Evaluator<'CallExpression'> =
-    async function (this: Sandbox, node: EST.CallExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const func: SandFunction | (() => any) =
-            await this.execute(node.callee, scope, nextTrace);
-
-        const args: any[] = [];
-        for (const arg of node.arguments) {
-            args.push(await this.execute(arg, scope, nextTrace));
-        }
-
-        if (!(func instanceof SandFunction)) {
-            if (this.usingAdditionalArgument) {
-                args.unshift(this.additionalArgument);
-            }
-        }
-
-        const settledFunction: () => any =
-            func instanceof SandFunction
-                ? func.function
-                : func;
-
-        if (node.callee.type === 'MemberExpression') {
-
-            const object: any = await this.execute(node.callee.object, scope, nextTrace);
-            const result: any = settledFunction.apply(object, args as any);
-            return result;
-        } else {
-
-            // eslint-disable-next-line prefer-spread
-            const result: any = settledFunction.apply(null, args as any);
-            return result;
-        }
-    };
+import { Trace } from "../variable/trace/trace";
 
 export const conditionalExpressionEvaluator: Evaluator<'ConditionalExpression'> =
     async function (this: Sandbox, node: EST.ConditionalExpression, scope: Scope, trace: Trace): Promise<any> {

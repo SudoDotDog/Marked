@@ -12,7 +12,7 @@ import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 
 export const tryEvaluator: Evaluator<'TryStatement'> =
     async function (this: Sandbox, node: EST.TryStatement, scope: Scope, trace: Trace): Promise<any> {

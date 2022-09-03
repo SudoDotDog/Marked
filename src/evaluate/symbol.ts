@@ -10,9 +10,8 @@ import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
-import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 import { Variable } from "../variable/variable";
 
 export const blockEvaluator: Evaluator<'BlockStatement'> =
@@ -114,12 +113,4 @@ export const returnEvaluator: Evaluator<'ReturnStatement'> =
         }
 
         return flag;
-    };
-
-export const thisExpressionEvaluator: Evaluator<'ThisExpression'> =
-    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
-    async function (this: Sandbox, node: EST.ThisExpression, scope: Scope, trace: Trace): Promise<SandMap<any>> {
-
-        const thisValue: SandMap<any> = scope.findThis();
-        return thisValue;
     };

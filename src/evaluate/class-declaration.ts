@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Evaluate
- * @description Function Declaration
+ * @description Class Declaration
  */
 
 import * as EST from "estree";
@@ -11,23 +11,18 @@ import { ISandbox } from "../declare/sandbox";
 import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
-import { SandFunction } from "../variable/sand-function";
+import { SandClass } from "../variable/sand-class/sand-class";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
-import { functionExpressionEvaluator } from "./function-expression";
+import { TraceClass } from "../variable/trace/trace-class";
 
-export const mountFunctionDeclaration = (sandbox: ISandbox): void => {
+export const mountClassDeclaration = (sandbox: ISandbox): void => {
 
-    sandbox.mount('FunctionDeclaration', functionDeclarationEvaluator);
+    sandbox.mount('ClassDeclaration', classDeclarationEvaluation);
 };
 
-export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
-    async function (this: Sandbox, node: EST.FunctionDeclaration, scope: Scope, trace: Trace): Promise<SandFunction> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const func: SandFunction
-            = await functionExpressionEvaluator.bind(this)(node as any, scope, nextTrace);
+export const classDeclarationEvaluation: Evaluator<'ClassDeclaration'> =
+    async function (this: Sandbox, node: EST.ClassDeclaration, scope: Scope, trace: Trace): Promise<SandClass> {
 
         if (!node.id) {
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
@@ -42,7 +37,13 @@ export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
         }
 
         const rawName: string = node.id.name;
+        const sandClass: SandClass = SandClass.create(rawName);
 
-        scope.register(VARIABLE_TYPE.CONSTANT)(rawName, func);
-        return func;
+        const nextTrace: TraceClass = TraceClass.fromStack(trace, node, sandClass);
+
+        await this.execute(node.body, scope, nextTrace);
+
+        scope.register(VARIABLE_TYPE.CONSTANT)(rawName, sandClass);
+
+        return sandClass;
     };

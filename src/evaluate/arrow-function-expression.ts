@@ -14,7 +14,7 @@ import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { SandFunction } from "../variable/sand-function";
 import { Scope } from "../variable/scope";
-import { Trace } from "../variable/trace";
+import { Trace } from "../variable/trace/trace";
 
 export const mountArrowFunctionExpression = (sandbox: ISandbox): void => {
 
