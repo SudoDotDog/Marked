@@ -6,6 +6,7 @@
 
 import { ISandbox } from "../declare/sandbox";
 import { mountArrowFunctionExpression } from "./arrow-function-expression";
+import { mountBlockStatement } from "./block-statement";
 import * as Calculate_Evaluators from "./calculate";
 import { mountCallExpression } from "./call-expression";
 import { mountClassBody } from "./class-body";
@@ -29,7 +30,6 @@ import * as Variable_Evaluators from "./variable";
 
 export const useSymbol = (sandbox: ISandbox): void => {
 
-    sandbox.mount('BlockStatement', Symbol_Evaluators.blockEvaluator);
     sandbox.mount('Identifier', Symbol_Evaluators.identifierEvaluator);
     sandbox.mount('Literal', Symbol_Evaluators.literalEvaluator);
     sandbox.mount('Program', Symbol_Evaluators.programEvaluator);
@@ -99,6 +99,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     useException(sandbox);
 
     mountArrowFunctionExpression(sandbox);
+    mountBlockStatement(sandbox);
     mountCallExpression(sandbox);
     mountClassBody(sandbox);
     mountClassDeclaration(sandbox);

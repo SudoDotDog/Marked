@@ -14,25 +14,6 @@ import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { Variable } from "../variable/variable";
 
-export const blockEvaluator: Evaluator<'BlockStatement'> =
-    async function (this: Sandbox, node: EST.BlockStatement, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-        const subScope: Scope = scope.child();
-        for (const child of node.body) {
-
-            const result: Flag = await this.execute(child, subScope, nextTrace);
-            if (result instanceof Flag) {
-
-                const flag: Flag = Flag.fromReturn(trace);
-                flag.setValue(result);
-                return result;
-            }
-        }
-
-        return;
-    };
-
 export const breakEvaluator: Evaluator<'BreakStatement'> =
     // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {

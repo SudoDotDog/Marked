@@ -27,5 +27,7 @@ export const throwStatementEvaluator: Evaluator<'ThrowStatement'> =
         const flag: Flag = Flag.fromThrow(trace);
         flag.setValue(result);
 
+        this.breakWithFlag(flag);
+
         return flag;
     };

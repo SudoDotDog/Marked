@@ -32,13 +32,52 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
         expect(result.exception).to.be.equal(message);
     });
 
-    it.only('should be able to handle function level throw', async (): Promise<void> => {
+    it('should be able to handle function level throw', async (): Promise<void> => {
 
         const message: string = chance.string();
 
         const sandbox: Sandbox = createSandbox();
 
-        const result = await sandbox.evaluate(`const t=()=>{throw "${message}";return 10;};export default t();`);
+        const result = await sandbox.evaluate(`const t=()=>{throw "${message}";};t();`);
+
+        assertExceptionMarkedResult(result);
+
+        expect(result.exception).to.be.equal(message);
+    });
+
+    it('should be able to handle function level throw with default export', async (): Promise<void> => {
+
+        const message: string = chance.string();
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`const t=()=>{throw "${message}";};export default t();`);
+
+        assertExceptionMarkedResult(result);
+
+        expect(result.exception).to.be.equal(message);
+    });
+
+    it('should be able to handle function level throw with named export', async (): Promise<void> => {
+
+        const message: string = chance.string();
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`const t=()=>{throw "${message}";};export const a=t();`);
+
+        assertExceptionMarkedResult(result);
+
+        expect(result.exception).to.be.equal(message);
+    });
+
+    it('should be able to handle function level throw with declaration', async (): Promise<void> => {
+
+        const message: string = chance.string();
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`const t=()=>{throw "${message}";};const a=t();`);
 
         assertExceptionMarkedResult(result);
 

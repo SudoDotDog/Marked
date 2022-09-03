@@ -44,13 +44,16 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
 
             if (node.body.type === 'BlockStatement') {
 
-                const result: Flag = await this.execute(node.body, subScope, nextTrace);
-                if (result) {
+                const result: any = await this.execute(node.body, subScope, nextTrace);
+                if (result instanceof Flag) {
 
                     if (!Boolean(result.getValue.bind(result))) {
                         throw error(ERROR_CODE.UNKNOWN_ERROR, result.toString(), node, trace);
                     }
-                    return result.getValue();
+                    if (result.isReturn()) {
+                        return result.getValue();
+                    }
+                    return result;
                 }
             } else {
 

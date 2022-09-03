@@ -57,6 +57,7 @@ export class Sandbox implements ISandbox {
 
     private _count: number;
     private _broke: boolean;
+    private _brokeFlag: Flag | null = null;
 
     private _usingAdditionalArgument: boolean;
     private _additionalArgument?: any;
@@ -78,6 +79,7 @@ export class Sandbox implements ISandbox {
 
         this._count = 0;
         this._broke = false;
+        this._brokeFlag = null;
 
         this._usingAdditionalArgument = false;
         this._additionalArgument = undefined;
@@ -176,7 +178,15 @@ export class Sandbox implements ISandbox {
             const targetScope: IScope = typeof scope === 'undefined'
                 ? this._rootScope
                 : scope;
-            const result: any = await this.execute(AST, targetScope, trace);
+            let result: any = await this.execute(AST, targetScope, trace);
+
+            if (this._broke) {
+                if (this._brokeFlag instanceof Flag) {
+                    if (this._brokeFlag.isThrow()) {
+                        result = this._brokeFlag;
+                    }
+                }
+            }
 
             if (result instanceof Flag) {
 
@@ -222,6 +232,12 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
+    protected breakWithFlag(flag: Flag): void {
+
+        this.break();
+        this._brokeFlag = flag;
+    }
+
     protected async resolveResource(source: string, trace: ITrace): Promise<ModuleResolveResult | null> {
 
         for (const resolver of this._resolvers) {
@@ -263,6 +279,11 @@ export class Sandbox implements ISandbox {
 
         if (this._broke) {
 
+            if (this._brokeFlag instanceof Flag) {
+                if (this._brokeFlag.isThrow()) {
+                    return this._brokeFlag;
+                }
+            }
             throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
         }
 
