@@ -22,4 +22,8 @@ export class MarkedDebugSnapshot {
 
         this._snapShotScope = scope;
     }
+
+    public get scope(): MarkedDebugSnapshotScope {
+        return this._snapShotScope;
+    }
 }

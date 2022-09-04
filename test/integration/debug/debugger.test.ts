@@ -40,12 +40,14 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
     it.only('should be able to handle debug with single debugger', async (): Promise<void> => {
 
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
         const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
             snapshot: MarkedDebugSnapshot,
             flowController: MarkedDebugFlowController,
         ) => {
-
-            console.log(snapshot, flowController);
+            debuggerSnapshot = snapshot;
+            flowController.continue();
         });
 
         const sandbox: Sandbox = createSandbox();
@@ -61,5 +63,14 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
 
         assertSucceedMarkedResult(result);
+
+        expect(middle).to.be.deep.equal([value1, value2]);
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getObject()).to.be.deep.equal({
+            deject: {
+                value: 'deject',
+                mutable: false,
+            },
+        });
     });
 });
