@@ -54,7 +54,7 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         });
     });
 
-    it('should be able to get scope info from snapshot', async (): Promise<void> => {
+    it('should be able to get location info from snapshot', async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -69,7 +69,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         const sandbox: Sandbox = createSandbox();
         sandbox.setDebugInterceptor(interceptor);
 
-        const result: MarkedResult = await sandbox.evaluate(`const value=0;debugger;`);
+        const sourceCode: string = `const value=0;debugger;`;
+        const result: MarkedResult = await sandbox.evaluate(sourceCode);
 
         assertSucceedMarkedResult(result);
 
@@ -84,5 +85,7 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         expect(debuggerSnapshot.location.startRange).to.be.equal(14);
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(debuggerSnapshot.location.endRange).to.be.equal(23);
+
+        expect(debuggerSnapshot.sliceCodeClip(sourceCode)).to.be.equal(`debugger;`);
     });
 });

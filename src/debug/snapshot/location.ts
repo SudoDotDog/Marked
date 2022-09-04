@@ -59,4 +59,9 @@ export class MarkedDebugSnapshotLocation {
     public get endRange(): number {
         return this._endRange;
     }
+
+    public sliceCodeClip(sourceCode: string): string {
+
+        return sourceCode.substring(this._startRange, this._endRange);
+    }
 }

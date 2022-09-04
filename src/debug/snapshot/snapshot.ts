@@ -37,4 +37,9 @@ export class MarkedDebugSnapshot {
     public get location(): MarkedDebugSnapshotLocation {
         return this._location;
     }
+
+    public sliceCodeClip(sourceCode: string): string {
+
+        return this._location.sliceCodeClip(sourceCode);
+    }
 }
