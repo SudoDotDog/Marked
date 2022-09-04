@@ -67,6 +67,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.UNKNOWN_LANGUAGE]: 'Unknown language', // 4050
 
+    [ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR]: 'Debugger without debug interceptor', // 5301
+
     [ERROR_CODE.UNMOUNTED_AST_TYPE]: 'Unmounted ast type', // 6001
     [ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME]: 'Provided module name duplicated', // 6002
     [ERROR_CODE.MODULE_IS_NOT_PROVIDED]: 'Module is not provided', // 6003

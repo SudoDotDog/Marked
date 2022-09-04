@@ -8,7 +8,8 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
-import { assertSucceedMarkedResult } from '../../util/assert-result';
+import { ERROR_CODE } from '../../../src/declare/error-code';
+import { assertFailedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Debug (Debugger) Cases', (): void => {
 
@@ -19,7 +20,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to handle simple single debugger', async (): Promise<void> => {
+    it.only('should be able to throw when debug without interceptor', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -32,8 +33,8 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
 
-        assertSucceedMarkedResult(result);
+        assertFailedMarkedResult(result);
 
-        expect(result.exports.default).to.be.undefined;
+        expect(result.error.code).to.be.equal(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR);
     });
 });
