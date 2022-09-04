@@ -1,53 +1,14 @@
 /**
  * @author WMXPY
- * @namespace Variable
- * @description Parse
+ * @namespace Parse
+ * @description Native To Sand
  */
 
 import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
-import { SandClass } from "./sand-class/sand-class";
-import { SandFunction } from "./sand-function/sand-function";
-import { SandList } from "./sand-list";
-import { SandMap } from "./sand-map";
-
-export const extractSandToNative = (target: any): any => {
-
-    if (target instanceof SandClass) {
-
-        throw error(ERROR_CODE.CANNOT_TRANSFER_CLASS_TO_NATIVE);
-    }
-
-    if (target instanceof SandFunction) {
-
-        throw error(ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE);
-    }
-
-    if (target instanceof SandList) {
-
-        const list: any[] = target.list;
-        const result: any[] = [];
-
-        for (const element of list) {
-            result.push(extractSandToNative(element));
-        }
-
-        return result;
-    }
-
-    if (target instanceof SandMap) {
-
-        const keys: string[] = target.keys();
-        const result: Record<string, any> = {};
-
-        for (const key of keys) {
-            result[key] = extractSandToNative(target.get(key));
-        }
-
-        return result;
-    }
-    return target;
-};
+import { SandList } from "../variable/sand-list";
+import { SandMap } from "../variable/sand-map";
+import { extractSandToNative } from "./sand-to-native";
 
 export const parseNativeToSand = (target: any): string | number | boolean | undefined | null | ((...args: any[]) => any) | SandMap<any> | SandList<any> => {
 

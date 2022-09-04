@@ -9,8 +9,8 @@ import { ERROR_CODE } from "../declare/error-code";
 import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
+import { parseNativeToSand } from "../parse/native-to-sand";
 import { Flag } from "../variable/flag";
-import { parseNativeToSand } from "../variable/parse";
 import { SandMap } from "../variable/sand-map";
 import { error } from "./error/error";
 
