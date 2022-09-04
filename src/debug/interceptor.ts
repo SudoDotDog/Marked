@@ -5,6 +5,8 @@
  */
 
 import { DebugInterceptorListener } from "./declare";
+import { MarkedDebugFlowController } from "./flow-controller";
+import { MarkedDebugSnapshot } from "./snapshot";
 
 export class MarkedDebugInterceptor {
 
@@ -22,5 +24,15 @@ export class MarkedDebugInterceptor {
     ) {
 
         this._listener = listener;
+    }
+
+    public async execute(
+        snapshot: MarkedDebugSnapshot,
+        flowController: MarkedDebugFlowController,
+    ): Promise<void> {
+
+        return await Promise.resolve(
+            this._listener(snapshot, flowController),
+        );
     }
 }

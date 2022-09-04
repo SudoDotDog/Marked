@@ -5,6 +5,7 @@
  */
 
 import * as EST from "estree";
+import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
@@ -26,6 +27,9 @@ export const debuggerStatementEvaluator: Evaluator<'DebuggerStatement'> =
         if (!this.hasDebugInterceptor()) {
             throw error(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR, void 0, node, trace);
         }
+
+        const interceptor: MarkedDebugInterceptor = this.ensureGetDebugInterceptor();
+
 
         return null;
     };

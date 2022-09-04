@@ -16,15 +16,21 @@ export type Evaluator<T extends EST_TYPE> =
 
 export enum END_SIGNAL {
 
-    SUCCEED = 0,
-    FAILED = 1,
-    EXCEPTION = 2,
+    SUCCEED = "SUCCEED",
+    TERMINATED = "TERMINATED",
+    FAILED = "FAILED",
+    EXCEPTION = "EXCEPTION",
 }
 
 export interface IMarkedResultSucceed {
 
     exports: IExposed;
     signal: END_SIGNAL.SUCCEED;
+}
+
+export interface IMarkedResultTerminated {
+
+    signal: END_SIGNAL.TERMINATED;
 }
 
 export interface IMarkedResultFailed {
