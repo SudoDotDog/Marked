@@ -4,26 +4,29 @@
  * @description Flow Controller
  */
 
+export type MarkedDebugFlowControllerOptions = {
+
+    readonly continueMethod: () => void;
+    readonly terminateMethod: () => void;
+    readonly nextStepMethod: () => void;
+};
+
 export class MarkedDebugFlowController {
 
-    public static fromMethods(
-        continueMethod: () => void,
-        terminateMethod: () => void,
-    ): MarkedDebugFlowController {
+    public static fromOptions(options: MarkedDebugFlowControllerOptions): MarkedDebugFlowController {
 
-        return new MarkedDebugFlowController(continueMethod, terminateMethod);
+        return new MarkedDebugFlowController(options);
     }
 
     private readonly _continueMethod: () => void;
     private readonly _terminateMethod: () => void;
+    private readonly _nextStepMethod: () => void;
 
-    private constructor(
-        continueMethod: () => void,
-        terminateMethod: () => void,
-    ) {
+    private constructor(options: MarkedDebugFlowControllerOptions) {
 
-        this._continueMethod = continueMethod;
-        this._terminateMethod = terminateMethod;
+        this._continueMethod = options.continueMethod;
+        this._terminateMethod = options.terminateMethod;
+        this._nextStepMethod = options.nextStepMethod;
     }
 
     public continue(): void {
@@ -34,5 +37,10 @@ export class MarkedDebugFlowController {
     public terminate(): void {
 
         this._terminateMethod();
+    }
+
+    public nextStep(): void {
+
+        this._nextStepMethod();
     }
 }

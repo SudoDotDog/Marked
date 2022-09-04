@@ -13,6 +13,7 @@ import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { useEverything } from '../evaluate/evaluate';
+import { pauseForBreakPoint } from "../operation/break-point";
 import { parseNativeToSand } from "../parse/native-to-sand";
 import { parseCodeToESTree } from '../parse/parse-estree';
 import { transpileTypeScriptCode } from "../parse/transpile-typescript";
@@ -57,6 +58,7 @@ export class Sandbox implements ISandbox {
     private readonly _options: ISandboxOptions;
 
     private _debugInterceptor: MarkedDebugInterceptor | null;
+    private _debugNextStep: boolean;
 
     private _count: number;
     private _broke: boolean;
@@ -81,6 +83,7 @@ export class Sandbox implements ISandbox {
         this._options = getDefaultSandboxOption();
 
         this._debugInterceptor = null;
+        this._debugNextStep = false;
 
         this._count = 0;
         this._broke = false;
@@ -272,6 +275,12 @@ export class Sandbox implements ISandbox {
         return this._debugInterceptor;
     }
 
+    protected setNextStep(nextStep: boolean): this {
+
+        this._debugNextStep = nextStep;
+        return this;
+    }
+
     protected breakWithFlag(flag: Flag): void {
 
         this.break();
@@ -328,13 +337,31 @@ export class Sandbox implements ISandbox {
             if (this._brokeFlag instanceof Flag) {
                 return this._brokeFlag;
             }
-            throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
+            throw error(
+                ERROR_CODE.SANDBOX_IS_BROKE,
+                this._count.toString(),
+                node as EST.Node,
+                trace as Trace,
+            );
         }
 
         if (this._count >= this._options.maxExpression) {
 
             this.break();
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
+        }
+
+        if (this._debugNextStep) {
+
+            this.setNextStep(false);
+
+            const bindingPauseForBreakPoint = pauseForBreakPoint.bind(this);
+
+            await bindingPauseForBreakPoint(
+                node as EST.Node,
+                scope as Scope,
+                trace as Trace,
+            );
         }
 
         const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);

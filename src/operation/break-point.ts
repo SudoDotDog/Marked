@@ -29,19 +29,19 @@ export const pauseForBreakPoint = async function (this: Sandbox, node: EST.Node,
     const interceptor: MarkedDebugInterceptor = this.ensureGetDebugInterceptor();
 
     const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScope(scope);
-    const flowController: MarkedDebugFlowController = MarkedDebugFlowController.fromMethods(
-        () => {
-            if (typeof pauseResolver !== 'function') {
-                throw error(ERROR_CODE.INTERNAL_ERROR, void 0, null as any, trace);
-            }
-            this.recoverFromBreak();
+    const flowController: MarkedDebugFlowController = MarkedDebugFlowController.fromOptions({
+        continueMethod: () => {
             pauseResolver();
         },
-        () => {
+        terminateMethod: () => {
             this.breakWithFlag(Flag.fromTerminate(trace));
             pauseResolver();
         },
-    );
+        nextStepMethod: () => {
+            this.setNextStep(true);
+            pauseResolver();
+        },
+    });
 
     interceptor.execute(snapshot, flowController);
 
