@@ -88,4 +88,34 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         expect(debuggerSnapshot.sliceCodeClip(sourceCode)).to.be.equal(`debugger;`);
     });
+
+    it('should be able to get location info from snapshot by stepper', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        let nextStepped: number = 0;
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            if (nextStepped > 0) {
+                flowController.continue();
+            } else {
+                nextStepped++;
+                flowController.nextStep();
+            }
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const sourceCode: string = `debugger;const value=0;`;
+        const result: MarkedResult = await sandbox.evaluate(sourceCode);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.sliceCodeClip(sourceCode)).to.be.equal(`const value=0;`);
+    });
 });
