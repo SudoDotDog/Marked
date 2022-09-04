@@ -74,7 +74,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         });
     });
 
-    it('should be able to handle debug with single debugger - continue', async (): Promise<void> => {
+    it('should be able to handle debug with single debugger - terminate', async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -101,6 +101,49 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         assertTerminatedMarkedResult(result);
 
         expect(middle).to.be.deep.equal([value1]);
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getObject()).to.be.deep.equal({
+            deject: {
+                value: '[Marked Function]',
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to handle debug with single debugger - next step', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        let nextStepped: number = 0;
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            if (nextStepped > 3) {
+                flowController.terminate();
+            } else {
+                nextStepped++;
+                flowController.nextStep();
+            }
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const middle: any[] = [];
+
+        const value1: number = chance.integer({ max: 10, min: 1 });
+        const value2: number = chance.integer({ max: 10, min: 1 });
+        const value3: number = chance.integer({ max: 10, min: 1 });
+
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});deject(${value3});`);
+
+        assertTerminatedMarkedResult(result);
+
+        expect(middle).to.be.deep.equal([value1, value2]);
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getObject()).to.be.deep.equal({
             deject: {

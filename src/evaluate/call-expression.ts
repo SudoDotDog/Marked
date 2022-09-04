@@ -10,6 +10,7 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
+import { Flag } from "../variable/flag";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -36,7 +37,12 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
 
         const args: any[] = [];
         for (const arg of node.arguments) {
-            args.push(await this.execute(arg, scope, nextTrace));
+
+            const argument: any = await this.execute(arg, scope, nextTrace);
+            if (argument instanceof Flag) {
+                return;
+            }
+            args.push(argument);
         }
 
         if (!(func instanceof SandFunction)) {
@@ -47,7 +53,9 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
 
         if (func instanceof SandFunction) {
             return await func.execute(...args);
-        } else {
+        }
+
+        if (typeof func === 'function') {
             return await func(...args);
         }
     };
