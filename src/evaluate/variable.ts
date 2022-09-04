@@ -8,7 +8,7 @@ import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
-import { declareVariableStack } from "../util/declaration";
+import { declareVariableStack } from "../operation/variable-declaration/declare-variable-stack";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateObjectIsSandboxStructure } from "../util/node/validator";

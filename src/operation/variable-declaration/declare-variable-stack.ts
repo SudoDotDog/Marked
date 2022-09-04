@@ -1,15 +1,15 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace Operation_VariableDeclaration
  * @description Declaration
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error-code";
-import { IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
-import { Sandbox } from "../marked/sandbox";
-import { error } from "./error/error";
-import { registerScopeVariable } from "./register";
+import { ERROR_CODE } from "../../declare/error-code";
+import { IScope, ITrace, VARIABLE_TYPE } from "../../declare/variable";
+import { Sandbox } from "../../marked/sandbox";
+import { error } from "../../util/error/error";
+import { registerScopeVariable } from "../../util/register";
 
 export type DeclareVariableElement = {
 
