@@ -5,7 +5,7 @@
  */
 
 import { MarkedDebugFlowController } from "./flow-controller";
-import { MarkedDebugSnapshot } from "./snapshot";
+import { MarkedDebugSnapshot } from "./snapshot/snapshot";
 
 export type DebugInterceptorListener = (
     snapshot: MarkedDebugSnapshot,

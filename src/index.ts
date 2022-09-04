@@ -6,7 +6,7 @@
 export * from "./debug/declare";
 export * from "./debug/flow-controller";
 export * from "./debug/interceptor";
-export * from "./debug/snapshot";
+export * from "./debug/snapshot/snapshot";
 export * from "./declare/evaluate";
 export * from "./declare/sandbox";
 export { ScriptLocation } from "./declare/script-location";

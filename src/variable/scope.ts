@@ -47,6 +47,13 @@ export class Scope implements IScope {
         this._this = null;
     }
 
+    public get constantMap(): Map<string, Variable<any>> {
+        return this._constantMap;
+    }
+    public get scopeMap(): Map<string, Variable<any>> {
+        return this._scopeMap;
+    }
+
     public get exposed(): IExposed {
 
         if (this.hasParent()) {
