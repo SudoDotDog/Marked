@@ -31,6 +31,11 @@ export interface IMarkedOptions {
     language?: SandboxLanguage;
 }
 
+export const defaultMarkedOptions: IMarkedOptions = {
+
+    language: 'javascript',
+};
+
 export interface ISandboxOptions {
 
     duration: number;

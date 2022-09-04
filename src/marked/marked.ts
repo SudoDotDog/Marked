@@ -6,7 +6,7 @@
 
 import { ERROR_CODE } from '../declare/error-code';
 import { MarkedResult } from '../declare/evaluate';
-import { IMarkedOptions, OptionName } from '../declare/sandbox';
+import { defaultMarkedOptions, IMarkedOptions, OptionName } from '../declare/sandbox';
 import { error } from '../util/error/error';
 import { Sandbox } from './sandbox';
 
@@ -20,7 +20,10 @@ export const marked = async (
         throw error(ERROR_CODE.SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED);
     }
 
-    const fixedOptions: IMarkedOptions = options ?? {};
+    const fixedOptions: IMarkedOptions = {
+        ...defaultMarkedOptions,
+        ...options,
+    };
 
     const sandbox: Sandbox = Sandbox.fromAllEvaluators(fixedOptions.language);
 
