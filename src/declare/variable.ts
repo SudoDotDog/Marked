@@ -22,6 +22,7 @@ export enum FLAG_TYPE {
     BREAK = 'BREAK',
     CONTINUE = 'CONTINUE',
     THROW = 'THROW',
+    TERMINATE = 'TERMINATE',
 }
 
 export type SCOPE_DECLARE_FUNC =

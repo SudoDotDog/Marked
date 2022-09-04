@@ -28,6 +28,11 @@ export class Flag {
         return new Flag(FLAG_TYPE.THROW, trace);
     }
 
+    public static fromTerminate(trace: ITrace): Flag {
+
+        return new Flag(FLAG_TYPE.TERMINATE, trace);
+    }
+
     private _type: FLAG_TYPE;
     private _value: any | null;
 
@@ -74,5 +79,10 @@ export class Flag {
     public isThrow(): boolean {
 
         return this._type === FLAG_TYPE.THROW;
+    }
+
+    public isTerminate(): boolean {
+
+        return this._type === FLAG_TYPE.TERMINATE;
     }
 }

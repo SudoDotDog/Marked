@@ -4,8 +4,7 @@
  * @description Scope
  */
 
-import { ERROR_CODE } from "../../declare/error-code";
-import { error } from "../../util/error/error";
+import { parseSnapshotScopeVariable } from "../../parse/snapshot-scope-variable";
 import { Scope } from "../../variable/scope";
 import { Variable } from "../../variable/variable";
 import { MarkedDebugSnapshotScopeMap, MarkedDebugSnapshotScopeVariable } from "./declare";
@@ -20,15 +19,9 @@ export class MarkedDebugSnapshotScope {
         for (const key of keys) {
 
             const variable: Variable<any> = scope.constantMap.get(key) as Variable<any>;
+            const value: MarkedDebugSnapshotScopeVariable = parseSnapshotScopeVariable(variable);
 
-            if (!(variable instanceof Variable)) {
-                throw error(ERROR_CODE.INTERNAL_ERROR, 'Scope variable is not variable');
-            }
-
-            map.set(key, {
-                value: variable.get(),
-                mutable: variable.mutable,
-            });
+            map.set(key, value);
         }
 
         if (scope.hasParent()) {

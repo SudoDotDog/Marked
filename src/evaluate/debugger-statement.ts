@@ -13,6 +13,7 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
+import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 
@@ -45,7 +46,7 @@ export const debuggerStatementEvaluator: Evaluator<'DebuggerStatement'> =
                 pauseResolver();
             },
             () => {
-                this.break();
+                this.breakWithFlag(Flag.fromTerminate(trace));
                 pauseResolver();
             },
         );

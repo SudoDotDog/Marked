@@ -31,6 +31,7 @@ export interface IMarkedResultSucceed {
 export interface IMarkedResultTerminated {
 
     signal: END_SIGNAL.TERMINATED;
+    trace: ITrace;
 }
 
 export interface IMarkedResultFailed {
@@ -41,11 +42,12 @@ export interface IMarkedResultFailed {
 
 export interface IMarkedResultException {
 
+    signal: END_SIGNAL.EXCEPTION;
     trace: ITrace;
     exception: any;
-    signal: END_SIGNAL.EXCEPTION;
 }
 
 export type MarkedResult = IMarkedResultSucceed
+    | IMarkedResultTerminated
     | IMarkedResultFailed
     | IMarkedResultException;

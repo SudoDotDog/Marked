@@ -5,7 +5,7 @@
  * @override Test
  */
 
-import { END_SIGNAL, IMarkedResultException, IMarkedResultFailed, IMarkedResultSucceed, MarkedResult } from "../../src/declare/evaluate";
+import { END_SIGNAL, IMarkedResultException, IMarkedResultFailed, IMarkedResultSucceed, IMarkedResultTerminated, MarkedResult } from "../../src/declare/evaluate";
 
 export const assertSucceedMarkedResult: (
     result: MarkedResult,
@@ -40,6 +40,19 @@ export const assertExceptionMarkedResult: (
 ): asserts result is IMarkedResultException => {
 
         if (result.signal !== END_SIGNAL.EXCEPTION) {
+            console.log(result);
+            throw new Error('Invalid marked result');
+        }
+        return;
+    };
+
+export const assertTerminatedMarkedResult: (
+    result: MarkedResult,
+) => asserts result is IMarkedResultTerminated = (
+    result: MarkedResult,
+): asserts result is IMarkedResultTerminated => {
+
+        if (result.signal !== END_SIGNAL.TERMINATED) {
             console.log(result);
             throw new Error('Invalid marked result');
         }

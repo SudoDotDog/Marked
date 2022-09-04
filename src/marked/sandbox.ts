@@ -186,8 +186,16 @@ export class Sandbox implements ISandbox {
             let result: any = await this.execute(AST, targetScope, trace);
 
             if (this._broke) {
+
                 if (this._brokeFlag instanceof Flag) {
+
                     if (this._brokeFlag.isThrow()) {
+
+                        result = this._brokeFlag;
+                    }
+
+                    if (this._brokeFlag.isTerminate()) {
+
                         result = this._brokeFlag;
                     }
                 }
@@ -201,6 +209,14 @@ export class Sandbox implements ISandbox {
                         signal: END_SIGNAL.EXCEPTION,
                         trace: result.trace,
                         exception: result.getValue(),
+                    };
+                }
+
+                if (result.isTerminate()) {
+
+                    return {
+                        signal: END_SIGNAL.TERMINATED,
+                        trace: result.trace,
                     };
                 }
             }
@@ -310,9 +326,7 @@ export class Sandbox implements ISandbox {
         if (this._broke) {
 
             if (this._brokeFlag instanceof Flag) {
-                if (this._brokeFlag.isThrow()) {
-                    return this._brokeFlag;
-                }
+                return this._brokeFlag;
             }
             throw error(ERROR_CODE.SANDBOX_IS_BROKE, this._count.toString(), node as any, trace as Trace);
         }

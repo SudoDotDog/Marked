@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
-import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
+import { assertFailedMarkedResult, assertSucceedMarkedResult, assertTerminatedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Debug (Debugger) Cases', (): void => {
 
@@ -38,7 +38,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         expect(result.error.code).to.be.equal(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR);
     });
 
-    it.only('should be able to handle debug with single debugger', async (): Promise<void> => {
+    it('should be able to handle debug with single debugger - continue', async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -68,7 +68,43 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getObject()).to.be.deep.equal({
             deject: {
-                value: 'deject',
+                value: '[Marked Function]',
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to handle debug with single debugger - continue', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.terminate();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const middle: any[] = [];
+
+        const value1: number = chance.integer({ max: 10, min: 1 });
+        const value2: number = chance.integer({ max: 10, min: 1 });
+
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
+
+        assertTerminatedMarkedResult(result);
+
+        expect(middle).to.be.deep.equal([value1]);
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getObject()).to.be.deep.equal({
+            deject: {
+                value: '[Marked Function]',
                 mutable: false,
             },
         });
