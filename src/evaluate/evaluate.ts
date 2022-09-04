@@ -14,6 +14,7 @@ import { mountCallExpression } from "./call-expression";
 import { mountClassBody } from "./class-body";
 import { mountClassDeclaration } from "./class-declaration";
 import { mountContinueStatement } from "./continue-statement";
+import { mountDebuggerStatement } from "./debugger-statement";
 import { mountEmptyStatement } from "./empty-statement";
 import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
@@ -106,6 +107,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountClassBody(sandbox);
     mountClassDeclaration(sandbox);
     mountContinueStatement(sandbox);
+    mountDebuggerStatement(sandbox);
     mountEmptyStatement(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);

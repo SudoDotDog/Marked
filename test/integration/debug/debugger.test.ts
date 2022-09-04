@@ -19,7 +19,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to handle simple single debugger', async (): Promise<void> => {
+    it.only('should be able to handle simple single debugger', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -30,7 +30,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         sandbox.inject('deject', (content: any) => middle.push(content));
 
-        const result: MarkedResult = await sandbox.evaluate(`deject(${value1});deject(${value2});`);
+        const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
 
         assertSucceedMarkedResult(result);
 
