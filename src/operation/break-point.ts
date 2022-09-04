@@ -17,6 +17,8 @@ import { Trace } from "../variable/trace/trace";
 
 export const pauseForBreakPoint = async function (this: Sandbox, node: EST.Node, scope: Scope, trace: Trace): Promise<void> {
 
+    console.log('break point', node);
+
     if (!this.hasDebugInterceptor()) {
         throw error(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR, void 0, node, trace);
     }

@@ -20,7 +20,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to throw when debug without interceptor', async (): Promise<void> => {
+    it.only('should be able to throw when debug without interceptor', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 

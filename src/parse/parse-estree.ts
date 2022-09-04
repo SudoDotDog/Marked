@@ -12,6 +12,7 @@ export const parseCodeToESTree = async (sourceCode: string): Promise<EST.BaseNod
     const AST: EST.BaseNode = Acorn.Parser.parse(sourceCode, {
 
         locations: true,
+        ranges: true,
         allowReturnOutsideFunction: false,
         allowAwaitOutsideFunction: false,
         allowHashBang: false,
