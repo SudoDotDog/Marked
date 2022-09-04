@@ -46,4 +46,17 @@ export class MarkedDebugSnapshotLocation {
         this._startRange = startRange;
         this._endRange = endRange;
     }
+
+    public get startPosition(): MarkedDebugSnapshotPosition {
+        return this._startPosition;
+    }
+    public get endPosition(): MarkedDebugSnapshotPosition {
+        return this._endPosition;
+    }
+    public get startRange(): number {
+        return this._startRange;
+    }
+    public get endRange(): number {
+        return this._endRange;
+    }
 }

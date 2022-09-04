@@ -4,11 +4,11 @@
  * @description Break Point
  */
 
+import * as EST from "estree";
 import { MarkedDebugFlowController } from "../debug/flow-controller";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { MarkedDebugSnapshot } from "../debug/snapshot/snapshot";
 import { ERROR_CODE } from "../declare/error-code";
-import * as EST from "estree";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
@@ -30,7 +30,7 @@ export const pauseForBreakPoint = async function (this: Sandbox, node: EST.Node,
 
     const interceptor: MarkedDebugInterceptor = this.ensureGetDebugInterceptor();
 
-    const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScope(scope);
+    const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScopeAndNode(scope, node);
     const flowController: MarkedDebugFlowController = MarkedDebugFlowController.fromOptions({
         continueMethod: () => {
             pauseResolver();

@@ -21,4 +21,11 @@ export class MarkedDebugSnapshotPosition {
         this._line = line;
         this._column = column;
     }
+
+    public get line(): number {
+        return this._line;
+    }
+    public get column(): number {
+        return this._column;
+    }
 }
