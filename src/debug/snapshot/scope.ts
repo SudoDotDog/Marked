@@ -15,10 +15,19 @@ export class MarkedDebugSnapshotScope {
 
         const map: MarkedDebugSnapshotScopeMap = new Map();
 
-        const keys: Iterable<string> = scope.constantMap.keys();
-        for (const key of keys) {
+        const constantMapKeys: Iterable<string> = scope.constantMap.keys();
+        for (const key of constantMapKeys) {
 
             const variable: Variable<any> = scope.constantMap.get(key) as Variable<any>;
+            const value: MarkedDebugSnapshotScopeVariable = parseSnapshotScopeVariable(variable);
+
+            map.set(key, value);
+        }
+
+        const scopeMapKeys: Iterable<string> = scope.scopeMap.keys();
+        for (const key of scopeMapKeys) {
+
+            const variable: Variable<any> = scope.scopeMap.get(key) as Variable<any>;
             const value: MarkedDebugSnapshotScopeVariable = parseSnapshotScopeVariable(variable);
 
             map.set(key, value);
@@ -51,12 +60,23 @@ export class MarkedDebugSnapshotScope {
         return this._map;
     }
 
-    public getObject(): Record<string, MarkedDebugSnapshotScopeVariable> {
+    public getDetailedObject(): Record<string, MarkedDebugSnapshotScopeVariable> {
 
         const object: Record<string, MarkedDebugSnapshotScopeVariable> = {};
         const keys: Iterable<string> = this._map.keys();
         for (const key of keys) {
             object[key] = this._map.get(key) as MarkedDebugSnapshotScopeVariable;
+        }
+        return object;
+    }
+
+    public getKeyValueObject(): Record<string, any> {
+
+        const object: Record<string, any> = {};
+        const keys: Iterable<string> = this._map.keys();
+        for (const key of keys) {
+            const variable = this._map.get(key) as MarkedDebugSnapshotScopeVariable;
+            object[key] = variable.value;
         }
         return object;
     }
