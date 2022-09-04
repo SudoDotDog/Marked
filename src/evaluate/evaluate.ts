@@ -8,15 +8,19 @@ import { ISandbox } from "../declare/sandbox";
 import { mountArrayExpression } from "./array-expression";
 import { mountArrowFunctionExpression } from "./arrow-function-expression";
 import { mountBlockStatement } from "./block-statement";
+import { mountBreakStatement } from "./break-statement";
 import * as Calculate_Evaluators from "./calculate";
 import { mountCallExpression } from "./call-expression";
 import { mountClassBody } from "./class-body";
 import { mountClassDeclaration } from "./class-declaration";
+import { mountContinueStatement } from "./continue-statement";
 import { mountEmptyStatement } from "./empty-statement";
 import * as Exception_Evaluators from "./exception";
 import * as Expression_Evaluators from "./expression";
 import { mountFunctionDeclaration } from "./function-declaration";
 import { mountFunctionExpression } from "./function-expression";
+import { mountIdentifier } from "./identifier";
+import { mountLiteral } from "./literal";
 import { mountMemberExpressionEvaluator } from "./member-expression";
 import { mountMethodDefinition } from "./method-definition";
 import * as Module_Evaluators from "./module";
@@ -33,12 +37,7 @@ import * as Variable_Evaluators from "./variable";
 
 export const useSymbol = (sandbox: ISandbox): void => {
 
-    sandbox.mount('Identifier', Symbol_Evaluators.identifierEvaluator);
-    sandbox.mount('Literal', Symbol_Evaluators.literalEvaluator);
     sandbox.mount('Program', Symbol_Evaluators.programEvaluator);
-
-    sandbox.mount('BreakStatement', Symbol_Evaluators.breakEvaluator);
-    sandbox.mount('ContinueStatement', Symbol_Evaluators.continueEvaluator);
     sandbox.mount('ReturnStatement', Symbol_Evaluators.returnEvaluator);
 };
 
@@ -102,12 +101,16 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
     mountBlockStatement(sandbox);
+    mountBreakStatement(sandbox);
     mountCallExpression(sandbox);
     mountClassBody(sandbox);
     mountClassDeclaration(sandbox);
+    mountContinueStatement(sandbox);
     mountEmptyStatement(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
+    mountIdentifier(sandbox);
+    mountLiteral(sandbox);
     mountMemberExpressionEvaluator(sandbox);
     mountMethodDefinition(sandbox);
     mountNewExpression(sandbox);

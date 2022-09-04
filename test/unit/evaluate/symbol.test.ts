@@ -31,40 +31,6 @@ describe('Given Symbol evaluators', (): void => {
         trace.reset();
     });
 
-    describe('Given an <BreakStatement> evaluator', (): void => {
-
-        it('should return a break flag', async (): Promise<void> => {
-
-            const testNode: EST.BreakStatement = {
-
-                type: 'BreakStatement',
-            };
-
-            const result: any = await Symbol_Expressions.breakEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            expect(result).to.be.instanceof(Flag);
-            expect(result.isBreak()).to.be.true;
-        });
-    });
-
-    describe('Given an <ContinueStatement> evaluator', (): void => {
-
-        it('should return a continue flag', async (): Promise<void> => {
-
-            const testNode: EST.ContinueStatement = {
-
-                type: 'ContinueStatement',
-            };
-
-            const result: Flag = await Symbol_Expressions.continueEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            expect(result).to.be.instanceof(Flag);
-            expect(result.isContinue()).to.be.true;
-        });
-    });
-
     describe('Given an <ReturnStatement> evaluator', (): void => {
 
         it('should return a return flag', async (): Promise<void> => {

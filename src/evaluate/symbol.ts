@@ -5,63 +5,11 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
-import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
-import { Variable } from "../variable/variable";
-
-export const breakEvaluator: Evaluator<'BreakStatement'> =
-    // eslint-disable-next-line @typescript-eslint/require-await
-    async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<Flag> {
-
-        if (node.label) {
-
-            throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
-        }
-        const flag: Flag = Flag.fromBreak(trace);
-
-        return flag;
-    };
-
-export const continueEvaluator: Evaluator<'ContinueStatement'> =
-    // eslint-disable-next-line @typescript-eslint/require-await
-    async function (this: Sandbox, node: EST.ContinueStatement, scope: Scope, trace: Trace): Promise<Flag> {
-
-        if (node.label) {
-
-            throw error(ERROR_CODE.CONTINUE_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
-        }
-        const flag: Flag = Flag.fromContinue(trace);
-
-        return flag;
-    };
-
-export const identifierEvaluator: Evaluator<'Identifier'> =
-    // eslint-disable-next-line @typescript-eslint/require-await
-    async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
-
-        if (node.name === 'undefined') {
-            return undefined;
-        }
-
-        const variable: Variable<any> | null = scope.rummage(node.name);
-        if (variable) {
-            return variable.get();
-        }
-
-        throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.name, node, trace);
-    };
-
-export const literalEvaluator: Evaluator<'Literal'> =
-    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
-    async function (this: Sandbox, node: EST.Literal, scope: Scope, trace: Trace): Promise<any> {
-
-        return node.value;
-    };
 
 export const programEvaluator: Evaluator<'Program'> =
     async function (this: Sandbox, node: EST.Program, scope: Scope, trace: Trace): Promise<any> {
