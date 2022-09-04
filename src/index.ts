@@ -3,9 +3,16 @@
  * @description Index
  */
 
+export * from "./debug/break-point/break-point";
+export * from "./debug/break-point/line";
+export * from "./debug/break-point/range";
 export * from "./debug/declare";
 export * from "./debug/flow-controller";
 export * from "./debug/interceptor";
+export * from "./debug/snapshot/declare";
+export * from "./debug/snapshot/location";
+export * from "./debug/snapshot/position";
+export * from "./debug/snapshot/scope";
 export * from "./debug/snapshot/snapshot";
 export * from "./declare/evaluate";
 export * from "./declare/sandbox";

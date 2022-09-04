@@ -191,14 +191,10 @@ export class Sandbox implements ISandbox {
             if (this._broke) {
 
                 if (this._brokeFlag instanceof Flag) {
-
                     if (this._brokeFlag.isThrow()) {
-
                         result = this._brokeFlag;
                     }
-
                     if (this._brokeFlag.isTerminate()) {
-
                         result = this._brokeFlag;
                     }
                 }
@@ -207,16 +203,13 @@ export class Sandbox implements ISandbox {
             if (result instanceof Flag) {
 
                 if (result.isThrow()) {
-
                     return {
                         signal: END_SIGNAL.EXCEPTION,
                         trace: result.trace,
                         exception: result.getValue(),
                     };
                 }
-
                 if (result.isTerminate()) {
-
                     return {
                         signal: END_SIGNAL.TERMINATED,
                         trace: result.trace,
