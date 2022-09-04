@@ -4,6 +4,7 @@
  * @description Sandbox
  */
 
+import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { Evaluator, MarkedResult } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
@@ -26,6 +27,7 @@ export interface IMarkedOptions {
     provides?: Record<string, any>;
     resolvers?: ModuleResolver[];
     sandbox?: Partial<ISandboxOptions>;
+    debugInterceptor?: MarkedDebugInterceptor;
     language?: SandboxLanguage;
 }
 

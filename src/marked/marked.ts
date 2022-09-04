@@ -20,27 +20,29 @@ export const marked = async (
         throw error(ERROR_CODE.SCRIPT_CANNOT_BE_NULL_OR_UNDEFINED);
     }
 
-    const sandbox: Sandbox = Sandbox.fromAllEvaluators(options?.language);
+    const fixedOptions: IMarkedOptions = options ?? {};
 
-    if (options) {
+    const sandbox: Sandbox = Sandbox.fromAllEvaluators(fixedOptions.language);
 
-        if (options.injects) {
-            Object.keys(options.injects).forEach((key: string) =>
-                sandbox.inject(key, (options.injects as any)[key]));
+    if (typeof fixedOptions.injects !== 'undefined') {
+        Object.keys(fixedOptions.injects).forEach((key: string) =>
+            sandbox.inject(key, (fixedOptions.injects as any)[key]));
+    }
+    if (typeof fixedOptions.provides !== 'undefined') {
+        Object.keys(fixedOptions.provides).forEach((key: string) =>
+            sandbox.provide(key, (fixedOptions.provides as any)[key]));
+    }
+    if (typeof fixedOptions.resolvers !== 'undefined') {
+        for (const resolver of fixedOptions.resolvers) {
+            sandbox.resolver(resolver);
         }
-        if (options.provides) {
-            Object.keys(options.provides).forEach((key: string) =>
-                sandbox.provide(key, (options.provides as any)[key]));
-        }
-        if (options.resolvers) {
-            for (const resolver of options.resolvers) {
-                sandbox.resolver(resolver);
-            }
-        }
-        if (options.sandbox) {
-            Object.keys(options.sandbox as any).forEach((key: any) =>
-                sandbox.setOption(key as OptionName, (options.sandbox as any)[key]));
-        }
+    }
+    if (typeof fixedOptions.sandbox !== 'undefined') {
+        Object.keys(fixedOptions.sandbox as any).forEach((key: any) =>
+            sandbox.setOption(key as OptionName, (fixedOptions.sandbox as any)[key]));
+    }
+    if (typeof fixedOptions.debugInterceptor !== 'undefined') {
+        sandbox.setDebugInterceptor(fixedOptions.debugInterceptor);
     }
 
     return await sandbox.evaluate(script);
