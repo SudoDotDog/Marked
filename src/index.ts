@@ -3,6 +3,10 @@
  * @description Index
  */
 
+export * from "./debug/declare";
+export * from "./debug/flow-controller";
+export * from "./debug/interceptor";
+export * from "./debug/snapshot";
 export { END_SIGNAL, Evaluator, IMarkedResultException, IMarkedResultFailed, IMarkedResultSucceed, MarkedResult } from "./declare/evaluate";
 export { defaultSandboxLanguage, IMarkedOptions, ModuleResolveResult, OptionName, SandboxLanguage } from "./declare/sandbox";
 export { ScriptLocation } from "./declare/script-location";

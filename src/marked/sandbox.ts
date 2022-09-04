@@ -5,6 +5,7 @@
  */
 
 import * as EST from "estree";
+import { DebugInterceptorListener } from "../debug/declare";
 import { ERROR_CODE } from '../declare/error-code';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
@@ -55,6 +56,8 @@ export class Sandbox implements ISandbox {
 
     private readonly _options: ISandboxOptions;
 
+    private _debugInterceptor: DebugInterceptorListener | null;
+
     private _count: number;
     private _broke: boolean;
     private _brokeFlag: Flag | null = null;
@@ -76,6 +79,8 @@ export class Sandbox implements ISandbox {
         this._cachedExecuter = new Map<string, IExecuter>();
 
         this._options = getDefaultSandboxOption();
+
+        this._debugInterceptor = null;
 
         this._count = 0;
         this._broke = false;
@@ -230,6 +235,19 @@ export class Sandbox implements ISandbox {
         this._usingAdditionalArgument = true;
         this._additionalArgument = value;
         return this;
+    }
+
+    protected hasDebugInterceptor(): boolean {
+
+        return this._debugInterceptor !== null;
+    }
+
+    protected ensureGetDebugInterceptor(): DebugInterceptorListener {
+
+        if (this._debugInterceptor === null) {
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+        }
+        return this._debugInterceptor;
     }
 
     protected breakWithFlag(flag: Flag): void {
