@@ -1,14 +1,14 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace Operation_VariableDeclaration
  * @description Register
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error-code";
-import { IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
-import { Sandbox } from "../marked/sandbox";
-import { error } from "./error/error";
+import { ERROR_CODE } from "../../declare/error-code";
+import { IScope, ITrace, VARIABLE_TYPE } from "../../declare/variable";
+import { Sandbox } from "../../marked/sandbox";
+import { error } from "../../util/error/error";
 
 export const registerScopeVariableWithExpression = async function (
     this: Sandbox,

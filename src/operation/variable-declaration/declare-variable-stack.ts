@@ -9,15 +9,10 @@ import { ERROR_CODE } from "../../declare/error-code";
 import { IScope, ITrace, VARIABLE_TYPE } from "../../declare/variable";
 import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
-import { registerScopeVariableWithExpression, registerScopeVariableWithValue } from "../../util/register";
-import { SandList } from "../../variable/sand-list";
-import { SandMap } from "../../variable/sand-map";
-
-export type DeclareVariableElement = {
-
-    readonly id: string;
-    readonly value: any;
-};
+import { declareVariableStackArray } from "./array";
+import { DeclareVariableElement } from "./declare";
+import { declareVariableStackObject } from "./object";
+import { registerScopeVariableWithExpression } from "./register";
 
 export const declareVariableStack = async function (
     this: Sandbox,
@@ -29,12 +24,13 @@ export const declareVariableStack = async function (
 
     const type: VARIABLE_TYPE = node.kind as VARIABLE_TYPE;
 
-    const results: DeclareVariableElement[] = [];
     for (const declaration of node.declarations) {
 
         switch (declaration.id.type) {
 
             case 'Identifier': {
+
+                const results: DeclareVariableElement[] = [];
 
                 const id: string = declaration.id.name;
                 const bindRegisterScopeVariable = registerScopeVariableWithExpression.bind(this);
@@ -42,118 +38,17 @@ export const declareVariableStack = async function (
                 const result: any = await bindRegisterScopeVariable(node, type, id, declaration.init, scope, currentTrace, nextTrace);
                 results.push({ id, value: result });
 
-                break;
+                return results;
             }
             case 'ArrayPattern': {
 
-                if (typeof declaration.init === 'undefined'
-                    || declaration.init === null) {
-
-                    throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
-                }
-
-                const initValue: any = await this.execute(declaration.init, scope, nextTrace);
-
-                if (!(initValue instanceof SandList)) {
-                    throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, currentTrace);
-                }
-
-                elementSizeCheck: if (initValue.length !== declaration.id.elements.length) {
-
-                    nonIdentifierCheck: for (const eachElement of declaration.id.elements) {
-
-                        if (!eachElement) {
-                            break nonIdentifierCheck;
-                        }
-                        if (eachElement.type !== 'Identifier') {
-                            break elementSizeCheck;
-                        }
-                    }
-                    throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, initValue.length.toString(), node, currentTrace);
-                }
-
-                const bindRegisterScopeVariable = registerScopeVariableWithValue.bind(this);
-                for (let i = 0; i < declaration.id.elements.length; i++) {
-
-                    const pattern = declaration.id.elements[i];
-                    if (!pattern) {
-
-                        throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
-                    }
-
-                    switch (pattern.type) {
-
-                        case 'Identifier': {
-
-                            const id: string = pattern.name;
-
-                            const initPattern: any = initValue.get(i);
-
-                            const value: any = await bindRegisterScopeVariable(
-                                node,
-                                type,
-                                id,
-                                initPattern,
-                                scope,
-                                currentTrace,
-                            );
-
-                            results.push({ id, value });
-                            break;
-                        }
-                        default: {
-
-                            throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, currentTrace);
-                        }
-                    }
-                }
-                break;
+                const bindingDeclareVariableStackArray = declareVariableStackArray.bind(this);
+                return await bindingDeclareVariableStackArray(node, type, declaration, scope, currentTrace, nextTrace);
             }
             case 'ObjectPattern': {
 
-                if (typeof declaration.init === 'undefined'
-                    || declaration.init === null) {
-
-                    throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
-                }
-
-                const initValue: any = await this.execute(declaration.init, scope, nextTrace);
-
-                if (!(initValue instanceof SandMap)) {
-                    throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, currentTrace);
-                }
-
-                const bindRegisterScopeVariable = registerScopeVariableWithValue.bind(this);
-                for (const pattern of declaration.id.properties) {
-
-                    if (!pattern) {
-
-                        throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
-                    }
-                    if (pattern.type !== 'Property') {
-
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, currentTrace);
-                    }
-                    if (pattern.key.type !== 'Identifier') {
-
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.key.type, node, currentTrace);
-                    }
-
-                    const id: string = pattern.key.name;
-                    const initPattern = initValue.get(id);
-
-                    const value = await bindRegisterScopeVariable(
-                        node,
-                        type,
-                        id,
-                        initPattern,
-                        scope,
-                        currentTrace,
-                    );
-
-                    results.push({ id, value });
-                }
-                break;
+                const bindingDeclareVariableStackObject = declareVariableStackObject.bind(this);
+                return await bindingDeclareVariableStackObject(node, type, declaration, scope, currentTrace, nextTrace);
             }
             default: {
 
@@ -161,5 +56,6 @@ export const declareVariableStack = async function (
             }
         }
     }
-    return results;
+
+    throw error(ERROR_CODE.INTERNAL_ERROR, 'No Declaration', node, currentTrace);
 };
