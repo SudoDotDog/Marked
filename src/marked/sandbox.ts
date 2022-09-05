@@ -5,6 +5,8 @@
  */
 
 import * as EST from "estree";
+import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
+import { MarkedDebugBreakPointController } from "../debug/break-point/controller";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { ERROR_CODE } from '../declare/error-code';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
@@ -163,6 +165,7 @@ export class Sandbox implements ISandbox {
 
     public async evaluate(
         script: string,
+        breakPoints?: Iterable<MarkedDebugBreakPoint>,
         scriptLocation: ScriptLocation = ScriptLocation.createRoot(),
         scope?: IScope,
     ): Promise<MarkedResult> {
@@ -181,7 +184,12 @@ export class Sandbox implements ISandbox {
         try {
 
             const AST: EST.BaseNode = await this.parse(script);
-            const trace: Trace = Trace.init(scriptLocation);
+
+            const breakPointController: MarkedDebugBreakPointController | undefined = typeof breakPoints === 'undefined'
+                ? undefined
+                : MarkedDebugBreakPointController.fromBreakPoints(breakPoints);
+
+            const trace: Trace = Trace.init(scriptLocation, breakPointController);
 
             const targetScope: IScope = typeof scope === 'undefined'
                 ? this._rootScope
@@ -301,7 +309,10 @@ export class Sandbox implements ISandbox {
         return null;
     }
 
-    protected async executeResource(resolveResult: ModuleResolveResult): Promise<IExecuter | null> {
+    protected async evaluateResource(
+        resolveResult: ModuleResolveResult,
+        breakPoints?: Iterable<MarkedDebugBreakPoint>,
+    ): Promise<IExecuter | null> {
 
         const hash: string = resolveResult.scriptLocation.hash();
         if (this._cachedExecuter.has(hash)) {
@@ -312,6 +323,7 @@ export class Sandbox implements ISandbox {
         const executer: Executer = Executer.from(this);
         const result: MarkedResult = await executer.evaluate(
             resolveResult.script,
+            breakPoints,
             resolveResult.scriptLocation,
         );
 

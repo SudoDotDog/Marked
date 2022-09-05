@@ -5,6 +5,7 @@
  */
 
 import * as EST from "estree";
+import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { ERROR_CODE } from "../declare/error-code";
 import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
@@ -84,7 +85,11 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
         return false;
     }
 
-    const executer: IExecuter | null = await this.executeResource(targetModule);
+    const breakPoints: Iterable<MarkedDebugBreakPoint> | undefined = currentTrace.hasBreakPointController()
+        ? currentTrace.ensureBreakPointController().getBreakPoints()
+        : undefined;
+
+    const executer: IExecuter | null = await this.evaluateResource(targetModule, breakPoints);
     if (!executer) {
 
         const flag: Flag = Flag.fromThrow(currentTrace);

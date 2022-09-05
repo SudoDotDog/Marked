@@ -4,6 +4,7 @@
  * @description Executer
  */
 
+import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { MarkedResult } from "../declare/evaluate";
 import { IExecuter, ISandbox } from "../declare/sandbox";
 import { ScriptLocation } from "../declare/script-location";
@@ -43,8 +44,17 @@ export class Executer implements IExecuter {
         return this._rootScope.exposed;
     }
 
-    public async evaluate(script: string, scriptLocation?: ScriptLocation): Promise<MarkedResult> {
+    public async evaluate(
+        script: string,
+        breakPoints?: Iterable<MarkedDebugBreakPoint>,
+        scriptLocation?: ScriptLocation,
+    ): Promise<MarkedResult> {
 
-        return await this._parent.evaluate(script, scriptLocation, this._rootScope);
+        return await this._parent.evaluate(
+            script,
+            breakPoints,
+            scriptLocation,
+            this._rootScope,
+        );
     }
 }

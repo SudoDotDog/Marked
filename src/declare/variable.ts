@@ -5,6 +5,7 @@
  */
 
 import * as EST from "estree";
+import { MarkedDebugBreakPointController } from "../debug/break-point/controller";
 import { SandMap } from "../variable/sand-map";
 import { Variable } from "../variable/variable";
 import { ScriptLocation } from "./script-location";
@@ -57,6 +58,9 @@ export interface IScope {
 export interface ITrace {
 
     scriptLocation: ScriptLocation;
+
+    hasBreakPointController(): boolean;
+    ensureBreakPointController(): MarkedDebugBreakPointController;
 
     getNode(): EST.Node | null;
     getParent(): ITrace | null;

@@ -4,8 +4,9 @@
  * @description Sandbox
  */
 
+import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
-import { Evaluator, MarkedResult } from "./evaluate";
+import { Evaluator } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
 import { IExposed, IScope, ITrace } from "./variable";
@@ -54,7 +55,12 @@ export interface ISandbox {
     exposed: IExposed;
 
     break: () => ISandbox;
-    evaluate: (script: string, scriptLocation?: ScriptLocation, scope?: IScope) => Promise<any>;
+    evaluate: (
+        script: string,
+        breakPoints?: Iterable<MarkedDebugBreakPoint>,
+        scriptLocation?: ScriptLocation,
+        scope?: IScope,
+    ) => Promise<any>;
 
     config: (name: string, value?: any) => ISandbox;
     inject: (name: string, value: any) => ISandbox;
@@ -73,5 +79,9 @@ export interface IExecuter {
     scope: IScope;
     exposed: IExposed;
 
-    evaluate: (script: string, scriptLocation?: ScriptLocation) => Promise<MarkedResult>;
+    evaluate: (
+        script: string,
+        breakPoints?: Iterable<MarkedDebugBreakPoint>,
+        scriptLocation?: ScriptLocation,
+    ) => Promise<any>;
 }

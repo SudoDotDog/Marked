@@ -32,6 +32,16 @@ export class MockTrace implements ITrace, IMockedClass {
         return this._mockStack;
     }
 
+    public hasBreakPointController(): boolean {
+
+        return false;
+    }
+
+    public ensureBreakPointController(): never {
+
+        throw new Error("[Sudoo-Mock] Should not call this function");
+    }
+
     public reset(): this {
 
         this._mockStack = [];

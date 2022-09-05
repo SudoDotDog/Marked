@@ -56,4 +56,12 @@ export class MarkedDebugBreakPointController {
 
         return triggered;
     }
+
+    public getBreakPoints(): Iterable<MarkedDebugBreakPoint> {
+
+        return [
+            ...this._pendingBreakPoints,
+            ...this._triggeredBreakPoints,
+        ];
+    }
 }
