@@ -126,11 +126,7 @@ export class Scope implements IScope {
 
     public hasParent(): boolean {
 
-        if (this._parent) {
-
-            return Boolean(this._parent.hasParent());
-        }
-        return false;
+        return this._parent !== null;
     }
 
     public ensureParent(): Scope {

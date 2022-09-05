@@ -1,14 +1,14 @@
 /**
  * @author WMXPY
- * @namespace Debug
- * @description Break Point
+ * @namespace Debug_BreakPoint
+ * @description Simple
  * @override Integration Test
  */
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugLineBreakPoint, MarkedDebugRangeBreakPoint, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../src';
-import { assertSucceedMarkedResult } from '../../util/assert-result';
+import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugLineBreakPoint, MarkedDebugRangeBreakPoint, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../../src';
+import { assertSucceedMarkedResult } from '../../../util/assert-result';
 
 describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
 

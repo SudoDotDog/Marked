@@ -34,10 +34,12 @@ export class MarkedDebugSnapshotScope {
         }
 
         if (scope.hasParent()) {
+
+            const parentScope: MarkedDebugSnapshotScope =
+                MarkedDebugSnapshotScope.fromScope(scope.ensureParent());
+
             return new MarkedDebugSnapshotScope(
-                MarkedDebugSnapshotScope.fromScope(
-                    scope.ensureParent()
-                ),
+                parentScope,
                 map,
             );
         }
@@ -84,5 +86,10 @@ export class MarkedDebugSnapshotScope {
     public hasParent(): boolean {
 
         return this._parent !== null;
+    }
+
+    public getParent(): MarkedDebugSnapshotScope | null {
+
+        return this._parent;
     }
 }
