@@ -67,7 +67,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         expect(middle).to.be.deep.equal([value1, value2]);
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
-            deject: '[Marked Function]',
+            deject: '[Marked Native Function]',
         });
     });
 
@@ -100,7 +100,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         expect(middle).to.be.deep.equal([value1]);
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
-            deject: '[Marked Function]',
+            deject: '[Marked Native Function]',
         });
     });
 
@@ -140,7 +140,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         expect(middle).to.be.deep.equal([value1, value2]);
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
-            deject: '[Marked Function]',
+            deject: '[Marked Native Function]',
         });
     });
 });
