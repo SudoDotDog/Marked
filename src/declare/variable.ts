@@ -47,8 +47,8 @@ export interface IScope {
     exist: (name: string) => boolean;
     rummage: (name: string) => Variable<any> | null;
     validateEditable: (name: string) => IScope;
-    expose: (name: string, value: any) => IScope;
-    exposeDefault: (value: any) => IScope;
+    expose: (name: string, value: any, trace: ITrace) => IScope;
+    exposeDefault: (value: any, trace: ITrace) => IScope;
 
     findThis: () => SandMap<any>;
     initThis: () => IScope;

@@ -29,7 +29,7 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                 const declareResults: DeclareVariableElement[] = await bindDeclareVariableStack(node.declaration, scope, trace, nextTrace);
 
                 for (const result of declareResults) {
-                    scope.expose(result.id, result.value);
+                    scope.expose(result.id, result.value, trace);
                 }
             } else {
 
@@ -42,7 +42,7 @@ export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration
                 const id: string = specifier.exported.name;
                 const value: any = await this.execute(specifier.local, scope, nextTrace);
 
-                scope.expose(id, value);
+                scope.expose(id, value, trace);
             }
         }
         return;
@@ -54,7 +54,7 @@ export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclara
         const nextTrace: Trace = trace.stack(node);
 
         const content: any = await this.execute(node.declaration, scope, nextTrace);
-        scope.exposeDefault(content);
+        scope.exposeDefault(content, trace);
     };
 
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =

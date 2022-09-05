@@ -5,7 +5,7 @@
  */
 
 import { ERROR_CODE } from "../declare/error-code";
-import { IExposed, IScope, VARIABLE_TYPE } from "../declare/variable";
+import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { extractSandToNative } from "../parse/sand-to-native";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
@@ -185,27 +185,35 @@ export class Scope implements IScope {
         return this;
     }
 
-    public expose(name: string, value: any): Scope {
+    public expose(key: string, value: any, trace: ITrace): Scope {
 
         if (this.hasParent()) {
-            this.ensureParent().expose(name, value);
+            this.ensureParent().expose(key, value, trace);
             return this;
         }
 
-        const extractedValue: any = extractSandToNative(value);
-        this._exposed.set(name, extractedValue);
+        if (!trace.scriptLocation.isRoot()) {
+            this._exposed.set(key, value);
+        } else {
+            const extractedValue: any = extractSandToNative(value);
+            this._exposed.set(key, extractedValue);
+        }
         return this;
     }
 
-    public exposeDefault(value: any): Scope {
+    public exposeDefault(value: any, trace: ITrace): Scope {
 
         if (this.hasParent()) {
-            this.ensureParent().exposeDefault(value);
+            this.ensureParent().exposeDefault(value, trace);
             return this;
         }
 
-        const extractedValue: any = extractSandToNative(value);
-        this._defaultExposed = extractedValue;
+        if (!trace.scriptLocation.isRoot()) {
+            this._defaultExposed = value;
+        } else {
+            const extractedValue: any = extractSandToNative(value);
+            this._defaultExposed = extractedValue;
+        }
         return this;
     }
 

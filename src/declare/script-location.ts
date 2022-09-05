@@ -38,6 +38,12 @@ export class ScriptLocation {
         return this._location;
     }
 
+    public isRoot(): boolean {
+
+        return this._protocol === Root_Protocol
+            && this._location === Root_Location;
+    }
+
     public compare(targetLocation: ScriptLocation): boolean {
 
         return this._protocol === targetLocation.protocol
