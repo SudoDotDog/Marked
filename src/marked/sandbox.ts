@@ -163,7 +163,7 @@ export class Sandbox implements ISandbox {
 
     public async evaluate(
         script: string,
-        scriptLocation?: ScriptLocation,
+        scriptLocation: ScriptLocation = ScriptLocation.createRoot(),
         scope?: IScope,
     ): Promise<MarkedResult> {
 
@@ -290,7 +290,9 @@ export class Sandbox implements ISandbox {
 
         for (const resolver of this._resolvers) {
 
-            const result: ModuleResolveResult | null = await Promise.resolve(resolver(source, trace));
+            const result: ModuleResolveResult | null = await Promise.resolve(
+                resolver(source, trace),
+            );
 
             if (result) {
                 return result;
@@ -308,7 +310,10 @@ export class Sandbox implements ISandbox {
         }
 
         const executer: Executer = Executer.from(this);
-        const result: MarkedResult = await executer.evaluate(resolveResult.script, resolveResult.scriptLocation);
+        const result: MarkedResult = await executer.evaluate(
+            resolveResult.script,
+            resolveResult.scriptLocation,
+        );
 
         if (result.signal !== END_SIGNAL.SUCCEED) {
             return null;

@@ -5,34 +5,47 @@
  */
 
 import * as EST from "estree";
+import { ScriptLocation } from "../../declare/script-location";
 import { MarkedDebugBreakPoint } from "./break-point";
 
 export class MarkedDebugLineBreakPoint extends MarkedDebugBreakPoint {
 
-    public static fromLineNumber(lineNumber: number): MarkedDebugLineBreakPoint {
+    public static fromLineNumber(
+        scriptLocation: ScriptLocation,
+        lineNumber: number,
+    ): MarkedDebugLineBreakPoint {
 
-        return new MarkedDebugLineBreakPoint(lineNumber);
+        return new MarkedDebugLineBreakPoint(scriptLocation, lineNumber);
     }
 
     private readonly _lineNumber: number;
 
     private constructor(
+        scriptLocation: ScriptLocation,
         lineNumber: number,
     ) {
 
-        super();
+        super(scriptLocation);
 
         this._lineNumber = lineNumber;
     }
 
-    public shouldTrigger(node: EST.Node): boolean {
+    public shouldTrigger(scriptLocation: ScriptLocation, node: EST.Node): boolean {
+
+        if (!this._properToHandle(scriptLocation)) {
+            return false;
+        }
 
         const sourceLocation: EST.SourceLocation = node.loc as EST.SourceLocation;
         return this._lineNumber === sourceLocation.start.line;
     }
 
-    public shouldReset(node: EST.Node): boolean {
+    public shouldReset(scriptLocation: ScriptLocation, node: EST.Node): boolean {
 
-        return !this.shouldTrigger(node);
+        if (!this._properToHandle(scriptLocation)) {
+            return false;
+        }
+
+        return !this.shouldTrigger(scriptLocation, node);
     }
 }

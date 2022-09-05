@@ -5,6 +5,7 @@
  */
 
 import * as EST from "estree";
+import { ScriptLocation } from "../../declare/script-location";
 import { MarkedDebugBreakPoint } from "./break-point";
 
 export class MarkedDebugBreakPointController {
@@ -28,13 +29,13 @@ export class MarkedDebugBreakPointController {
         this._triggeredBreakPoints = new Set();
     }
 
-    public shouldBreak(node: EST.Node): boolean {
+    public shouldBreak(scriptLocation: ScriptLocation, node: EST.Node): boolean {
 
         const pendingClone: Set<MarkedDebugBreakPoint> = new Set(this._pendingBreakPoints);
         const triggeredClone: Set<MarkedDebugBreakPoint> = new Set(this._triggeredBreakPoints);
 
         for (const breakPoint of triggeredClone) {
-            if (breakPoint.shouldReset(node)) {
+            if (breakPoint.shouldReset(scriptLocation, node)) {
 
                 this._pendingBreakPoints.add(breakPoint);
                 this._triggeredBreakPoints.delete(breakPoint);
@@ -44,7 +45,7 @@ export class MarkedDebugBreakPointController {
         let triggered: boolean = false;
 
         for (const breakPoint of pendingClone) {
-            if (breakPoint.shouldTrigger(node)) {
+            if (breakPoint.shouldTrigger(scriptLocation, node)) {
 
                 this._triggeredBreakPoints.add(breakPoint);
                 this._pendingBreakPoints.delete(breakPoint);

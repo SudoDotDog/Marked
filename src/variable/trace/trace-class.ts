@@ -23,9 +23,14 @@ export class TraceClass extends Trace implements ITrace {
 
     private readonly _sandClass: SandClass;
 
-    public constructor(node: EST.Node | null, parent: Trace, scriptLocation: ScriptLocation | undefined, sandClass: SandClass) {
+    public constructor(
+        node: EST.Node,
+        parent: Trace,
+        scriptLocation: ScriptLocation,
+        sandClass: SandClass,
+    ) {
 
-        super(node, parent, scriptLocation);
+        super(scriptLocation, node, parent);
 
         this._sandClass = sandClass;
     }

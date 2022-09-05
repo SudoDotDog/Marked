@@ -5,14 +5,19 @@
  */
 
 import * as EST from "estree";
+import { ScriptLocation } from "../../src/declare/script-location";
 import { ITrace } from "../../src/declare/variable";
 import { IMockedClass } from "./node";
 
 export class MockTrace implements ITrace, IMockedClass {
 
+    public scriptLocation: ScriptLocation;
+
     private _mockStack: EST.Node[];
 
     public constructor() {
+
+        this.scriptLocation = ScriptLocation.createRoot();
 
         this._mockStack = [];
     }

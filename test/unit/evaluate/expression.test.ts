@@ -7,6 +7,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
+import { ScriptLocation } from '../../../src/declare/script-location';
 import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import * as Evaluator_Expressions from '../../../src/evaluate/expression';
 import { Sandbox } from '../../../src/marked/sandbox';
@@ -349,7 +350,9 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Identifier', (node: EST.Identifier) => node.name);
             sandbox.when('Literal', mockLLiteralEvaluator);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak(Trace.init()));
+            sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak(
+                Trace.init(ScriptLocation.createRoot()),
+            ));
 
             sandbox.when('SwitchCase', Evaluator_Expressions.switchCaseEvaluator);
             sandbox.when('MockStatement' as any, (node: any) => result.push(node.value));

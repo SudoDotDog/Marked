@@ -56,7 +56,7 @@ export interface IScope {
 
 export interface ITrace {
 
-    scriptLocation?: ScriptLocation;
+    scriptLocation: ScriptLocation;
 
     getNode(): EST.Node | null;
     getParent(): ITrace | null;
