@@ -12,12 +12,13 @@ export const memberExpressionClass = (sandClass: SandClass, key: string | number
 
     if (typeof key === 'string') {
 
-        switch (key) {
-
-            case 'name':
-                return sandClass.className;
+        if (sandClass.staticBody.has(key)) {
+            return sandClass.staticBody.get(key);
         }
 
+        switch (key) {
+            case 'name': return sandClass.className;
+        }
         return undefined;
     }
 

@@ -33,7 +33,11 @@ export const propertyDefinitionEvaluation: Evaluator<'PropertyDefinition'> =
         const key: string = node.key.name;
         const value: any = await this.execute(node.value as any, scope, trace);
 
-        trace.sandClass.body.set(key, value);
+        if (node.static) {
+            trace.sandClass.staticBody.set(key, value);
+        } else {
+            trace.sandClass.body.set(key, value);
+        }
 
         return true;
     };

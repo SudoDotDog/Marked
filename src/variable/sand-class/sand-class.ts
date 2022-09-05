@@ -15,13 +15,15 @@ export class SandClass {
 
     private readonly _className: string;
 
-    private _map: SandMap<any>;
+    private readonly _map: SandMap<any>;
+    private readonly _staticMap: SandMap<any>;
 
     private constructor(className: string) {
 
         this._className = className;
 
         this._map = new SandMap();
+        this._staticMap = new SandMap();
     }
 
     public get className(): string {
@@ -29,5 +31,8 @@ export class SandClass {
     }
     public get body(): SandMap<any> {
         return this._map;
+    }
+    public get staticBody(): SandMap<any> {
+        return this._staticMap;
     }
 }

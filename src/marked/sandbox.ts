@@ -427,8 +427,8 @@ export class Sandbox implements ISandbox {
 
         try {
 
-            const typeScriptCode: string = await transpileTypeScriptCode(script);
-            return await this._parseJavaScript(typeScriptCode);
+            const javaScriptCode: string = await transpileTypeScriptCode(script);
+            return await this._parseJavaScript(javaScriptCode);
         } catch (err) {
 
             throw error(ERROR_CODE.TYPESCRIPT_COMPILE_ERROR);
