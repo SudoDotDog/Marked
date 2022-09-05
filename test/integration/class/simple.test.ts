@@ -29,7 +29,29 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(className);
+        expect(result.exports.default).to.be.equal(className);
+    });
+
+    it('should be able to get typeof class declaration', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate(`class A{};export default typeof A;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal('class');
+    });
+
+    it('should be able to get typeof class instance', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate(`class A{};const a=new A();export default typeof a;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal('class-instance');
     });
 
     it('should be able to create a class variable', async (): Promise<void> => {
@@ -42,7 +64,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(value);
+        expect(result.exports.default).to.be.equal(value);
     });
 
     it('should be able to create a class function', async (): Promise<void> => {
@@ -55,6 +77,6 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(value);
+        expect(result.exports.default).to.be.equal(value);
     });
 });
