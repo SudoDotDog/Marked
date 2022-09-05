@@ -7,6 +7,7 @@
 import { ISandbox } from "../declare/sandbox";
 import { mountArrayExpression } from "./array-expression";
 import { mountArrowFunctionExpression } from "./arrow-function-expression";
+import { mountAssignmentExpression } from "./assignment-expression";
 import { mountBlockStatement } from "./block-statement";
 import { mountBreakStatement } from "./break-statement";
 import * as Calculate_Evaluators from "./calculate";
@@ -34,7 +35,6 @@ import { mountTemplateLiteral } from "./template-literal";
 import { mountThisExpression } from "./this-expression";
 import { mountThrowStatement } from "./throw-statement";
 import { mountUnaryExpression } from "./unary-expression";
-import * as Variable_Evaluators from "./variable";
 import { mountVariableDeclaration } from "./variable-declaration";
 
 export const useSymbol = (sandbox: ISandbox): void => {
@@ -59,11 +59,6 @@ export const useExpression = (sandbox: ISandbox): void => {
 
     sandbox.mount('SwitchCase', Expression_Evaluators.switchCaseEvaluator);
     sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
-};
-
-export const useVariable = (sandbox: ISandbox): void => {
-
-    sandbox.mount('AssignmentExpression', Variable_Evaluators.assignmentExpressionEvaluator);
 };
 
 export const useCalculate = (sandbox: ISandbox): void => {
@@ -94,13 +89,13 @@ export const useEverything = (sandbox: ISandbox): void => {
 
     useSymbol(sandbox);
     useExpression(sandbox);
-    useVariable(sandbox);
     useCalculate(sandbox);
     useModule(sandbox);
     useException(sandbox);
 
     mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
+    mountAssignmentExpression(sandbox);
     mountBlockStatement(sandbox);
     mountBreakStatement(sandbox);
     mountCallExpression(sandbox);

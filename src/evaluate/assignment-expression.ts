@@ -1,12 +1,13 @@
 /**
  * @author WMXPY
  * @namespace Evaluate
- * @description Variable
+ * @description Assignment Expression
  */
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
+import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
@@ -17,6 +18,11 @@ import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { Variable } from "../variable/variable";
+
+export const mountAssignmentExpression = (sandbox: ISandbox): void => {
+
+    sandbox.mount('AssignmentExpression', assignmentExpressionEvaluator);
+};
 
 export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
     async function (this: Sandbox, node: EST.AssignmentExpression, scope: Scope, trace: Trace): Promise<any> {
