@@ -10,7 +10,7 @@ import { IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "./error/error";
 
-export const registerScopeVariable = async function (
+export const registerScopeVariableWithExpression = async function (
     this: Sandbox,
     node: EST.Node,
     variableType: VARIABLE_TYPE,
@@ -29,6 +29,25 @@ export const registerScopeVariable = async function (
     const value: any = expression
         ? await this.execute(expression, scope, nextTrace)
         : undefined;
+
+    scope.register(variableType)(id, value);
+    return value;
+};
+
+export const registerScopeVariableWithValue = async function (
+    this: Sandbox,
+    node: EST.Node,
+    variableType: VARIABLE_TYPE,
+    id: string,
+    value: any,
+    scope: IScope,
+    currentTrace: ITrace,
+): Promise<any> {
+
+    if (scope.exist(id)) {
+
+        throw error(ERROR_CODE.DUPLICATED_VARIABLE, id, node, currentTrace);
+    }
 
     scope.register(variableType)(id, value);
     return value;
