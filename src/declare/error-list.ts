@@ -88,6 +88,7 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.TRACE_SHOULD_BE_CLASS_TRACE]: 'Trace should be class trace', // 7201
 
     [ERROR_CODE.PROPERTY_SHOULD_BE_IDENTIFIER]: 'Property should be identifier', // 7301
+    [ERROR_CODE.CANNOT_DIVIDE_BY_ZERO]: 'Cannot divide by zero', // 7302
 
     [ERROR_CODE.CATCH_NOT_FOUND]: 'Catch not found', // 7501
 

@@ -5,7 +5,9 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "../declare/error-code";
 import { Variable } from "../variable/variable";
+import { error } from "./error/error";
 
 export const getBinaryOperation
     = (symbol: EST.BinaryOperator)
@@ -22,7 +24,12 @@ export const getBinaryOperation
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             case '+': return (left: any, right: any) => left + right;
             case '-': return (left: any, right: any) => left - right;
-            case '/': return (left: any, right: any) => left / right;
+            case '/': return (left: any, right: any) => {
+                if (right === 0) {
+                    throw error(ERROR_CODE.CANNOT_DIVIDE_BY_ZERO, symbol);
+                }
+                return left / right;
+            };
             case '<': return (left: any, right: any) => left < right;
             case '<<': return null;
             case '<=': return (left: any, right: any) => left <= right;
@@ -77,11 +84,16 @@ export const getAssignmentOperation
             case '%=': return null;
             case '&=': return null;
             case '**=': return null;
-            case '*=': return null;
+            case '*=': return (variable: Variable<any>, value: any) => variable.set(variable.get() * value);
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             case '+=': return (variable: Variable<any>, value: any) => variable.set(variable.get() + value);
             case '-=': return (variable: Variable<any>, value: any) => variable.set(variable.get() - value);
-            case '/=': return null;
+            case '/=': return (variable: Variable<any>, value: any) => {
+                if (value === 0) {
+                    throw error(ERROR_CODE.CANNOT_DIVIDE_BY_ZERO, symbol);
+                }
+                return variable.set(variable.get() / value);
+            };
             case '<<=': return null;
             case '=': return (variable: Variable<any>, value: any) => variable.set(value);
             case '>>=': return null;
