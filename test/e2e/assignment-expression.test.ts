@@ -10,7 +10,7 @@ import * as Chance from 'chance';
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
-describe.only('Given Sandbox for <AssignmentExpression> Cases', (): void => {
+describe('Given Sandbox for <AssignmentExpression> Cases', (): void => {
 
     const chance = new Chance('sandbox-assignment-expression');
 
@@ -43,6 +43,21 @@ describe.only('Given Sandbox for <AssignmentExpression> Cases', (): void => {
         sandbox.inject('deject', (content: any) => middle.push(content));
 
         const result = await sandbox.evaluate(`const list=[1,2];const [a,b]=list;deject(a);deject(b);`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(middle).to.be.lengthOf(2);
+        expect(middle).to.be.deep.equal([1, 2]);
+    });
+
+    it('should be able to handle assignment expression - object', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const map={a:1,b:2};const {a,b}=map;deject(a);deject(b);`);
 
         assertSucceedMarkedResult(result);
 

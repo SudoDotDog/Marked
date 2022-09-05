@@ -11,6 +11,7 @@ import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
 import { registerScopeVariableWithExpression, registerScopeVariableWithValue } from "../../util/register";
 import { SandList } from "../../variable/sand-list";
+import { SandMap } from "../../variable/sand-map";
 
 export type DeclareVariableElement = {
 
@@ -110,26 +111,21 @@ export const declareVariableStack = async function (
             }
             case 'ObjectPattern': {
 
-                if (!declaration.init) {
+                if (typeof declaration.init === 'undefined'
+                    || declaration.init === null) {
 
                     throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
                 }
 
+                const initValue: any = await this.execute(declaration.init, scope, nextTrace);
 
-                if (declaration.init.type !== 'ObjectExpression') {
-
+                if (!(initValue instanceof SandMap)) {
                     throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, currentTrace);
                 }
 
-                if (declaration.init.properties.length !== declaration.id.properties.length) {
+                const bindRegisterScopeVariable = registerScopeVariableWithValue.bind(this);
+                for (const pattern of declaration.id.properties) {
 
-                    throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, declaration.init.properties.length.toString(), node, currentTrace);
-                }
-
-                const bindRegisterScopeVariable = registerScopeVariableWithExpression.bind(this);
-                for (let i = 0; i < declaration.id.properties.length; i++) {
-
-                    const pattern = declaration.id.properties[i];
                     if (!pattern) {
 
                         throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
@@ -144,18 +140,17 @@ export const declareVariableStack = async function (
                     }
 
                     const id: string = pattern.key.name;
+                    const initPattern = initValue.get(id);
 
-                    const initPattern = declaration.init.properties[i];
-                    if (!initPattern) {
+                    const value = await bindRegisterScopeVariable(
+                        node,
+                        type,
+                        id,
+                        initPattern,
+                        scope,
+                        currentTrace,
+                    );
 
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
-                    }
-                    if (initPattern.type !== 'Property') {
-
-                        throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, initPattern.type, node, currentTrace);
-                    }
-
-                    const value = await bindRegisterScopeVariable(node, type, id, initPattern.value, scope, currentTrace, nextTrace);
                     results.push({ id, value });
                 }
                 break;
