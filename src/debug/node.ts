@@ -8,6 +8,7 @@ import { EST_TYPE } from "../declare/types";
 
 const Debug_Skip_Node: Set<EST_TYPE> = new Set([
     'Program',
+    'Literal',
 ] as EST_TYPE[]);
 
 export const shouldDebugNode = (type: EST_TYPE): boolean => {

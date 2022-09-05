@@ -21,12 +21,14 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
 
     it('should be able to enter debug with line break point', async (): Promise<void> => {
 
+        let triggered: number = 0;
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
         const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
             snapshot: MarkedDebugSnapshot,
             flowController: MarkedDebugFlowController,
         ) => {
+            triggered++;
             debuggerSnapshot = snapshot;
             flowController.continue();
         });
@@ -46,6 +48,8 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
+        expect(triggered).to.be.equal(1);
+
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
             value1,
@@ -54,12 +58,14 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
 
     it('should be able to enter debug with range break point', async (): Promise<void> => {
 
+        let triggered: number = 0;
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
         const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
             snapshot: MarkedDebugSnapshot,
             flowController: MarkedDebugFlowController,
         ) => {
+            triggered++;
             debuggerSnapshot = snapshot;
             flowController.continue();
         });
@@ -77,6 +83,8 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
+        expect(triggered).to.be.equal(1);
+
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
             value1: "value1",
@@ -85,12 +93,14 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
 
     it('should be able to enter debug with range break point - not hit path', async (): Promise<void> => {
 
+        let triggered: number = 0;
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
         const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
             snapshot: MarkedDebugSnapshot,
             flowController: MarkedDebugFlowController,
         ) => {
+            triggered++;
             debuggerSnapshot = snapshot;
             flowController.continue();
         });
@@ -107,6 +117,8 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
         );
 
         assertSucceedMarkedResult(result);
+
+        expect(triggered).to.be.equal(1);
 
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
