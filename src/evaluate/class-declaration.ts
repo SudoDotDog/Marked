@@ -39,6 +39,16 @@ export const classDeclarationEvaluation: Evaluator<'ClassDeclaration'> =
         const rawName: string = node.id.name;
         const sandClass: SandClass = SandClass.create(rawName);
 
+        if (node.superClass) {
+
+            const superClass: any = await this.execute(node.superClass, scope, trace);
+            if (!(superClass instanceof SandClass)) {
+                throw error(ERROR_CODE.INTERNAL_ERROR, 'Super class node is not sand class', node, trace);
+            }
+
+            sandClass.setSuperClass(superClass);
+        }
+
         const nextTrace: TraceClass = TraceClass.fromStack(trace, node, sandClass);
 
         await this.execute(node.body, scope, nextTrace);

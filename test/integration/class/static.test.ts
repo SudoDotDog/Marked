@@ -31,4 +31,17 @@ describe('Given Integration Class (Static) Cases', (): void => {
 
         expect(result.exports.default).to.be.equal(1);
     });
+
+    it('should be able to assign override and get static value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const className: string = chance.word();
+
+        const result: MarkedResult = await sandbox.evaluate(`class ${className}{static name=1;};export default ${className}.name;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(1);
+    });
 });

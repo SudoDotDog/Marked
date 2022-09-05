@@ -38,7 +38,7 @@ export class SandClassInstance {
             return this._body.get(key);
         }
 
-        return this._targetClass.body.get(key);
+        return this._targetClass.lookFor(key);
     }
 
     public combineBody(): SandMap<any> {
