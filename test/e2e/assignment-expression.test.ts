@@ -8,7 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { Sandbox } from '../../src/marked/sandbox';
-import { assertSucceedMarkedResult } from '../util/assert-result';
+import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../util/assert-result';
 
 describe('Given Sandbox for <AssignmentExpression> Cases', (): void => {
 
@@ -50,6 +50,57 @@ describe('Given Sandbox for <AssignmentExpression> Cases', (): void => {
         expect(middle).to.be.deep.equal([1, 2]);
     });
 
+    it('should be able to handle assignment expression - array but invalid length - short', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const list=[1];const [a,b]=list;deject(a);deject(b);`);
+
+        assertFailedMarkedResult(result);
+    });
+
+    it('should be able to handle assignment expression - array but invalid length - long', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const list=[1,2,3];const [a,b]=list;deject(a);deject(b);`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(middle).to.be.lengthOf(2);
+        expect(middle).to.be.deep.equal([1, 2]);
+    });
+
+    it('should be able to handle assignment expression - array but got object', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const list={a:1,b:2};const [a,b]=list;deject(a);deject(b);`);
+
+        assertFailedMarkedResult(result);
+    });
+
+    it('should be able to handle assignment expression - array but got literal', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const list=5;const [a,b]=list;deject(a);deject(b);`);
+
+        assertFailedMarkedResult(result);
+    });
+
     it('should be able to handle assignment expression - object', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
@@ -63,5 +114,71 @@ describe('Given Sandbox for <AssignmentExpression> Cases', (): void => {
 
         expect(middle).to.be.lengthOf(2);
         expect(middle).to.be.deep.equal([1, 2]);
+    });
+
+    it('should be able to handle assignment expression - object but invalid property - missing', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const map={a:1};const {a,b}=map;deject(a);deject(b);`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(middle).to.be.lengthOf(2);
+        expect(middle).to.be.deep.equal([1, undefined]);
+    });
+
+    it('should be able to handle assignment expression - object but invalid property - extra', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const map={a:1,b:2,c:3};const {a,b}=map;deject(a);deject(b);`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(middle).to.be.lengthOf(2);
+        expect(middle).to.be.deep.equal([1, 2]);
+    });
+
+    it('should be able to handle assignment expression - object but got class', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`class A{a=1;b=2}const clazz=new A();const {a,b}=clazz;deject(a);deject(b);`);
+
+        assertFailedMarkedResult(result);
+    });
+
+    it('should be able to handle assignment expression - object but got list', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const map=[1,2];const {a,b}=map;deject(a);deject(b);`);
+
+        assertFailedMarkedResult(result);
+    });
+
+    it('should be able to handle assignment expression - object but got literal', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const middle: any[] = [];
+        sandbox.inject('deject', (content: any) => middle.push(content));
+
+        const result = await sandbox.evaluate(`const map="Tests";const {a,b}=map;deject(a);deject(b);`);
+
+        assertFailedMarkedResult(result);
     });
 });

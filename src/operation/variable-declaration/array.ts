@@ -41,17 +41,8 @@ export const declareVariableStackArray = async function (
         throw error(ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED, declaration.init.type, node, currentTrace);
     }
 
-    elementSizeCheck: if (initValue.length !== declaration.id.elements.length) {
+    if (initValue.length < declaration.id.elements.length) {
 
-        nonIdentifierCheck: for (const eachElement of declaration.id.elements) {
-
-            if (!eachElement) {
-                break nonIdentifierCheck;
-            }
-            if (eachElement.type !== 'Identifier') {
-                break elementSizeCheck;
-            }
-        }
         throw error(ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED, initValue.length.toString(), node, currentTrace);
     }
 
