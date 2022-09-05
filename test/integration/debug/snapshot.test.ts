@@ -19,7 +19,7 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to get scope info from snapshot', async (): Promise<void> => {
+    it('should be able to get scope info from snapshot - number', async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -44,12 +44,212 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
             value1: {
+                type: 'number',
                 value: value1,
+                native: false,
                 mutable: false,
             },
             value2: {
+                type: 'number',
                 value: value2,
+                native: false,
                 mutable: true,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - string', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const value1: string = chance.string();
+
+        const result: MarkedResult = await sandbox.evaluate(`const value1="${value1}";debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            value1: {
+                type: 'string',
+                value: value1,
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - boolean', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const value1: boolean = chance.bool();
+
+        const result: MarkedResult = await sandbox.evaluate(`const value1=${value1};debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            value1: {
+                type: 'boolean',
+                value: value1,
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - null', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const result: MarkedResult = await sandbox.evaluate(`const value1=null;debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            value1: {
+                type: 'null',
+                value: null,
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - undefined', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const result: MarkedResult = await sandbox.evaluate(`const value1=undefined;debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            value1: {
+                type: 'undefined',
+                value: undefined,
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - class', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const result: MarkedResult = await sandbox.evaluate(`class C{a=1};debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            C: {
+                type: 'class',
+                value: {
+                    a: 1,
+                },
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - class instance', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const result: MarkedResult = await sandbox.evaluate(`class C{a=1};const c=new C();debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            C: {
+                type: 'class',
+                value: {
+                    a: 1,
+                },
+                native: false,
+                mutable: false,
+            },
+            c: {
+                type: 'class-instance',
+                value: {
+                    a: 1,
+                },
+                native: false,
+                mutable: false,
             },
         });
     });
@@ -76,7 +276,9 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
             value1: {
+                type: 'list',
                 value: [1, 2],
+                native: false,
                 mutable: false,
             },
         });
@@ -104,10 +306,12 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
             value1: {
+                type: 'map',
                 value: {
                     a: 1,
                     b: 2,
                 },
+                native: false,
                 mutable: false,
             },
         });
