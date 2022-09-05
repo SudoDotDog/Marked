@@ -8,6 +8,7 @@ import * as EST from "estree";
 import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { MarkedDebugBreakPointController } from "../debug/break-point/controller";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
+import { shouldDebugNode } from "../debug/node";
 import { ERROR_CODE } from '../declare/error-code';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
@@ -194,7 +195,7 @@ export class Sandbox implements ISandbox {
             const targetScope: IScope = typeof scope === 'undefined'
                 ? this._rootScope
                 : scope;
-            let result: any = await this.execute(AST, targetScope, trace);
+            let result: any = await this.execute(AST as EST.Node, targetScope, trace);
 
             if (this._broke) {
 
@@ -335,7 +336,7 @@ export class Sandbox implements ISandbox {
         return executer;
     }
 
-    protected async execute(node: EST.BaseNode, scope: IScope, trace: ITrace): Promise<any> {
+    protected async execute(node: EST.Node, scope: IScope, trace: ITrace): Promise<any> {
 
         if (this.getOption('duration') > 0) {
 
@@ -350,7 +351,7 @@ export class Sandbox implements ISandbox {
             throw error(
                 ERROR_CODE.SANDBOX_IS_BROKE,
                 this._count.toString(),
-                node as EST.Node,
+                node,
                 trace as Trace,
             );
         }
@@ -361,29 +362,41 @@ export class Sandbox implements ISandbox {
             throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
         }
 
-        if (this._debugNextStep) {
+        if (shouldDebugNode(node.type)) {
 
-            this.setNextStep(false);
+            if (trace.hasBreakPointController()) {
 
-            const bindingPauseForBreakPoint = pauseForBreakPoint.bind(this);
+                const breakPointController: MarkedDebugBreakPointController = trace.ensureBreakPointController();
 
-            await bindingPauseForBreakPoint(
-                node as EST.Node,
-                scope as Scope,
-                trace as Trace,
-            );
+                if (breakPointController.shouldBreak(trace.scriptLocation, node)) {
+                    this.setNextStep(true);
+                }
+            }
+
+            if (this._debugNextStep) {
+
+                this.setNextStep(false);
+
+                const bindingPauseForBreakPoint = pauseForBreakPoint.bind(this);
+
+                await bindingPauseForBreakPoint(
+                    node,
+                    scope as Scope,
+                    trace as Trace,
+                );
+            }
         }
 
-        const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type as EST_TYPE);
+        const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type);
 
         if (!executor) {
 
-            throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node as EST.Node, trace as Trace);
+            throw error(ERROR_CODE.UNMOUNTED_AST_TYPE, node.type, node, trace as Trace);
         }
 
         this._count++;
 
-        const result: any = await executor.bind(this)(node as any, scope as Scope, trace as Trace);
+        const result: any = await executor.bind(this)(node, scope as Scope, trace as Trace);
         return result;
     }
 

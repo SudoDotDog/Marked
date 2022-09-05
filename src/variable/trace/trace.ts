@@ -6,8 +6,10 @@
 
 import * as EST from "estree";
 import { MarkedDebugBreakPointController } from "../../debug/break-point/controller";
+import { ERROR_CODE } from "../../declare/error-code";
 import { ScriptLocation } from "../../declare/script-location";
 import { ITrace } from "../../declare/variable";
+import { error } from "../../util/error/error";
 
 export class Trace implements ITrace {
 
@@ -52,12 +54,24 @@ export class Trace implements ITrace {
 
     public hasBreakPointController(): boolean {
 
-        return this._breakPointController !== null;
+        if (this._breakPointController !== null) {
+            return true;
+        }
+        if (this._parent) {
+            return this._parent.hasBreakPointController();
+        }
+        return false;
     }
 
     public ensureBreakPointController(): MarkedDebugBreakPointController {
 
-        return this._breakPointController as MarkedDebugBreakPointController;
+        if (this._breakPointController !== null) {
+            return this._breakPointController;
+        }
+        if (this._parent) {
+            return this._parent.ensureBreakPointController();
+        }
+        throw error(ERROR_CODE.INTERNAL_ERROR, 'No Break Point Controller');
     }
 
     public getNode(): EST.Node | null {

@@ -11,8 +11,8 @@ import { MarkedDebugBreakPoint } from "./break-point";
 export class MarkedDebugRangeBreakPoint extends MarkedDebugBreakPoint {
 
     public static fromRangeStart(
-        scriptLocation: ScriptLocation,
         rangeStart: number,
+        scriptLocation: ScriptLocation = ScriptLocation.createRoot(),
     ): MarkedDebugRangeBreakPoint {
 
         return new MarkedDebugRangeBreakPoint(scriptLocation, rangeStart);

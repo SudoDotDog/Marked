@@ -247,7 +247,7 @@ export const sequenceExpressionEvaluator: Evaluator<'SequenceExpression'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const returnStatement: EST.BaseNode
+        const returnStatement: EST.Node
             = assert(node.expressions.pop() as EST.Node).is.exist().firstValue();
         for (const statement of node.expressions) {
 

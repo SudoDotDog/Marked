@@ -3,7 +3,6 @@
  * @description Index
  */
 
-export * from "./debug/break-point/break-point";
 export * from "./debug/break-point/line";
 export * from "./debug/break-point/range";
 export * from "./debug/declare";
