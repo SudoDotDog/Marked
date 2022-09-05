@@ -41,4 +41,28 @@ describe('Given Integration Cross File (Class) Cases', (): void => {
 
         expect(result.exports.default).to.be.equal(aValue);
     });
+
+    it('should be able to execute cross file class instance', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const aValue: number = chance.integer({ min: 0, max: 100 });
+
+        sandbox.resolver(() => {
+            return {
+                script: [
+                    `class A{a=${aValue}}`,
+                    `const a = new A();`,
+                    `export {a};`,
+                ].join('\n'),
+                scriptLocation: ScriptLocation.create('mock', 'test'),
+            };
+        });
+
+        const result: MarkedResult = await sandbox.evaluate(`import {a} from 'test';export default a.a;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(aValue);
+    });
 });

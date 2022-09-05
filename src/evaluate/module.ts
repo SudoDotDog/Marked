@@ -16,7 +16,6 @@ import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 
 export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
-    // eslint-disable-next-line @typescript-eslint/require-await
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
