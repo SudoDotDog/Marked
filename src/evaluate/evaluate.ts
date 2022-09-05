@@ -35,6 +35,7 @@ import { mountThisExpression } from "./this-expression";
 import { mountThrowStatement } from "./throw-statement";
 import { mountUnaryExpression } from "./unary-expression";
 import * as Variable_Evaluators from "./variable";
+import { mountVariableDeclaration } from "./variable-declaration";
 
 export const useSymbol = (sandbox: ISandbox): void => {
 
@@ -63,7 +64,6 @@ export const useExpression = (sandbox: ISandbox): void => {
 export const useVariable = (sandbox: ISandbox): void => {
 
     sandbox.mount('AssignmentExpression', Variable_Evaluators.assignmentExpressionEvaluator);
-    sandbox.mount('VariableDeclaration', Variable_Evaluators.variableDeclarationEvaluator);
 };
 
 export const useCalculate = (sandbox: ISandbox): void => {
@@ -123,4 +123,5 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountThisExpression(sandbox);
     mountThrowStatement(sandbox);
     mountUnaryExpression(sandbox);
+    mountVariableDeclaration(sandbox);
 };

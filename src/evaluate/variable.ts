@@ -8,7 +8,6 @@ import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
-import { declareVariableStack } from "../operation/variable-declaration/declare-variable-stack";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateObjectIsSandboxStructure } from "../util/node/validator";
@@ -86,13 +85,4 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
         operation(variable, assignee);
 
         return assignee;
-    };
-
-export const variableDeclarationEvaluator: Evaluator<'VariableDeclaration'> =
-    async function (this: Sandbox, node: EST.VariableDeclaration, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const bindDeclareVariableStack = declareVariableStack.bind(this);
-        await bindDeclareVariableStack(node, scope, trace, nextTrace);
     };
