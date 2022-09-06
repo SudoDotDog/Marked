@@ -30,21 +30,6 @@ export const parseNativeToSand = (target: any): string | number | boolean | unde
         return target;
     }
 
-    if (typeCheckIsConstructor(target)) {
-
-        throw error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS, target);
-    }
-
-    if (typeof target === 'function') {
-        return (...args) => {
-            const parsedArgs: any = [];
-            for (const arg of args) {
-                parsedArgs.push(extractSandToNative(arg));
-            }
-            return target(...parsedArgs);
-        };
-    }
-
     if (Array.isArray(target)) {
 
         const list: SandList<any> = new SandList();
@@ -57,11 +42,33 @@ export const parseNativeToSand = (target: any): string | number | boolean | unde
 
     if (typeof target === 'object') {
 
+        if (target.constructor && target.constructor.name !== 'Object') {
+
+            throw error(
+                ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE,
+                target.constructor.name,
+            );
+        }
+
         const map: SandMap<any> = new SandMap();
         for (const key of Object.keys(target)) {
             map.set(key, parseNativeToSand(target[key]));
         }
         return map;
+    }
+
+    if (typeCheckIsConstructor(target)) {
+        throw error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS, target);
+    }
+
+    if (typeof target === 'function') {
+        return (...args) => {
+            const parsedArgs: any = [];
+            for (const arg of args) {
+                parsedArgs.push(extractSandToNative(arg));
+            }
+            return target(...parsedArgs);
+        };
     }
 
     throw error(ERROR_CODE.INTERNAL_ERROR, 'Invalid Type');

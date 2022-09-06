@@ -5,6 +5,7 @@
  * @override Integration Test
  */
 
+/* eslint-disable max-classes-per-file */
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { Sandbox } from '../../../src';
@@ -33,5 +34,20 @@ describe('Given Integration Sandbox (Inject Class) Cases', (): void => {
         };
 
         expect(exec).to.be.throw(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS).message);
+    });
+
+    it('should be able to fail for inject class instance', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        class Test { }
+        const test = new Test();
+
+        const exec = () => {
+
+            sandbox.inject('test', test);
+        };
+
+        expect(exec).to.be.throw(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE).message);
     });
 });

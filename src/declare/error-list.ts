@@ -84,6 +84,7 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE]: 'Cannot transfer function to native', // 6101
 
     [ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS]: 'Cannot transfer native to class', // 6105
+    [ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE]: 'Cannot transfer native to class instance', // 6106
 
     [ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED]: 'Cannot read property of undefined', // 6110
 
