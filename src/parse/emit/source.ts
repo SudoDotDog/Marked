@@ -20,6 +20,7 @@ export const emitTypeScriptSource = async (
             result = sourceCompiledCode;
         },
     );
+
     const program: TS.Program = TS.createProgram({
         rootNames: [Host_Target_File],
         options: {
@@ -33,7 +34,7 @@ export const emitTypeScriptSource = async (
         },
         host,
     });
-    program.emit();
 
+    program.emit();
     return result;
 };
