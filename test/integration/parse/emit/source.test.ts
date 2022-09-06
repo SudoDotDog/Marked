@@ -1,18 +1,18 @@
 /**
  * @author WMXPY
- * @namespace Parse
- * @description Emit TypeScript Source
+ * @namespace Parse_Emit
+ * @description Source
  * @override Integration Test
  */
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { emitTypeScriptSource } from '../../../src';
+import { emitTypeScriptSource } from '../../../../src';
 
-describe('Given Integration Parse (Emit TypeScript Source) Cases', (): void => {
+describe('Given Integration Parse Emit (Source) Cases', (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const chance = new Chance('integration-parse-emit-typescript-source');
+    const chance = new Chance('integration-parse-emit-source');
 
     it('should be able to emit typescript source', async (): Promise<void> => {
 
