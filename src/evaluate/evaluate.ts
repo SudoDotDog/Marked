@@ -12,6 +12,7 @@ import { mountBlockStatement } from "./block-statement";
 import { mountBreakStatement } from "./break-statement";
 import * as Calculate_Evaluators from "./calculate";
 import { mountCallExpression } from "./call-expression";
+import { mountChainExpression } from "./chain-expression";
 import { mountClassBody } from "./class-body";
 import { mountClassDeclaration } from "./class-declaration";
 import { mountContinueStatement } from "./continue-statement";
@@ -99,6 +100,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountBlockStatement(sandbox);
     mountBreakStatement(sandbox);
     mountCallExpression(sandbox);
+    mountChainExpression(sandbox);
     mountClassBody(sandbox);
     mountClassDeclaration(sandbox);
     mountContinueStatement(sandbox);
