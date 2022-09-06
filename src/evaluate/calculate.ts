@@ -11,7 +11,7 @@ import { Sandbox } from "../marked/sandbox";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateObjectIsSandboxStructure } from "../util/node/validator";
-import { getBinaryOperation, getLogicalOperation, getUpdateOperation } from "../util/operation";
+import { getBinaryOperation, getUpdateOperation } from "../util/operation";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
@@ -31,24 +31,6 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
         if (!operation) {
 
             throw error(ERROR_CODE.BINARY_NOT_SUPPORT, node.operator, node, trace);
-        }
-
-        return operation(await evalLeft(), await evalRight());
-    };
-
-export const logicalExpressionEvaluator: Evaluator<'LogicalExpression'> =
-    async function (this: Sandbox, node: EST.LogicalExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const evalLeft: () => Promise<any> = async () => await this.execute(node.left, scope, nextTrace);
-        const evalRight: () => Promise<any> = async () => await this.execute(node.right, scope, nextTrace);
-
-        const operation: ((left: any, right: any) => any) | null = getLogicalOperation(node.operator);
-
-        if (!operation) {
-
-            throw error(ERROR_CODE.LOGICAL_NOT_SUPPORT, node.operator, node, trace);
         }
 
         return operation(await evalLeft(), await evalRight());
@@ -75,7 +57,9 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
 
             const current: any = await this.execute(node.argument, scope, nextTrace);
             const result: any = operation(current);
+
             identifierVariable.set(result);
+
             return node.prefix ? result : current;
         } else if (node.argument.type === 'MemberExpression') {
 
@@ -94,10 +78,12 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             const memberValue = memberVariable
                 ? memberVariable.get()
                 : undefined;
+
             if (!memberValue || !memberVariable) { throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberValue, node, trace); }
 
             const result: any = operation(memberValue);
             memberVariable.set(result);
+
             return node.prefix ? result : memberValue;
         }
         throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);

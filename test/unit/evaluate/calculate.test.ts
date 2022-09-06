@@ -46,39 +46,4 @@ describe('Given Calculation evaluators', (): void => {
             expect(result).to.be.equal(25);
         });
     });
-
-    describe('Given an <LogicalExpression> evaluator', (): void => {
-
-        it('or operator should return operated result', async (): Promise<void> => {
-
-            const testNode: EST.LogicalExpression = {
-                type: 'LogicalExpression',
-                operator: '||',
-                left: createLiteral(true),
-                right: createLiteral(false),
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.logicalExpressionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            expect(result).to.be.equal(true);
-        });
-
-        it('and operator should return operated result', async (): Promise<void> => {
-
-            const testNode: EST.LogicalExpression = {
-                type: 'LogicalExpression',
-                operator: '&&',
-                left: createLiteral(true),
-                right: createLiteral(false),
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-            const result: any = await Calculate_Expressions.logicalExpressionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            expect(result).to.be.equal(false);
-        });
-    });
 });

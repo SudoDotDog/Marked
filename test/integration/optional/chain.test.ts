@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
- * @namespace OptionalChain
- * @description Simple
+ * @namespace Optional
+ * @description Chain
  * @override Integration Test
  */
 
@@ -10,9 +10,9 @@ import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
 
-describe('Given Integration Optional Chain (Simple) Cases', (): void => {
+describe('Given Integration Optional (Chain) Cases', (): void => {
 
-    const chance = new Chance('integration-optional-chain-simple');
+    const chance = new Chance('integration-optional-chain');
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();

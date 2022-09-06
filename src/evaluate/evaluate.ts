@@ -24,6 +24,7 @@ import { mountFunctionDeclaration } from "./function-declaration";
 import { mountFunctionExpression } from "./function-expression";
 import { mountIdentifier } from "./identifier";
 import { mountLiteral } from "./literal";
+import { mountLogicalExpression } from "./logical-expression";
 import { mountMemberExpressionEvaluator } from "./member-expression";
 import { mountMethodDefinition } from "./method-definition";
 import * as Module_Evaluators from "./module";
@@ -65,7 +66,6 @@ export const useExpression = (sandbox: ISandbox): void => {
 export const useCalculate = (sandbox: ISandbox): void => {
 
     sandbox.mount('BinaryExpression', Calculate_Evaluators.binaryExpressionEvaluator);
-    sandbox.mount('LogicalExpression', Calculate_Evaluators.logicalExpressionEvaluator);
     sandbox.mount('UpdateExpression', Calculate_Evaluators.updateExpressionEvaluator);
 };
 
@@ -110,6 +110,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountFunctionExpression(sandbox);
     mountIdentifier(sandbox);
     mountLiteral(sandbox);
+    mountLogicalExpression(sandbox);
     mountMemberExpressionEvaluator(sandbox);
     mountMethodDefinition(sandbox);
     mountNewExpression(sandbox);
