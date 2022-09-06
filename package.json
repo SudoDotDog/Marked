@@ -1,20 +1,24 @@
 {
   "name": "@sudoo/marked",
-  "version": "3.4.2",
+  "version": "3.5.0",
   "description": "JavaScript code runner in JavaScript, safe with marked territory, asynchronous",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SudoDotDog/Marked.git"
   },
   "keywords": [
-    "JS"
+    "JavaScript",
+    "TypeScript",
+    "Complier",
+    "Executer",
+    "Sandbox"
   ],
   "author": "WMXPY",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SudoDotDog/Marked/issues"
   },
-  "homepage": "https://github.com/SudoDotDog/Marked#readme",
+  "homepage": "https://marked.sudo.dog",
   "dependencies": {
     "acorn": "8.8.0",
     "typescript": "4.8.2"
