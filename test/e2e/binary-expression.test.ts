@@ -103,4 +103,55 @@ describe('Given Sandbox for <BinaryExpression> Cases', (): void => {
 
         assertFailedMarkedResult(result);
     });
+
+    it('should be able to handle instance of operation - 1 layer', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`class A{}const a=new A();export default a instanceof A;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.true;
+    });
+
+    it('should be able to handle instance of operation - 2 layers', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`class A{}class B extends A{}const a=new B();export default a instanceof A;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.true;
+    });
+
+    it('should be able to handle instance of operation - class not same', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`class A{}class B{}const a=new A();export default a instanceof B;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.false;
+    });
+
+    it('should be able to handle instance of operation - invalid left', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`class A{}const a={};export default a instanceof A;`);
+
+        assertFailedMarkedResult(result);
+    });
+
+    it('should be able to handle instance of operation - invalid right', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate(`class A{}const a=new A();export default a instanceof {};`);
+
+        assertFailedMarkedResult(result);
+    });
 });

@@ -22,8 +22,7 @@ describe('Given Binary Operation', (): void => {
             = ['!=', '!==', '%', '&', '*',
                 '**', '+', '-', '/', '<',
                 '<<', '<=', '==', '===', '>',
-                '>=', '>>', '>>>', '^',
-                'instanceof', '|'];
+                '>=', '>>', '>>>', '^', '|'];
 
         binaryOperators.forEach((operator: EST.BinaryOperator) => {
             const operation: ((leftArg: any, rightArg: any) => any) | null = getBinaryOperation(operator);

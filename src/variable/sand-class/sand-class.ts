@@ -86,4 +86,17 @@ export class SandClass {
         }
         throw error(ERROR_CODE.INTERNAL_ERROR, 'No super class');
     }
+
+    public sameClass(other: SandClass): boolean {
+
+        if (this === other) {
+            return true;
+        }
+
+        if (!this._superClass) {
+            return false;
+        }
+
+        return this._superClass.sameClass(other);
+    }
 }

@@ -10,6 +10,7 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { executeInBinaryOperator } from "../operation/binary-expression/in";
+import { executeInstanceOfBinaryOperator } from "../operation/binary-expression/instance-of";
 import { getBinaryOperation } from "../operation/binary-expression/operators";
 import { error } from "../util/error/error";
 import { Scope } from "../variable/scope";
@@ -32,6 +33,12 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
 
             const bindingExecuteInBinaryOperator = executeInBinaryOperator.bind(this);
             return bindingExecuteInBinaryOperator(node.left, node.right, scope, nextTrace);
+        }
+
+        if (node.operator === 'instanceof') {
+
+            const bindingExecuteInstanceOfBinaryOperator = executeInstanceOfBinaryOperator.bind(this);
+            return bindingExecuteInstanceOfBinaryOperator(node.left, node.right, scope, nextTrace);
         }
 
         const operation: ((left: any, right: any) => any) | null =

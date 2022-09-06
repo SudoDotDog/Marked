@@ -39,7 +39,6 @@ export const getBinaryOperation
             case '>>': return null;
             case '>>>': return null;
             case '^': return null;
-            case 'instanceof': return null;
             case '|': return null;
         }
 

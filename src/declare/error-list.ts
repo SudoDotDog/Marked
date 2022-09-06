@@ -69,6 +69,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.IN_BINARY_OPERATION_ONLY_ALLOW_ON_MAP_OR_CLASS]: 'In binary operation only allow on map or class', // 3330
     [ERROR_CODE.IN_BINARY_OPERATION_ONLY_ALLOW_ON_IDENTIFIER]: 'In binary operation only allow on identifier', // 3331
+    [ERROR_CODE.INSTANCE_OF_BINARY_OPERATION_LEFT_ONLY_ALLOW_ON_CLASS_INSTANCE]: 'Instance of binary operation left only allow on class instance', // 3332
+    [ERROR_CODE.INSTANCE_OF_BINARY_OPERATION_RIGHT_ONLY_ALLOW_ON_CLASS]: 'Instance of binary operation right only allow on class', // 3333
 
     [ERROR_CODE.UNKNOWN_LANGUAGE]: 'Unknown language', // 4050
 
