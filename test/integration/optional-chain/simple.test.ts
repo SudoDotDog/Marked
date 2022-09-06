@@ -8,9 +8,9 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
-import { assertSucceedMarkedResult } from '../../util/assert-result';
+import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
 
-describe.only('Given Integration Optional Chain (Simple) Cases', (): void => {
+describe('Given Integration Optional Chain (Simple) Cases', (): void => {
 
     const chance = new Chance('integration-optional-chain-simple');
 
@@ -36,12 +36,28 @@ describe.only('Given Integration Optional Chain (Simple) Cases', (): void => {
 
         const sandbox: Sandbox = createSandbox();
 
-        const value: string = chance.word();
-
-        const result: MarkedResult = await sandbox.evaluate(`const map={a:{b:"${value}"}};export default map.a?.b;`);
+        const result: MarkedResult = await sandbox.evaluate(`const map={};export default map.a?.b;`);
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).to.be.undefined;
+    });
+
+    it('should be able to get error without optional chain', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate(`const map={};export default map.a.b;`);
+
+        assertFailedMarkedResult(result);
+    });
+
+    it('should be able to get nested error without optional chain', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate(`const map={};export default map.a?.b.c;`);
+
+        assertFailedMarkedResult(result);
     });
 });

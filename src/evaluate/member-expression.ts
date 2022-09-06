@@ -70,5 +70,14 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
             return memberExpressionClassInstance(object, key);
         }
 
+        if (typeof object === 'undefined') {
+
+            if (node.optional) {
+                return undefined;
+            }
+
+            throw error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED, key.toString(), node, trace);
+        }
+
         return object[key];
     };
