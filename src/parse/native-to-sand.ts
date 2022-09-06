@@ -6,6 +6,7 @@
 
 import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
+import { typeCheckIsConstructor } from "../util/type-check";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { extractSandToNative } from "./sand-to-native";
@@ -27,6 +28,11 @@ export const parseNativeToSand = (target: any): string | number | boolean | unde
     }
     if (typeof target === 'boolean') {
         return target;
+    }
+
+    if (typeCheckIsConstructor(target)) {
+
+        throw error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS, target);
     }
 
     if (typeof target === 'function') {

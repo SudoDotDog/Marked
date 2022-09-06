@@ -83,6 +83,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.CANNOT_TRANSFER_CLASS_TO_NATIVE]: 'Cannot transfer class to native', // 6100
     [ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE]: 'Cannot transfer function to native', // 6101
 
+    [ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS]: 'Cannot transfer native to class', // 6105
+
     [ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED]: 'Cannot read property of undefined', // 6110
 
     [ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED]: 'Member expression value cannot be undefined', // 6121
