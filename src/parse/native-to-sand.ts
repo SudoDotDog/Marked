@@ -62,6 +62,7 @@ export const parseNativeToSand = (target: any): string | number | boolean | unde
     }
 
     if (typeof target === 'function') {
+
         return (...args) => {
             const parsedArgs: any = [];
             for (const arg of args) {

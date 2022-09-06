@@ -36,6 +36,15 @@ describe('Given Integration Sandbox (Inject Class) Cases', (): void => {
         expect(exec).to.be.throw(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS).message);
     });
 
+    it('should be able to inject empty object', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        sandbox.inject('object', new Object());
+
+        expect(sandbox).to.be.instanceOf(Sandbox);
+    });
+
     it('should be able to fail for inject class instance', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
