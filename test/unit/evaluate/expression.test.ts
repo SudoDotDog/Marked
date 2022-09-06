@@ -11,7 +11,7 @@ import { ScriptLocation } from '../../../src/declare/script-location';
 import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import * as Evaluator_Expressions from '../../../src/evaluate/expression';
 import { Sandbox } from '../../../src/marked/sandbox';
-import { getBinaryOperation } from '../../../src/util/operation';
+import { getBinaryOperation } from '../../../src/operation/binary';
 import { Flag } from '../../../src/variable/flag';
 import { SandList } from '../../../src/variable/sand-list';
 import { SandMap } from '../../../src/variable/sand-map';

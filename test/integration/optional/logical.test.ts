@@ -8,7 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
-import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
+import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Optional (Logical) Cases', (): void => {
 
@@ -19,16 +19,31 @@ describe('Given Integration Optional (Logical) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to get result without optional chain', async (): Promise<void> => {
+    it('should be able to get result with true chain logical operator', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
         const value: string = chance.word();
+        const fallback: string = chance.word();
 
-        const result: MarkedResult = await sandbox.evaluate(`const map={a:"${value}"};export default map.a || "wave";`);
+        const result: MarkedResult = await sandbox.evaluate(`const map={a:"${value}"};export default map.a || "${fallback}";`);
 
         assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(value);
+    });
+
+    it('should be able to get fallback result with true chain logical operator', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: string = chance.word();
+        const fallback: string = chance.word();
+
+        const result: MarkedResult = await sandbox.evaluate(`const map={a:"${value}"};export default map.b || "${fallback}";`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(fallback);
     });
 });

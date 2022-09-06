@@ -1,40 +1,28 @@
 /**
  * @author WMXPY
  * @namespace Evaluate
- * @description Calculate
+ * @description Update Expression
  */
 
 import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
+import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
+import { getUpdateOperation } from "../operation/update";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateObjectIsSandboxStructure } from "../util/node/validator";
-import { getBinaryOperation, getUpdateOperation } from "../util/operation";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { Variable } from "../variable/variable";
 
-export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
-    async function (this: Sandbox, node: EST.BinaryExpression, scope: Scope, trace: Trace): Promise<any> {
+export const mountUpdateExpression = (sandbox: ISandbox): void => {
 
-        const nextTrace: Trace = trace.stack(node);
-
-        const evalLeft: () => Promise<any> = async () => await this.execute(node.left, scope, nextTrace);
-        const evalRight: () => Promise<any> = async () => await this.execute(node.right, scope, nextTrace);
-
-        const operation: ((left: any, right: any) => any) | null = getBinaryOperation(node.operator);
-
-        if (!operation) {
-
-            throw error(ERROR_CODE.BINARY_NOT_SUPPORT, node.operator, node, trace);
-        }
-
-        return operation(await evalLeft(), await evalRight());
-    };
+    sandbox.mount('UpdateExpression', updateExpressionEvaluator);
+};
 
 export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
     async function (this: Sandbox, node: EST.UpdateExpression, scope: Scope, trace: Trace): Promise<any> {

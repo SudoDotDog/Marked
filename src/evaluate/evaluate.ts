@@ -8,9 +8,9 @@ import { ISandbox } from "../declare/sandbox";
 import { mountArrayExpression } from "./array-expression";
 import { mountArrowFunctionExpression } from "./arrow-function-expression";
 import { mountAssignmentExpression } from "./assignment-expression";
+import { mountBinaryExpression } from "./binary-expression";
 import { mountBlockStatement } from "./block-statement";
 import { mountBreakStatement } from "./break-statement";
-import * as Calculate_Evaluators from "./calculate";
 import { mountCallExpression } from "./call-expression";
 import { mountChainExpression } from "./chain-expression";
 import { mountClassBody } from "./class-body";
@@ -37,6 +37,7 @@ import { mountTemplateLiteral } from "./template-literal";
 import { mountThisExpression } from "./this-expression";
 import { mountThrowStatement } from "./throw-statement";
 import { mountUnaryExpression } from "./unary-expression";
+import { mountUpdateExpression } from "./update-expression";
 import { mountVariableDeclaration } from "./variable-declaration";
 
 export const useSymbol = (sandbox: ISandbox): void => {
@@ -63,12 +64,6 @@ export const useExpression = (sandbox: ISandbox): void => {
     sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
 };
 
-export const useCalculate = (sandbox: ISandbox): void => {
-
-    sandbox.mount('BinaryExpression', Calculate_Evaluators.binaryExpressionEvaluator);
-    sandbox.mount('UpdateExpression', Calculate_Evaluators.updateExpressionEvaluator);
-};
-
 export const useModule = (sandbox: ISandbox): void => {
 
     sandbox.mount('ExportNamedDeclaration', Module_Evaluators.exportsNamedDeclarationEvaluator);
@@ -90,13 +85,13 @@ export const useEverything = (sandbox: ISandbox): void => {
 
     useSymbol(sandbox);
     useExpression(sandbox);
-    useCalculate(sandbox);
     useModule(sandbox);
     useException(sandbox);
 
     mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
     mountAssignmentExpression(sandbox);
+    mountBinaryExpression(sandbox);
     mountBlockStatement(sandbox);
     mountBreakStatement(sandbox);
     mountCallExpression(sandbox);
@@ -121,5 +116,6 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountThisExpression(sandbox);
     mountThrowStatement(sandbox);
     mountUnaryExpression(sandbox);
+    mountUpdateExpression(sandbox);
     mountVariableDeclaration(sandbox);
 };

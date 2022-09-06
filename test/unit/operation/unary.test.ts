@@ -12,7 +12,7 @@ import { getUnaryOperation } from '../../../src/operation/unary';
 
 describe('Given Unary Operation', (): void => {
 
-    const chance: Chance.Chance = new Chance('util-operations');
+    const chance: Chance.Chance = new Chance('operation-unary');
 
     it('should be able to return correct result', (): void => {
 

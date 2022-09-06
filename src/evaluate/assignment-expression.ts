@@ -9,10 +9,10 @@ import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
+import { getAssignmentOperation } from "../operation/assignment";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
 import { validateObjectIsSandboxStructure } from "../util/node/validator";
-import { getAssignmentOperation } from "../util/operation";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
@@ -81,7 +81,9 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
             }
         })();
 
-        const operation: ((variableArg: Variable<any>, value: any) => any) | null = getAssignmentOperation(node.operator);
+        const operation: ((variableArg: Variable<any>, value: any) => any) | null =
+            getAssignmentOperation(node.operator);
+
         if (!operation) {
 
             throw error(ERROR_CODE.ASSIGNMENT_NOT_SUPPORT, node.operator, node, trace);
