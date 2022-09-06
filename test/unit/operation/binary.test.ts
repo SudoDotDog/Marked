@@ -8,7 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import * as EST from "estree";
-import { getBinaryOperation } from '../../../src/operation/binary';
+import { getBinaryOperation } from '../../../src/operation/binary-expression/operators';
 
 describe('Given Binary Operation', (): void => {
 
@@ -22,7 +22,7 @@ describe('Given Binary Operation', (): void => {
             = ['!=', '!==', '%', '&', '*',
                 '**', '+', '-', '/', '<',
                 '<<', '<=', '==', '===', '>',
-                '>=', '>>', '>>>', '^', 'in',
+                '>=', '>>', '>>>', '^',
                 'instanceof', '|'];
 
         binaryOperators.forEach((operator: EST.BinaryOperator) => {

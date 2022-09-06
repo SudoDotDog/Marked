@@ -67,6 +67,9 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.POSITIVE_UPDATE_ONLY_AVAILABLE_FOR_VALID_NUMBER]: 'Positive update only available for valid number', // 3320
 
+    [ERROR_CODE.IN_BINARY_OPERATION_ONLY_ALLOW_ON_MAP_OR_CLASS]: 'In binary operation only allow on map or class', // 3330
+    [ERROR_CODE.IN_BINARY_OPERATION_ONLY_ALLOW_ON_IDENTIFIER]: 'In binary operation only allow on identifier', // 3331
+
     [ERROR_CODE.UNKNOWN_LANGUAGE]: 'Unknown language', // 4050
 
     [ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR]: 'Debugger without debug interceptor', // 5301

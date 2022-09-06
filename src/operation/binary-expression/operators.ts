@@ -1,12 +1,12 @@
 /**
  * @author WMXPY
- * @namespace Operation
- * @description Binary
+ * @namespace Operation_BinaryExpression
+ * @description Operators
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error-code";
-import { error } from "../util/error/error";
+import { ERROR_CODE } from "../../declare/error-code";
+import { error } from "../../util/error/error";
 
 export const getBinaryOperation
     = (symbol: EST.BinaryOperator)
@@ -39,7 +39,6 @@ export const getBinaryOperation
             case '>>': return null;
             case '>>>': return null;
             case '^': return null;
-            case 'in': return null;
             case 'instanceof': return null;
             case '|': return null;
         }

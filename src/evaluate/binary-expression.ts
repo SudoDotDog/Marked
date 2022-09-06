@@ -9,7 +9,8 @@ import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
-import { getBinaryOperation } from "../operation/binary";
+import { executeInBinaryOperator } from "../operation/binary-expression/in";
+import { getBinaryOperation } from "../operation/binary-expression/operators";
 import { error } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -27,12 +28,21 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
         const evalLeft: () => Promise<any> = async () => await this.execute(node.left, scope, nextTrace);
         const evalRight: () => Promise<any> = async () => await this.execute(node.right, scope, nextTrace);
 
-        const operation: ((left: any, right: any) => any) | null = getBinaryOperation(node.operator);
+        if (node.operator === 'in') {
+
+            const bindingExecuteInBinaryOperator = executeInBinaryOperator.bind(this);
+            return bindingExecuteInBinaryOperator(node.left, node.right, scope, nextTrace);
+        }
+
+        const operation: ((left: any, right: any) => any) | null =
+            getBinaryOperation(node.operator);
 
         if (!operation) {
-
             throw error(ERROR_CODE.BINARY_NOT_SUPPORT, node.operator, node, trace);
         }
 
-        return operation(await evalLeft(), await evalRight());
+        const left: any = await evalLeft();
+        const right: any = await evalRight();
+
+        return operation(left, right);
     };

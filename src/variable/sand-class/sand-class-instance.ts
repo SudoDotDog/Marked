@@ -41,6 +41,15 @@ export class SandClassInstance {
         return this._targetClass.lookFor(key);
     }
 
+    public lookForHas(key: string): boolean {
+
+        if (this._body.has(key)) {
+            return true;
+        }
+
+        return this._targetClass.lookForHas(key);
+    }
+
     public combineBody(): SandMap<any> {
 
         const result: SandMap<any> = new SandMap();

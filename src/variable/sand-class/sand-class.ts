@@ -57,6 +57,17 @@ export class SandClass {
         return null;
     }
 
+    public lookForHas(key: string): boolean {
+
+        if (this._map.has(key)) {
+            return true;
+        }
+        if (this._superClass) {
+            return this._superClass.lookForHas(key);
+        }
+        return false;
+    }
+
     public setSuperClass(superClass: SandClass): this {
 
         this._superClass = superClass;
