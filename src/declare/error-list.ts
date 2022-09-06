@@ -65,6 +65,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.NEGATIVE_UNARY_ONLY_AVAILABLE_FOR_VALID_NUMBER]: 'Negative unary only available for valid number', // 3310
 
+    [ERROR_CODE.POSITIVE_UPDATE_ONLY_AVAILABLE_FOR_VALID_NUMBER]: 'Positive update only available for valid number', // 3320
+
     [ERROR_CODE.UNKNOWN_LANGUAGE]: 'Unknown language', // 4050
 
     [ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR]: 'Debugger without debug interceptor', // 5301

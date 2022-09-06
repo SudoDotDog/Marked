@@ -46,4 +46,32 @@ describe('Given Integration Optional (Logical) Cases', (): void => {
 
         expect(result.exports.default).to.be.equal(fallback);
     });
+
+    it('should be able to get result with true optional logical operator', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: string = chance.word();
+        const fallback: string = chance.word();
+
+        const result: MarkedResult = await sandbox.evaluate(`const map={a:"${value}"};export default map.a ?? "${fallback}";`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(value);
+    });
+
+    it('should be able to get fallback result with true optional logical operator', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: string = chance.word();
+        const fallback: string = chance.word();
+
+        const result: MarkedResult = await sandbox.evaluate(`const map={a:"${value}"};export default map.b ?? "${fallback}";`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(fallback);
+    });
 });

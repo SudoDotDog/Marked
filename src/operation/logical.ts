@@ -14,6 +14,7 @@ export const getLogicalOperation
 
             case '&&': return (left: any, right: any) => left && right;
             case '||': return (left: any, right: any) => left || right;
+            case '??': return (left: any, right: any) => left ?? right;
         }
 
         return null;

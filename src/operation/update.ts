@@ -5,6 +5,8 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "../declare/error-code";
+import { error } from "../util/error/error";
 
 export const getUpdateOperation
     = (symbol: EST.UpdateOperator)
@@ -12,8 +14,12 @@ export const getUpdateOperation
 
         switch (symbol) {
 
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            case '++': return (value: any) => value + 1;
+            case '++': return (value: any) => {
+                if (typeof value === 'number') {
+                    return value + 1;
+                }
+                throw error(ERROR_CODE.POSITIVE_UPDATE_ONLY_AVAILABLE_FOR_VALID_NUMBER, value);
+            };
             case '--': return (value: any) => value - 1;
         }
 
