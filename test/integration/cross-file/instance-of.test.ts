@@ -8,6 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
+import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Cross File (Instance Of) Cases', (): void => {
@@ -29,7 +30,7 @@ describe('Given Integration Cross File (Instance Of) Cases', (): void => {
                 script: [
                     `class A{}`,
                     `export default A;`,
-                ].join('\n'),
+                ].join(New_Line_Character),
                 scriptLocation: ScriptLocation.create('mock', 'test'),
             };
         });
@@ -53,7 +54,7 @@ describe('Given Integration Cross File (Instance Of) Cases', (): void => {
                     script: [
                         `class A{}`,
                         `export default A;`,
-                    ].join('\n'),
+                    ].join(New_Line_Character),
                     scriptLocation: ScriptLocation.create('mock', 'class'),
                 };
             } else if (path === 'instance') {
@@ -63,7 +64,7 @@ describe('Given Integration Cross File (Instance Of) Cases', (): void => {
                         `import A from 'class';`,
                         `const a = new A();`,
                         `export default a;`,
-                    ].join('\n'),
+                    ].join(New_Line_Character),
                     scriptLocation: ScriptLocation.create('mock', 'instance'),
                 };
             }
@@ -74,7 +75,7 @@ describe('Given Integration Cross File (Instance Of) Cases', (): void => {
             `import A from 'class';`,
             `import a from 'instance';`,
             `export default a instanceof A;`,
-        ].join('\n'));
+        ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 

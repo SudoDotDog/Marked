@@ -7,7 +7,8 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugLineBreakPoint, MarkedDebugRangeBreakPoint, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../../src';
+import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugLineBreakPoint, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../../src';
+import { New_Line_Character } from '../../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../../util/assert-result';
 
 describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
@@ -42,7 +43,7 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
         const result: MarkedResult = await sandbox.evaluate([
             `const value1=${value1};`,
             `const value2=${value2};`,
-        ].join('\n'), [
+        ].join(New_Line_Character), [
             MarkedDebugLineBreakPoint.fromLineNumber(2),
         ]);
 
@@ -53,75 +54,6 @@ describe('Given Integration Debug (Break Point Simple) Cases', (): void => {
         expect(debuggerSnapshot).to.be.not.null;
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
             value1,
-        });
-    });
-
-    it('should be able to enter debug with range break point', async (): Promise<void> => {
-
-        let triggered: number = 0;
-        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
-
-        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
-            snapshot: MarkedDebugSnapshot,
-            flowController: MarkedDebugFlowController,
-        ) => {
-            triggered++;
-            debuggerSnapshot = snapshot;
-            flowController.continue();
-        });
-
-        const sandbox: Sandbox = createSandbox();
-        sandbox.setDebugInterceptor(interceptor);
-
-        const result: MarkedResult = await sandbox.evaluate(
-            `const value1="value1";const value2="value2";`,
-            [
-                // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                MarkedDebugRangeBreakPoint.fromRangeStart(24),
-            ],
-        );
-
-        assertSucceedMarkedResult(result);
-
-        expect(triggered).to.be.equal(1);
-
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
-            value1: "value1",
-        });
-    });
-
-    it('should be able to enter debug with range break point - not hit path', async (): Promise<void> => {
-
-        let triggered: number = 0;
-        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
-
-        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
-            snapshot: MarkedDebugSnapshot,
-            flowController: MarkedDebugFlowController,
-        ) => {
-            triggered++;
-            debuggerSnapshot = snapshot;
-            flowController.continue();
-        });
-
-        const sandbox: Sandbox = createSandbox();
-        sandbox.setDebugInterceptor(interceptor);
-
-        const result: MarkedResult = await sandbox.evaluate(
-            `const value1="value1";const value2="value2";`,
-            [
-                // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                MarkedDebugRangeBreakPoint.fromRangeStart(20),
-            ],
-        );
-
-        assertSucceedMarkedResult(result);
-
-        expect(triggered).to.be.equal(1);
-
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({
         });
     });
 });

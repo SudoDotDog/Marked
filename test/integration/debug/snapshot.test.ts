@@ -344,10 +344,6 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(debuggerSnapshot.location.endPosition.column).to.be.equal(23);
         expect(debuggerSnapshot.location.endPosition.line).to.be.equal(1);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(debuggerSnapshot.location.startRange).to.be.equal(14);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(debuggerSnapshot.location.endRange).to.be.equal(23);
 
         expect(debuggerSnapshot.sliceCodeClip(sourceCode)).to.be.equal(`debugger;`);
     });

@@ -8,6 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { formatTypeScriptCode } from '../../../../src';
+import { New_Line_Character } from '../../../../src/host/declare';
 
 describe('Given Integration Parse Format (TypeScript) Cases', (): void => {
 
@@ -18,12 +19,12 @@ describe('Given Integration Parse Format (TypeScript) Cases', (): void => {
 
         const typeScriptCode: string = [
             `export const a: string = 'hello';`,
-        ].join('\n');
+        ].join(New_Line_Character);
 
         const formatted: string = await formatTypeScriptCode(typeScriptCode);
 
         expect(formatted).to.be.equal([
             `export const a: string = 'hello';`,
-        ].join('\n'));
+        ].join(New_Line_Character));
     });
 });

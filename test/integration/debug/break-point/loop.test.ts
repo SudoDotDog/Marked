@@ -8,6 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugLineBreakPoint, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../../src';
+import { New_Line_Character } from '../../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../../util/assert-result';
 
 describe('Given Integration Debug (Break Point Loop) Cases', (): void => {
@@ -45,7 +46,7 @@ describe('Given Integration Debug (Break Point Loop) Cases', (): void => {
             `for(let i=0;i<5;i++){`,
             `deject(i);`,
             `}`,
-        ].join('\n'), [
+        ].join(New_Line_Character), [
             MarkedDebugLineBreakPoint.fromLineNumber(2),
         ]);
 

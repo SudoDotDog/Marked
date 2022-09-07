@@ -8,6 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
+import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Cross File (Class) Cases', (): void => {
@@ -30,7 +31,7 @@ describe('Given Integration Cross File (Class) Cases', (): void => {
                 script: [
                     `class A{a=${aValue}}`,
                     `export default A;`,
-                ].join('\n'),
+                ].join(New_Line_Character),
                 scriptLocation: ScriptLocation.create('mock', 'test'),
             };
         });
@@ -53,7 +54,7 @@ describe('Given Integration Cross File (Class) Cases', (): void => {
                 script: [
                     `class A{a=${aValue}}`,
                     `export default A;`,
-                ].join('\n'),
+                ].join(New_Line_Character),
                 scriptLocation: ScriptLocation.create('mock', 'test'),
             };
         });
@@ -77,7 +78,7 @@ describe('Given Integration Cross File (Class) Cases', (): void => {
                     `class A{a=${aValue}}`,
                     `const a = new A();`,
                     `export {a};`,
-                ].join('\n'),
+                ].join(New_Line_Character),
                 scriptLocation: ScriptLocation.create('mock', 'test'),
             };
         });

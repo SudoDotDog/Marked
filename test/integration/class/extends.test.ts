@@ -8,6 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
+import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Class (Extends) Cases', (): void => {
@@ -31,7 +32,7 @@ describe('Given Integration Class (Extends) Cases', (): void => {
             `class ${className} extends ${originName}{}`,
             `export const AName = ${originName}.name;`,
             `export const BName = ${className}.name;`,
-        ].join('\n'));
+        ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
@@ -51,7 +52,7 @@ describe('Given Integration Class (Extends) Cases', (): void => {
             `class ${className} extends ${originName}{}`,
             `const b=new ${className}();`,
             `export default b.superValue;`,
-        ].join('\n'));
+        ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
@@ -68,7 +69,7 @@ describe('Given Integration Class (Extends) Cases', (): void => {
             `class C extends B{}`,
             `const c=new C();`,
             `export default c.superValue;`,
-        ].join('\n'));
+        ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
@@ -89,7 +90,7 @@ describe('Given Integration Class (Extends) Cases', (): void => {
             `const b=new ${className}();`,
             `export const AValue = a.superValue;`,
             `export const BValue = b.superValue;`,
-        ].join('\n'));
+        ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
