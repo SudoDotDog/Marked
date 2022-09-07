@@ -6,15 +6,16 @@
 
 import * as EST from "estree";
 import { Scope } from "../../variable/scope";
+import { Trace } from "../../variable/trace/trace";
 import { MarkedDebugSnapshotLocation } from "./location";
 import { MarkedDebugSnapshotScope } from "./scope";
 
 export class MarkedDebugSnapshot {
 
-    public static fromScopeAndNode(scope: Scope, node: EST.Node): MarkedDebugSnapshot {
+    public static fromScopeAndNode(scope: Scope, node: EST.Node, trace: Trace): MarkedDebugSnapshot {
 
         const snapshotScope: MarkedDebugSnapshotScope = MarkedDebugSnapshotScope.fromScope(scope);
-        const location: MarkedDebugSnapshotLocation = MarkedDebugSnapshotLocation.fromNode(node);
+        const location: MarkedDebugSnapshotLocation = MarkedDebugSnapshotLocation.fromNode(node, trace);
 
         return new MarkedDebugSnapshot(snapshotScope, location);
     }

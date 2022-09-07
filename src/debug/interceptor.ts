@@ -20,7 +20,7 @@ export class MarkedDebugInterceptor {
     private readonly _listener: DebugInterceptorListener;
 
     private constructor(
-        listener: DebugInterceptorListener
+        listener: DebugInterceptorListener,
     ) {
 
         this._listener = listener;
