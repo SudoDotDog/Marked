@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "JavaScript code runner in JavaScript, safe with marked territory, asynchronous",
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://marked.sudo.dog",
   "dependencies": {
     "acorn": "8.8.0",
+    "sourcemap-codec": "^1.4.8",
     "typescript": "4.8.2"
   },
   "devDependencies": {
