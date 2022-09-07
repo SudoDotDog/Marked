@@ -25,7 +25,6 @@ describe('Given Integration Parse Emit (Declaration) Cases', (): void => {
 
         expect(javaScriptCode).to.be.equal([
             `export declare const a: string;`,
-            '',
         ].join(New_Line_Character));
     });
 });

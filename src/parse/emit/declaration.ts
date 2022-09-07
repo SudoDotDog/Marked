@@ -6,7 +6,7 @@
 
 import * as TS from "typescript";
 import { createTypeScriptComplierHost } from "../../host/complier";
-import { Host_Target_File } from "../../host/declare";
+import { Host_Target_File, New_Line_Character } from "../../host/declare";
 
 export const emitTypeScriptDeclaration = async (
     sourceCode: string,
@@ -19,9 +19,17 @@ export const emitTypeScriptDeclaration = async (
         undefined,
         undefined,
         (declarationCode: string) => {
+
             result = declarationCode;
+            if (result.endsWith(New_Line_Character)) {
+                result = result.substring(
+                    0,
+                    result.length - New_Line_Character.length,
+                );
+            }
         },
     );
+
     const program: TS.Program = TS.createProgram({
         rootNames: [Host_Target_File],
         options: {

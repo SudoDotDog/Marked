@@ -21,6 +21,7 @@ export const createTypeScriptComplierHost = (
     const host: TS.CompilerHost = {
 
         getSourceFile: (fileName: string): TS.SourceFile | undefined => {
+
             if (fileName !== `${Host_Target_File}.ts`) {
                 return undefined;
             }
