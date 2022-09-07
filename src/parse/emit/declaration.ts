@@ -17,6 +17,7 @@ export const emitTypeScriptDeclaration = async (
     const host: TS.CompilerHost = createTypeScriptComplierHost(
         sourceCode,
         undefined,
+        undefined,
         (declarationCode: string) => {
             result = declarationCode;
         },

@@ -7,17 +7,17 @@
 import * as Acorn from 'acorn';
 import * as EST from "estree";
 
-export const parseCodeToESTree = async (sourceCode: string): Promise<EST.BaseNode> => {
+export const parseCodeToESTree = async (sourceCode: string): Promise<EST.Node> => {
 
-    const AST: EST.BaseNode = Acorn.Parser.parse(sourceCode, {
+    const AST: EST.Node = Acorn.Parser.parse(sourceCode, {
 
         locations: true,
-        ranges: true,
         allowReturnOutsideFunction: false,
         allowAwaitOutsideFunction: false,
         allowHashBang: false,
         sourceType: 'module',
         ecmaVersion: 'latest',
-    });
+    }) as EST.Node;
+
     return AST;
 };
