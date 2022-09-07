@@ -11,7 +11,6 @@ import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { getUnaryOperation } from "../operation/unary";
 import { error } from "../util/error/error";
-import { rummageSpecialKeyword } from "../util/hack";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 
@@ -27,10 +26,6 @@ export const unaryExpressionEvaluator: Evaluator<'UnaryExpression'> =
 
         const evalValue: () => Promise<any> = async () => await this.execute(node.argument, scope, nextTrace);
         const value: any = await evalValue();
-
-        if (rummageSpecialKeyword(node.operator, value, scope, this)) {
-            return value;
-        }
 
         const operation: ((valueArg: any) => any) | null = getUnaryOperation(node.operator);
         if (operation === null) {

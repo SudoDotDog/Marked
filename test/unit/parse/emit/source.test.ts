@@ -22,7 +22,7 @@ describe('Given (Emit Source) Parse Methods', (): void => {
 
         const result: string = await emitTypeScriptSource(code);
 
-        expect(result).to.be.equal(code + New_Line_Character);
+        expect(result).to.be.equal(code);
     });
 
     it('should be able to emit source - module with slash', async (): Promise<void> => {
@@ -34,6 +34,6 @@ describe('Given (Emit Source) Parse Methods', (): void => {
 
         const result: string = await emitTypeScriptSource(code);
 
-        expect(result).to.be.equal(code + New_Line_Character);
+        expect(result).to.be.equal(code);
     });
 });
