@@ -4,7 +4,6 @@
  */
 
 export * from "./debug/break-point/line";
-export * from "./debug/break-point/range";
 export * from "./debug/declare";
 export * from "./debug/flow-controller";
 export * from "./debug/interceptor";
@@ -24,7 +23,7 @@ export { marked as Marked } from "./marked/marked";
 export { Sandbox } from "./marked/sandbox";
 export * from "./parse/emit/declaration";
 export * from "./parse/emit/source";
-export * from "./parse/emit/source-and-declaration";
+export * from "./parse/emit/transform";
 export * from "./parse/format/typescript";
 export { MarkedError } from "./util/error/error";
 export { SandClass } from "./variable/sand-class/sand-class";

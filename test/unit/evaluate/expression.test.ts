@@ -12,6 +12,7 @@ import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import * as Evaluator_Expressions from '../../../src/evaluate/expression';
 import { Sandbox } from '../../../src/marked/sandbox';
 import { getBinaryOperation } from '../../../src/operation/binary-expression/operators';
+import { RawSourceMapLocationFinder } from '../../../src/source-map/location-finder/raw';
 import { Flag } from '../../../src/variable/flag';
 import { SandList } from '../../../src/variable/sand-list';
 import { SandMap } from '../../../src/variable/sand-map';
@@ -351,7 +352,10 @@ describe('Given Expression evaluators', (): void => {
             sandbox.when('Literal', mockLLiteralEvaluator);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             sandbox.when('BreakStatement', (node: EST.BreakStatement) => Flag.fromBreak(
-                Trace.init(ScriptLocation.createRoot()),
+                Trace.init(
+                    ScriptLocation.createRoot(),
+                    RawSourceMapLocationFinder.fromEmpty(),
+                ),
             ));
 
             sandbox.when('SwitchCase', Evaluator_Expressions.switchCaseEvaluator);

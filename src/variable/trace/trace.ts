@@ -9,12 +9,14 @@ import { MarkedDebugBreakPointController } from "../../debug/break-point/control
 import { ERROR_CODE } from "../../declare/error-code";
 import { ScriptLocation } from "../../declare/script-location";
 import { ITrace } from "../../declare/variable";
+import { BaseSourceMapLocationFinder } from "../../source-map/location-finder/base";
 import { error } from "../../util/error/error";
 
 export class Trace implements ITrace {
 
     public static init(
         scriptLocation: ScriptLocation,
+        locationFinder: BaseSourceMapLocationFinder,
         breakPointController?: MarkedDebugBreakPointController,
     ): Trace {
 
@@ -22,6 +24,7 @@ export class Trace implements ITrace {
             scriptLocation,
             null,
             undefined,
+            locationFinder,
             breakPointController,
         );
     }
@@ -31,12 +34,14 @@ export class Trace implements ITrace {
     protected readonly _parent: Trace | null;
     protected readonly _node: EST.Node | null;
 
-    protected readonly _breakPointController: MarkedDebugBreakPointController | null = null;
+    protected readonly _locationFinder: BaseSourceMapLocationFinder | null;
+    protected readonly _breakPointController: MarkedDebugBreakPointController | null;
 
     protected constructor(
         scriptLocation: ScriptLocation,
         node: EST.Node | null,
         parent?: Trace,
+        locationFinder?: BaseSourceMapLocationFinder,
         breakPointController?: MarkedDebugBreakPointController,
     ) {
 
@@ -45,6 +50,7 @@ export class Trace implements ITrace {
         this._parent = parent ?? null;
         this._node = node;
 
+        this._locationFinder = locationFinder ?? null;
         this._breakPointController = breakPointController ?? null;
     }
 
@@ -72,6 +78,17 @@ export class Trace implements ITrace {
             return this._parent.ensureBreakPointController();
         }
         throw error(ERROR_CODE.INTERNAL_ERROR, 'No Break Point Controller');
+    }
+
+    public ensureLocationFinder(): BaseSourceMapLocationFinder {
+
+        if (this._locationFinder !== null) {
+            return this._locationFinder;
+        }
+        if (this._parent) {
+            return this._parent.ensureLocationFinder();
+        }
+        throw error(ERROR_CODE.INTERNAL_ERROR, 'No Location Finder');
     }
 
     public getNode(): EST.Node | null {

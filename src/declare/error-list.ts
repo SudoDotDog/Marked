@@ -93,6 +93,9 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.DECLARATION_INIT_TYPE_NOT_MATCHED]: 'Declaration init type not matched', // 6201
     [ERROR_CODE.DECLARATION_INIT_SIZE_NOT_MATCHED]: 'Declaration init size not matched', // 6202
 
+    [ERROR_CODE.CANNOT_FIND_ORIGINAL_POSITION_FROM_LINE]: 'Cannot find original position from line', // 6301
+    [ERROR_CODE.CANNOT_FIND_ORIGINAL_POSITION_FROM_COLUMN]: 'Cannot find original position from column', // 6302
+
     [ERROR_CODE.DUPLICATED_VARIABLE]: 'Duplicated variable declaration', // 7005
 
     [ERROR_CODE.VARIABLE_IS_NOT_DEFINED]: 'Variable is not defined', // 7102

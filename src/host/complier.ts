@@ -8,11 +8,13 @@ import * as TS from "typescript";
 import { Host_Target_File, New_Line_Character } from "./declare";
 
 export type CreateTypeScriptHostWriteSource = (sourceCode: string) => void;
+export type CreateTypeScriptHostWriteSourceMap = (sourceMap: string) => void;
 export type CreateTypeScriptHostWriteDeclaration = (declarationCode: string) => void;
 
 export const createTypeScriptComplierHost = (
     sourceCode: string,
     emitSource?: CreateTypeScriptHostWriteSource,
+    emitSourceMap?: CreateTypeScriptHostWriteSourceMap,
     emitDeclaration?: CreateTypeScriptHostWriteDeclaration,
 ): TS.CompilerHost => {
 
@@ -29,7 +31,12 @@ export const createTypeScriptComplierHost = (
             );
         },
         writeFile: (fileName: string, data: string): void => {
-            if (fileName === `${Host_Target_File}.js`) {
+
+            if (fileName === `${Host_Target_File}.js.map`) {
+                if (typeof emitSourceMap !== 'undefined') {
+                    emitSourceMap(data);
+                }
+            } else if (fileName === `${Host_Target_File}.js`) {
                 if (typeof emitSource !== 'undefined') {
                     emitSource(data);
                 }

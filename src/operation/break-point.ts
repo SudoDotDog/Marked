@@ -28,7 +28,7 @@ export const pauseForBreakPoint = async function (this: Sandbox, node: EST.Node,
 
     const interceptor: MarkedDebugInterceptor = this.ensureGetDebugInterceptor();
 
-    const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScopeAndNode(scope, node);
+    const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScopeAndNode(scope, node, trace);
     const flowController: MarkedDebugFlowController = MarkedDebugFlowController.fromOptions({
         continueMethod: () => {
             pauseResolver();
