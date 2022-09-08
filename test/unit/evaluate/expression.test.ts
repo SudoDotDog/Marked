@@ -14,8 +14,6 @@ import { Sandbox } from '../../../src/marked/sandbox';
 import { getBinaryOperation } from '../../../src/operation/binary-expression/operators';
 import { RawSourceMapLocationFinder } from '../../../src/source-map/location-finder/raw';
 import { Flag } from '../../../src/variable/flag';
-import { SandList } from '../../../src/variable/sand-list';
-import { SandMap } from '../../../src/variable/sand-map';
 import { Scope } from '../../../src/variable/scope';
 import { Trace } from '../../../src/variable/trace/trace';
 import { Variable } from '../../../src/variable/variable';
@@ -91,84 +89,6 @@ describe('Given Expression evaluators', (): void => {
             await Evaluator_Expressions.ifStatementEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
             expect(result).to.be.deep.equal([sadValue]);
-        });
-    });
-
-    describe('Given an <ForInStatement> evaluator', (): void => {
-
-        it('should get keys one by one', async (): Promise<void> => {
-
-            const value: string = chance.string();
-            const testNode: EST.ForInStatement = {
-
-                type: 'ForInStatement',
-                left: {
-                    type: 'VariableDeclaration',
-                    declarations: [{
-                        type: 'VariableDeclarator',
-                        id: {
-                            type: 'Identifier',
-                            name: 'left',
-                        },
-                    }],
-                    kind: 'const',
-                },
-                right: createIdentifier(value),
-                body: {
-                    type: 'BlockStatement',
-                    body: [],
-                },
-            };
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            sandbox.when('Identifier', (node: EST.Identifier) => new SandMap<any>().set(value, undefined));
-
-            await Evaluator_Expressions.forInStatementEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(sandbox.count).to.be.equal(2);
-
-            const variable: Variable<any> = scope.children[0].rummage('left') as Variable<any>;
-            expect(variable.get()).to.be.equal(value);
-        });
-    });
-
-    describe('Given an <ForOfStatement> evaluator', (): void => {
-
-        it('should get value one by one', async (): Promise<void> => {
-
-            const value: string = chance.string();
-            const testNode: EST.ForOfStatement = {
-
-                type: 'ForOfStatement',
-                left: {
-                    type: 'VariableDeclaration',
-                    declarations: [{
-                        type: 'VariableDeclarator',
-                        id: {
-                            type: 'Identifier',
-                            name: 'left',
-                        },
-                    }],
-                    kind: 'const',
-                },
-                await: false,
-                right: createIdentifier(value),
-                body: {
-                    type: 'BlockStatement',
-                    body: [],
-                },
-            };
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            sandbox.when('Identifier', (node: EST.Identifier) => SandList.create([1, 2, 3, 4, 5]));
-
-            await Evaluator_Expressions.forOfStatementEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            expect(sandbox.count).to.be.equal(6);
-            expect(scope.children).to.be.lengthOf(5);
-            scope.children.forEach((child: MockScope, index: number) =>
-                expect((child.rummage('left') as Variable<number>).get()).to.be.equal(index + 1));
         });
     });
 
