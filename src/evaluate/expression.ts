@@ -8,48 +8,10 @@ import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { Sandbox } from "../marked/sandbox";
-import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
-import { LimitCounter } from "../util/node/context";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
-
-export const ifStatementEvaluator: Evaluator<'IfStatement'> =
-    async function (this: Sandbox, node: EST.IfStatement, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-        const subScope: Scope = scope.child();
-
-        const statement: boolean = Boolean(await this.execute(node.test, scope, nextTrace));
-        if (statement) {
-
-            return await this.execute(node.consequent, subScope, nextTrace);
-        } else {
-
-            if (node.alternate) {
-
-                return await this.execute(node.alternate, subScope, nextTrace);
-            }
-        }
-        return;
-    };
-
-export const sequenceExpressionEvaluator: Evaluator<'SequenceExpression'> =
-    async function (this: Sandbox, node: EST.SequenceExpression, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const returnStatement: EST.Node
-            = assert(node.expressions.pop() as EST.Node).is.exist().firstValue();
-        for (const statement of node.expressions) {
-
-            await this.execute(statement, scope, nextTrace);
-        }
-        const result: any = await this.execute(returnStatement, scope, nextTrace);
-
-        return result;
-    };
 
 export const switchCaseEvaluator: Evaluator<'SwitchCase'> =
     async function (this: Sandbox, node: EST.SwitchCase, scope: Scope, trace: Trace): Promise<any> {
@@ -97,37 +59,6 @@ export const switchExpressionEvaluator: Evaluator<'SwitchStatement'> =
                     else if (result.isContinue()) { continue loop; }
                     else { throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace); }
                 }
-            }
-        }
-
-        return;
-    };
-
-export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
-    async function (this: Sandbox, node: EST.WhileStatement, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxWhileLoopLimit'));
-        const test: () => Promise<boolean>
-            = async () => await this.execute(node.test, scope, nextTrace);
-
-        loop: while (await test()) {
-
-            if (limitCounter.addAndCheck()) {
-
-                this.break();
-                throw error(ERROR_CODE.MAXIMUM_WHILE_LOOP_LIMITED_EXCEED, void 0, node, trace);
-            }
-
-            const subScope: Scope = scope.child();
-            const result: any = await this.execute(node.body, subScope, nextTrace);
-            if (result instanceof Flag) {
-
-                if (result.isBreak()) { break loop; }
-                else if (result.isReturn()) { return result; }
-                else if (result.isContinue()) { continue loop; }
-                else { throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace); }
             }
         }
 

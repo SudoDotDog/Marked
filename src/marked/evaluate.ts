@@ -31,6 +31,7 @@ import { mountForStatement } from "../evaluate/for-statement";
 import { mountFunctionDeclaration } from "../evaluate/function-declaration";
 import { mountFunctionExpression } from "../evaluate/function-expression";
 import { mountIdentifier } from "../evaluate/identifier";
+import { mountIfStatement } from "../evaluate/if-statement";
 import { mountImportDeclaration } from "../evaluate/import-declaration";
 import { mountImportDefaultSpecifier } from "../evaluate/import-default-specifier";
 import { mountImportNamespaceSpecifier } from "../evaluate/import-namespace-specifier";
@@ -44,6 +45,7 @@ import { mountObjectExpression } from "../evaluate/object-expression";
 import { mountProgram } from "../evaluate/program";
 import { mountPropertyDefinition } from "../evaluate/property-definition";
 import { mountReturnStatement } from "../evaluate/return-statement";
+import { mountSequenceExpression } from "../evaluate/sequence-expression";
 import { mountSpreadElement } from "../evaluate/spread-element";
 import { mountTemplateLiteral } from "../evaluate/template-literal";
 import { mountThisExpression } from "../evaluate/this-expression";
@@ -52,14 +54,9 @@ import { mountTryStatement } from "../evaluate/try-statement";
 import { mountUnaryExpression } from "../evaluate/unary-expression";
 import { mountUpdateExpression } from "../evaluate/update-expression";
 import { mountVariableDeclaration } from "../evaluate/variable-declaration";
+import { mountWhileStatement } from "../evaluate/while-statement";
 
 export const useExpression = (sandbox: ISandbox): void => {
-
-    sandbox.mount('SequenceExpression', Expression_Evaluators.sequenceExpressionEvaluator);
-
-    sandbox.mount('IfStatement', Expression_Evaluators.ifStatementEvaluator);
-
-    sandbox.mount('WhileStatement', Expression_Evaluators.whileStatementEvaluator);
 
     sandbox.mount('SwitchCase', Expression_Evaluators.switchCaseEvaluator);
     sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
@@ -94,6 +91,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
     mountIdentifier(sandbox);
+    mountIfStatement(sandbox);
     mountImportDeclaration(sandbox);
     mountImportDefaultSpecifier(sandbox);
     mountImportNamespaceSpecifier(sandbox);
@@ -107,6 +105,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountProgram(sandbox);
     mountPropertyDefinition(sandbox);
     mountReturnStatement(sandbox);
+    mountSequenceExpression(sandbox);
     mountSpreadElement(sandbox);
     mountTemplateLiteral(sandbox);
     mountThisExpression(sandbox);
@@ -115,4 +114,5 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountUnaryExpression(sandbox);
     mountUpdateExpression(sandbox);
     mountVariableDeclaration(sandbox);
+    mountWhileStatement(sandbox);
 };
