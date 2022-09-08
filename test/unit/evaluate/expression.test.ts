@@ -38,51 +38,6 @@ describe('Given Expression evaluators', (): void => {
         trace.reset();
     });
 
-    describe('Given an <DoWhileStatement> evaluator', (): void => {
-
-        it('should do expression while the test is working', async (): Promise<void> => {
-
-            const value: string = chance.string();
-            const result: any[] = [];
-            const getLeft: () => number = () => {
-                return result.length;
-            };
-
-            const testNode: EST.DoWhileStatement = {
-
-                type: 'DoWhileStatement',
-                test: {
-                    type: 'BinaryExpression',
-                    left: getLeft as any,
-                    right: createLiteral(5),
-                    operator: '<',
-                },
-                body: {
-                    type: 'ExpressionStatement',
-                    expression: createIdentifier(value),
-                },
-            };
-
-            sandbox.when('BinaryExpression', (node: EST.BinaryExpression) => {
-
-                const operation: any = getBinaryOperation(node.operator) as any;
-                const left: number = (node.left as any)();
-                const right: number = (node.right as EST.Literal).value as number;
-                return operation(left, right);
-            });
-            sandbox.when('ExpressionStatement', (node: EST.ExpressionStatement) => sandbox.execute(node.expression, scope, trace));
-            sandbox.when('Identifier', (node: EST.Identifier) => result.push(node.name));
-
-            await Evaluator_Expressions.doWhileStatementEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            expect(sandbox.count).to.be.equal(15);
-            expect(trace).to.be.lengthOf(1);
-            expect(result).to.be.lengthOf(5);
-        });
-    });
-
     describe('Given an <IfStatement> evaluator', (): void => {
 
         it('should be able to handle if statement - happy path', async (): Promise<void> => {

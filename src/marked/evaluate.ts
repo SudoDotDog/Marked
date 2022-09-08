@@ -16,12 +16,15 @@ import { mountCatchClause } from "../evaluate/catch-clause";
 import { mountChainExpression } from "../evaluate/chain-expression";
 import { mountClassBody } from "../evaluate/class-body";
 import { mountClassDeclaration } from "../evaluate/class-declaration";
+import { mountConditionalExpression } from "../evaluate/conditional-expression";
 import { mountContinueStatement } from "../evaluate/continue-statement";
 import { mountDebuggerStatement } from "../evaluate/debugger-statement";
+import { mountDoWhileStatement } from "../evaluate/do-while-statement";
 import { mountEmptyStatement } from "../evaluate/empty-statement";
 import { mountExportDefaultDeclaration } from "../evaluate/export-default-declaration";
 import { mountExportNamedDeclaration } from "../evaluate/export-named-declaration";
 import * as Expression_Evaluators from "../evaluate/expression";
+import { mountExpressionStatement } from "../evaluate/expression-statement";
 import { mountFunctionDeclaration } from "../evaluate/function-declaration";
 import { mountFunctionExpression } from "../evaluate/function-expression";
 import { mountIdentifier } from "../evaluate/identifier";
@@ -49,17 +52,14 @@ import { mountVariableDeclaration } from "../evaluate/variable-declaration";
 
 export const useExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ConditionalExpression', Expression_Evaluators.conditionalExpressionEvaluator);
     sandbox.mount('SequenceExpression', Expression_Evaluators.sequenceExpressionEvaluator);
 
-    sandbox.mount('ExpressionStatement', Expression_Evaluators.expressionEvaluator);
     sandbox.mount('IfStatement', Expression_Evaluators.ifStatementEvaluator);
 
     sandbox.mount('ForInStatement', Expression_Evaluators.forInStatementEvaluator);
     sandbox.mount('ForOfStatement', Expression_Evaluators.forOfStatementEvaluator);
     sandbox.mount('ForStatement', Expression_Evaluators.forStatementEvaluator);
     sandbox.mount('WhileStatement', Expression_Evaluators.whileStatementEvaluator);
-    sandbox.mount('DoWhileStatement', Expression_Evaluators.doWhileStatementEvaluator);
 
     sandbox.mount('SwitchCase', Expression_Evaluators.switchCaseEvaluator);
     sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
@@ -80,11 +80,14 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountChainExpression(sandbox);
     mountClassBody(sandbox);
     mountClassDeclaration(sandbox);
+    mountConditionalExpression(sandbox);
     mountContinueStatement(sandbox);
     mountDebuggerStatement(sandbox);
+    mountDoWhileStatement(sandbox);
     mountEmptyStatement(sandbox);
     mountExportDefaultDeclaration(sandbox);
     mountExportNamedDeclaration(sandbox);
+    mountExpressionStatement(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
     mountIdentifier(sandbox);
