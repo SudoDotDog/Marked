@@ -49,6 +49,7 @@ describe('Given Integration Parse Emit (Transform) Cases', (): void => {
         const javaScriptCode: EmitTypeScriptTransformResult = await emitTypeScriptTransform(typeScriptCode);
 
         expect(javaScriptCode.source).to.be.equal([
+            `// Start`,
             `export const a = 'hello';`,
             `export const b = 'world';`,
         ].join(New_Line_Character));
@@ -56,7 +57,7 @@ describe('Given Integration Parse Emit (Transform) Cases', (): void => {
         expect(javaScriptCode.sourceMap).to.be.deep.equal({
             sourceRoot: '',
             // spell-checker: disable-next-line
-            mappings: 'AACA,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC;AACjC,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC',
+            mappings: 'AAAA,QAAQ;AACR,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC;AACjC,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC',
         });
 
         expect(javaScriptCode.declaration).to.be.equal([

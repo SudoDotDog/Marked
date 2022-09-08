@@ -317,6 +317,66 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         });
     });
 
+    it('should be able to get scope info from snapshot - regexp', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const result: MarkedResult = await sandbox.evaluate(`const value=/test/ig;debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            value: {
+                type: 'regexp',
+                value: /test/ig,
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
+    it('should be able to get scope info from snapshot - bigint', async (): Promise<void> => {
+
+        let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
+            snapshot: MarkedDebugSnapshot,
+            flowController: MarkedDebugFlowController,
+        ) => {
+            debuggerSnapshot = snapshot;
+            flowController.continue();
+        });
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setDebugInterceptor(interceptor);
+
+        const result: MarkedResult = await sandbox.evaluate(`const value=10n;debugger;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+            value: {
+                type: 'bigint',
+                value: BigInt(10),
+                native: false,
+                mutable: false,
+            },
+        });
+    });
+
     it('should be able to get location info from snapshot', async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
