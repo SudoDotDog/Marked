@@ -18,7 +18,6 @@ import { createExecuteWithMock } from '../../util/execute-with-mock';
 
 describe('Given <ReturnStatement> Evaluators', (): void => {
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('evaluate-return-statement');
 
     const sandbox: MockSandbox = new MockSandbox();
