@@ -16,47 +16,6 @@ import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 
-export const exportsNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
-    async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        if (node.declaration) { // Node has a declaration
-
-            if (node.declaration.type === 'VariableDeclaration') {
-
-                const bindDeclareVariableStack = declareVariableStack.bind(this);
-                const declareResults: DeclareVariableElement[] = await bindDeclareVariableStack(node.declaration, scope, trace, nextTrace);
-
-                for (const result of declareResults) {
-                    scope.expose(result.id, result.value, trace);
-                }
-            } else {
-
-                throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, node.declaration.type, node, nextTrace);
-            }
-        } else { // Node have no declaration
-
-            for (const specifier of node.specifiers) {
-
-                const id: string = specifier.exported.name;
-                const value: any = await this.execute(specifier.local, scope, nextTrace);
-
-                scope.expose(id, value, trace);
-            }
-        }
-        return;
-    };
-
-export const exportsDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclaration'> =
-    async function (this: Sandbox, node: EST.ExportDefaultDeclaration, scope: Scope, trace: Trace): Promise<any> {
-
-        const nextTrace: Trace = trace.stack(node);
-
-        const content: any = await this.execute(node.declaration, scope, nextTrace);
-        scope.exposeDefault(content, trace);
-    };
-
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
     async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
