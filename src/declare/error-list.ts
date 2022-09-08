@@ -118,6 +118,7 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.SANDBOX_IS_BROKE]: 'Sandbox is broke', // 7800
 
     [ERROR_CODE.CANNOT_CALL_MEMBER_FUNCTION_OF_UNDEFINED]: 'Cannot call member function of undefined', // 8001
+    [ERROR_CODE.CANNOT_CALL_TAGGED_TEMPLATE_EXPRESSION_OF_UNDEFINED]: 'Cannot call tagged template expression of undefined', // 8002
 
     [ERROR_CODE.CANNOT_SPREAD_OTHER_THAN_ARRAY]: 'Cannot spread other than array', // 8101
     [ERROR_CODE.CANNOT_SPREAD_OTHER_THAN_MAP]: 'Cannot spread other than map', // 8102

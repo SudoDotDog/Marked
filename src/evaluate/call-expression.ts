@@ -32,7 +32,12 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
 
             const calleeNode: EST.MemberExpression = node.callee as EST.MemberExpression;
             const callee: EST.Identifier = calleeNode.property as EST.Identifier;
-            throw error(ERROR_CODE.CANNOT_CALL_MEMBER_FUNCTION_OF_UNDEFINED, callee.name, node, trace);
+            throw error(
+                ERROR_CODE.CANNOT_CALL_MEMBER_FUNCTION_OF_UNDEFINED,
+                callee.name,
+                node,
+                trace,
+            );
         }
 
         const args: any[] = [];
@@ -56,6 +61,6 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
         }
 
         if (typeof func === 'function') {
-            return await func(...args);
+            return await Promise.resolve(func(...args));
         }
     };

@@ -25,12 +25,17 @@ describe.only('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => 
         const sandbox: Sandbox = createSandbox();
 
         const result = await sandbox.evaluate([
-            'const a=(args)=>args;',
-            'export default a`${hello}`',
+            'const func=(args,values)=>({args,values});',
+            'const a="A"',
+            'const b="B"',
+            'export default func`${a}1${b}2`',
         ].join('\n'));
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal("");
+        expect(result.exports.default).to.be.deep.equal({
+            args: ['', '1', '2'],
+            values: ['A', 'B'],
+        });
     });
 });
