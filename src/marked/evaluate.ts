@@ -25,6 +25,9 @@ import { mountExportDefaultDeclaration } from "../evaluate/export-default-declar
 import { mountExportNamedDeclaration } from "../evaluate/export-named-declaration";
 import * as Expression_Evaluators from "../evaluate/expression";
 import { mountExpressionStatement } from "../evaluate/expression-statement";
+import { mountForInStatement } from "../evaluate/for-in-statement";
+import { mountForOfStatement } from "../evaluate/for-of-statement";
+import { mountForStatement } from "../evaluate/for-statement";
 import { mountFunctionDeclaration } from "../evaluate/function-declaration";
 import { mountFunctionExpression } from "../evaluate/function-expression";
 import { mountIdentifier } from "../evaluate/identifier";
@@ -56,9 +59,6 @@ export const useExpression = (sandbox: ISandbox): void => {
 
     sandbox.mount('IfStatement', Expression_Evaluators.ifStatementEvaluator);
 
-    sandbox.mount('ForInStatement', Expression_Evaluators.forInStatementEvaluator);
-    sandbox.mount('ForOfStatement', Expression_Evaluators.forOfStatementEvaluator);
-    sandbox.mount('ForStatement', Expression_Evaluators.forStatementEvaluator);
     sandbox.mount('WhileStatement', Expression_Evaluators.whileStatementEvaluator);
 
     sandbox.mount('SwitchCase', Expression_Evaluators.switchCaseEvaluator);
@@ -88,6 +88,9 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountExportDefaultDeclaration(sandbox);
     mountExportNamedDeclaration(sandbox);
     mountExpressionStatement(sandbox);
+    mountForInStatement(sandbox);
+    mountForOfStatement(sandbox);
+    mountForStatement(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
     mountIdentifier(sandbox);
