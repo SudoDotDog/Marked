@@ -38,43 +38,6 @@ describe('Given Expression evaluators', (): void => {
         trace.reset();
     });
 
-    describe('Given an <ConditionalExpression> evaluator', (): void => {
-
-        it('consequence should be returned of test is true', async (): Promise<void> => {
-
-            const testNode: EST.ConditionalExpression = {
-
-                type: 'ConditionalExpression',
-                test: createLiteral(true),
-                consequent: createLiteral(true),
-                alternate: createLiteral(false),
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-
-            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(result).to.be.equal(true);
-        });
-
-        it('alternative should be returned of test is false', async (): Promise<void> => {
-
-            const testNode: EST.ConditionalExpression = {
-
-                type: 'ConditionalExpression',
-                test: createLiteral(false),
-                consequent: createLiteral(true),
-                alternate: createLiteral(false),
-            };
-
-            sandbox.when('Literal', mockLLiteralEvaluator);
-
-            const result: any = await Evaluator_Expressions.conditionalExpressionEvaluator
-                .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
-            expect(result).to.be.equal(false);
-        });
-    });
-
     describe('Given an <DoWhileStatement> evaluator', (): void => {
 
         it('should do expression while the test is working', async (): Promise<void> => {
