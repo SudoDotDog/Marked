@@ -48,6 +48,7 @@ import { mountSequenceExpression } from "../evaluate/sequence-expression";
 import { mountSpreadElement } from "../evaluate/spread-element";
 import { mountSwitchCase } from "../evaluate/switch-case";
 import { mountSwitchStatement } from "../evaluate/switch-statement";
+import { mountTaggedTemplateExpression } from "../evaluate/tagged-template-expression";
 import { mountTemplateLiteral } from "../evaluate/template-literal";
 import { mountThisExpression } from "../evaluate/this-expression";
 import { mountThrowStatement } from "../evaluate/throw-statement";
@@ -102,6 +103,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountSpreadElement(sandbox);
     mountSwitchCase(sandbox);
     mountSwitchStatement(sandbox);
+    mountTaggedTemplateExpression(sandbox);
     mountTemplateLiteral(sandbox);
     mountThisExpression(sandbox);
     mountThrowStatement(sandbox);
