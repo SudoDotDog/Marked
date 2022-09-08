@@ -25,7 +25,7 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
         const sandbox: Sandbox = createSandbox();
 
         const result = await sandbox.evaluate([
-            'const func=(args,valueA,valueB)=>({args,values:[valueA,valueB]});',
+            'const func=(args,...values)=>({args,values});',
             'const a="A"',
             'const b="B"',
             'export default func`${a}1${b}2`',
@@ -36,6 +36,41 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
         expect(result.exports.default).to.be.deep.equal({
             args: ['', '1', '2'],
             values: ['A', 'B'],
+        });
+    });
+
+    it('should be able to call with sand function - single value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate([
+            'const func=(args,...values)=>({args,values});',
+            'const a="A"',
+            'export default func`${a}`',
+        ].join('\n'));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal({
+            args: ['', ''],
+            values: ['A'],
+        });
+    });
+
+    it('should be able to call with sand function - single arg', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result = await sandbox.evaluate([
+            'const func=(args,...values)=>({args,values});',
+            'export default func`123`',
+        ].join('\n'));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal({
+            args: ['123'],
+            values: [],
         });
     });
 
