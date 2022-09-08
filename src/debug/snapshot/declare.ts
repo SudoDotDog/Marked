@@ -12,12 +12,14 @@ export type MarkedDebugSnapshotScopeVariable = {
     readonly type:
     | 'function'
     | 'number'
+    | 'bigint'
     | 'string'
     | 'boolean'
     | 'undefined'
     | 'null'
     | 'list'
     | 'map'
+    | 'regexp'
     | 'class'
     | 'class-instance'
     | 'unknown';
