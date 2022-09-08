@@ -8,8 +8,8 @@ import * as EST from "estree";
 import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
-import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
+import { registerFunctionExpressionParams } from "../operation/function-expression/params-register";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
@@ -35,12 +35,10 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
                 subScope.replaceThis(thisValue.combineBody());
             }
 
-            node.params.forEach((pattern: EST.Pattern, index: number) => {
-                const identifier: EST.Identifier = pattern as EST.Identifier;
-                const value: any = args[index];
+            const bindingRegisterFunctionExpressionParams =
+                registerFunctionExpressionParams.bind(this);
 
-                subScope.register(VARIABLE_TYPE.CONSTANT)(identifier.name, value);
-            });
+            bindingRegisterFunctionExpressionParams(args, node.params, subScope);
 
             if (node.body.type === 'BlockStatement') {
 

@@ -7,8 +7,8 @@
 import * as EST from "estree";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
-import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
+import { registerFunctionExpressionParams } from "../operation/function-expression/params-register";
 import { Flag } from "../variable/flag";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
@@ -33,13 +33,10 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
                 subScope.replaceThis(thisValue.combineBody());
             }
 
-            node.params.forEach((pattern: EST.Pattern, index: number) => {
+            const bindingRegisterFunctionExpressionParams =
+                registerFunctionExpressionParams.bind(this);
 
-                const identifier: EST.Identifier = pattern as EST.Identifier;
-                const value: any = args[index];
-
-                subScope.register(VARIABLE_TYPE.CONSTANT)(identifier.name, value);
-            });
+            bindingRegisterFunctionExpressionParams(args, node.params, subScope);
 
             const result: Flag = await this.execute(node.body, subScope, nextTrace);
             if (result instanceof Flag) {

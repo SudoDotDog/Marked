@@ -43,6 +43,8 @@ export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
 
         const rawName: string = node.id.name;
 
-        scope.register(VARIABLE_TYPE.CONSTANT)(rawName, func);
+        const registerer = scope.register(VARIABLE_TYPE.CONSTANT);
+        registerer(rawName, func);
+
         return func;
     };
