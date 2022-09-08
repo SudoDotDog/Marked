@@ -15,7 +15,6 @@ import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleRes
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
-import { useEverything } from '../evaluate/evaluate';
 import { pauseForBreakPoint } from "../operation/break-point";
 import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from "../parse/emit/transform";
 import { parseNativeToSand } from "../parse/native-to-sand";
@@ -30,6 +29,7 @@ import { Flag } from '../variable/flag';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace/trace';
 import { ParseScriptResult } from "./declare";
+import { useEverything } from './evaluate';
 import { Executer } from './executer';
 
 export class Sandbox implements ISandbox {
