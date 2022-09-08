@@ -19,15 +19,20 @@ import { mountClassDeclaration } from "../evaluate/class-declaration";
 import { mountContinueStatement } from "../evaluate/continue-statement";
 import { mountDebuggerStatement } from "../evaluate/debugger-statement";
 import { mountEmptyStatement } from "../evaluate/empty-statement";
+import { mountExportDefaultDeclaration } from "../evaluate/export-default-declaration";
+import { mountExportNamedDeclaration } from "../evaluate/export-named-declaration";
 import * as Expression_Evaluators from "../evaluate/expression";
 import { mountFunctionDeclaration } from "../evaluate/function-declaration";
 import { mountFunctionExpression } from "../evaluate/function-expression";
 import { mountIdentifier } from "../evaluate/identifier";
+import { mountImportDeclaration } from "../evaluate/import-declaration";
+import { mountImportDefaultSpecifier } from "../evaluate/import-default-specifier";
+import { mountImportNamespaceSpecifier } from "../evaluate/import-namespace-specifier";
+import { mountImportSpecifier } from "../evaluate/import-specifier";
 import { mountLiteral } from "../evaluate/literal";
 import { mountLogicalExpression } from "../evaluate/logical-expression";
 import { mountMemberExpressionEvaluator } from "../evaluate/member-expression";
 import { mountMethodDefinition } from "../evaluate/method-definition";
-import * as Module_Evaluators from "../evaluate/module";
 import { mountNewExpression } from "../evaluate/new-expression";
 import { mountObjectExpression } from "../evaluate/object-expression";
 import { mountProgram } from "../evaluate/program";
@@ -60,21 +65,9 @@ export const useExpression = (sandbox: ISandbox): void => {
     sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
 };
 
-export const useModule = (sandbox: ISandbox): void => {
-
-    sandbox.mount('ExportNamedDeclaration', Module_Evaluators.exportsNamedDeclarationEvaluator);
-    sandbox.mount('ExportDefaultDeclaration', Module_Evaluators.exportsDefaultDeclarationEvaluator);
-
-    sandbox.mount('ImportDeclaration', Module_Evaluators.importDeclarationEvaluator);
-    sandbox.mount('ImportDefaultSpecifier', Module_Evaluators.importDefaultSpecifierEvaluator);
-    sandbox.mount('ImportNamespaceSpecifier', Module_Evaluators.importNamespaceSpecifierEvaluator);
-    sandbox.mount('ImportSpecifier', Module_Evaluators.importSpecifierEvaluator);
-};
-
 export const useEverything = (sandbox: ISandbox): void => {
 
     useExpression(sandbox);
-    useModule(sandbox);
 
     mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
@@ -90,9 +83,15 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountContinueStatement(sandbox);
     mountDebuggerStatement(sandbox);
     mountEmptyStatement(sandbox);
+    mountExportDefaultDeclaration(sandbox);
+    mountExportNamedDeclaration(sandbox);
     mountFunctionDeclaration(sandbox);
     mountFunctionExpression(sandbox);
     mountIdentifier(sandbox);
+    mountImportDeclaration(sandbox);
+    mountImportDefaultSpecifier(sandbox);
+    mountImportNamespaceSpecifier(sandbox);
+    mountImportSpecifier(sandbox);
     mountLiteral(sandbox);
     mountLogicalExpression(sandbox);
     mountMemberExpressionEvaluator(sandbox);
