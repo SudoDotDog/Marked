@@ -23,7 +23,6 @@ import { mountDoWhileStatement } from "../evaluate/do-while-statement";
 import { mountEmptyStatement } from "../evaluate/empty-statement";
 import { mountExportDefaultDeclaration } from "../evaluate/export-default-declaration";
 import { mountExportNamedDeclaration } from "../evaluate/export-named-declaration";
-import * as Expression_Evaluators from "../evaluate/expression";
 import { mountExpressionStatement } from "../evaluate/expression-statement";
 import { mountForInStatement } from "../evaluate/for-in-statement";
 import { mountForOfStatement } from "../evaluate/for-of-statement";
@@ -47,6 +46,8 @@ import { mountPropertyDefinition } from "../evaluate/property-definition";
 import { mountReturnStatement } from "../evaluate/return-statement";
 import { mountSequenceExpression } from "../evaluate/sequence-expression";
 import { mountSpreadElement } from "../evaluate/spread-element";
+import { mountSwitchCase } from "../evaluate/switch-case";
+import { mountSwitchStatement } from "../evaluate/switch-statement";
 import { mountTemplateLiteral } from "../evaluate/template-literal";
 import { mountThisExpression } from "../evaluate/this-expression";
 import { mountThrowStatement } from "../evaluate/throw-statement";
@@ -56,15 +57,7 @@ import { mountUpdateExpression } from "../evaluate/update-expression";
 import { mountVariableDeclaration } from "../evaluate/variable-declaration";
 import { mountWhileStatement } from "../evaluate/while-statement";
 
-export const useExpression = (sandbox: ISandbox): void => {
-
-    sandbox.mount('SwitchCase', Expression_Evaluators.switchCaseEvaluator);
-    sandbox.mount('SwitchStatement', Expression_Evaluators.switchExpressionEvaluator);
-};
-
 export const useEverything = (sandbox: ISandbox): void => {
-
-    useExpression(sandbox);
 
     mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
@@ -107,6 +100,8 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountReturnStatement(sandbox);
     mountSequenceExpression(sandbox);
     mountSpreadElement(sandbox);
+    mountSwitchCase(sandbox);
+    mountSwitchStatement(sandbox);
     mountTemplateLiteral(sandbox);
     mountThisExpression(sandbox);
     mountThrowStatement(sandbox);
