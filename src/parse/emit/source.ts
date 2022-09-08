@@ -34,6 +34,7 @@ export const emitTypeScriptSource = async (
             declaration: false,
             strict: false,
             alwaysStrict: false,
+            removeComments: false,
             skipLibCheck: true,
             skipDefaultLibCheck: true,
             target: TS.ScriptTarget.ESNext,

@@ -35,6 +35,12 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP]: 'Only string available for map', // 2392
     [ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_CLASS]: 'Only string available for class', // 2393
     [ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_CLASS_INSTANCE]: 'Only string available for class instance', // 2394
+    [ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_REGEXP]: 'Only string available for RegExp', // 2395
+    [ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_BIGINT]: 'Only string available for bigint', // 2396
+    [ERROR_CODE.STRING_METHOD_NOT_FOUND]: 'String method not found', // 2397
+    [ERROR_CODE.NUMBER_METHOD_NOT_FOUND]: 'Number method not found', // 2398
+    [ERROR_CODE.BOOLEAN_METHOD_NOT_FOUND]: 'Boolean method not found', // 2399
+    [ERROR_CODE.FUNCTION_METHOD_NOT_FOUND]: 'Function method not found', // 2400
 
     [ERROR_CODE.MAP_ARGUMENT_SHOULD_BE_A_FUNCTION]: 'Map argument should be a function', // 2410
     [ERROR_CODE.FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION]: 'Filter argument should be a function', // 2411
@@ -87,6 +93,7 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE]: 'Cannot transfer native to class instance', // 6106
 
     [ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED]: 'Cannot read property of undefined', // 6110
+    [ERROR_CODE.CANNOT_READ_PROPERTY_OF_NULL]: 'Cannot read property of null', // 6111
 
     [ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED]: 'Member expression value cannot be undefined', // 6121
 
@@ -104,6 +111,7 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.PROPERTY_SHOULD_BE_IDENTIFIER]: 'Property should be identifier', // 7301
     [ERROR_CODE.CANNOT_DIVIDE_BY_ZERO]: 'Cannot divide by zero', // 7302
+    [ERROR_CODE.CANNOT_PERFORM_ACTION_ON_NON_NUMBER]: 'Cannot perform action on non-number', // 7303
 
     [ERROR_CODE.CATCH_NOT_FOUND]: 'Catch not found', // 7501
 

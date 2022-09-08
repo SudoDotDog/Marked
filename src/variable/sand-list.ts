@@ -8,9 +8,14 @@ import { Variable } from "./variable";
 
 export class SandList<T> {
 
+    public static create<T>(list: T[] = []): SandList<T> {
+
+        return new SandList<T>(list);
+    }
+
     private _list: Array<Variable<T>>;
 
-    public constructor(list: T[] = []) {
+    private constructor(list: T[]) {
 
         const variableList: Array<Variable<T>> = list.map((value: T) => {
 

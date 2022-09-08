@@ -11,6 +11,8 @@ import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
+import { SandLiteralBigInt } from "../variable/sand-literal/bigint";
+import { SandLiteralRegExp } from "../variable/sand-literal/regexp";
 import { SandMap } from "../variable/sand-map";
 import { Variable } from "../variable/variable";
 
@@ -21,6 +23,15 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
     }
 
     const value: any = variable.get();
+
+    if (value instanceof SandLiteralBigInt) {
+        return {
+            type: 'bigint',
+            value: value.toNativeBigInt(),
+            native: false,
+            mutable: variable.mutable,
+        };
+    }
 
     if (value instanceof SandClass) {
         return {
@@ -35,6 +46,15 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
         return {
             type: 'class-instance',
             value: value.combineBody().map,
+            native: false,
+            mutable: variable.mutable,
+        };
+    }
+
+    if (value instanceof SandLiteralRegExp) {
+        return {
+            type: 'regexp',
+            value: value.toNativeRegExp(),
             native: false,
             mutable: variable.mutable,
         };

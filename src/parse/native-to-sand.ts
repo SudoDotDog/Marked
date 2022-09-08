@@ -8,10 +8,22 @@ import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
 import { typeCheckIsConstructor } from "../util/type-check";
 import { SandList } from "../variable/sand-list";
+import { SandLiteralBigInt } from "../variable/sand-literal/bigint";
+import { SandLiteralRegExp } from "../variable/sand-literal/regexp";
 import { SandMap } from "../variable/sand-map";
 import { extractSandToNative } from "./sand-to-native";
 
-export const parseNativeToSand = (target: any): string | number | boolean | undefined | null | ((...args: any[]) => any) | SandMap<any> | SandList<any> => {
+export const parseNativeToSand = (target: any):
+    | string
+    | number
+    | boolean
+    | undefined
+    | null
+    | ((...args: any[]) => any)
+    | SandLiteralBigInt
+    | SandLiteralRegExp
+    | SandMap<any>
+    | SandList<any> => {
 
     if (typeof target === 'undefined') {
         return undefined;
@@ -30,14 +42,25 @@ export const parseNativeToSand = (target: any): string | number | boolean | unde
         return target;
     }
 
+    if (typeof target === 'bigint') {
+
+        const sandBitInt: SandLiteralBigInt = SandLiteralBigInt.create(target.toString());
+        return sandBitInt;
+    }
+
     if (Array.isArray(target)) {
 
-        const list: SandList<any> = new SandList();
+        const list: SandList<any> = SandList.create();
         for (const element of target) {
             list.push(parseNativeToSand(element));
         }
 
         return list;
+    }
+
+    if (target instanceof RegExp) {
+
+        return SandLiteralRegExp.create(target.source, target.flags);
     }
 
     if (typeof target === 'object') {

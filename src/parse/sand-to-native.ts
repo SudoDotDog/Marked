@@ -9,9 +9,21 @@ import { error } from "../util/error/error";
 import { SandClass } from "../variable/sand-class/sand-class";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
+import { SandLiteralBigInt } from "../variable/sand-literal/bigint";
+import { SandLiteralRegExp } from "../variable/sand-literal/regexp";
 import { SandMap } from "../variable/sand-map";
 
 export const extractSandToNative = (target: any): any => {
+
+    if (target instanceof SandLiteralBigInt) {
+
+        return target.toNativeBigInt();
+    }
+
+    if (target instanceof SandLiteralRegExp) {
+
+        return target.toNativeRegExp();
+    }
 
     if (target instanceof SandClass) {
 

@@ -242,7 +242,7 @@ describe('Given Expression evaluators', (): void => {
             };
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            sandbox.when('Identifier', (node: EST.Identifier) => new SandList<number>([1, 2, 3, 4, 5]));
+            sandbox.when('Identifier', (node: EST.Identifier) => SandList.create([1, 2, 3, 4, 5]));
 
             await Evaluator_Expressions.forOfStatementEvaluator
                 .bind(sandbox as any as Sandbox)(testNode, scope as any as Scope, trace as any as Trace);
