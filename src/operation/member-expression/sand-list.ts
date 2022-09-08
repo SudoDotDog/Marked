@@ -1,17 +1,17 @@
 /**
  * @author WMXPY
- * @namespace Operation
- * @description Array
+ * @namespace Operation_MemberExpression
+ * @description Sand List
  */
 
-import { ERROR_CODE } from "../declare/error-code";
-import { error } from "../util/error/error";
-import { SandFunction } from "../variable/sand-function/sand-function";
-import { SandList } from "../variable/sand-list";
+import { ERROR_CODE } from "../../declare/error-code";
+import { error } from "../../util/error/error";
+import { SandFunction } from "../../variable/sand-function/sand-function";
+import { SandList } from "../../variable/sand-list";
 
 export const GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL = Symbol('GET_ARRAY_MEMBER_NOT_FOUND');
 
-export const getArrayMember = (list: SandList<any>, key: string): any => {
+export const memberExpressionSandList = (list: SandList<any>, key: string): any => {
 
     switch (key) {
 
