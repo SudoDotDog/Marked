@@ -30,21 +30,16 @@ import { mountMethodDefinition } from "./method-definition";
 import * as Module_Evaluators from "./module";
 import { mountNewExpression } from "./new-expression";
 import { mountObjectExpression } from "./object-expression";
+import { mountProgram } from "./program";
 import { mountPropertyDefinition } from "./property-definition";
+import { mountReturnStatement } from "./return-statement";
 import { mountSpreadElement } from "./spread-element";
-import * as Symbol_Evaluators from "./symbol";
 import { mountTemplateLiteral } from "./template-literal";
 import { mountThisExpression } from "./this-expression";
 import { mountThrowStatement } from "./throw-statement";
 import { mountUnaryExpression } from "./unary-expression";
 import { mountUpdateExpression } from "./update-expression";
 import { mountVariableDeclaration } from "./variable-declaration";
-
-export const useSymbol = (sandbox: ISandbox): void => {
-
-    sandbox.mount('Program', Symbol_Evaluators.programEvaluator);
-    sandbox.mount('ReturnStatement', Symbol_Evaluators.returnEvaluator);
-};
 
 export const useExpression = (sandbox: ISandbox): void => {
 
@@ -83,7 +78,6 @@ export const useException = (sandbox: ISandbox): void => {
 
 export const useEverything = (sandbox: ISandbox): void => {
 
-    useSymbol(sandbox);
     useExpression(sandbox);
     useModule(sandbox);
     useException(sandbox);
@@ -110,7 +104,9 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountMethodDefinition(sandbox);
     mountNewExpression(sandbox);
     mountObjectExpression(sandbox);
+    mountProgram(sandbox);
     mountPropertyDefinition(sandbox);
+    mountReturnStatement(sandbox);
     mountSpreadElement(sandbox);
     mountTemplateLiteral(sandbox);
     mountThisExpression(sandbox);
