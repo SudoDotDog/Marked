@@ -27,7 +27,8 @@
   "devDependencies": {
     "@sudoo/triforce": "^3.8.0",
     "@types/acorn": "^6.0.0",
-    "@types/estree": "^1.0.0"
+    "@types/estree": "^1.0.0",
+    "ts-node": "^10.9.1"
   },
   "nyc": {
     "extension": [
