@@ -85,6 +85,7 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.UNMOUNTED_AST_TYPE]: 'Unmounted ast type', // 6001
     [ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME]: 'Provided module name duplicated', // 6002
     [ERROR_CODE.MODULE_IS_NOT_PROVIDED]: 'Module is not provided', // 6003
+    [ERROR_CODE.CYCLE_IMPORT]: 'Cycle import', // 6004
 
     [ERROR_CODE.CANNOT_TRANSFER_CLASS_TO_NATIVE]: 'Cannot transfer class to native', // 6100
     [ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE]: 'Cannot transfer function to native', // 6101

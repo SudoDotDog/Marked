@@ -22,11 +22,15 @@ export class Executer implements IExecuter {
 
     private readonly _rootScope: Scope;
 
+    private _executing: boolean;
+
     private constructor(sandbox: ISandbox) {
 
         this._parent = sandbox;
 
         this._rootScope = Scope.executeScope(sandbox.bridgeScope);
+
+        this._executing = false;
     }
 
     public get parent(): ISandbox {
@@ -44,17 +48,26 @@ export class Executer implements IExecuter {
         return this._rootScope.exposed;
     }
 
+    public isExecuting(): boolean {
+
+        return this._executing;
+    }
+
     public async evaluate(
         script: string,
         breakPoints?: Iterable<MarkedDebugBreakPoint>,
         scriptLocation?: ScriptLocation,
     ): Promise<MarkedResult> {
 
-        return await this._parent.evaluate(
+        this._executing = true;
+        const evaluateResult: MarkedResult = await this._parent.evaluate(
             script,
             breakPoints,
             scriptLocation,
             this._rootScope,
         );
+
+        this._executing = false;
+        return evaluateResult;
     }
 }
