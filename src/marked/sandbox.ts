@@ -28,7 +28,7 @@ import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../ut
 import { Flag } from '../variable/flag';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace/trace';
-import { ParseScriptResult } from "./declare";
+import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL, ParseScriptResult } from "./declare";
 import { useEverything } from './evaluate';
 import { Executer } from './executer';
 
@@ -228,12 +228,22 @@ export class Sandbox implements ISandbox {
             if (result instanceof Flag) {
 
                 if (result.isThrow()) {
+
                     return {
                         signal: END_SIGNAL.EXCEPTION,
                         trace: result.trace,
                         exception: result.getValue(),
                     };
                 }
+
+                if (result.isFatal()) {
+
+                    return {
+                        signal: END_SIGNAL.FAILED,
+                        error: result.getValue(),
+                    };
+                }
+
                 if (result.isTerminate()) {
                     return {
                         signal: END_SIGNAL.TERMINATED,
@@ -329,15 +339,28 @@ export class Sandbox implements ISandbox {
     protected async evaluateResource(
         resolveResult: ModuleResolveResult,
         breakPoints?: Iterable<MarkedDebugBreakPoint>,
-    ): Promise<IExecuter | null> {
+    ): Promise<EvaluateResourceResult> {
 
         const hash: string = resolveResult.scriptLocation.hash();
         if (this._cachedExecuter.has(hash)) {
 
-            return this._cachedExecuter.get(hash) as IExecuter;
+            const cachedExecuter: IExecuter = this._cachedExecuter.get(hash) as IExecuter;
+            if (cachedExecuter.isExecuting()) {
+
+                return {
+                    signal: EVALUATE_RESOURCE_END_SIGNAL.CYCLED_IMPORT,
+                };
+            }
+
+            return {
+                signal: EVALUATE_RESOURCE_END_SIGNAL.SUCCEED,
+                executer: cachedExecuter,
+            };
         }
 
         const executer: Executer = Executer.from(this);
+        this._cachedExecuter.set(hash, executer);
+
         const result: MarkedResult = await executer.evaluate(
             resolveResult.script,
             breakPoints,
@@ -345,11 +368,17 @@ export class Sandbox implements ISandbox {
         );
 
         if (result.signal !== END_SIGNAL.SUCCEED) {
-            return null;
+
+            return {
+                signal: EVALUATE_RESOURCE_END_SIGNAL.EVALUATE_FAILED,
+                result,
+            };
         }
 
-        this._cachedExecuter.set(hash, executer);
-        return executer;
+        return {
+            signal: EVALUATE_RESOURCE_END_SIGNAL.SUCCEED,
+            executer,
+        };
     }
 
     protected async execute(node: EST.Node, scope: IScope, trace: ITrace): Promise<any> {

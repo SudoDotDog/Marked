@@ -80,6 +80,8 @@ export interface IExecuter {
     scope: IScope;
     exposed: IExposed;
 
+    isExecuting: () => boolean;
+
     evaluate: (
         script: string,
         breakPoints?: Iterable<MarkedDebugBreakPoint>,

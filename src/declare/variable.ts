@@ -23,6 +23,7 @@ export enum FLAG_TYPE {
     BREAK = 'BREAK',
     CONTINUE = 'CONTINUE',
     THROW = 'THROW',
+    FATAL = 'FATAL',
     TERMINATE = 'TERMINATE',
 }
 

@@ -7,8 +7,10 @@
 import * as EST from "estree";
 import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { ERROR_CODE } from "../declare/error-code";
-import { IExecuter, ModuleResolveResult } from "../declare/sandbox";
+import { END_SIGNAL, MarkedResult } from "../declare/evaluate";
+import { ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
+import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL } from "../marked/declare";
 import { Sandbox } from "../marked/sandbox";
 import { parseNativeToSand } from "../parse/native-to-sand";
 import { Flag } from "../variable/flag";
@@ -89,10 +91,35 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
         ? currentTrace.ensureBreakPointController().getBreakPoints()
         : undefined;
 
-    const executer: IExecuter | null = await this.evaluateResource(targetModule, breakPoints);
-    if (!executer) {
+    const executer: EvaluateResourceResult = await this.evaluateResource(targetModule, breakPoints);
+    if (executer.signal === EVALUATE_RESOURCE_END_SIGNAL.CYCLED_IMPORT) {
+
+        const flag: Flag = Flag.fromFatal(currentTrace);
+        const sourceScript: string = currentTrace.scriptLocation.hash();
+        const targetScript: string = targetModule.scriptLocation.hash();
+
+        flag.setValue(
+            error(
+                ERROR_CODE.CYCLED_IMPORT,
+                `source: [${sourceScript}], target: [${targetScript}]`,
+                node,
+                currentTrace,
+            ),
+        );
+        return flag;
+    }
+
+    if (executer.signal === EVALUATE_RESOURCE_END_SIGNAL.EVALUATE_FAILED) {
+
+        const result: MarkedResult = executer.result;
+
+        if (result.signal === END_SIGNAL.FAILED) {
+
+            throw result.error;
+        }
 
         const flag: Flag = Flag.fromThrow(currentTrace);
+        flag.setValue(executer.result);
         return flag;
     }
 
@@ -101,7 +128,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
         const target: any = await this.execute(specifier, scope, nextTrace);
         const register: (name: string, value: any) => void = scope.register(VARIABLE_TYPE.CONSTANT);
 
-        const exposed: IExposed = executer.scope.exposed;
+        const exposed: IExposed = executer.executer.exposed;
 
         switch (specifier.type) {
 

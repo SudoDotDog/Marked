@@ -26,6 +26,10 @@ export const programEvaluator: Evaluator<'Program'> =
 
             const result: any = await this.execute(child, scope, nextTrace);
             if (result instanceof Flag) {
+
+                if (result.isFatal()) {
+                    return result;
+                }
                 if (result.isThrow()) {
                     return result;
                 }

@@ -8,10 +8,12 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
+import { ERROR_CODE } from '../../../src/declare/error-code';
 import { New_Line_Character } from '../../../src/host/declare';
-import { assertSucceedMarkedResult } from '../../util/assert-result';
+import { error } from '../../../src/util/error/error';
+import { assertFailedMarkedResult } from '../../util/assert-result';
 
-describe.only('Given Integration Cross File (Cycle) Cases', (): void => {
+describe('Given Integration Cross File (Cycle) Cases', (): void => {
 
     const chance = new Chance('integration-cross-file-cycle');
 
@@ -64,8 +66,9 @@ describe.only('Given Integration Cross File (Cycle) Cases', (): void => {
             `logB();`,
         ].join(New_Line_Character));
 
-        assertSucceedMarkedResult(result);
+        assertFailedMarkedResult(result);
 
-        expect(middle).to.be.deep.equal([aValue, bValue]);
+        expect(result.error.message).to.be.equal(error(ERROR_CODE.CYCLED_IMPORT).message);
+        expect(result.error.info).to.be.equal("source: [mock://b], target: [mock://a]");
     });
 });
