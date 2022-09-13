@@ -51,7 +51,8 @@ export type OptionName = keyof ISandboxOptions;
 export interface ISandbox {
 
     count: number;
-    scope: IScope;
+    bridgeScope: IScope;
+    executeScope: IScope;
     exposed: IExposed;
 
     break: () => ISandbox;

@@ -68,6 +68,6 @@ describe('Given <FunctionExpression> Evaluators', (): void => {
         expect(result).to.be.deep.equal([value]);
 
         const mockedChildScope: MockScope = scope.children[0];
-        expect((mockedChildScope.constants.get(param) as any).get()).to.be.equal(argument);
+        expect((mockedChildScope.constantMap.get(param) as any).get()).to.be.equal(argument);
     });
 });

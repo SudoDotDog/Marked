@@ -44,13 +44,10 @@ export class MockScope implements IScope, IMockedClass {
         return this._children;
     }
 
-    public get constants(): Map<string, Variable<any>> {
-
+    public get constantMap(): Map<string, Variable<any>> {
         return this._mockedConstantMap;
     }
-
-    public get scopes(): Map<string, Variable<any>> {
-
+    public get scopeMap(): Map<string, Variable<any>> {
         return this._mockedScopeMap;
     }
 
@@ -62,6 +59,16 @@ export class MockScope implements IScope, IMockedClass {
             named: this._exposed,
         };
         return result;
+    }
+
+    public isBridgeScope(): boolean {
+
+        return false;
+    }
+
+    public isExecuteScope(): boolean {
+
+        return true;
     }
 
     public config(name: string, value?: any): MockScope {
@@ -119,6 +126,11 @@ export class MockScope implements IScope, IMockedClass {
     public hasParent(): boolean {
 
         return Boolean(this._mockedParent);
+    }
+
+    public ensureParent(): MockScope {
+
+        return this._mockedParent as MockScope;
     }
 
     public register(type: VARIABLE_TYPE): (name: string, value: any) => MockScope {

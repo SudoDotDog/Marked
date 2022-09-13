@@ -4,14 +4,14 @@
  * @description Scope
  */
 
+import { IScope } from "../../declare/variable";
 import { parseSnapshotScopeVariable } from "../../parse/snapshot-scope-variable";
-import { Scope } from "../../variable/scope";
 import { Variable } from "../../variable/variable";
 import { MarkedDebugSnapshotScopeMap, MarkedDebugSnapshotScopeVariable } from "./declare";
 
 export class MarkedDebugSnapshotScope {
 
-    public static fromScope(scope: Scope): MarkedDebugSnapshotScope {
+    public static fromScope(scope: IScope): MarkedDebugSnapshotScope {
 
         const map: MarkedDebugSnapshotScopeMap = new Map();
 

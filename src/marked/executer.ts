@@ -26,7 +26,7 @@ export class Executer implements IExecuter {
 
         this._parent = sandbox;
 
-        this._rootScope = Scope.fromRoot();
+        this._rootScope = Scope.executeScope(sandbox.bridgeScope);
     }
 
     public get parent(): ISandbox {

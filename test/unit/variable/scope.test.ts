@@ -13,7 +13,7 @@ import { Scope } from '../../../src/variable/scope';
 
 describe('Given an Scope class', (): void => {
 
-    const rootScope = Scope.fromRoot();
+    const rootScope = Scope.bridgeScope();
     const chance = new Chance('variable-scope');
 
     it('should be able set config', (): void => {

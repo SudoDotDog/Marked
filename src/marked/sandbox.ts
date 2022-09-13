@@ -54,7 +54,9 @@ export class Sandbox implements ISandbox {
     private readonly _language: SandboxLanguage;
 
     private readonly _map: Map<EST_TYPE, Evaluator<EST_TYPE>>;
-    private readonly _rootScope: Scope;
+
+    private readonly _bridgeScope: Scope;
+    private readonly _executeScope: Scope;
 
     private readonly _configs: Map<string, any>;
     private readonly _modules: Map<string, any>;
@@ -79,7 +81,9 @@ export class Sandbox implements ISandbox {
         this._language = language;
 
         this._map = new Map<EST_TYPE, Evaluator<EST_TYPE>>();
-        this._rootScope = Scope.fromRoot();
+
+        this._bridgeScope = Scope.bridgeScope();
+        this._executeScope = Scope.executeScope(this._bridgeScope);
 
         this._configs = new Map<string, any>();
         this._modules = new Map<string, any>();
@@ -107,11 +111,14 @@ export class Sandbox implements ISandbox {
         return this._count;
     }
 
-    public get scope(): Scope {
-        return this._rootScope;
+    public get bridgeScope(): Scope {
+        return this._bridgeScope;
+    }
+    public get executeScope(): Scope {
+        return this._executeScope;
     }
     public get exposed(): IExposed {
-        return this._rootScope.exposed;
+        return this._executeScope.exposed;
     }
 
     public get usingAdditionalArgument(): boolean {
@@ -136,7 +143,7 @@ export class Sandbox implements ISandbox {
     public inject(name: string, value: any): Sandbox {
 
         const parsedContent = parseNativeToSand(value);
-        this._rootScope.register(VARIABLE_TYPE.CONSTANT)(name, parsedContent);
+        this._bridgeScope.register(VARIABLE_TYPE.CONSTANT)(name, parsedContent);
         return this;
     }
 
@@ -202,7 +209,7 @@ export class Sandbox implements ISandbox {
             );
 
             const targetScope: IScope = typeof scope === 'undefined'
-                ? this._rootScope
+                ? this._executeScope
                 : scope;
             let result: any = await this.execute(AST as EST.Node, targetScope, trace);
 
@@ -244,7 +251,7 @@ export class Sandbox implements ISandbox {
 
         return {
             signal: END_SIGNAL.SUCCEED,
-            exports: this._rootScope.exposed,
+            exports: this.exposed,
         };
     }
 

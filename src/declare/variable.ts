@@ -37,11 +37,17 @@ export interface IExposed {
 
 export interface IScope {
 
+    constantMap: Map<string, Variable<any>>;
+    scopeMap: Map<string, Variable<any>>;
     exposed: IExposed;
+
+    isBridgeScope: () => boolean;
+    isExecuteScope: () => boolean;
 
     config: (name: string, value?: any) => IScope;
     child: () => IScope;
     hasParent: () => boolean;
+    ensureParent: () => IScope;
     register: (type: VARIABLE_TYPE) => SCOPE_DECLARE_FUNC;
 
     exist: (name: string) => boolean;

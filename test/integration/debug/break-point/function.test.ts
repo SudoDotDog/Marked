@@ -61,8 +61,11 @@ describe('Given Integration Debug (Break Point Function) Cases', (): void => {
         expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({});
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(debuggerSnapshot.scope.getParent()!.getParent()!.getKeyValueObject()).to.be.deep.equal({
-            deject: `[Marked Native Function]`,
             test: `[Marked Function]`,
+        });
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(debuggerSnapshot.scope.getParent()!.getParent()!.getParent()!.getKeyValueObject()).to.be.deep.equal({
+            deject: `[Marked Native Function]`,
         });
     });
 });

@@ -23,7 +23,7 @@ export const mountImportDeclaration = (sandbox: ISandbox): void => {
 export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
     async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
-        if (scope.hasParent()) {
+        if (!scope.isExecuteScope()) {
             throw error(ERROR_CODE.IMPORT_ONLY_AVAILABLE_IN_ROOT_SCOPE, void 0, node, trace);
         }
 

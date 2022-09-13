@@ -11,14 +11,38 @@ import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
 import { SandMap } from "./sand-map";
 
+export const BRIDGE_SCOPE_SYMBOL: unique symbol = Symbol('bridge-scope');
+export const EXECUTE_SCOPE_SYMBOL: unique symbol = Symbol('execute-scope');
+
+type ScopeSymbol =
+    | typeof BRIDGE_SCOPE_SYMBOL
+    | typeof EXECUTE_SCOPE_SYMBOL;
+
 export class Scope implements IScope {
 
-    public static fromRoot(): Scope {
+    public static bridgeScope(): Scope {
 
-        return new Scope().initThis();
+        const scope: Scope = new Scope(undefined, BRIDGE_SCOPE_SYMBOL);
+        scope.initThis();
+
+        return scope;
     }
 
-    private _parent: Scope | null;
+    public static executeScope(parent: IScope): Scope {
+
+        if (!parent.isBridgeScope()) {
+            throw error(ERROR_CODE.INTERNAL_ERROR, 'only bridge scope can create execute scope');
+        }
+
+        const scope: Scope = new Scope(parent, EXECUTE_SCOPE_SYMBOL);
+        scope.initThis();
+
+        return scope;
+    }
+
+    private readonly _symbol?: ScopeSymbol;
+
+    private readonly _parent: IScope | null;
 
     private _defaultExposed: any;
     private readonly _exposed: Map<string, any>;
@@ -31,7 +55,9 @@ export class Scope implements IScope {
 
     private _this: SandMap<any> | null;
 
-    public constructor(scope?: Scope) {
+    public constructor(scope?: IScope, symbol?: ScopeSymbol) {
+
+        this._symbol = symbol;
 
         this._parent = scope || null;
 
@@ -71,6 +97,16 @@ export class Scope implements IScope {
             named: namedObject,
         };
         return result;
+    }
+
+    public isBridgeScope(): boolean {
+
+        return this._symbol === BRIDGE_SCOPE_SYMBOL;
+    }
+
+    public isExecuteScope(): boolean {
+
+        return this._symbol === EXECUTE_SCOPE_SYMBOL;
     }
 
     public config(name: string, value?: any): Scope {
@@ -129,7 +165,7 @@ export class Scope implements IScope {
         return this._parent !== null;
     }
 
-    public ensureParent(): Scope {
+    public ensureParent(): IScope {
 
         if (this._parent) {
 
@@ -165,23 +201,24 @@ export class Scope implements IScope {
         return this._parent ? this._parent.rummage(name) : null;
     }
 
-    public validateEditable(name: string): Scope {
+    public validateEditable(name: string): IScope {
 
         if (this._constantMap.has(name)) {
 
             throw error(ERROR_CODE.CONSTANT_VARIABLE_CANNOT_BE_EDITED, name);
         }
 
-        if (this._parent) {
+        if (this._scopeMap.has(name)) {
 
-            this._parent.validateEditable(name);
-        } else {
-
-            if (!this._scopeMap.has(name)) {
-
-                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
-            }
+            return this;
         }
+
+        if (!this._parent) {
+
+            throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, name);
+        }
+
+        this._parent.validateEditable(name);
         return this;
     }
 

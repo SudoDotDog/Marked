@@ -44,17 +44,17 @@ export class MockSandbox implements ISandbox, IMockedClass {
     }
 
     public get broke(): boolean {
-
         return this._broke;
     }
 
     public get count(): number {
-
         return this._executedList.length;
     }
 
-    public get scope(): any {
-
+    public get bridgeScope(): any {
+        return undefined as any;
+    }
+    public get executeScope(): any {
         return undefined as any;
     }
 
