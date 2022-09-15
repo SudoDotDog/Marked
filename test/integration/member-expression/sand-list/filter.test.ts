@@ -35,7 +35,7 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
         expect(result.exports.default).to.be.deep.equal([4, 5]);
     });
 
-    it('should be able to execute filter with string', async (): Promise<void> => {
+    it('should be able to execute nested filter', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
         sandbox.inject('test', {

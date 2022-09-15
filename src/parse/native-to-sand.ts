@@ -7,6 +7,9 @@
 import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
 import { typeCheckIsConstructor } from "../util/type-check";
+import { SandClass } from "../variable/sand-class/sand-class";
+import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
+import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
 import { SandLiteralBigInt } from "../variable/sand-literal/bigint";
 import { SandLiteralRegExp } from "../variable/sand-literal/regexp";
@@ -20,6 +23,9 @@ export const parseNativeToSand = (target: any):
     | undefined
     | null
     | ((...args: any[]) => any)
+    | SandClass
+    | SandClassInstance
+    | SandFunction
     | SandLiteralBigInt
     | SandLiteralRegExp
     | SandMap<any>
@@ -61,6 +67,28 @@ export const parseNativeToSand = (target: any):
     if (target instanceof RegExp) {
 
         return SandLiteralRegExp.create(target.source, target.flags);
+    }
+
+    if (target instanceof SandClass) {
+        return target;
+    }
+    if (target instanceof SandClassInstance) {
+        return target;
+    }
+    if (target instanceof SandFunction) {
+        return target;
+    }
+    if (target instanceof SandLiteralBigInt) {
+        return target;
+    }
+    if (target instanceof SandLiteralRegExp) {
+        return target;
+    }
+    if (target instanceof SandMap) {
+        return target;
+    }
+    if (target instanceof SandList) {
+        return target;
     }
 
     if (typeof target === 'object') {
