@@ -9,6 +9,7 @@ import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
+import { parseNativeToSand } from "../parse/native-to-sand";
 import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { SandFunction } from "../variable/sand-function/sand-function";
@@ -61,6 +62,10 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
         }
 
         if (typeof func === 'function') {
-            return await Promise.resolve(func(...args));
+
+            const result = await Promise.resolve(func(...args));
+            const sandResult = parseNativeToSand(result);
+
+            return sandResult;
         }
     };
