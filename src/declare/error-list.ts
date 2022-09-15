@@ -42,8 +42,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.BOOLEAN_METHOD_NOT_FOUND]: 'Boolean method not found', // 2399
     [ERROR_CODE.FUNCTION_METHOD_NOT_FOUND]: 'Function method not found', // 2400
 
-    [ERROR_CODE.MAP_ARGUMENT_SHOULD_BE_A_FUNCTION]: 'Map argument should be a function', // 2410
-    [ERROR_CODE.FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION]: 'Filter argument should be a function', // 2411
+    [ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION]: 'List Map argument should be a function', // 2410
+    [ERROR_CODE.LIST_FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION]: 'List Filter argument should be a function', // 2411
 
     [ERROR_CODE.VAR_DECLARATION_NOT_SUPPORT]: 'Var declaration not support', // 3003
     [ERROR_CODE.BINARY_NOT_SUPPORT]: 'Binary not support', // 3004

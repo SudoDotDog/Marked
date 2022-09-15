@@ -24,7 +24,7 @@ export const memberExpressionSandList = (list: SandList<any>, key: string): any 
 
                 if (!(func instanceof SandFunction)
                     && typeof func !== 'function') {
-                    throw error(ERROR_CODE.MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
+                    throw error(ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
 
                 const sandFunction: SandFunction = SandFunction.wrapFunction(func);
@@ -45,7 +45,7 @@ export const memberExpressionSandList = (list: SandList<any>, key: string): any 
 
                 if (!(func instanceof SandFunction)
                     && typeof func !== 'function') {
-                    throw error(ERROR_CODE.MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
+                    throw error(ERROR_CODE.LIST_FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
 
                 const sandFunction: SandFunction = SandFunction.wrapFunction(func);
