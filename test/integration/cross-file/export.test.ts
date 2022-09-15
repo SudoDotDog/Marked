@@ -20,7 +20,7 @@ describe('Given Integration Cross File (Export) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to only export from script file', async (): Promise<void> => {
+    it('should be able to only export default from script file', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -40,6 +40,54 @@ describe('Given Integration Cross File (Export) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(value);
-        expect(Object.keys(result.exports.named)).to.be.deep.equal({});
+        expect(Object.keys(result.exports.named)).to.be.deep.equal([]);
+    });
+
+    it('should be able to only export value from script file', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ min: 0, max: 100 });
+
+        sandbox.resolver(() => {
+            return {
+                script: [
+                    `export const crossFile = ${value};`,
+                ].join(New_Line_Character),
+                scriptLocation: ScriptLocation.create('mock', 'test'),
+            };
+        });
+
+        const result: MarkedResult = await sandbox.evaluate(`import {crossFile} from 'test';export const value = crossFile;`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.named).to.be.deep.equal({
+            value,
+        });
+    });
+
+    it('should be able to pass export value from script file', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ min: 0, max: 100 });
+
+        sandbox.resolver(() => {
+            return {
+                script: [
+                    `export const crossFile = ${value};`,
+                ].join(New_Line_Character),
+                scriptLocation: ScriptLocation.create('mock', 'test'),
+            };
+        });
+
+        const result: MarkedResult = await sandbox.evaluate(`import {crossFile} from 'test';export {crossFile};`);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.named).to.be.deep.equal({
+            crossFile: value,
+        });
     });
 });

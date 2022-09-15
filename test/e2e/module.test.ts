@@ -80,7 +80,7 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(sandbox.exposed.default).to.be.equal(testValue);
+        expect(sandbox.executeScope.exposed.default).to.be.equal(testValue);
     });
 
     it('should be able to provide objects', async (): Promise<void> => {
@@ -96,7 +96,7 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         await sandbox.evaluate(`import {a} from 'a';export default a.a;`);
 
-        expect(sandbox.exposed.default).to.be.equal(testValue);
+        expect(sandbox.executeScope.exposed.default).to.be.equal(testValue);
     });
 
     it('should be able to provide array', async (): Promise<void> => {
@@ -110,6 +110,6 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         await sandbox.evaluate(`import {a} from 'a';export default a[0];`);
 
-        expect(sandbox.exposed.default).to.be.equal(testValue);
+        expect(sandbox.executeScope.exposed.default).to.be.equal(testValue);
     });
 });

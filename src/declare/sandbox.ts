@@ -53,7 +53,6 @@ export interface ISandbox {
     count: number;
     bridgeScope: IScope;
     executeScope: IScope;
-    exposed: IExposed;
 
     break: () => ISandbox;
     evaluate: (

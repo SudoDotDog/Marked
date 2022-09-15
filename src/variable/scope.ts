@@ -83,7 +83,12 @@ export class Scope implements IScope {
     public get exposed(): IExposed {
 
         if (this.hasParent()) {
-            return this.ensureParent().exposed;
+
+            const parent: IScope = this.ensureParent();
+
+            if (!parent.isBridgeScope()) {
+                return parent.exposed;
+            }
         }
 
         const namedObject: Record<string, any> = {};
@@ -225,8 +230,12 @@ export class Scope implements IScope {
     public expose(key: string, value: any, trace: ITrace): Scope {
 
         if (this.hasParent()) {
-            this.ensureParent().expose(key, value, trace);
-            return this;
+
+            const parent: IScope = this.ensureParent();
+            if (!parent.isBridgeScope()) {
+                parent.expose(key, value, trace);
+                return this;
+            }
         }
 
         if (!trace.scriptLocation.isRoot()) {
@@ -240,9 +249,14 @@ export class Scope implements IScope {
 
     public exposeDefault(value: any, trace: ITrace): Scope {
 
+
         if (this.hasParent()) {
-            this.ensureParent().exposeDefault(value, trace);
-            return this;
+
+            const parent: IScope = this.ensureParent();
+            if (!parent.isBridgeScope()) {
+                parent.exposeDefault(value, trace);
+                return this;
+            }
         }
 
         if (!trace.scriptLocation.isRoot()) {

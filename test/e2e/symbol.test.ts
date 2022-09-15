@@ -60,7 +60,7 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
 
             expect(result).to.be.lengthOf(1);
             expect(result).to.be.deep.equal([loopStart]);
-            expect(sandbox.exposed.default).to.be.equal(loopStart);
+            expect(sandbox.executeScope.exposed.default).to.be.equal(loopStart);
         });
     });
 });

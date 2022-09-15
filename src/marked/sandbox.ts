@@ -14,7 +14,7 @@ import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
 import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
-import { IExposed, IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
+import { IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { pauseForBreakPoint } from "../operation/break-point";
 import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from "../parse/emit/transform";
 import { parseNativeToSand } from "../parse/native-to-sand";
@@ -117,9 +117,6 @@ export class Sandbox implements ISandbox {
     public get executeScope(): Scope {
         return this._executeScope;
     }
-    public get exposed(): IExposed {
-        return this._executeScope.exposed;
-    }
 
     public get usingAdditionalArgument(): boolean {
         return this._usingAdditionalArgument;
@@ -193,6 +190,10 @@ export class Sandbox implements ISandbox {
             };
         }
 
+        const targetScope: IScope = typeof scope === 'undefined'
+            ? this._executeScope
+            : scope;
+
         try {
 
             const parseResult = await this.parse(script);
@@ -208,9 +209,6 @@ export class Sandbox implements ISandbox {
                 breakPointController,
             );
 
-            const targetScope: IScope = typeof scope === 'undefined'
-                ? this._executeScope
-                : scope;
             let result: any = await this.execute(AST as EST.Node, targetScope, trace);
 
             if (this._broke) {
@@ -261,7 +259,7 @@ export class Sandbox implements ISandbox {
 
         return {
             signal: END_SIGNAL.SUCCEED,
-            exports: this.exposed,
+            exports: targetScope.exposed,
         };
     }
 
