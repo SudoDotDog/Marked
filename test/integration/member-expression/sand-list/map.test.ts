@@ -13,7 +13,6 @@ import { assertSucceedMarkedResult } from '../../../util/assert-result';
 
 describe('Given Integration Member Expression Sand List (Map) Cases', (): void => {
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('integration-member-expression-sand-list-map');
 
     const createSandbox = () => {
@@ -81,5 +80,21 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
         expect(result.exports.default).to.be.deep.equal(
             [{ "a": 2 }, { "a": 3 }, { "a": 4 }, { "a": 5 }, { "a": 6 }],
         );
+    });
+
+    it('should be able to execute map on number with additional argument', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setAdditionalArgument(chance.string());
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `const list = [1, 2, 3, 4, 5];`,
+            `const result = list.map((each) => each + 1);`,
+            `export default result;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal([2, 3, 4, 5, 6]);
     });
 });
