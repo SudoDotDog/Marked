@@ -61,10 +61,22 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
                     return target.replace(searchValue, replaceValue);
                 });
             }
+            case 'slice': {
+
+                return wrapMemberFunction(sandbox, (start: number, end?: number) => {
+                    return target.slice(start, end);
+                });
+            }
             case 'split': {
 
                 return wrapMemberFunction(sandbox, (separator: string) => {
                     return target.split(separator);
+                });
+            }
+            case 'substring': {
+
+                return wrapMemberFunction(sandbox, (start: number, end?: number) => {
+                    return target.substring(start, end);
                 });
             }
             case 'startWith': {
