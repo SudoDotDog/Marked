@@ -5,9 +5,10 @@
  */
 
 import { ERROR_CODE } from "../../declare/error-code";
+import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
 
-export const memberExpressionString = (target: string, key: string | number): any => {
+export const memberExpressionString = (sandbox: Sandbox, target: string, key: string | number): any => {
 
     if (typeof key === 'string') {
 

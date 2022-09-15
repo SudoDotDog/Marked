@@ -13,7 +13,6 @@ import { assertSucceedMarkedResult } from '../../../util/assert-result';
 
 describe('Given Integration Member Expression Sand List (Filter) Cases', (): void => {
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('integration-member-expression-sand-list-filter');
 
     const createSandbox = () => {
@@ -24,6 +23,22 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
     it('should be able to execute filter', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `const list = [1, 2, 3, 4, 5];`,
+            `const result = list.filter((each) => each > 3);`,
+            `export default result;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal([4, 5]);
+    });
+
+    it('should be able to execute filter with additional arguments', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.setAdditionalArgument(chance.string());
 
         const result: MarkedResult = await sandbox.evaluate([
             `const list = [1, 2, 3, 4, 5];`,

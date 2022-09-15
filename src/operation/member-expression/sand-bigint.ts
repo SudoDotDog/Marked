@@ -5,10 +5,11 @@
  */
 
 import { ERROR_CODE } from "../../declare/error-code";
+import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
 import { SandLiteralBigInt } from "../../variable/sand-literal/bigint";
 
-export const memberExpressionSandBigInt = (bigint: SandLiteralBigInt, key: string | number): any => {
+export const memberExpressionSandBigInt = (sandbox: Sandbox, bigint: SandLiteralBigInt, key: string | number): any => {
 
     switch (key) {
 

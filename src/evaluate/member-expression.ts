@@ -69,13 +69,13 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
         }
 
         if (typeof object === 'string') {
-            return memberExpressionString(object, key);
+            return memberExpressionString(this, object, key);
         }
         if (typeof object === 'number') {
-            return memberExpressionNumber(object, key);
+            return memberExpressionNumber(this, object, key);
         }
         if (typeof object === 'boolean') {
-            return memberExpressionBoolean(object, key);
+            return memberExpressionBoolean(this, object, key);
         }
 
         if (object instanceof SandList) {
@@ -85,7 +85,7 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
                 return object.get(key);
             } else if (typeof key === 'string') {
 
-                const arrayMember: any = memberExpressionSandList(object, key);
+                const arrayMember: any = memberExpressionSandList(this, object, key);
                 if (arrayMember !== GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL) {
                     return arrayMember;
                 }
@@ -104,21 +104,21 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
         }
 
         if (object instanceof SandFunction) {
-            return memberExpressionSandFunction(object, key);
+            return memberExpressionSandFunction(this, object, key);
         }
 
         if (object instanceof SandClass) {
-            return memberExpressionClass(object, key);
+            return memberExpressionClass(this, object, key);
         }
         if (object instanceof SandClassInstance) {
-            return memberExpressionClassInstance(object, key);
+            return memberExpressionClassInstance(this, object, key);
         }
 
         if (object instanceof SandLiteralBigInt) {
-            return memberExpressionSandBigInt(object, key);
+            return memberExpressionSandBigInt(this, object, key);
         }
         if (object instanceof SandLiteralRegExp) {
-            return memberExpressionSandRegExp(object, key);
+            return memberExpressionSandRegExp(this, object, key);
         }
 
         return object[key];

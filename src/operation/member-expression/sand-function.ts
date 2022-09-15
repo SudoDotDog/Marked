@@ -5,10 +5,11 @@
  */
 
 import { ERROR_CODE } from "../../declare/error-code";
+import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
 import { SandFunction } from "../../variable/sand-function/sand-function";
 
-export const memberExpressionSandFunction = (target: SandFunction, key: string | number): any => {
+export const memberExpressionSandFunction = (sandbox: Sandbox, target: SandFunction, key: string | number): any => {
 
     switch (key) {
 
