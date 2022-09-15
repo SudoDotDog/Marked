@@ -18,7 +18,10 @@ export const memberExpressionClass = (sandbox: Sandbox, sandClass: SandClass, ke
         }
 
         switch (key) {
-            case 'name': return sandClass.className;
+
+            case 'name': {
+                return sandClass.className;
+            }
         }
         return undefined;
     }

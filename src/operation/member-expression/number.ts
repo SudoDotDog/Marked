@@ -16,8 +16,9 @@ export const memberExpressionNumber = (sandbox: Sandbox, target: number, key: st
         switch (key) {
 
             case 'toString': {
+
                 return wrapMemberFunction(sandbox, () => {
-                    target.toString();
+                    return target.toString();
                 });
             }
         }

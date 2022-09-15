@@ -7,6 +7,7 @@
 import { ERROR_CODE } from "../../declare/error-code";
 import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
+import { wrapMemberFunction } from "../../util/wrap-member-function";
 import { SandFunction } from "../../variable/sand-function/sand-function";
 
 export const memberExpressionSandFunction = (sandbox: Sandbox, target: SandFunction, key: string | number): any => {
@@ -14,9 +15,10 @@ export const memberExpressionSandFunction = (sandbox: Sandbox, target: SandFunct
     switch (key) {
 
         case 'toString': {
-            return () => {
+
+            return wrapMemberFunction(sandbox, () => {
                 return '[Marked Function]';
-            };
+            });
         }
     }
 

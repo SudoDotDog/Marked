@@ -7,6 +7,7 @@
 import { ERROR_CODE } from "../../declare/error-code";
 import { Sandbox } from "../../marked/sandbox";
 import { error } from "../../util/error/error";
+import { wrapMemberFunction } from "../../util/wrap-member-function";
 import { SandLiteralRegExp } from "../../variable/sand-literal/regexp";
 
 export const memberExpressionSandRegExp = (sandbox: Sandbox, regexp: SandLiteralRegExp, key: string | number): any => {
@@ -14,9 +15,9 @@ export const memberExpressionSandRegExp = (sandbox: Sandbox, regexp: SandLiteral
     switch (key) {
 
         case 'test': {
-            return (target: string) => {
+            return wrapMemberFunction(sandbox, (target: string) => {
                 return regexp.toNativeRegExp().test(target);
-            };
+            });
         }
     }
 
