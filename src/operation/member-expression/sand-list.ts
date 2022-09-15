@@ -17,31 +17,8 @@ export const memberExpressionSandList = (sandbox: Sandbox, list: SandList<any>, 
 
     switch (key) {
 
-        case 'length': {
-
-            return list.length;
-        }
-        case 'map': {
-            return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => any) | SandFunction) => {
-
-                if (!(func instanceof SandFunction)
-                    && typeof func !== 'function') {
-                    throw error(ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
-                }
-
-                const sandFunction: SandFunction = SandFunction.wrapFunction(func);
-
-                const result: any[] = [];
-                for (let i = 0; i < list.length; i++) {
-
-                    const currentResult: any =
-                        await Promise.resolve(sandFunction.execute(list.get(i), i));
-                    result.push(currentResult);
-                }
-                return result;
-            });
-        }
         case 'filter': {
+
             return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => Promise<boolean>) | SandFunction) => {
 
                 if (!(func instanceof SandFunction)
@@ -60,6 +37,49 @@ export const memberExpressionSandList = (sandbox: Sandbox, list: SandList<any>, 
                     if (currentResult) {
                         result.push(list.get(i));
                     }
+                }
+                return result;
+            });
+        }
+        case 'forEach': {
+
+            return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => Promise<void>) | SandFunction) => {
+
+                if (!(func instanceof SandFunction)
+                    && typeof func !== 'function') {
+                    throw error(ERROR_CODE.LIST_FOR_EACH_ARGUMENT_SHOULD_BE_A_FUNCTION);
+                }
+
+                const sandFunction: SandFunction = SandFunction.wrapFunction(func);
+
+                for (let i = 0; i < list.length; i++) {
+
+                    await Promise.resolve(sandFunction.execute(list.get(i), i));
+                }
+                return;
+            });
+        }
+        case 'length': {
+
+            return list.length;
+        }
+        case 'map': {
+
+            return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => any) | SandFunction) => {
+
+                if (!(func instanceof SandFunction)
+                    && typeof func !== 'function') {
+                    throw error(ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
+                }
+
+                const sandFunction: SandFunction = SandFunction.wrapFunction(func);
+
+                const result: any[] = [];
+                for (let i = 0; i < list.length; i++) {
+
+                    const currentResult: any =
+                        await Promise.resolve(sandFunction.execute(list.get(i), i));
+                    result.push(currentResult);
                 }
                 return result;
             });

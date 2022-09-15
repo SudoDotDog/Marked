@@ -14,10 +14,10 @@ export const memberExpressionSandFunction = (sandbox: Sandbox, target: SandFunct
 
     switch (key) {
 
-        case 'toString': {
+        case "toString": {
 
             return wrapMemberFunction(sandbox, () => {
-                return '[Marked Function]';
+                return "[Marked Function]";
             });
         }
     }

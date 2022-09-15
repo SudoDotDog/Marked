@@ -15,6 +15,18 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
 
         switch (key) {
 
+            case 'concat': {
+
+                return wrapMemberFunction(sandbox, (...args: any[]) => {
+                    return target.concat(...args);
+                });
+            }
+            case 'endWith': {
+
+                return wrapMemberFunction(sandbox, (slice: string) => {
+                    return target.endsWith(slice);
+                });
+            }
             case 'includes': {
 
                 return wrapMemberFunction(sandbox, (slice: string) => {
@@ -25,14 +37,47 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
 
                 return target.length;
             }
+            case 'padEnd': {
+
+                return wrapMemberFunction(sandbox, (length: number, fillString: string) => {
+                    return target.padEnd(length, fillString);
+                });
+            }
+            case 'padStart': {
+
+                return wrapMemberFunction(sandbox, (length: number, fillString: string) => {
+                    return target.padStart(length, fillString);
+                });
+            }
+            case 'repeat': {
+
+                return wrapMemberFunction(sandbox, (count: number) => {
+                    return target.repeat(count);
+                });
+            }
             case 'replace': {
 
-                return wrapMemberFunction(
-                    sandbox,
-                    (searchValue: string, replaceValue: string) => {
-                        return target.replace(searchValue, replaceValue);
-                    },
-                );
+                return wrapMemberFunction(sandbox, (searchValue: string, replaceValue: string) => {
+                    return target.replace(searchValue, replaceValue);
+                });
+            }
+            case 'split': {
+
+                return wrapMemberFunction(sandbox, (separator: string) => {
+                    return target.split(separator);
+                });
+            }
+            case 'startWith': {
+
+                return wrapMemberFunction(sandbox, (slice: string) => {
+                    return target.startsWith(slice);
+                });
+            }
+            case 'toLowerCase': {
+
+                return wrapMemberFunction(sandbox, () => {
+                    return target.toLowerCase();
+                });
             }
             case 'toString': {
 
@@ -40,12 +85,18 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
                     return target.toString();
                 });
             }
+            case 'toUpperCase': {
+
+                return wrapMemberFunction(sandbox, () => {
+                    return target.toUpperCase();
+                });
+            }
         }
     }
 
     if (typeof key === 'number') {
 
-        return target[key];
+        return target.charAt(key);
     }
 
     throw error(ERROR_CODE.STRING_METHOD_NOT_FOUND);
