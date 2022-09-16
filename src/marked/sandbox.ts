@@ -16,19 +16,15 @@ import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
 import { IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
 import { pauseForBreakPoint } from "../operation/break-point";
-import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from "../parse/emit/transform";
 import { parseNativeToSand } from "../parse/native-to-sand";
-import { parseCodeToESTree } from '../parse/parse-estree';
-import { BaseSourceMapLocationFinder } from "../source-map/location-finder/base";
-import { RawSourceMapLocationFinder } from "../source-map/location-finder/raw";
-import { SegmentSourceMapLocationFinder } from "../source-map/location-finder/segment";
+import { parseScript } from "../parse/script/parse-script";
 import { assert } from '../util/error/assert';
 import { error, MarkedError } from "../util/error/error";
 import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
 import { Flag } from '../variable/flag';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace/trace';
-import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL, ParseScriptResult } from "./declare";
+import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL } from "./declare";
 import { useEverything } from './evaluate';
 import { Executer } from './executer';
 
@@ -196,7 +192,7 @@ export class Sandbox implements ISandbox {
 
         try {
 
-            const parseResult = await this.parse(script);
+            const parseResult = await parseScript(script, this._language);
             const AST: EST.BaseNode = parseResult.estree;
 
             const breakPointController: MarkedDebugBreakPointController | undefined = typeof breakPoints === 'undefined'
@@ -441,54 +437,5 @@ export class Sandbox implements ISandbox {
 
         const result: any = await executor.bind(this)(node, scope as Scope, trace as Trace);
         return result;
-    }
-
-    protected async parse(script: string): Promise<ParseScriptResult> {
-
-        if (this._language === 'javascript') {
-            return await this._parseJavaScript(script);
-        } else if (this._language === 'typescript') {
-            return await this._parseTypeScript(script);
-        }
-
-        throw error(ERROR_CODE.UNKNOWN_LANGUAGE);
-    }
-
-    private async _parseJavaScript(script: string): Promise<ParseScriptResult> {
-
-        try {
-
-            const estree: EST.Node = await parseCodeToESTree(script);
-
-            return {
-                estree,
-                locationFinder: RawSourceMapLocationFinder.fromEmpty(),
-            };
-        } catch (err) {
-
-            const syntaxError: any = err;
-            throw error(ERROR_CODE.PARSE_ERROR, syntaxError.message, `POS:${syntaxError.pos}, RAISEDAT:${syntaxError.raisedAt}` as any);
-        }
-    }
-
-    private async _parseTypeScript(script: string): Promise<ParseScriptResult> {
-
-        try {
-
-            const transformResult: EmitTypeScriptTransformResult =
-                await emitTypeScriptTransform(script);
-
-            const estree: EST.Node = await parseCodeToESTree(transformResult.source);
-            const locationFinder: BaseSourceMapLocationFinder =
-                SegmentSourceMapLocationFinder.fromSourceMap(transformResult.sourceMap);
-
-            return {
-                estree,
-                locationFinder,
-            };
-        } catch (err) {
-
-            throw error(ERROR_CODE.TYPESCRIPT_COMPILE_ERROR);
-        }
     }
 }

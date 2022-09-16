@@ -29,6 +29,6 @@ describe('Given Integration Source Map (Simple) Cases', (): void => {
         expect(locationFinder.findSourceLocation({
             line: 1,
             column: 0,
-        }).line).to.be.equal(1);
+        }, null as any).line).to.be.equal(1);
     });
 });
