@@ -8,6 +8,7 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
+import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Cross File (Function) Cases', (): void => {
@@ -32,7 +33,10 @@ describe('Given Integration Cross File (Function) Cases', (): void => {
             };
         });
 
-        const result: MarkedResult = await sandbox.evaluate(`import {func} from 'test';export default func();`);
+        const result: MarkedResult = await sandbox.evaluate([
+            `import {func} from 'test';`,
+            `export default func();`,
+        ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
