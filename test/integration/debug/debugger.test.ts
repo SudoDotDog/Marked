@@ -9,6 +9,7 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
+import { New_Line_Character } from '../../../src/host/declare';
 import { assertFailedMarkedResult, assertSucceedMarkedResult, assertTerminatedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Debug (Debugger) Cases', (): void => {
@@ -116,7 +117,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
             flowController: MarkedDebugFlowController,
         ) => {
             debuggerSnapshot = snapshot;
-            if (nextStepped > 3) {
+            if (nextStepped >= 2) {
                 flowController.terminate();
             } else {
                 nextStepped++;
@@ -135,7 +136,11 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         sandbox.inject('deject', (content: any) => middle.push(content));
 
-        const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});deject(${value3});`);
+        const result: MarkedResult = await sandbox.evaluate([
+            `deject(${value1});`,
+            `debugger;deject(${value2});`,
+            `deject(${value3});`,
+        ].join(New_Line_Character));
 
         assertTerminatedMarkedResult(result);
 

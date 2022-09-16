@@ -21,7 +21,7 @@ describe('Given Integration Debug (Function) Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to resolve function declaration scenario', async (): Promise<void> => {
+    it('should be able to resolve function declaration scenario', async (): Promise<void> => {
 
         const code: string = [
             `debugger;`,
@@ -35,10 +35,12 @@ describe('Given Integration Debug (Function) Cases', (): void => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
+        let steps: number = 0;
         const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
             snapshot: MarkedDebugSnapshot,
             flowController: MarkedDebugFlowController,
         ) => {
+            steps++;
             debuggerSnapshot = snapshot;
             flowController.nextStep();
         });
@@ -51,5 +53,6 @@ describe('Given Integration Debug (Function) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(debuggerSnapshot).to.be.not.null;
+        expect(steps).to.be.equal(6);
     });
 });

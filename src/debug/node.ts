@@ -8,6 +8,9 @@ import { EST_TYPE } from "../declare/types";
 
 const Debug_Skip_Node: Set<EST_TYPE> = new Set([
     "BlockStatement",
+    "EmptyStatement",
+    "ExpressionStatement",
+    "Identifier",
     "Literal",
     "Program",
 ] as EST_TYPE[]);

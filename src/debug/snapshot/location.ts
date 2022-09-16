@@ -17,8 +17,6 @@ export class MarkedDebugSnapshotLocation {
         const location: EST.SourceLocation = node.loc as EST.SourceLocation;
         const locationFinder: BaseSourceMapLocationFinder = trace.ensureLocationFinder();
 
-        console.log(node);
-
         const startPosition: MarkedDebugSnapshotPosition =
             MarkedDebugSnapshotPosition.fromPosition(
                 locationFinder.findSourceLocation(location.start, node),
