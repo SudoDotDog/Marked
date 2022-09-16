@@ -31,7 +31,7 @@ export class SegmentSourceMapLocationFinder extends BaseSourceMapLocationFinder 
         this._decoded = decoded;
     }
 
-    public findSourceLocation(position: EST.Position): EST.Position {
+    public findSourceLocation(position: EST.Position, node: EST.Node): EST.Position {
 
         const line: SourceMappingLine | undefined = this._decoded[position.line - 1];
 
@@ -40,6 +40,7 @@ export class SegmentSourceMapLocationFinder extends BaseSourceMapLocationFinder 
             throw error(
                 ERROR_CODE.CANNOT_FIND_ORIGINAL_POSITION_FROM_LINE,
                 `${position.line}:${position.column}`,
+                node,
             );
         }
 
@@ -56,6 +57,7 @@ export class SegmentSourceMapLocationFinder extends BaseSourceMapLocationFinder 
         throw error(
             ERROR_CODE.CANNOT_FIND_ORIGINAL_POSITION_FROM_COLUMN,
             `${position.line}:${position.column}`,
+            node,
         );
     }
 }

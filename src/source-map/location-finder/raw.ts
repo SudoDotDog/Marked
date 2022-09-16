@@ -19,7 +19,7 @@ export class RawSourceMapLocationFinder extends BaseSourceMapLocationFinder {
         super();
     }
 
-    public findSourceLocation(position: EST.Position): EST.Position {
+    public findSourceLocation(position: EST.Position, _node: EST.Node): EST.Position {
 
         return position;
     }

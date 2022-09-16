@@ -19,12 +19,12 @@ export class MarkedDebugSnapshotLocation {
 
         const startPosition: MarkedDebugSnapshotPosition =
             MarkedDebugSnapshotPosition.fromPosition(
-                locationFinder.findSourceLocation(location.start),
+                locationFinder.findSourceLocation(location.start, node),
             );
 
         const endPosition: MarkedDebugSnapshotPosition =
             MarkedDebugSnapshotPosition.fromPosition(
-                locationFinder.findSourceLocation(location.end),
+                locationFinder.findSourceLocation(location.end, node),
             );
 
         return new MarkedDebugSnapshotLocation(

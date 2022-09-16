@@ -8,5 +8,5 @@ import * as EST from "estree";
 
 export abstract class BaseSourceMapLocationFinder {
 
-    public abstract findSourceLocation(position: EST.Position): EST.Position;
+    public abstract findSourceLocation(position: EST.Position, node: EST.Node): EST.Position;
 }
