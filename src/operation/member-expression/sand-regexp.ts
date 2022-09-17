@@ -19,6 +19,11 @@ export const memberExpressionSandRegExp = (sandbox: Sandbox, regexp: SandLiteral
                 return regexp.toNativeRegExp().test(target);
             });
         }
+        case 'toString': {
+            return wrapMemberFunction(sandbox, () => {
+                return regexp.toString();
+            });
+        }
     }
 
     throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_REGEXP);

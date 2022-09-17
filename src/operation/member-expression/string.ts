@@ -79,7 +79,7 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
                     return target.substring(start, end);
                 });
             }
-            case 'startWith': {
+            case 'startsWith': {
 
                 return wrapMemberFunction(sandbox, (slice: string) => {
                     return target.startsWith(slice);

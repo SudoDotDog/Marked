@@ -28,7 +28,25 @@ export const pauseForBreakPoint = async function (this: Sandbox, node: EST.Node,
 
     const interceptor: MarkedDebugInterceptor = this.ensureGetDebugInterceptor();
 
-    const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScopeAndNode(scope, node, trace);
+    const sourceCode: string | null = this.getSourceCode(trace.scriptLocation);
+
+    if (typeof sourceCode !== 'string') {
+
+        throw error(
+            ERROR_CODE.INTERNAL_ERROR,
+            `Cannot find source code for ${trace.scriptLocation.hash()}`,
+            node,
+            trace,
+        );
+    }
+
+    const snapshot: MarkedDebugSnapshot = MarkedDebugSnapshot.fromScopeAndNode(
+        sourceCode,
+        scope,
+        node,
+        trace,
+    );
+
     const flowController: MarkedDebugFlowController = MarkedDebugFlowController.fromOptions({
         continueMethod: () => {
             pauseResolver();
