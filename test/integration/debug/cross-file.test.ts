@@ -20,11 +20,17 @@ describe('Given Integration Debug (Cross File) Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to cross file debug', async (): Promise<void> => {
+    it('should be able to cross file debug', async (): Promise<void> => {
 
         const value: number = chance.integer({ min: 0, max: 100 });
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
+
+        const code: string = [
+            `import { func } from 'test'; `,
+            `debugger;`,
+            `export default func(); `,
+        ].join(New_Line_Character);
 
         let steps: number = 0;
         const interceptor: MarkedDebugInterceptor = MarkedDebugInterceptor.fromListener((
@@ -50,19 +56,11 @@ describe('Given Integration Debug (Cross File) Cases', (): void => {
         });
         sandbox.setDebugInterceptor(interceptor);
 
-        const code: string = [
-            `import { func } from 'test'; `,
-            `debugger;`,
-            `export default func(); `,
-        ].join(New_Line_Character);
-
         const result: MarkedResult = await sandbox.evaluate(code);
-
-        console.log(result);
 
         assertSucceedMarkedResult(result);
 
         expect(debuggerSnapshot).to.be.not.null;
-        expect(steps).to.be.equal(6);
+        expect(steps).to.be.equal(4);
     });
 });

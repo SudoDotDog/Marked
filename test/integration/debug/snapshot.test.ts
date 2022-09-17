@@ -405,7 +405,7 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         expect(debuggerSnapshot.location.endPosition.column).to.be.equal(23);
         expect(debuggerSnapshot.location.endPosition.line).to.be.equal(1);
 
-        expect(debuggerSnapshot.sliceCodeClip(sourceCode)).to.be.equal(`debugger;`);
+        expect(debuggerSnapshot.sliceCodeClip()).to.be.equal(`debugger;`);
     });
 
     it('should be able to get location info from snapshot by stepper', async (): Promise<void> => {
@@ -435,6 +435,6 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.sliceCodeClip(sourceCode)).to.be.equal(`const value=0;`);
+        expect(debuggerSnapshot.sliceCodeClip()).to.be.equal(`const value=0;`);
     });
 });

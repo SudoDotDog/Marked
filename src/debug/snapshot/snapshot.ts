@@ -5,6 +5,7 @@
  */
 
 import * as EST from "estree";
+import { ScriptLocation } from "../../declare/script-location";
 import { Scope } from "../../variable/scope";
 import { Trace } from "../../variable/trace/trace";
 import { MarkedDebugSnapshotLocation } from "./location";
@@ -13,7 +14,12 @@ import { MarkedDebugSnapshotScope } from "./scope";
 
 export class MarkedDebugSnapshot {
 
-    public static fromScopeAndNode(scope: Scope, node: EST.Node, trace: Trace): MarkedDebugSnapshot {
+    public static fromScopeAndNode(
+        sourceCode: string,
+        scope: Scope,
+        node: EST.Node,
+        trace: Trace,
+    ): MarkedDebugSnapshot {
 
         const snapshotScope: MarkedDebugSnapshotScope =
             MarkedDebugSnapshotScope.fromScope(scope);
@@ -22,18 +28,32 @@ export class MarkedDebugSnapshot {
         const snapshotNode: MarkedDebugSnapshotNode =
             MarkedDebugSnapshotNode.fromNode(node);
 
-        return new MarkedDebugSnapshot(snapshotScope, snapshotLocation, snapshotNode);
+        return new MarkedDebugSnapshot(
+            sourceCode,
+            trace.scriptLocation,
+            snapshotScope,
+            snapshotLocation,
+            snapshotNode,
+        );
     }
+
+    private readonly _sourceCode: string;
+    private readonly _scriptLocation: ScriptLocation;
 
     private readonly _scope: MarkedDebugSnapshotScope;
     private readonly _location: MarkedDebugSnapshotLocation;
     private readonly _node: MarkedDebugSnapshotNode;
 
     private constructor(
+        sourceCode: string,
+        scriptLocation: ScriptLocation,
         scope: MarkedDebugSnapshotScope,
         location: MarkedDebugSnapshotLocation,
         node: MarkedDebugSnapshotNode,
     ) {
+
+        this._sourceCode = sourceCode;
+        this._scriptLocation = scriptLocation;
 
         this._scope = scope;
         this._location = location;
@@ -50,8 +70,13 @@ export class MarkedDebugSnapshot {
         return this._node;
     }
 
-    public sliceCodeClip(sourceCode: string): string {
+    public getScriptLocation(): ScriptLocation {
 
-        return this._location.sliceCodeClip(sourceCode);
+        return this._scriptLocation;
+    }
+
+    public sliceCodeClip(): string {
+
+        return this._location.sliceCodeClip(this._sourceCode);
     }
 }

@@ -59,6 +59,7 @@ export class Sandbox implements ISandbox {
 
     private readonly _resolvers: ModuleResolver[];
     private readonly _cachedExecuter: Map<string, IExecuter>;
+    private readonly _cachedSource: Map<string, string>;
 
     private readonly _options: ISandboxOptions;
 
@@ -86,6 +87,7 @@ export class Sandbox implements ISandbox {
 
         this._resolvers = [];
         this._cachedExecuter = new Map<string, IExecuter>();
+        this._cachedSource = new Map<string, string>();
 
         this._options = getDefaultSandboxOption();
 
@@ -186,6 +188,19 @@ export class Sandbox implements ISandbox {
             };
         }
 
+        if (this._broke) {
+
+            return {
+                signal: END_SIGNAL.FAILED,
+                error: error(ERROR_CODE.SANDBOX_IS_BROKE),
+            };
+        }
+
+        this._cachedSource.set(
+            scriptLocation.hash(),
+            script,
+        );
+
         const targetScope: IScope = typeof scope === 'undefined'
             ? this._executeScope
             : scope;
@@ -282,6 +297,14 @@ export class Sandbox implements ISandbox {
         this._usingAdditionalArgument = true;
         this._additionalArgument = value;
         return this;
+    }
+
+    protected getSourceCode(scriptLocation: ScriptLocation): string | null {
+
+        if (!this._cachedSource.has(scriptLocation.hash())) {
+            return null;
+        }
+        return this._cachedSource.get(scriptLocation.hash()) as string;
     }
 
     protected hasDebugInterceptor(): boolean {

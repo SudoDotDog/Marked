@@ -17,6 +17,7 @@ export * from "./declare/sandbox";
 export { ScriptLocation } from "./declare/script-location";
 export { EST_TYPE } from "./declare/types";
 export { IExposed, ITrace } from "./declare/variable";
+export { New_Line_Character } from "./host/declare";
 export { Executer } from "./marked/executer";
 export { marked as Marked } from "./marked/marked";
 export { Sandbox } from "./marked/sandbox";
