@@ -56,7 +56,9 @@ export interface ISandbox {
     bridgeScope: IScope;
     executeScope: IScope;
 
-    break: () => ISandbox;
+    use: (mixin: MarkedMixin) => this;
+
+    break: () => this;
     evaluate: (
         script: string,
         breakPoints?: Iterable<MarkedDebugBreakPoint>,
@@ -64,14 +66,14 @@ export interface ISandbox {
         scope?: IScope,
     ) => Promise<any>;
 
-    config: (name: string, value?: any) => ISandbox;
-    inject: (name: string, value: any) => ISandbox;
+    config: (name: string, value?: any) => this;
+    inject: (name: string, value: any) => this;
     module: (name: string) => any | null;
-    mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => ISandbox;
-    provide: (name: string, value: any) => ISandbox;
-    resolver: (resolver: ModuleResolver) => ISandbox;
+    mount: <M extends EST_TYPE>(type: M, evaluator: Evaluator<M>) => this;
+    provide: (name: string, value: any) => this;
+    resolver: (resolver: ModuleResolver) => this;
 
-    setOption: <T extends OptionName>(name: T, value: ISandboxOptions[T]) => ISandbox;
+    setOption: <T extends OptionName>(name: T, value: ISandboxOptions[T]) => this;
     getOption: <T extends OptionName>(name: T) => ISandboxOptions[T];
 }
 

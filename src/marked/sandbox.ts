@@ -130,19 +130,19 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public break(): Sandbox {
+    public break(): this {
 
         this._broke = true;
         return this;
     }
 
-    public config(name: string, value?: any): Sandbox {
+    public config(name: string, value?: any): this {
 
         this._configs.set(name, value === undefined ? true : value);
         return this;
     }
 
-    public inject(name: string, value: any): Sandbox {
+    public inject(name: string, value: any): this {
 
         const parsedContent = parseNativeToSand(value);
         this._bridgeScope.register(VARIABLE_TYPE.CONSTANT)(name, parsedContent);
@@ -154,13 +154,13 @@ export class Sandbox implements ISandbox {
         return this._modules.get(name) || null;
     }
 
-    public mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): Sandbox {
+    public mount<M extends EST_TYPE>(type: M, evaluator: Evaluator<M>): this {
 
         this._map.set(type, evaluator as any);
         return this;
     }
 
-    public provide(name: string, value: any): Sandbox {
+    public provide(name: string, value: any): this {
 
         if (this._modules.has(name)) {
 
@@ -171,7 +171,7 @@ export class Sandbox implements ISandbox {
         return this;
     }
 
-    public resolver(resolver: ModuleResolver): Sandbox {
+    public resolver(resolver: ModuleResolver): this {
 
         this._resolvers.push(resolver);
         return this;

@@ -7,6 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../../src/declare/error-code";
 import { Evaluator } from "../../src/declare/evaluate";
+import { MarkedMixin } from "../../src/declare/mixin";
 import { ISandbox, ISandboxOptions, ModuleResolver, OptionName } from "../../src/declare/sandbox";
 import { EST_TYPE, IESTreeType } from "../../src/declare/types";
 import { IExposed, IScope, ITrace } from "../../src/declare/variable";
@@ -72,26 +73,32 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this._executedList;
     }
 
-    public break(): MockSandbox {
+    public use(mixin: MarkedMixin): this {
+
+        mixin(this);
+        return this;
+    }
+
+    public break(): this {
 
         this._broke = true;
         return this;
     }
 
-    public config(name: string, value?: any): MockSandbox {
+    public config(name: string, value?: any): this {
 
         this._configs.set(name, value === undefined ? true : value);
         return this;
     }
 
-    public expose(name: string, value: any): MockSandbox {
+    public expose(name: string, value: any): this {
 
         this._exposed.set(name, value);
         return this;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public inject(name: string, value: any): MockSandbox {
+    public inject(name: string, value: any): this {
 
         return this;
     }
@@ -101,19 +108,19 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return this._modules.get(name) || null;
     }
 
-    public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): MockSandbox {
+    public mount<T extends EST_TYPE>(type: T, evaluator: Evaluator<T>): this {
 
         this._mockMap.set(type, evaluator);
         return this;
     }
 
-    public provide(name: string, value: any): MockSandbox {
+    public provide(name: string, value: any): this {
 
         this._modules.set(name, value);
         return this;
     }
 
-    public resolver(resolver: ModuleResolver): MockSandbox {
+    public resolver(resolver: ModuleResolver): this {
 
         this._resolvers.push(resolver);
         return this;
@@ -138,7 +145,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return assert(value).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
     }
 
-    public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): MockSandbox {
+    public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): this {
 
         this._options[name] = value;
         return this;
