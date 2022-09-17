@@ -7,10 +7,11 @@
 import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { Evaluator } from "./evaluate";
-import { MarkedMixin } from "./mixin";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
 import { IExposed, IScope, ITrace } from "./variable";
+
+export type MarkedMixin = (sandbox: ISandbox) => void;
 
 export type ModuleResolveResult = {
 

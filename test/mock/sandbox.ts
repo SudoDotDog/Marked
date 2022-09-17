@@ -7,8 +7,7 @@
 import * as EST from "estree";
 import { ERROR_CODE } from "../../src/declare/error-code";
 import { Evaluator } from "../../src/declare/evaluate";
-import { MarkedMixin } from "../../src/declare/mixin";
-import { ISandbox, ISandboxOptions, ModuleResolver, OptionName } from "../../src/declare/sandbox";
+import { ISandbox, ISandboxOptions, MarkedMixin, ModuleResolver, OptionName } from "../../src/declare/sandbox";
 import { EST_TYPE, IESTreeType } from "../../src/declare/types";
 import { IExposed, IScope, ITrace } from "../../src/declare/variable";
 import { assert } from "../../src/util/error/assert";
