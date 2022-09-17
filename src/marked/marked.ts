@@ -27,23 +27,33 @@ export const marked = async (
 
     const sandbox: Sandbox = Sandbox.fromAllEvaluators(fixedOptions.language);
 
+    if (typeof fixedOptions.mixins !== 'undefined') {
+        for (const mixin of fixedOptions.mixins) {
+            sandbox.use(mixin);
+        }
+    }
+
     if (typeof fixedOptions.injects !== 'undefined') {
         Object.keys(fixedOptions.injects).forEach((key: string) =>
             sandbox.inject(key, (fixedOptions.injects as any)[key]));
     }
+
     if (typeof fixedOptions.provides !== 'undefined') {
         Object.keys(fixedOptions.provides).forEach((key: string) =>
             sandbox.provide(key, (fixedOptions.provides as any)[key]));
     }
+
     if (typeof fixedOptions.resolvers !== 'undefined') {
         for (const resolver of fixedOptions.resolvers) {
             sandbox.resolver(resolver);
         }
     }
+
     if (typeof fixedOptions.sandbox !== 'undefined') {
         Object.keys(fixedOptions.sandbox as any).forEach((key: any) =>
             sandbox.setOption(key as OptionName, (fixedOptions.sandbox as any)[key]));
     }
+
     if (typeof fixedOptions.debugInterceptor !== 'undefined') {
         sandbox.setDebugInterceptor(fixedOptions.debugInterceptor);
     }

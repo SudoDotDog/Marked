@@ -7,6 +7,7 @@
 import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { Evaluator } from "./evaluate";
+import { MarkedMixin } from "./mixin";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
 import { IExposed, IScope, ITrace } from "./variable";
@@ -24,9 +25,10 @@ export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveRes
 
 export interface IMarkedOptions {
 
+    mixins?: Iterable<MarkedMixin>;
     injects?: Record<string, any>;
     provides?: Record<string, any>;
-    resolvers?: ModuleResolver[];
+    resolvers?: Iterable<ModuleResolver>;
     sandbox?: Partial<ISandboxOptions>;
     debugInterceptor?: MarkedDebugInterceptor;
     language?: SandboxLanguage;

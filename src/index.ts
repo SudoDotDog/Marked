@@ -13,6 +13,7 @@ export * from "./debug/snapshot/position";
 export * from "./debug/snapshot/scope";
 export * from "./debug/snapshot/snapshot";
 export * from "./declare/evaluate";
+export * from "./declare/mixin";
 export * from "./declare/sandbox";
 export { ScriptLocation } from "./declare/script-location";
 export { EST_TYPE } from "./declare/types";

@@ -11,6 +11,7 @@ import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { shouldDebugNode } from "../debug/node";
 import { ERROR_CODE } from '../declare/error-code';
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
+import { MarkedMixin } from "../declare/mixin";
 import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
 import { ScriptLocation } from '../declare/script-location';
 import { EST_TYPE } from '../declare/types';
@@ -121,6 +122,12 @@ export class Sandbox implements ISandbox {
     }
     public get additionalArgument(): any {
         return this._additionalArgument;
+    }
+
+    public use(mixin: MarkedMixin): this {
+
+        mixin(this);
+        return this;
     }
 
     public break(): Sandbox {
