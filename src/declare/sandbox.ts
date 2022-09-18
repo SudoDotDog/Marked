@@ -53,9 +53,14 @@ export type OptionName = keyof ISandboxOptions;
 
 export interface ISandbox {
 
+    broke: boolean;
     count: number;
+
     bridgeScope: IScope;
     executeScope: IScope;
+
+    usingAdditionalArgument: boolean;
+    additionalArgument: any;
 
     use: (mixin: MarkedMixin) => this;
 

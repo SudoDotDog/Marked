@@ -46,7 +46,6 @@ export class MockSandbox implements ISandbox, IMockedClass {
     public get broke(): boolean {
         return this._broke;
     }
-
     public get count(): number {
         return this._executedList.length;
     }
@@ -55,6 +54,13 @@ export class MockSandbox implements ISandbox, IMockedClass {
         return undefined as any;
     }
     public get executeScope(): any {
+        return undefined as any;
+    }
+
+    public get usingAdditionalArgument(): boolean {
+        return false;
+    }
+    public get additionalArgument(): any {
         return undefined as any;
     }
 
