@@ -99,8 +99,12 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                 );
             }
 
+            console.log(memberVariable);
+
             const result: any = operation(memberValue);
             memberVariable.set(result);
+
+            console.log(memberVariable);
 
             return node.prefix ? result : memberValue;
         }
