@@ -6,7 +6,10 @@
 
 import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
+import { MarkedNativeClass } from "../variable/native-class/native-class";
+import { MarkedNativeClassInstance } from "../variable/native-class/native-class-instance";
 import { SandClass } from "../variable/sand-class/sand-class";
+import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
 import { SandLiteralBigInt } from "../variable/sand-literal/bigint";
@@ -25,9 +28,24 @@ export const extractSandToNative = (target: any): any => {
         return target.toNativeRegExp();
     }
 
+    if (target instanceof MarkedNativeClass) {
+
+        return extractSandToNative(target.toNative());
+    }
+
+    if (target instanceof MarkedNativeClassInstance) {
+
+        return extractSandToNative(target.toNative());
+    }
+
     if (target instanceof SandClass) {
 
-        throw error(ERROR_CODE.CANNOT_TRANSFER_CLASS_TO_NATIVE);
+        return extractSandToNative(target.toNative());
+    }
+
+    if (target instanceof SandClassInstance) {
+
+        return extractSandToNative(target.toNative());
     }
 
     if (target instanceof SandFunction) {

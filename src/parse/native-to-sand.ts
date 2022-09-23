@@ -7,6 +7,8 @@
 import { ERROR_CODE } from "../declare/error-code";
 import { error } from "../util/error/error";
 import { typeCheckIsConstructor } from "../util/type-check";
+import { MarkedNativeClass } from "../variable/native-class/native-class";
+import { MarkedNativeClassInstance } from "../variable/native-class/native-class-instance";
 import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
@@ -23,6 +25,8 @@ export const parseNativeToSand = (target: any):
     | undefined
     | null
     | ((...args: any[]) => any)
+    | MarkedNativeClass
+    | MarkedNativeClassInstance
     | SandClass
     | SandClassInstance
     | SandFunction
@@ -69,6 +73,12 @@ export const parseNativeToSand = (target: any):
         return SandLiteralRegExp.create(target.source, target.flags);
     }
 
+    if (target instanceof MarkedNativeClass) {
+        return target;
+    }
+    if (target instanceof MarkedNativeClassInstance) {
+        return target;
+    }
     if (target instanceof SandClass) {
         return target;
     }

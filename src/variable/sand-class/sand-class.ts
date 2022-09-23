@@ -23,6 +23,7 @@ export class SandClass {
     private readonly _staticMap: SandMap<any>;
 
     private _superClass: SandClass | null;
+    private _classConstructor: any | null;
 
     private constructor(
         className: string,
@@ -34,6 +35,7 @@ export class SandClass {
         this._staticMap = new SandMap();
 
         this._superClass = null;
+        this._classConstructor = null;
     }
 
     public get className(): string {
@@ -44,6 +46,15 @@ export class SandClass {
     }
     public get staticBody(): SandMap<any> {
         return this._staticMap;
+    }
+    public get classConstructor(): any | null {
+        return this._classConstructor;
+    }
+
+    public setClassConstructor(classConstructor: any): this {
+
+        this._classConstructor = classConstructor;
+        return this;
     }
 
     public lookFor(key: string): any {
@@ -98,5 +109,12 @@ export class SandClass {
         }
 
         return this._superClass.sameClass(other);
+    }
+
+    public toNative(): any {
+
+        return {
+            ...this._staticMap.map,
+        };
     }
 }

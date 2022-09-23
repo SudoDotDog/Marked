@@ -62,4 +62,9 @@ export class SandClassInstance {
         }
         return result;
     }
+
+    public toNative(): any {
+
+        return this.combineBody().map;
+    }
 }
