@@ -80,7 +80,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
         expect(result.exports.default).to.be.equal(value);
     });
 
-    it.only('should be able to call mutate variable method', async (): Promise<void> => {
+    it('should be able to call mutate variable method', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -90,14 +90,19 @@ describe('Given Integration Class (Simple) Cases', (): void => {
             `addValue(){`,
             `this.value++;`,
             `}`,
+            `getValue(){`,
+            `return this.value;`,
+            `}`,
             `}`,
             `const i = new C();`,
             `i.addValue();`,
-            `export default i.value;`,
+            `export const valueResult = i.value;`,
+            `export const getValueResult = i.getValue();`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(1);
+        expect(result.exports.named.valueResult).to.be.equal(1);
+        expect(result.exports.named.getValueResult).to.be.equal(1);
     });
 });

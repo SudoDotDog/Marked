@@ -32,7 +32,7 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
             const subScope: Scope = scope.child();
 
             if (thisValue instanceof SandClassInstance) {
-                subScope.replaceThis(thisValue.combineBody());
+                subScope.replaceThis(thisValue.body);
             }
 
             const bindingRegisterFunctionExpressionParams =

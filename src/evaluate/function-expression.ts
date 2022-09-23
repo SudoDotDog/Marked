@@ -30,7 +30,7 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
             const subScope: Scope = scope.child().initThis();
 
             if (thisValue instanceof SandClassInstance) {
-                subScope.replaceThis(thisValue.combineBody());
+                subScope.replaceThis(thisValue.body);
             }
 
             const bindingRegisterFunctionExpressionParams =

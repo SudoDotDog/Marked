@@ -29,7 +29,7 @@ describe('Given Integration Class (Constructor) Cases', (): void => {
             `class Test{`,
             `arg = "before"`,
             `constructor(arg){`,
-            `this.arg = "arg";`,
+            `this.arg = arg;`,
             `}`,
             `};`,
             `const instance = new Test("${argumentResult}");`,

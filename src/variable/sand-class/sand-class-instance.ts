@@ -22,7 +22,7 @@ export class SandClassInstance {
 
         this._targetClass = targetClass;
 
-        this._body = new SandMap();
+        this._body = targetClass.body.clone();
     }
 
     public get targetClass(): SandClass {
@@ -50,21 +50,8 @@ export class SandClassInstance {
         return this._targetClass.lookForHas(key);
     }
 
-    public combineBody(): SandMap<any> {
-
-        const result: SandMap<any> = new SandMap();
-
-        for (const key of this._targetClass.body.keys()) {
-            result.set(key, this._targetClass.body.get(key));
-        }
-        for (const key of this._body.keys()) {
-            result.set(key, this._body.get(key));
-        }
-        return result;
-    }
-
     public toNative(): any {
 
-        return this.combineBody().map;
+        return this.body.map;
     }
 }

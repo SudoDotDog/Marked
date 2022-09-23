@@ -45,7 +45,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
     if (value instanceof SandClassInstance) {
         return {
             type: 'class-instance',
-            value: value.combineBody().map,
+            value: value.body.map,
             native: false,
             mutable: variable.mutable,
         };
