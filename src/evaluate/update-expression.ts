@@ -32,7 +32,12 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
         const operation: ((value: any) => any) | null = getUpdateOperation(node.operator);
         if (!operation) {
 
-            throw error(ERROR_CODE.UNARY_NOT_SUPPORT, node.operator, node, trace);
+            throw error(
+                ERROR_CODE.UNARY_NOT_SUPPORT,
+                node.operator,
+                node,
+                trace,
+            );
         }
 
         if (node.argument.type === 'Identifier') {
@@ -40,7 +45,12 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             const identifierVariable: Variable<any> | null = scope.rummage(node.argument.name);
             if (!identifierVariable) {
 
-                throw error(ERROR_CODE.VARIABLE_IS_NOT_DEFINED, node.argument.name, node, trace);
+                throw error(
+                    ERROR_CODE.VARIABLE_IS_NOT_DEFINED,
+                    node.argument.name,
+                    node,
+                    trace,
+                );
             }
 
             const current: any = await this.execute(node.argument, scope, nextTrace);
@@ -54,25 +64,51 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             const argument: EST.MemberExpression = node.argument;
             const object: SandList<any> | SandMap<any>
                 = await this.execute(argument.object, scope, nextTrace);
-            const member: string | number = argument.computed
-                ? await this.execute(argument.property, scope, nextTrace)
-                : (argument.property as EST.Identifier).name;
+            const member: string | number =
+                argument.computed
+                    ? await this.execute(argument.property, scope, nextTrace)
+                    : (argument.property as EST.Identifier).name;
 
-            if (!validateObjectIsSandboxStructure(object)) { throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any).toString(), node, trace); }
+            if (!validateObjectIsSandboxStructure(object)) {
 
-            const memberVariable: Variable<any> | undefined = object instanceof SandList
-                ? object.getRaw(assert(member as number).to.be.number(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST).firstValue())
-                : object.getRaw(assert(member as string).to.be.string(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP).firstValue());
-            const memberValue = memberVariable
-                ? memberVariable.get()
-                : undefined;
+                throw error(
+                    ERROR_CODE.UNKNOWN_ERROR,
+                    (object as any).toString(),
+                    node,
+                    trace,
+                );
+            }
 
-            if (!memberValue || !memberVariable) { throw error(ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED, memberValue, node, trace); }
+            const memberVariable: Variable<any> | undefined =
+                object instanceof SandList
+                    ? object.getRaw(assert(member as number).to.be.number(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST).firstValue())
+                    : object.getRaw(assert(member as string).to.be.string(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP).firstValue());
+            const memberValue: any | undefined =
+                memberVariable
+                    ? memberVariable.get()
+                    : undefined;
+
+            if (typeof memberValue === 'undefined'
+                || typeof memberVariable === 'undefined') {
+
+                throw error(
+                    ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED,
+                    memberValue,
+                    node,
+                    trace,
+                );
+            }
 
             const result: any = operation(memberValue);
             memberVariable.set(result);
 
             return node.prefix ? result : memberValue;
         }
-        throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+
+        throw error(
+            ERROR_CODE.INTERNAL_ERROR,
+            void 0,
+            node,
+            trace,
+        );
     };

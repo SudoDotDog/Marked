@@ -19,7 +19,9 @@ import { memberExpressionSandFunction } from "../operation/member-expression/san
 import { GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL, memberExpressionSandList } from "../operation/member-expression/sand-list";
 import { memberExpressionSandRegExp } from "../operation/member-expression/sand-regexp";
 import { memberExpressionString } from "../operation/member-expression/string";
+import { parseNativeToSand } from "../parse/native-to-sand";
 import { error } from "../util/error/error";
+import { MarkedNativeClassInstance } from "../variable/native-class/native-class-instance";
 import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
@@ -45,10 +47,16 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
         const bindExecuteMemberExpressionObject =
             executeMemberExpressionObject.bind(this);
         const object: any = await bindExecuteMemberExpressionObject(node.object, scope, nextTrace);
+
         const key: string | number = computed
             ? await this.execute(node.property, scope, nextTrace)
             : (node.property as EST.Identifier).name;
 
+        if (object instanceof MarkedNativeClassInstance) {
+
+            const memberValue: any = parseNativeToSand(object.getMember(String(key)));
+            return memberValue;
+        }
 
         if (typeof object === 'undefined') {
 

@@ -37,6 +37,8 @@ export class SandFunction {
     }
 
     public execute(...args: any[]): any {
+
+        console.log('execute', this._function, this._thisValue, args);
         return this._function(this.thisValue, ...args);
     }
 

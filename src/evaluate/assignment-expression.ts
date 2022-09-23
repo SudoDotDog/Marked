@@ -27,6 +27,8 @@ export const mountAssignmentExpression = (sandbox: ISandbox): void => {
 export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
     async function (this: Sandbox, node: EST.AssignmentExpression, scope: Scope, trace: Trace): Promise<any> {
 
+        console.log('assignment expression', node);
+
         const nextTrace: Trace = trace.stack(node);
 
         const variable: Variable<any> = await (async ()
@@ -46,6 +48,8 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
                 const member: string | number = node.left.computed
                     ? await this.execute(node.left.property, scope, nextTrace)
                     : (node.left.property as EST.Identifier).name;
+
+                console.log('member expression', object, member);
 
                 if (!validateObjectIsSandboxStructure(object)) {
 
@@ -81,6 +85,8 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
             }
         })();
 
+        console.log('variable', variable);
+
         const operation: ((variableArg: Variable<any>, value: any) => any) | null =
             getAssignmentOperation(node.operator);
 
@@ -91,6 +97,8 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
 
         const assignee: any = await this.execute(node.right, scope, nextTrace);
         operation(variable, assignee);
+
+        console.log('variable', variable);
 
         return assignee;
     };

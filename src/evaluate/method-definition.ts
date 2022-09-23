@@ -38,6 +38,12 @@ export const methodDefinitionEvaluation: Evaluator<'MethodDefinition'> =
             throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
         }
 
+        if (node.kind === 'constructor') {
+
+            trace.sandClass.setClassConstructor(value);
+            return true;
+        }
+
         trace.sandClass.body.set(key, value);
 
         return true;
