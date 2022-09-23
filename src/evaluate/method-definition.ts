@@ -44,6 +44,12 @@ export const methodDefinitionEvaluation: Evaluator<'MethodDefinition'> =
             return true;
         }
 
+        if (node.static) {
+
+            trace.sandClass.staticBody.set(key, value);
+            return true;
+        }
+
         trace.sandClass.body.set(key, value);
 
         return true;

@@ -10,7 +10,7 @@ import * as Chance from 'chance';
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
-describe.only('Given Integration Class (Static Set) Cases', (): void => {
+describe('Given Integration Class (Static Set) Cases', (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('integration-class-static-set');
@@ -46,6 +46,26 @@ describe.only('Given Integration Class (Static Set) Cases', (): void => {
             `static a=1;`,
             `}`,
             `Test.a++;`,
+            `export default Test.a;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(2);
+    });
+
+    it.only('should be able to set and get static value via method', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class Test {`,
+            `static a=1;`,
+            `static setA(value: number) {`,
+            `this.a = value;`,
+            `}`,
+            `}`,
+            `Test.setA(2);`,
             `export default Test.a;`,
         ].join(New_Line_Character));
 
