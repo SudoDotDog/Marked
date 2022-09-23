@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked",
-  "version": "3.9.4",
+  "version": "3.10.0",
   "description": "JavaScript code runner in JavaScript, safe with marked territory, asynchronous",
   "repository": {
     "type": "git",
