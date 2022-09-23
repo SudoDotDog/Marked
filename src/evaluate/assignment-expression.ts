@@ -10,9 +10,9 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { getAssignmentOperation } from "../operation/assignment";
+import { extractObjectForUpdateExpression } from "../operation/update-expression/extract-object";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
-import { validateObjectIsSandboxStructure } from "../util/node/validator";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
@@ -41,15 +41,23 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
                 ).to.be.exist(ERROR_CODE.VARIABLE_IS_NOT_DEFINED).firstValue();
             } else if (node.left.type === 'MemberExpression') {
 
-                const object: SandList<any> | SandMap<any>
+                const preExtractObject: SandList<any> | SandMap<any>
                     = await this.execute(node.left.object, scope, nextTrace);
                 const member: string | number = node.left.computed
                     ? await this.execute(node.left.property, scope, nextTrace)
                     : (node.left.property as EST.Identifier).name;
 
-                if (!validateObjectIsSandboxStructure(object)) {
+                const object: SandList<any> | SandMap<any> | null =
+                    extractObjectForUpdateExpression(preExtractObject);
 
-                    throw error(ERROR_CODE.UNKNOWN_ERROR, (object as any), node, trace);
+                if (object === null) {
+
+                    throw error(
+                        ERROR_CODE.UNKNOWN_ERROR,
+                        String(preExtractObject),
+                        node,
+                        trace,
+                    );
                 }
 
                 const memberVariable: Variable<any> | undefined = object instanceof SandList

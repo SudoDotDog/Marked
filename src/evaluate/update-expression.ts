@@ -10,9 +10,9 @@ import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { getUpdateOperation } from "../operation/update";
+import { extractObjectForUpdateExpression } from "../operation/update-expression/extract-object";
 import { assert } from "../util/error/assert";
 import { error } from "../util/error/error";
-import { validateObjectIsSandboxStructure } from "../util/node/validator";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
@@ -62,18 +62,21 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
         } else if (node.argument.type === 'MemberExpression') {
 
             const argument: EST.MemberExpression = node.argument;
-            const object: SandList<any> | SandMap<any>
+            const preExtractObject: SandList<any> | SandMap<any>
                 = await this.execute(argument.object, scope, nextTrace);
             const member: string | number =
                 argument.computed
                     ? await this.execute(argument.property, scope, nextTrace)
                     : (argument.property as EST.Identifier).name;
 
-            if (!validateObjectIsSandboxStructure(object)) {
+            const object: SandList<any> | SandMap<any> | null =
+                extractObjectForUpdateExpression(preExtractObject);
+
+            if (object === null) {
 
                 throw error(
                     ERROR_CODE.UNKNOWN_ERROR,
-                    (object as any).toString(),
+                    String(preExtractObject),
                     node,
                     trace,
                 );
