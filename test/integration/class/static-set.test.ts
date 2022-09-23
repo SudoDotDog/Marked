@@ -54,7 +54,7 @@ describe('Given Integration Class (Static Set) Cases', (): void => {
         expect(result.exports.default).to.be.equal(2);
     });
 
-    it.only('should be able to set and get static value via method', async (): Promise<void> => {
+    it('should be able to set and get static value via method', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -66,6 +66,26 @@ describe('Given Integration Class (Static Set) Cases', (): void => {
             `}`,
             `}`,
             `Test.setA(2);`,
+            `export default Test.a;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(2);
+    });
+
+    it('should be able to update and get static value via method', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class Test {`,
+            `static a=1;`,
+            `static updateA() {`,
+            `this.a++;`,
+            `}`,
+            `}`,
+            `Test.updateA();`,
             `export default Test.a;`,
         ].join(New_Line_Character));
 

@@ -16,7 +16,9 @@ export class SandFunction {
         return SandFunction.create(func);
     }
 
-    public static create(func: (thisValue: any, ...args: any[]) => any): SandFunction {
+    public static create(
+        func: (thisValue: any, ...args: any[]) => any,
+    ): SandFunction {
 
         return new SandFunction(func);
     }

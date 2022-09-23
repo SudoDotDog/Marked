@@ -10,6 +10,7 @@ import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { registerFunctionExpressionParams } from "../operation/function-expression/params-register";
 import { Flag } from "../variable/flag";
+import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
 import { SandFunction } from "../variable/sand-function/sand-function";
 import { Scope } from "../variable/scope";
@@ -28,6 +29,10 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
         const func = async (thisValue: any, ...args: any[]): Promise<any> => {
 
             const subScope: Scope = scope.child().initThis();
+
+            if (thisValue instanceof SandClass) {
+                subScope.replaceThis(thisValue.staticBody);
+            }
 
             if (thisValue instanceof SandClassInstance) {
                 subScope.replaceThis(thisValue.body);
