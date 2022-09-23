@@ -64,6 +64,17 @@ export class SandList<T> {
         return this._list[key];
     }
 
+    public clone(): SandList<T> {
+
+        const newList: Array<Variable<T>> = [];
+
+        this._list.forEach((element: Variable<T>) => {
+            newList.push(element.clone());
+        });
+
+        return SandList.create(newList as any);
+    }
+
     public toString(): string {
 
         return this._list.toString();

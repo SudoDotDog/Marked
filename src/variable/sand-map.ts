@@ -4,6 +4,7 @@
  * @description Map
  */
 
+import { SandList } from "./sand-list";
 import { Variable } from "./variable";
 
 export class SandMap<T> {
@@ -78,7 +79,15 @@ export class SandMap<T> {
 
         const map: SandMap<T> = new SandMap<T>();
         this._map.forEach((value: Variable<T>, key: string) => {
-            map.set(key, value.get());
+
+            const actualValue = value.get();
+            if (actualValue instanceof SandMap) {
+                map.set(key, actualValue.clone() as any);
+            } else if (actualValue instanceof SandList) {
+                map.set(key, actualValue.clone() as any);
+            } else {
+                map.set(key, value.get());
+            }
         });
         return map;
     }
