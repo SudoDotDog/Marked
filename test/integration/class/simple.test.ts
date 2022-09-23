@@ -105,4 +105,30 @@ describe('Given Integration Class (Simple) Cases', (): void => {
         expect(result.exports.named.valueResult).to.be.equal(1);
         expect(result.exports.named.getValueResult).to.be.equal(1);
     });
+
+    it('should be able to call mutate variable method with nested map', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class C {`,
+            `value = {a: {b: 0}};`,
+            `addValue(){`,
+            `this.value.a.b++;`,
+            `}`,
+            `getValue(){`,
+            `return this.value.a.b;`,
+            `}`,
+            `}`,
+            `const i = new C();`,
+            `i.addValue();`,
+            `export const valueResult = i.value.a.b;`,
+            `export const getValueResult = i.getValue();`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.named.valueResult).to.be.equal(1);
+        expect(result.exports.named.getValueResult).to.be.equal(1);
+    });
 });
