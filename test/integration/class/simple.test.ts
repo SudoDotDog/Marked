@@ -7,7 +7,7 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { MarkedResult, Sandbox } from '../../../src';
+import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Class (Simple) Cases', (): void => {
@@ -78,5 +78,26 @@ describe('Given Integration Class (Simple) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(value);
+    });
+
+    it.only('should be able to call mutate variable method', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class C {`,
+            `value = 0;`,
+            `addValue(){`,
+            `this.value++;`,
+            `}`,
+            `}`,
+            `const i = new C();`,
+            `i.addValue();`,
+            `export default i.value;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(1);
     });
 });
