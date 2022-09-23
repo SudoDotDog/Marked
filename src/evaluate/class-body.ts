@@ -27,8 +27,6 @@ export const classBodyEvaluation: Evaluator<'ClassBody'> =
             throw error(ERROR_CODE.TRACE_SHOULD_BE_CLASS_TRACE, void 0, node, trace);
         }
 
-        console.log(node);
-
         for (const item of node.body) {
             await this.execute(item, scope, trace);
         }

@@ -56,8 +56,6 @@ export const newStatementEvaluator: Evaluator<'NewExpression'> =
                 classConstructor.bindThisValue(classInstance);
 
             bindClassConstructor.execute(...argumentValues);
-
-            console.log(classInstance);
         }
 
         return classInstance;

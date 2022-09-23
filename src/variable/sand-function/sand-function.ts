@@ -38,8 +38,8 @@ export class SandFunction {
 
     public execute(...args: any[]): any {
 
-        console.log('execute', this._function, this._thisValue, args);
-        return this._function(this._thisValue, ...args);
+        const thisValue: any = this._thisValue;
+        return this._function(thisValue, ...args);
     }
 
     public bindThisValue(thisValue: any): SandFunction {

@@ -81,8 +81,16 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
 
             const memberVariable: Variable<any> | undefined =
                 object instanceof SandList
-                    ? object.getRaw(assert(member as number).to.be.number(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST).firstValue())
-                    : object.getRaw(assert(member as string).to.be.string(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP).firstValue());
+                    ? object.getRaw(
+                        assert(member as number).to.be.number(
+                            ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST,
+                        ).firstValue(),
+                    )
+                    : object.getRaw(
+                        assert(member as string).to.be.string(
+                            ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_MAP,
+                        ).firstValue(),
+                    );
             const memberValue: any | undefined =
                 memberVariable
                     ? memberVariable.get()
@@ -99,12 +107,8 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                 );
             }
 
-            console.log(memberVariable);
-
             const result: any = operation(memberValue);
             memberVariable.set(result);
-
-            console.log(memberVariable);
 
             return node.prefix ? result : memberValue;
         }

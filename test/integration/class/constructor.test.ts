@@ -36,8 +36,6 @@ describe('Given Integration Class (Constructor) Cases', (): void => {
             `export default instance.arg;`,
         ].join(New_Line_Character));
 
-        console.log(result.signal);
-
         assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(argumentResult);
