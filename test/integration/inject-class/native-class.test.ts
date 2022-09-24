@@ -61,8 +61,8 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         const nativeClass: MarkedNativeClass = MarkedNativeClass.create(() => {
             return null as any;
-        }, {
-            test: staticResult,
+        }, () => {
+            return staticResult;
         });
 
         sandbox.inject('Clazz', nativeClass);
@@ -83,8 +83,8 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         const nativeClass: MarkedNativeClass = MarkedNativeClass.create(() => {
             return null as any;
-        }, {
-            test: () => staticResult,
+        }, () => {
+            return () => staticResult;
         });
 
         sandbox.inject('Clazz', nativeClass);

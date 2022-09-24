@@ -4,31 +4,37 @@
  * @description Native Class
  */
 
-import { MarkedNativeClassConstructor } from "./declare";
+import { ISandbox } from "../../declare/sandbox";
+import { defaultMarkedNativeClassGetStaticMemberFunction, defaultMarkedNativeClassToNativeFunction, MarkedNativeClassConstructor, MarkedNativeClassGetStaticMemberFunction, MarkedNativeClassToNativeFunction } from "./declare";
 
 export class MarkedNativeClass {
 
     public static create(
         constructorMethod: MarkedNativeClassConstructor,
-        staticMap: Record<string, any> = {},
+        getStaticMemberFunction: MarkedNativeClassGetStaticMemberFunction = defaultMarkedNativeClassGetStaticMemberFunction,
+        toNativeFunction: MarkedNativeClassToNativeFunction = defaultMarkedNativeClassToNativeFunction,
     ): MarkedNativeClass {
 
         return new MarkedNativeClass(
             constructorMethod,
-            staticMap,
+            getStaticMemberFunction,
+            toNativeFunction,
         );
     }
 
     private readonly _constructorMethod: MarkedNativeClassConstructor;
-    private _staticMap: Record<string, any>;
+    private readonly _getStaticMemberFunction: MarkedNativeClassGetStaticMemberFunction;
+    private readonly _toNativeFunction: MarkedNativeClassToNativeFunction;
 
     private constructor(
         constructorMethod: MarkedNativeClassConstructor,
-        staticMap: Record<string, any>,
+        getStaticMemberFunction: MarkedNativeClassGetStaticMemberFunction,
+        toNativeFunction: MarkedNativeClassToNativeFunction,
     ) {
 
         this._constructorMethod = constructorMethod;
-        this._staticMap = staticMap;
+        this._getStaticMemberFunction = getStaticMemberFunction;
+        this._toNativeFunction = toNativeFunction;
     }
 
     public get constructorMethod(): MarkedNativeClassConstructor {
@@ -36,13 +42,13 @@ export class MarkedNativeClass {
         return this._constructorMethod;
     }
 
-    public getStaticMember(name: string): any {
+    public getStaticMember(name: string, sandbox: ISandbox): any {
 
-        return this._staticMap[name];
+        return this._getStaticMemberFunction(name, sandbox);
     }
 
     public toNative(): any {
 
-        return "[Marked Native Class]";
+        return this._toNativeFunction();
     }
 }

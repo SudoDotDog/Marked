@@ -56,7 +56,7 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
         if (object instanceof MarkedNativeClass) {
 
             const staticValue: any = parseNativeToSand(
-                object.getStaticMember(String(key)),
+                object.getStaticMember(String(key), this),
             );
 
             return staticValue;
@@ -65,7 +65,7 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
         if (object instanceof MarkedNativeClassInstance) {
 
             const memberValue: any = parseNativeToSand(
-                object.getMember(String(key)),
+                object.getMember(String(key), this),
             );
 
             return memberValue;
