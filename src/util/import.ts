@@ -35,7 +35,13 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
             case 'ImportDefaultSpecifier': {
 
                 if (!(typeof targetModule === 'object' && Boolean(targetModule.default))) {
-                    throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, currentTrace);
+
+                    throw error(
+                        ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT,
+                        target,
+                        node,
+                        currentTrace,
+                    );
                 }
 
                 const moduleContent: any = targetModule.default;
@@ -135,7 +141,13 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
             case 'ImportDefaultSpecifier': {
 
                 if (!Boolean(exposed.default)) {
-                    throw error(ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT, target, node, currentTrace);
+                    throw error(
+
+                        ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT,
+                        target,
+                        node,
+                        currentTrace,
+                    );
                 }
 
                 register(target, exposed.default);
