@@ -21,6 +21,7 @@ import { memberExpressionSandRegExp } from "../operation/member-expression/sand-
 import { memberExpressionString } from "../operation/member-expression/string";
 import { parseNativeToSand } from "../parse/native-to-sand";
 import { error } from "../util/error/error";
+import { MarkedNativeClass } from "../variable/native-class/native-class";
 import { MarkedNativeClassInstance } from "../variable/native-class/native-class-instance";
 import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
@@ -52,9 +53,21 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
             ? await this.execute(node.property, scope, nextTrace)
             : (node.property as EST.Identifier).name;
 
+        if (object instanceof MarkedNativeClass) {
+
+            const staticValue: any = parseNativeToSand(
+                object.getStaticMember(String(key)),
+            );
+
+            return staticValue;
+        }
+
         if (object instanceof MarkedNativeClassInstance) {
 
-            const memberValue: any = parseNativeToSand(object.getMember(String(key)));
+            const memberValue: any = parseNativeToSand(
+                object.getMember(String(key)),
+            );
+
             return memberValue;
         }
 

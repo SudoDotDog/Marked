@@ -54,6 +54,50 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
         expect(result.exports.named.native).to.be.equal(nativeResult);
     });
 
+    it('should be able to inject native class with static value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+        const staticResult: string = chance.string();
+
+        const nativeClass: MarkedNativeClass = MarkedNativeClass.create(() => {
+            return null as any;
+        }, {
+            test: staticResult,
+        });
+
+        sandbox.inject('Clazz', nativeClass);
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `export default Clazz.test;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(staticResult);
+    });
+
+    it('should be able to inject native class with static method', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+        const staticResult: string = chance.string();
+
+        const nativeClass: MarkedNativeClass = MarkedNativeClass.create(() => {
+            return null as any;
+        }, {
+            test: () => staticResult,
+        });
+
+        sandbox.inject('Clazz', nativeClass);
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `export default Clazz.test();`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(staticResult);
+    });
+
     it('should be able to inject native class with constructor value', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
