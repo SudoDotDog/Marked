@@ -11,7 +11,7 @@ import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-describe('Given Integration BiInt (Operation) Cases', (): void => {
+describe('Given Integration BigInt (Operation) Cases', (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance = new Chance('integration-bigint-operation');

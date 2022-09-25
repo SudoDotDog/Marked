@@ -10,7 +10,7 @@ import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
-describe('Given Integration BiInt (Native To Sand) Cases', (): void => {
+describe('Given Integration BigInt (Native To Sand) Cases', (): void => {
 
     const chance = new Chance('integration-bigint-native-to-sand');
 
