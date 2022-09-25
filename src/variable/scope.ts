@@ -47,6 +47,8 @@ export class Scope implements IScope {
     private _defaultExposed: any;
     private readonly _exposed: Map<string, any>;
 
+    private readonly _labelListeners: Map<string, () => void>;
+
     private _constantMap: Map<string, Variable<any>>;
     private _scopeMap: Map<string, Variable<any>>;
     private _configs: Map<string, any>;
@@ -63,6 +65,8 @@ export class Scope implements IScope {
 
         this._defaultExposed = undefined;
         this._exposed = new Map<string, any>();
+
+        this._labelListeners = new Map<string, () => void>();
 
         this._constantMap = new Map<string, Variable<any>>();
         this._scopeMap = new Map<string, Variable<any>>();
@@ -204,6 +208,29 @@ export class Scope implements IScope {
         }
 
         return this._parent ? this._parent.rummage(name) : null;
+    }
+
+    public registerLabelListener(label: string, listener: () => void): this {
+
+        this._labelListeners.set(label, listener);
+        return this;
+    }
+
+    public executeLabelListener(label: string): boolean {
+
+        if (this._labelListeners.has(label)) {
+
+            const listener: () => void =
+                this._labelListeners.get(label) as () => void;
+            listener();
+            return true;
+        }
+
+        if (this._parent) {
+            return this._parent.executeLabelListener(label);
+        }
+
+        return false;
     }
 
     public validateEditable(name: string): IScope {

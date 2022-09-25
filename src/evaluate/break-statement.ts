@@ -5,11 +5,9 @@
  */
 
 import * as EST from "estree";
-import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
-import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -20,13 +18,12 @@ export const mountBreakStatement = (sandbox: ISandbox): void => {
 };
 
 export const breakStatementEvaluator: Evaluator<'BreakStatement'> =
-    async function (this: Sandbox, node: EST.BreakStatement, scope: Scope, trace: Trace): Promise<any> {
+    async function (this: Sandbox, node: EST.BreakStatement, _scope: Scope, trace: Trace): Promise<any> {
 
-        if (node.label) {
-
-            throw error(ERROR_CODE.BREAK_LABEL_IS_NOT_SUPPORT, node.label.name, node, trace);
-        }
         const flag: Flag = Flag.fromBreak(trace);
 
+        if (node.label) {
+            flag.setValue(node.label.name);
+        }
         return flag;
     };

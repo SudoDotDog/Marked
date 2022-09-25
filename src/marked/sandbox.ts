@@ -429,7 +429,12 @@ export class Sandbox implements ISandbox {
         if (this._count >= this._options.maxExpression) {
 
             this.break();
-            throw error(ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED, this._count.toString(), node as any, trace as Trace);
+            throw error(
+                ERROR_CODE.MAXIMUM_EXPRESSION_LIMIT_EXCEED,
+                this._count.toString(),
+                node as any,
+                trace as Trace,
+            );
         }
 
         if (shouldDebugNode(node.type)) {

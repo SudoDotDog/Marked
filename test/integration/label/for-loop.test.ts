@@ -20,7 +20,7 @@ describe('Given Integration Label (For Loop) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to label for loop', async (): Promise<void> => {
+    it('should be able to break without labeled for loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -34,6 +34,51 @@ describe('Given Integration Label (For Loop) Cases', (): void => {
             `}`,
             `}`,
             `export default i;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(10);
+    });
+
+    it('should be able to break labeled for loop', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ min: 50, max: 100 });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `let i;`,
+            `outer: for (i = 0;i < ${value};i++) {`,
+            `if (i === 10) {`,
+            `break outer;`,
+            `}`,
+            `}`,
+            `export default i;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(10);
+    });
+
+    it('should be able to break labeled stacked for loop', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ min: 50, max: 100 });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `let count = 0;`,
+            `outer: for (let i = 0;i < 5;i++) {`,
+            `inner: for (let j = 0;j < ${value};j++) {`,
+            `if (j === 10) {`,
+            `break outer;`,
+            `}`,
+            `count++;`,
+            `}`,
+            `}`,
+            `export default count;`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);

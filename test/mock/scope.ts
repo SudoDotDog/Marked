@@ -133,6 +133,16 @@ export class MockScope implements IScope, IMockedClass {
         return this._mockedParent as MockScope;
     }
 
+    public registerLabelListener(_label: string, _listener: () => void): void {
+
+        return;
+    }
+
+    public executeLabelListener(_label: string): boolean {
+
+        return false;
+    }
+
     public register(type: VARIABLE_TYPE): (name: string, value: any) => MockScope {
 
         if (type === VARIABLE_TYPE.VARIABLE) {

@@ -105,6 +105,24 @@ export class Trace implements ITrace {
         return this._parent;
     }
 
+    public hasLabel(): boolean {
+
+        return typeof this._label === 'string';
+    }
+
+    public getLabel(): string | null {
+
+        return this._label;
+    }
+
+    public ensureLabel(): string {
+
+        if (typeof this._label === 'string') {
+            return this._label;
+        }
+        throw error(ERROR_CODE.INTERNAL_ERROR, 'No Label');
+    }
+
     public stack(node: EST.Node): Trace {
 
         return new Trace(this._scriptLocation, node, this);

@@ -10,10 +10,10 @@ import { New_Line_Character } from "../host/declare";
 export const getDefaultSandboxOption = (): ISandboxOptions => ({
 
     duration: 0,
-    maxCodeLength: 1250,
-    maxExpression: 360,
-    maxForLoopLimit: 42,
-    maxWhileLoopLimit: 42,
+    maxCodeLength: 4096,
+    maxExpression: 1024,
+    maxForLoopLimit: 128,
+    maxWhileLoopLimit: 128,
 });
 
 export const getRawCode = (script: string): string => {

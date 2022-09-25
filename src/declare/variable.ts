@@ -51,6 +51,9 @@ export interface IScope {
     ensureParent: () => IScope;
     register: (type: VARIABLE_TYPE) => SCOPE_DECLARE_FUNC;
 
+    registerLabelListener: (label: string, listener: () => void) => void;
+    executeLabelListener: (label: string) => boolean;
+
     exist: (name: string) => boolean;
     rummage: (name: string) => Variable<any> | null;
     validateEditable: (name: string) => IScope;

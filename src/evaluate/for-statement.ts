@@ -50,6 +50,18 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             }
         };
 
+        let loopIsBreaking: boolean = false;
+
+        if (trace.hasLabel()) {
+
+            scope.registerLabelListener(
+                trace.ensureLabel(),
+                () => {
+                    loopIsBreaking = true;
+                },
+            );
+        }
+
         loop: for (limitCounter.reset(); await test(); limitCounter.add()) {
 
             if (limitCounter.check()) {
@@ -63,21 +75,33 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                 );
             }
 
+            if (loopIsBreaking) {
+                break loop;
+            }
+
             const result: any = await this.execute(node.body, subScope, nextTrace);
 
             if (result instanceof Flag) {
 
                 if (result.isBreak()) {
+
+                    if (typeof result.getValue() === 'string') {
+                        const breakingLabel: string = result.getValue();
+                        scope.executeLabelListener(breakingLabel);
+                        break loop;
+                    }
                     break loop;
                 } else if (result.isReturn()) {
+
                     return result;
                 } else if (result.isContinue()) {
+
                     continue loop;
                 } else {
+
                     throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
                 }
             }
-
             await update();
         }
         return;
