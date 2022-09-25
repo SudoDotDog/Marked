@@ -35,6 +35,7 @@ import { mountImportDeclaration } from "../evaluate/import-declaration";
 import { mountImportDefaultSpecifier } from "../evaluate/import-default-specifier";
 import { mountImportNamespaceSpecifier } from "../evaluate/import-namespace-specifier";
 import { mountImportSpecifier } from "../evaluate/import-specifier";
+import { mountLabeledStatement } from "../evaluate/labeled-statement";
 import { mountLiteral } from "../evaluate/literal";
 import { mountLogicalExpression } from "../evaluate/logical-expression";
 import { mountMemberExpressionEvaluator } from "../evaluate/member-expression";
@@ -90,6 +91,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountImportDefaultSpecifier(sandbox);
     mountImportNamespaceSpecifier(sandbox);
     mountImportSpecifier(sandbox);
+    mountLabeledStatement(sandbox);
     mountLiteral(sandbox);
     mountLogicalExpression(sandbox);
     mountMemberExpressionEvaluator(sandbox);

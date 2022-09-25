@@ -28,7 +28,7 @@ describe('Given Integration Label (For Loop) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate([
             `let i;`,
-            `for (i = 0;i < ${value};i++) {`,
+            `label: for (i = 0;i < ${value};i++) {`,
             `if (i === 10) {`,
             `break;`,
             `}`,

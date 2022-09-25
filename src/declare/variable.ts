@@ -72,4 +72,5 @@ export interface ITrace {
     getNode(): EST.Node | null;
     getParent(): ITrace | null;
     stack(node: EST.Node): ITrace;
+    stackWithLabel(node: EST.Node, label: string): ITrace;
 }

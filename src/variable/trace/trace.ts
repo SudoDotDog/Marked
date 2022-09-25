@@ -37,6 +37,8 @@ export class Trace implements ITrace {
     protected readonly _locationFinder: BaseSourceMapLocationFinder | null;
     protected readonly _breakPointController: MarkedDebugBreakPointController | null;
 
+    protected _label: string | null;
+
     protected constructor(
         scriptLocation: ScriptLocation,
         node: EST.Node | null,
@@ -52,6 +54,8 @@ export class Trace implements ITrace {
 
         this._locationFinder = locationFinder ?? null;
         this._breakPointController = breakPointController ?? null;
+
+        this._label = null;
     }
 
     public get scriptLocation(): ScriptLocation {
@@ -104,5 +108,13 @@ export class Trace implements ITrace {
     public stack(node: EST.Node): Trace {
 
         return new Trace(this._scriptLocation, node, this);
+    }
+
+    public stackWithLabel(node: EST.Node, label: string): Trace {
+
+        const trace: Trace = this.stack(node);
+        trace._label = label;
+
+        return trace;
     }
 }
