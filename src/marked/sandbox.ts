@@ -68,7 +68,10 @@ export class Sandbox implements ISandbox {
 
     private _count: number;
     private _broke: boolean;
-    private _brokeFlag: Flag | null = null;
+    private _brokeFlag: Flag | null;
+
+    private _skipping: boolean;
+    private _skippingFlag: Flag | null;
 
     private _usingAdditionalArgument: boolean;
     private _additionalArgument?: any;
@@ -97,6 +100,9 @@ export class Sandbox implements ISandbox {
         this._count = 0;
         this._broke = false;
         this._brokeFlag = null;
+
+        this._skipping = false;
+        this._skippingFlag = null;
 
         this._usingAdditionalArgument = false;
         this._additionalArgument = undefined;
@@ -132,6 +138,12 @@ export class Sandbox implements ISandbox {
     public break(): this {
 
         this._broke = true;
+        return this;
+    }
+
+    public skip(): this {
+
+        this._skipping = true;
         return this;
     }
 
@@ -340,10 +352,27 @@ export class Sandbox implements ISandbox {
         this._brokeFlag = flag;
     }
 
+    protected skipWithFlag(flag: Flag): void {
+
+        this.skip();
+        this._skippingFlag = flag;
+    }
+
+    protected getSkippingFlag(): Flag | null {
+
+        return this._skippingFlag;
+    }
+
     protected recoverFromBreak(): void {
 
         this._broke = false;
         this._brokeFlag = null;
+    }
+
+    protected recoverFromSkip(): void {
+
+        this._skipping = false;
+        this._skippingFlag = null;
     }
 
     protected async resolveResource(source: string, trace: ITrace): Promise<ModuleResolveResult | null> {
@@ -424,6 +453,11 @@ export class Sandbox implements ISandbox {
                 node,
                 trace as Trace,
             );
+        }
+
+        if (this._skipping) {
+
+            return;
         }
 
         if (this._count >= this._options.maxExpression) {

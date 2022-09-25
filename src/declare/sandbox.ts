@@ -65,6 +65,7 @@ export interface ISandbox {
     use: (mixin: MarkedMixin) => this;
 
     break: () => this;
+    skip: () => this;
     evaluate: (
         script: string,
         breakPoints?: Iterable<MarkedDebugBreakPoint>,

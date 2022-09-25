@@ -62,6 +62,32 @@ describe('Given Integration Label (For Loop) Cases', (): void => {
         expect(result.exports.default).to.be.equal(10);
     });
 
+    it('should be able to break labeled stacked with nested stack', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ min: 50, max: 100 });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `let count = 0;`,
+            `outer: for (let i = 0;i < 5;i++) {`,
+            `for (let j = 0;j < 5;j++) {`,
+            `for (let k = 0;k < ${value};k++) {`,
+            `if (k === 10) {`,
+            `break outer;`,
+            `}`,
+            `count++;`,
+            `}`,
+            `}`,
+            `}`,
+            `export default count;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(10);
+    });
+
     it('should be able to break labeled stacked for loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();

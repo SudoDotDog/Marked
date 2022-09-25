@@ -20,6 +20,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
     private _mockMap: Map<any, any>;
 
     private _broke: boolean;
+    private _skipping: boolean;
     private _configs: Map<string, any>;
     private _exposed: Map<string, any>;
     private _modules: Map<string, any>;
@@ -34,6 +35,7 @@ export class MockSandbox implements ISandbox, IMockedClass {
         this._mockMap = new Map<any, any>();
 
         this._broke = false;
+        this._skipping = false;
         this._configs = new Map<string, any>();
         this._exposed = new Map<string, any>();
         this._modules = new Map<string, any>();
@@ -87,6 +89,12 @@ export class MockSandbox implements ISandbox, IMockedClass {
     public break(): this {
 
         this._broke = true;
+        return this;
+    }
+
+    public skip(): this {
+
+        this._skipping = true;
         return this;
     }
 

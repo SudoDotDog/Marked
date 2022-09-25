@@ -227,6 +227,7 @@ export class Scope implements IScope {
         }
 
         if (this._parent) {
+
             return this._parent.executeLabelListener(label);
         }
 

@@ -57,6 +57,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             scope.registerLabelListener(
                 trace.ensureLabel(),
                 () => {
+                    this.skip();
                     loopIsBreaking = true;
                 },
             );
@@ -76,6 +77,8 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             }
 
             if (loopIsBreaking) {
+
+                this.recoverFromSkip();
                 break loop;
             }
 
@@ -103,6 +106,10 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                 }
             }
             await update();
+        }
+
+        if (loopIsBreaking) {
+            this.recoverFromSkip();
         }
         return;
     };
