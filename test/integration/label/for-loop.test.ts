@@ -10,7 +10,7 @@ import * as Chance from 'chance';
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
-describe.only('Given Integration Label (For Loop) Cases', (): void => {
+describe('Given Integration Label (For Loop) Cases', (): void => {
 
     const chance = new Chance('integration-label-for-loop');
 
@@ -133,20 +133,19 @@ describe.only('Given Integration Label (For Loop) Cases', (): void => {
         expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to break labeled for loop', async (): Promise<void> => {
+    it.only('should be able to continue labeled for loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
-        const value: number = chance.integer({ min: 50, max: 100 });
-
         const result: MarkedResult = await sandbox.evaluate([
-            `let i;`,
-            `outer: for (i = 0;i < ${value};i++) {`,
-            `if (i === 10) {`,
-            `break outer;`,
+            `let count = 0;`,
+            `outer: for (let i = 0;i < 20;i++) {`,
+            `if (i % 2 === 0) {`,
+            `continue outer;`,
             `}`,
+            `count++`,
             `}`,
-            `export default i;`,
+            `export default count;`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
@@ -154,22 +153,20 @@ describe.only('Given Integration Label (For Loop) Cases', (): void => {
         expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to break labeled stacked with nested stack', async (): Promise<void> => {
+    it('should be able to continue labeled stacked with nested stack', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
-
-        const value: number = chance.integer({ min: 50, max: 100 });
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
             `outer: for (let i = 0;i < 5;i++) {`,
             `for (let j = 0;j < 5;j++) {`,
             `middle: for (let k = 0;k < 5;k++) {`,
-            `for (let l = 0;l < ${value};l++) {`,
-            `if (l === 10) {`,
-            `break outer;`,
+            `for (let l = 0;l < 5;l++) {`,
+            `if (i % 2 === 0) {`,
+            `continue outer;`,
             `}`,
-            `count++;`,
+            `count++`,
             `}`,
             `}`,
             `}`,

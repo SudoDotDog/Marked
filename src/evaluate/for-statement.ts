@@ -99,6 +99,12 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                     return result;
                 } else if (result.isContinue()) {
 
+                    if (typeof result.getValue() === 'string') {
+                        const continuingLabel: string = result.getValue();
+                        scope.executeLabelListener(continuingLabel);
+                        break loop;
+                    }
+
                     await update();
                     continue loop;
                 } else {
