@@ -90,7 +90,7 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
         expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to break labeled stacked for loop', async (): Promise<void> => {
+    it('should be able to break labeled stacked for of loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -98,7 +98,8 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `outer: for (let i = 0;i < 5;i++) {`,
+            `const items = [0, 1, 2, 3, 4, 5]`,
+            `outer: for (const item of items) {`,
             `inner: for (let j = 0;j < ${value};j++) {`,
             `if (j === 10) {`,
             `break outer;`,
@@ -114,14 +115,15 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
         expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to continue without labeled for loop', async (): Promise<void> => {
+    it('should be able to continue without labeled for of loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `label: for (let i = 0;i < 20;i++) {`,
-            `if (i % 2 === 0) {`,
+            `const items = [0, 1, 2, 3, 4, 5]`,
+            `outer: for (const item of items) {`,
+            `if (item % 2 === 0) {`,
             `continue;`,
             `}`,
             `count++;`,
@@ -131,7 +133,7 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).to.be.equal(3);
     });
 
     it('should be able to continue labeled for loop', async (): Promise<void> => {
@@ -140,8 +142,9 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `outer: for (let i = 0;i < 20;i++) {`,
-            `if (i % 2 === 0) {`,
+            `const items = [0, 1, 2, 3, 4, 5]`,
+            `outer: for (const item of items) {`,
+            `if (item % 2 === 0) {`,
             `continue outer;`,
             `}`,
             `count++;`,
@@ -151,7 +154,7 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).to.be.equal(3);
     });
 
     it('should be able to continue labeled stacked with nested stack', async (): Promise<void> => {
@@ -160,11 +163,12 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `outer: for (let i = 0;i < 4;i++) {`,
+            `const items = [0, 1, 2, 3, 4, 5]`,
+            `outer: for (const item of items) {`,
             `for (let j = 0;j < 4;j++) {`,
             `middle: for (let k = 0;k < 4;k++) {`,
             `for (let l = 0;l < 4;l++) {`,
-            `if (i % 2 === 0) {`,
+            `if (item % 2 === 0) {`,
             `continue outer;`,
             `}`,
             `count++;`,
@@ -177,7 +181,8 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(128);
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        expect(result.exports.default).to.be.equal(192);
     });
 
     it('should be able to continue labeled stacked for loop', async (): Promise<void> => {
@@ -188,7 +193,8 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `outer: for (let i = 0;i < 5;i++) {`,
+            `const items = [0, 1, 2, 3, 4, 5]`,
+            `outer: for (const item of items) {`,
             `inner: for (let j = 0;j < ${value};j++) {`,
             `if (j % 2 !== 0) {`,
             `continue outer;`,
@@ -201,6 +207,6 @@ describe('Given Integration Label (For Of Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(5);
+        expect(result.exports.default).to.be.equal(6);
     });
 });
