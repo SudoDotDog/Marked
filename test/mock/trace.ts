@@ -58,6 +58,21 @@ export class MockTrace implements ITrace, IMockedClass {
         return null;
     }
 
+    public hasLabel(): boolean {
+
+        return false;
+    }
+
+    public getLabel(): string | null {
+
+        return null;
+    }
+
+    public ensureLabel(): string {
+
+        throw new Error("[Sudoo-Mock] Should not call this function");
+    }
+
     public stack(node: EST.Node): MockTrace {
 
         this._mockStack.push(node);

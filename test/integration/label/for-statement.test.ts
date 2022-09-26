@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Label
- * @description For Loop
+ * @description For Statement
  * @override Integration Test
  */
 
@@ -10,9 +10,9 @@ import * as Chance from 'chance';
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
-describe('Given Integration Label (For Loop) Cases', (): void => {
+describe('Given Integration Label (For Statement) Cases', (): void => {
 
-    const chance = new Chance('integration-label-for-loop');
+    const chance = new Chance('integration-label-for-statement');
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();

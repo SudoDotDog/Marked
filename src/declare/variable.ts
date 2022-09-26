@@ -75,6 +75,11 @@ export interface ITrace {
 
     getNode(): EST.Node | null;
     getParent(): ITrace | null;
+
+    hasLabel(): boolean;
+    getLabel(): string | null;
+    ensureLabel(): string;
+
     stack(node: EST.Node): ITrace;
     stackWithLabel(node: EST.Node, label: string): ITrace;
 }
