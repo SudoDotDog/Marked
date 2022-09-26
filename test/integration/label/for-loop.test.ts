@@ -118,13 +118,14 @@ describe.only('Given Integration Label (For Loop) Cases', (): void => {
         const sandbox: Sandbox = createSandbox();
 
         const result: MarkedResult = await sandbox.evaluate([
-            `let i;`,
-            `label: for (i = 0;i < 20;i++) {`,
+            `let count = 0;`,
+            `label: for (let i = 0;i < 20;i++) {`,
             `if (i % 2 === 0) {`,
             `continue;`,
             `}`,
+            `count++`,
             `}`,
-            `export default i;`,
+            `export default count;`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);

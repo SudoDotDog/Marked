@@ -99,6 +99,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                     return result;
                 } else if (result.isContinue()) {
 
+                    await update();
                     continue loop;
                 } else {
 
