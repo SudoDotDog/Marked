@@ -10,7 +10,6 @@ import * as Chance from 'chance';
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 describe('Given Integration Label (For Loop) Cases', (): void => {
 
     const chance = new Chance('integration-label-for-loop');

@@ -13,7 +13,9 @@ import { SandFunction } from "../variable/sand-function/sand-function";
 import { SandList } from "../variable/sand-list";
 import { SandMap } from "../variable/sand-map";
 
-export const getUnaryOperation = (symbol: EST.UnaryOperator): ((value: any) => any) | null => {
+export const getUnaryOperation = (
+    symbol: EST.UnaryOperator
+): ((value: any) => any) | null => {
 
     switch (symbol) {
 
@@ -47,7 +49,7 @@ export const getUnaryOperation = (symbol: EST.UnaryOperator): ((value: any) => a
             }
             return typeof value;
         };
-        case 'void': return null;
+        case 'void': return () => undefined;
         case '~': return null;
     }
 
