@@ -7,6 +7,7 @@
 import { ERROR_CODE } from "../../src/declare/error-code";
 import { IExposed, IScope, VARIABLE_TYPE } from "../../src/declare/variable";
 import { error } from "../../src/util/error/error";
+import { ScopeLabelListener, SCOPE_LABEL_LISTENER_TYPE } from "../../src/variable/declare";
 import { SandMap } from "../../src/variable/sand-map";
 import { Variable } from "../../src/variable/variable";
 import { IMockedClass } from "./node";
@@ -133,12 +134,12 @@ export class MockScope implements IScope, IMockedClass {
         return this._mockedParent as MockScope;
     }
 
-    public registerLabelListener(_label: string, _listener: () => void): void {
+    public registerLabelListener(_label: string, _listener: ScopeLabelListener): void {
 
         return;
     }
 
-    public executeLabelListener(_label: string): boolean {
+    public executeLabelListener(_label: string, _type: SCOPE_LABEL_LISTENER_TYPE): boolean {
 
         return false;
     }

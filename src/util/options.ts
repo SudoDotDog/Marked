@@ -11,7 +11,7 @@ export const getDefaultSandboxOption = (): ISandboxOptions => ({
 
     duration: 0,
     maxCodeLength: 4096,
-    maxExpression: 1024,
+    maxExpression: 16384,
     maxForLoopLimit: 128,
     maxWhileLoopLimit: 128,
 });

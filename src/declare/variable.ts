@@ -6,6 +6,7 @@
 
 import * as EST from "estree";
 import { MarkedDebugBreakPointController } from "../debug/break-point/controller";
+import { ScopeLabelListener, SCOPE_LABEL_LISTENER_TYPE } from "../variable/declare";
 import { SandMap } from "../variable/sand-map";
 import { Variable } from "../variable/variable";
 import { ScriptLocation } from "./script-location";
@@ -51,8 +52,8 @@ export interface IScope {
     ensureParent: () => IScope;
     register: (type: VARIABLE_TYPE) => SCOPE_DECLARE_FUNC;
 
-    registerLabelListener: (label: string, listener: () => void) => void;
-    executeLabelListener: (label: string) => boolean;
+    registerLabelListener: (label: string, listener: ScopeLabelListener) => void;
+    executeLabelListener: (label: string, type: SCOPE_LABEL_LISTENER_TYPE) => boolean;
 
     exist: (name: string) => boolean;
     rummage: (name: string) => Variable<any> | null;

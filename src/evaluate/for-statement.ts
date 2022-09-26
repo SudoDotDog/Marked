@@ -11,6 +11,7 @@ import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { LimitCounter } from "../util/node/context";
+import { SCOPE_LABEL_LISTENER_TYPE } from "../variable/declare";
 import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -51,14 +52,23 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
         };
 
         let loopIsBreaking: boolean = false;
+        let loopIsContinuing: boolean = false;
 
         if (trace.hasLabel()) {
 
             scope.registerLabelListener(
                 trace.ensureLabel(),
-                () => {
-                    this.skip();
-                    loopIsBreaking = true;
+                (type: SCOPE_LABEL_LISTENER_TYPE) => {
+
+                    if (type === SCOPE_LABEL_LISTENER_TYPE.BREAK) {
+                        this.skip();
+                        loopIsBreaking = true;
+                    }
+
+                    if (type === SCOPE_LABEL_LISTENER_TYPE.CONTINUE) {
+                        this.skip();
+                        loopIsContinuing = true;
+                    }
                 },
             );
         }
@@ -84,13 +94,27 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
 
             const result: any = await this.execute(node.body, subScope, nextTrace);
 
+            if (loopIsContinuing) {
+
+                this.recoverFromSkip();
+                loopIsContinuing = false;
+
+                await update();
+                continue loop;
+            }
+
             if (result instanceof Flag) {
 
                 if (result.isBreak()) {
 
                     if (typeof result.getValue() === 'string') {
+
                         const breakingLabel: string = result.getValue();
-                        scope.executeLabelListener(breakingLabel);
+                        scope.executeLabelListener(
+                            breakingLabel,
+                            SCOPE_LABEL_LISTENER_TYPE.BREAK,
+                        );
+
                         break loop;
                     }
                     break loop;
@@ -100,8 +124,20 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                 } else if (result.isContinue()) {
 
                     if (typeof result.getValue() === 'string') {
+
+                        if (trace.hasLabel()
+                            && trace.ensureLabel() === result.getValue()) {
+
+                            await update();
+                            continue loop;
+                        }
+
                         const continuingLabel: string = result.getValue();
-                        scope.executeLabelListener(continuingLabel);
+                        scope.executeLabelListener(
+                            continuingLabel,
+                            SCOPE_LABEL_LISTENER_TYPE.CONTINUE,
+                        );
+
                         break loop;
                     }
 
@@ -115,7 +151,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
             await update();
         }
 
-        if (loopIsBreaking) {
+        if (loopIsBreaking || loopIsContinuing) {
             this.recoverFromSkip();
         }
         return;

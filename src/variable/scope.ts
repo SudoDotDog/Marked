@@ -9,6 +9,7 @@ import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { extractSandToNative } from "../parse/sand-to-native";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
+import { ScopeLabelListener, SCOPE_LABEL_LISTENER_TYPE } from "./declare";
 import { SandMap } from "./sand-map";
 
 export const BRIDGE_SCOPE_SYMBOL: unique symbol = Symbol('bridge-scope');
@@ -47,7 +48,7 @@ export class Scope implements IScope {
     private _defaultExposed: any;
     private readonly _exposed: Map<string, any>;
 
-    private readonly _labelListeners: Map<string, () => void>;
+    private readonly _labelListeners: Map<string, ScopeLabelListener>;
 
     private _constantMap: Map<string, Variable<any>>;
     private _scopeMap: Map<string, Variable<any>>;
@@ -66,7 +67,7 @@ export class Scope implements IScope {
         this._defaultExposed = undefined;
         this._exposed = new Map<string, any>();
 
-        this._labelListeners = new Map<string, () => void>();
+        this._labelListeners = new Map<string, ScopeLabelListener>();
 
         this._constantMap = new Map<string, Variable<any>>();
         this._scopeMap = new Map<string, Variable<any>>();
@@ -210,25 +211,28 @@ export class Scope implements IScope {
         return this._parent ? this._parent.rummage(name) : null;
     }
 
-    public registerLabelListener(label: string, listener: () => void): this {
+    public registerLabelListener(label: string, listener: ScopeLabelListener): this {
 
         this._labelListeners.set(label, listener);
         return this;
     }
 
-    public executeLabelListener(label: string): boolean {
+    public executeLabelListener(
+        label: string,
+        type: SCOPE_LABEL_LISTENER_TYPE,
+    ): boolean {
 
         if (this._labelListeners.has(label)) {
 
-            const listener: () => void =
-                this._labelListeners.get(label) as () => void;
-            listener();
+            const listener: ScopeLabelListener =
+                this._labelListeners.get(label) as ScopeLabelListener;
+            listener(type);
             return true;
         }
 
         if (this._parent) {
 
-            return this._parent.executeLabelListener(label);
+            return this._parent.executeLabelListener(label, type);
         }
 
         return false;
