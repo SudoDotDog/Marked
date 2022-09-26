@@ -139,7 +139,6 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
 
                         break loop;
                     }
-
                     continue loop;
                 } else {
 

@@ -12,6 +12,7 @@ import { VARIABLE_TYPE } from "../declare/variable";
 import { Sandbox } from "../marked/sandbox";
 import { error } from "../util/error/error";
 import { LimitCounter } from "../util/node/context";
+import { SCOPE_LABEL_LISTENER_TYPE } from "../variable/declare";
 import { Flag } from "../variable/flag";
 import { SandMap } from "../variable/sand-map";
 import { Scope } from "../variable/scope";
@@ -38,12 +39,40 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
             throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
         }
 
+        let loopIsBreaking: boolean = false;
+        let loopIsContinuing: boolean = false;
+
+        if (trace.hasLabel()) {
+
+            scope.registerLabelListener(
+                trace.ensureLabel(),
+                (type: SCOPE_LABEL_LISTENER_TYPE) => {
+
+                    if (type === SCOPE_LABEL_LISTENER_TYPE.BREAK) {
+                        this.skip();
+                        loopIsBreaking = true;
+                    }
+
+                    if (type === SCOPE_LABEL_LISTENER_TYPE.CONTINUE) {
+                        this.skip();
+                        loopIsContinuing = true;
+                    }
+                },
+            );
+        }
+
         loop: for (const key of map.keys()) {
 
             if (limitCounter.addAndCheck()) {
 
                 this.break();
                 throw error(ERROR_CODE.MAXIMUM_FOR_IN_LOOP_LIMIT_EXCEED, limitCounter.amount().toString(), node, trace);
+            }
+
+            if (loopIsBreaking) {
+
+                this.recoverFromSkip();
+                break loop;
             }
 
             const subScope: Scope = scope.child();
@@ -62,14 +91,61 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
             });
 
             const result: any = await this.execute(node.body, subScope, nextTrace);
+
+            if (loopIsContinuing) {
+
+                this.recoverFromSkip();
+                loopIsContinuing = false;
+
+                continue loop;
+            }
+
             if (result instanceof Flag) {
 
-                if (result.isBreak()) { break loop; }
-                else if (result.isReturn()) { return result.getValue(); }
-                else if (result.isContinue()) { continue loop; }
-                else { throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace); }
+                if (result.isBreak()) {
+
+                    if (typeof result.getValue() === 'string') {
+
+                        const breakingLabel: string = result.getValue();
+                        scope.executeLabelListener(
+                            breakingLabel,
+                            SCOPE_LABEL_LISTENER_TYPE.BREAK,
+                        );
+
+                        break loop;
+                    }
+                    break loop;
+                } else if (result.isReturn()) {
+
+                    return result.getValue();
+                } else if (result.isContinue()) {
+
+                    if (typeof result.getValue() === 'string') {
+
+                        if (trace.hasLabel()
+                            && trace.ensureLabel() === result.getValue()) {
+
+                            continue loop;
+                        }
+
+                        const continuingLabel: string = result.getValue();
+                        scope.executeLabelListener(
+                            continuingLabel,
+                            SCOPE_LABEL_LISTENER_TYPE.CONTINUE,
+                        );
+
+                        break loop;
+                    }
+                    continue loop;
+                } else {
+
+                    throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
+                }
             }
         }
 
+        if (loopIsBreaking || loopIsContinuing) {
+            this.recoverFromSkip();
+        }
         return;
     };
