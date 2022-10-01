@@ -181,12 +181,10 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         const sandbox: Sandbox = createSandbox();
 
-        const value: number = chance.integer({ min: 50, max: 100 });
-
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
             `outer: while (count < 10) {`,
-            `inner: for (let j = 0;j < ${value};j++) {`,
+            `inner: for (let j = 0;j < 5;j++) {`,
             `count++;`,
             `if (j % 2 !== 0) {`,
             `continue outer;`,
@@ -198,6 +196,6 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(6);
+        expect(result.exports.default).to.be.equal(10);
     });
 });

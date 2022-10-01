@@ -63,6 +63,14 @@ export const whileStatementEvaluator: Evaluator<'WhileStatement'> =
             const subScope: Scope = scope.child();
             const result: any = await this.execute(node.body, subScope, nextTrace);
 
+            if (loopIsContinuing) {
+
+                this.recoverFromSkip();
+                loopIsContinuing = false;
+
+                continue loop;
+            }
+
             if (result instanceof Flag) {
 
                 if (result.isBreak()) {
