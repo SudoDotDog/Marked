@@ -8,8 +8,9 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../../src';
+import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
-import { assertSucceedMarkedResult } from '../../../util/assert-result';
+import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../../util/assert-result';
 
 describe('Given Integration Member Expression Sand List (Filter) Cases', (): void => {
 
@@ -19,6 +20,21 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
+
+    it('should be able to throw for invalid filter', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `const list = [1, 2, 3, 4, 5];`,
+            `const result = list.filter("");`,
+            `export default result;`,
+        ].join(New_Line_Character));
+
+        assertFailedMarkedResult(result);
+
+        expect(result.error.code).to.be.equal(ERROR_CODE.LIST_FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION);
+    });
 
     it('should be able to execute filter', async (): Promise<void> => {
 
