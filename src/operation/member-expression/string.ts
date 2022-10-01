@@ -21,7 +21,7 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
                     return target.concat(...args);
                 });
             }
-            case 'endWith': {
+            case 'endsWith': {
 
                 return wrapMemberFunction(sandbox, (slice: string) => {
                     return target.endsWith(slice);
