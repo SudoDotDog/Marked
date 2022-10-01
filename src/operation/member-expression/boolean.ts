@@ -18,7 +18,7 @@ export const memberExpressionBoolean = (sandbox: Sandbox, target: boolean, key: 
             case 'toString': {
 
                 return wrapMemberFunction(sandbox, () => {
-                    target.toString();
+                    return target.toString();
                 });
             }
         }
