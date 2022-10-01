@@ -21,7 +21,7 @@ export const memberExpressionSandRegExp = (sandbox: Sandbox, regexp: SandLiteral
         }
         case 'toString': {
             return wrapMemberFunction(sandbox, () => {
-                return regexp.toString();
+                return regexp.toNativeRegExp().toString();
             });
         }
     }
