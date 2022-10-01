@@ -36,7 +36,7 @@ export class MarkedDebugSnapshotNode {
         });
     }
 
-    public get TailComments(): string[] {
+    public getTailComments(): string[] {
 
         if (typeof this._node.trailingComments === 'undefined') {
             return [];
