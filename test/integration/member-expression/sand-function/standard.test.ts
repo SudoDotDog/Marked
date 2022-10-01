@@ -33,7 +33,7 @@ describe('Given Integration Member Expression Sand Function (Standard) Cases', (
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('1');
+        expect(result.exports.default).to.be.equal('[Marked Function]');
     });
 
     it('should be able to catch not found error', async (): Promise<void> => {
