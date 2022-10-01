@@ -22,5 +22,5 @@ export const memberExpressionSandFunction = (sandbox: Sandbox, target: SandFunct
         }
     }
 
-    throw error(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_BIGINT);
+    throw error(ERROR_CODE.FUNCTION_METHOD_NOT_FOUND);
 };
