@@ -8,7 +8,8 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
-import { assertSucceedMarkedResult } from '../../util/assert-result';
+import { ERROR_CODE } from '../../../src/declare/error-code';
+import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Label (For In Statement) Cases', (): void => {
 
@@ -208,5 +209,30 @@ describe('Given Integration Label (For In Statement) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(6);
+    });
+
+    it('should be able to throw when label not found', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const value: number = chance.integer({ min: 50, max: 100 });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `let count = 0;`,
+            `const items = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0}`,
+            `outer: for (const item in items) {`,
+            `inner: for (let j = 0;j < ${value};j++) {`,
+            `if (j % 2 !== 0) {`,
+            `continue random;`,
+            `}`,
+            `count++;`,
+            `}`,
+            `}`,
+            `export default count;`,
+        ].join(New_Line_Character));
+
+        assertFailedMarkedResult(result);
+
+        expect(result.error.code).to.be.equal(ERROR_CODE.PARSE_ERROR);
     });
 });
