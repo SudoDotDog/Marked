@@ -19,7 +19,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
         return sandbox;
     };
 
-    it('should be able to break without labeled for while loop', async (): Promise<void> => {
+    it('should be able to break without labeled while loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -111,62 +111,60 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
         expect(result.exports.default).to.be.equal(10);
     });
 
-    it.only('should be able to continue without labeled while loop', async (): Promise<void> => {
+    it('should be able to continue without labeled while loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `outer: while (count <= 10) {`,
+            `outer: while (count < 10) {`,
+            `count++;`,
             `if (count % 2 === 0) {`,
             `continue;`,
             `}`,
-            `count++;`,
             `}`,
             `export default count;`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(3);
+        expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to continue labeled for in loop', async (): Promise<void> => {
+    it('should be able to continue labeled while loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `const items = [0, 1, 2, 3, 4, 5]`,
-            `outer: for (const item of items) {`,
-            `if (item % 2 === 0) {`,
+            `outer: while (count < 10) {`,
+            `count++;`,
+            `if (count % 2 === 0) {`,
             `continue outer;`,
             `}`,
-            `count++;`,
             `}`,
             `export default count;`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(3);
+        expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to continue labeled stacked with nested stack', async (): Promise<void> => {
+    it('should be able to continue labeled stacked with nested stack while loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `const items = [0, 1, 2, 3, 4, 5]`,
-            `outer: for (const item of items) {`,
+            `outer: while (count < 10) {`,
             `for (let j = 0;j < 4;j++) {`,
             `middle: for (let k = 0;k < 4;k++) {`,
             `for (let l = 0;l < 4;l++) {`,
-            `if (item % 2 === 0) {`,
+            `count++;`,
+            `if (count % 2 === 0) {`,
             `continue outer;`,
             `}`,
-            `count++;`,
             `}`,
             `}`,
             `}`,
@@ -176,11 +174,10 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(result.exports.default).to.be.equal(192);
+        expect(result.exports.default).to.be.equal(10);
     });
 
-    it('should be able to continue labeled stacked for in loop', async (): Promise<void> => {
+    it('should be able to continue labeled stacked while loop', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -188,13 +185,12 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         const result: MarkedResult = await sandbox.evaluate([
             `let count = 0;`,
-            `const items = [0, 1, 2, 3, 4, 5]`,
-            `outer: for (const item of items) {`,
+            `outer: while (count < 10) {`,
             `inner: for (let j = 0;j < ${value};j++) {`,
+            `count++;`,
             `if (j % 2 !== 0) {`,
             `continue outer;`,
             `}`,
-            `count++;`,
             `}`,
             `}`,
             `export default count;`,
