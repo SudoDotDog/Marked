@@ -5,7 +5,6 @@
  */
 
 import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
-import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { Evaluator } from "./evaluate";
 import { ScriptLocation } from "./script-location";
 import { EST_TYPE } from "./types";
@@ -23,22 +22,6 @@ export type SandboxLanguage = 'typescript' | 'javascript';
 export const defaultSandboxLanguage: SandboxLanguage = 'javascript';
 
 export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
-
-export interface IMarkedOptions {
-
-    mixins?: Iterable<MarkedMixin>;
-    injects?: Record<string, any>;
-    provides?: Record<string, any>;
-    resolvers?: Iterable<ModuleResolver>;
-    sandbox?: Partial<ISandboxOptions>;
-    debugInterceptor?: MarkedDebugInterceptor;
-    language?: SandboxLanguage;
-}
-
-export const defaultMarkedOptions: IMarkedOptions = {
-
-    language: 'javascript',
-};
 
 export interface ISandboxOptions {
 

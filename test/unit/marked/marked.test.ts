@@ -6,19 +6,19 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
+import { Marked } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { END_SIGNAL, MarkedResult } from '../../../src/declare/evaluate';
-import { marked } from '../../../src/marked/marked';
 import { error } from '../../../src/util/error/error';
 
-describe('Given Marked function', (): void => {
+describe('Given {Marked} Class', (): void => {
 
     const chance = new Chance('sandbox-marked');
 
-    it('should be able to handle evaluate', async (): Promise<void> => {
+    it('should be able to handle run script static method', async (): Promise<void> => {
 
         const value: number = chance.integer();
-        const result: MarkedResult = await marked(`export default ${value};`);
+        const result: MarkedResult = await Marked.runScript(`export default ${value};`);
 
         expect(result).to.be.deep.equal({
             exports: {
@@ -34,7 +34,7 @@ describe('Given Marked function', (): void => {
         const provideName: string = chance.word();
         const provideValue: number = chance.integer();
 
-        const result: MarkedResult = await marked(`import a from '${provideName}';export default a;`, {
+        const result: MarkedResult = await Marked.runScript(`import a from '${provideName}';export default a;`, {
             provides: {
                 [provideName]: {
                     default: provideValue,
@@ -56,7 +56,7 @@ describe('Given Marked function', (): void => {
         const injectName: string = chance.word();
         const injectValue: number = chance.integer();
 
-        const result: MarkedResult = await marked(`export default ${injectName};`, {
+        const result: MarkedResult = await Marked.runScript(`export default ${injectName};`, {
             injects: {
                 [injectName]: injectValue,
             },
@@ -73,7 +73,7 @@ describe('Given Marked function', (): void => {
 
     it('should be able to handle sandbox options', async (): Promise<void> => {
 
-        const result: MarkedResult = await marked(`1+1`, {
+        const result: MarkedResult = await Marked.runScript(`1+1`, {
             sandbox: {
                 maxCodeLength: 2,
             },
