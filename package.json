@@ -20,7 +20,7 @@
   },
   "homepage": "https://marked.sudo.dog",
   "dependencies": {
-    "acorn": "8.8.0",
+    "acorn": "8.8.1",
     "sourcemap-codec": "1.4.8",
     "typescript": "4.8.4"
   },
