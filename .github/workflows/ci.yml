@@ -17,8 +17,8 @@ jobs:
           - ubuntu-latest
           - windows-latest
         node-version:
-          - 14
           - 16
+          - 18
         architecture:
           - x64
     steps:
