@@ -4,8 +4,6 @@
  * @description Sand To Native
  */
 
-import { ERROR_CODE } from "../declare/error-code";
-import { error } from "../util/error/error";
 import { MarkedNativeClass } from "../variable/native-class/native-class";
 import { MarkedNativeClassInstance } from "../variable/native-class/native-class-instance";
 import { SandClass } from "../variable/sand-class/sand-class";
@@ -50,7 +48,7 @@ export const extractSandToNative = (target: any): any => {
 
     if (target instanceof SandFunction) {
 
-        throw error(ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE);
+        return target.execute.bind(target);
     }
 
     if (target instanceof SandList) {
