@@ -28,7 +28,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
 
         const result: IMarkedResultFailed = await sandbox.evaluate(`1+1`) as IMarkedResultFailed;
 
-        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+        expect(result.signal).to.be.equal(END_SIGNAL.ABORTED);
         expect(result.error.message).to.be.equal(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
     });
 
@@ -76,7 +76,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
 
         const result: IMarkedResultFailed = await sandbox.evaluate(`1+1`) as IMarkedResultFailed;
 
-        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+        expect(result.signal).to.be.equal(END_SIGNAL.ABORTED);
         expect(result.error.message).to.be.equal(error(ERROR_CODE.SANDBOX_IS_BROKE).message);
     });
 });

@@ -20,7 +20,7 @@ describe('Given Integration Hand Bang (Hash Bang) Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to execute with start point is hash bang', async (): Promise<void> => {
+    it('should be able to execute with start point is hash bang', async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -32,5 +32,6 @@ describe('Given Integration Hand Bang (Hash Bang) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(10);
+        expect(result.comments).to.be.lengthOf(1);
     });
 });

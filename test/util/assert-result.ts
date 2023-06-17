@@ -5,7 +5,20 @@
  * @override Test
  */
 
-import { END_SIGNAL, IMarkedResultException, IMarkedResultFailed, IMarkedResultSucceed, IMarkedResultTerminated, MarkedResult } from "../../src/declare/evaluate";
+import { END_SIGNAL, IMarkedResultAborted, IMarkedResultException, IMarkedResultFailed, IMarkedResultSucceed, IMarkedResultTerminated, MarkedResult } from "../../src/declare/evaluate";
+
+export const assertAbortedMarkedResult: (
+    result: MarkedResult,
+) => asserts result is IMarkedResultAborted = (
+    result: MarkedResult,
+): asserts result is IMarkedResultAborted => {
+
+        if (result.signal !== END_SIGNAL.ABORTED) {
+            console.log(result);
+            throw new Error('Invalid marked result');
+        }
+        return;
+    };
 
 export const assertSucceedMarkedResult: (
     result: MarkedResult,

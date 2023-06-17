@@ -5,6 +5,7 @@
  */
 
 import { Sandbox } from "../marked/sandbox";
+import { ParseESTreeComment } from "../parse/parse-estree";
 import { MarkedError } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
@@ -16,10 +17,17 @@ export type Evaluator<T extends EST_TYPE> =
 
 export enum END_SIGNAL {
 
+    ABORTED = "ABORTED",
     SUCCEED = "SUCCEED",
     TERMINATED = "TERMINATED",
     FAILED = "FAILED",
     EXCEPTION = "EXCEPTION",
+}
+
+export interface IMarkedResultAborted {
+
+    error: MarkedError;
+    signal: END_SIGNAL.ABORTED;
 }
 
 export type MarkedResultSucceedRootReturn =
@@ -36,18 +44,21 @@ export interface IMarkedResultSucceed {
     exports: IExposed;
     signal: END_SIGNAL.SUCCEED;
     rootReturn: MarkedResultSucceedRootReturn;
+    comments: ParseESTreeComment[];
 }
 
 export interface IMarkedResultTerminated {
 
     signal: END_SIGNAL.TERMINATED;
     trace: ITrace;
+    comments: ParseESTreeComment[];
 }
 
 export interface IMarkedResultFailed {
 
     error: MarkedError;
     signal: END_SIGNAL.FAILED;
+    comments: ParseESTreeComment[];
 }
 
 export interface IMarkedResultException {
@@ -55,9 +66,11 @@ export interface IMarkedResultException {
     signal: END_SIGNAL.EXCEPTION;
     trace: ITrace;
     exception: any;
+    comments: ParseESTreeComment[];
 }
 
 export type MarkedResult =
+    | IMarkedResultAborted
     | IMarkedResultSucceed
     | IMarkedResultTerminated
     | IMarkedResultFailed

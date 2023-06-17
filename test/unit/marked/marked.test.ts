@@ -29,7 +29,8 @@ describe('Given {Marked} Class', (): void => {
             rootReturn: {
                 hasRootReturn: false,
             },
-        });
+            comments: [],
+        } as MarkedResult);
     });
 
     it('should be able to handle import', async (): Promise<void> => {
@@ -54,7 +55,8 @@ describe('Given {Marked} Class', (): void => {
             rootReturn: {
                 hasRootReturn: false,
             },
-        });
+            comments: [],
+        } as MarkedResult);
     });
 
     it('should be able to handle inject', async (): Promise<void> => {
@@ -77,7 +79,8 @@ describe('Given {Marked} Class', (): void => {
             rootReturn: {
                 hasRootReturn: false,
             },
-        });
+            comments: [],
+        } as MarkedResult);
     });
 
     it('should be able to handle sandbox options', async (): Promise<void> => {
@@ -88,7 +91,7 @@ describe('Given {Marked} Class', (): void => {
             },
         });
 
-        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+        expect(result.signal).to.be.equal(END_SIGNAL.ABORTED);
         expect((result as any).error.message).to.be.equal(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
     });
 });

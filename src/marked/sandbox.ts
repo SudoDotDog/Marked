@@ -24,7 +24,7 @@ import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../ut
 import { Flag } from '../variable/flag';
 import { Scope } from "../variable/scope";
 import { Trace } from '../variable/trace/trace';
-import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL } from "./declare";
+import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL, ParseScriptResult } from "./declare";
 import { useEverything } from './evaluate';
 import { Executer } from './executer';
 
@@ -202,7 +202,7 @@ export class Sandbox implements ISandbox {
 
             this.break();
             return {
-                signal: END_SIGNAL.FAILED,
+                signal: END_SIGNAL.ABORTED,
                 error: error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED),
             };
         }
@@ -210,7 +210,7 @@ export class Sandbox implements ISandbox {
         if (this._broke) {
 
             return {
-                signal: END_SIGNAL.FAILED,
+                signal: END_SIGNAL.ABORTED,
                 error: error(ERROR_CODE.SANDBOX_IS_BROKE),
             };
         }
@@ -224,9 +224,21 @@ export class Sandbox implements ISandbox {
             ? this._executeScope
             : scope;
 
+        let parseResult: ParseScriptResult;
+
         try {
 
-            const parseResult = await parseScript(script, this._language);
+            parseResult = await parseScript(script, this._language);
+        } catch (reason) {
+
+            return {
+                signal: END_SIGNAL.ABORTED,
+                error: reason as any as MarkedError,
+            };
+        }
+
+        try {
+
             const AST: EST.BaseNode = parseResult.estree;
 
             const breakPointController: MarkedDebugBreakPointController | undefined =
@@ -270,6 +282,7 @@ export class Sandbox implements ISandbox {
                             hasRootReturn: true,
                             returnValue: result.getValue(),
                         },
+                        comments: parseResult.comments,
                     };
                 }
 
@@ -279,6 +292,7 @@ export class Sandbox implements ISandbox {
                         signal: END_SIGNAL.EXCEPTION,
                         trace: result.trace,
                         exception: result.getValue(),
+                        comments: parseResult.comments,
                     };
                 }
 
@@ -287,6 +301,7 @@ export class Sandbox implements ISandbox {
                     return {
                         signal: END_SIGNAL.FAILED,
                         error: result.getValue(),
+                        comments: parseResult.comments,
                     };
                 }
 
@@ -295,24 +310,27 @@ export class Sandbox implements ISandbox {
                     return {
                         signal: END_SIGNAL.TERMINATED,
                         trace: result.trace,
+                        comments: parseResult.comments,
                     };
                 }
             }
+
+            return {
+                signal: END_SIGNAL.SUCCEED,
+                exports: targetScope.exposed,
+                rootReturn: {
+                    hasRootReturn: false,
+                },
+                comments: parseResult.comments,
+            };
         } catch (reason) {
 
             return {
                 signal: END_SIGNAL.FAILED,
                 error: reason as any as MarkedError,
+                comments: parseResult.comments,
             };
         }
-
-        return {
-            signal: END_SIGNAL.SUCCEED,
-            exports: targetScope.exposed,
-            rootReturn: {
-                hasRootReturn: false,
-            },
-        };
     }
 
     public setDebugInterceptor(interceptor: MarkedDebugInterceptor): this {
@@ -457,8 +475,6 @@ export class Sandbox implements ISandbox {
     }
 
     protected async execute(node: EST.Node, scope: IScope, trace: ITrace): Promise<any> {
-
-        console.log(node);
 
         if (this.getOption('duration') > 0) {
 

@@ -8,6 +8,8 @@
 import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, Sandbox } from '../../../src';
+import { ERROR_CODE } from '../../../src/declare/error-code';
+import { error } from '../../../src/util/error/error';
 import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Optional (Chain) Cases', (): void => {
@@ -61,6 +63,8 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
         const result: MarkedResult = await sandbox.evaluate(`const map={};export default map.a.b;`);
 
         assertFailedMarkedResult(result);
+
+        expect(result.error.message).to.be.equal(error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED).message);
     });
 
     it('should be able to get nested error without optional chain', async (): Promise<void> => {
@@ -70,5 +74,7 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
         const result: MarkedResult = await sandbox.evaluate(`const map={};export default map.a?.b.c;`);
 
         assertFailedMarkedResult(result);
+
+        expect(result.error.message).to.be.equal(error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED).message);
     });
 });

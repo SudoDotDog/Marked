@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import * as Chance from 'chance';
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
-import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
+import { assertAbortedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Label (For In Statement) Cases', (): void => {
 
@@ -231,7 +231,7 @@ describe('Given Integration Label (For In Statement) Cases', (): void => {
             `export default count;`,
         ].join(New_Line_Character));
 
-        assertFailedMarkedResult(result);
+        assertAbortedMarkedResult(result);
 
         expect(result.error.code).to.be.equal(ERROR_CODE.PARSE_ERROR);
     });
