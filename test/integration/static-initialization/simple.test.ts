@@ -118,4 +118,78 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         expect(injectExecutes).to.be.deep.equal([0]);
     });
+
+    it('should be able to set static variable double blocks', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class A {`,
+            `static a = 0;`,
+            `static {`,
+            `this.a = 5;`,
+            `}`,
+            `static {`,
+            `this.a = 10;`,
+            `}`,
+            `}`,
+            `execute(A.a);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([10]);
+    });
+
+    it('should be able to set static variable reverse orders', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class A {`,
+            `static {`,
+            `this.a = 0;`,
+            `}`,
+            `static a = 10;`,
+            `}`,
+            `execute(A.a);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([10]);
+    });
+
+    it('should be able to set static variable non-declaration', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class A {`,
+            `static {`,
+            `this.a = 0;`,
+            `}`,
+            `}`,
+            `execute(A.a);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([0]);
+    });
 });
