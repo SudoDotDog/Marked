@@ -11,6 +11,7 @@ export const createDefaultFormatTypeScriptCodeSettings =
     (): TS.FormatCodeSettings => {
 
         return {
+
             baseIndentSize: 0,
             convertTabsToSpaces: true,
             indentSize: 4,
