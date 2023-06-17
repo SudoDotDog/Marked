@@ -30,14 +30,20 @@ export interface IMarkedResultAborted {
     signal: END_SIGNAL.ABORTED;
 }
 
+export type MarkedResultSucceedRootReturnHas = {
+
+    hasRootReturn: true;
+    returnValue: any;
+};
+
+export type MarkedResultSucceedRootReturnNot = {
+
+    hasRootReturn: false;
+};
+
 export type MarkedResultSucceedRootReturn =
-    | {
-        hasRootReturn: true;
-        returnValue: any;
-    }
-    | {
-        hasRootReturn: false;
-    };
+    | MarkedResultSucceedRootReturnHas
+    | MarkedResultSucceedRootReturnNot;
 
 export interface IMarkedResultSucceed {
 
