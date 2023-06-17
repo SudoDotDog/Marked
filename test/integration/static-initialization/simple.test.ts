@@ -13,7 +13,7 @@ import { assertSucceedMarkedResult } from '../../util/assert-result';
 describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const chance = new Chance('integration-inject-class-date');
+    const chance = new Chance('integration-static-initialization-simple');
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();

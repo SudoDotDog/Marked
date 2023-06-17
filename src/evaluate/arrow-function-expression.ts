@@ -27,6 +27,11 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
 
         const nextTrace: Trace = trace.stack(node);
 
+        if (node.async) {
+
+            throw error(ERROR_CODE.UNNECESSARY_ASYNC_EXPRESSION, void 0, node, trace);
+        }
+
         const func = async (thisValue: any, ...args: any[]): Promise<any> => {
 
             const subScope: Scope = scope.child();

@@ -88,6 +88,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME]: 'Provided module name duplicated', // 6002
     [ERROR_CODE.MODULE_IS_NOT_PROVIDED]: 'Module is not provided', // 6003
     [ERROR_CODE.CYCLED_IMPORT]: 'Cycled import', // 6004
+    [ERROR_CODE.UNNECESSARY_ASYNC_EXPRESSION]: 'Unnecessary async expression', // 6005
+    [ERROR_CODE.UNNECESSARY_AWAIT_EXPRESSION]: 'Unnecessary await expression', // 6006
 
     [ERROR_CODE.CANNOT_TRANSFER_CLASS_TO_NATIVE]: 'Cannot transfer class to native', // 6100
     [ERROR_CODE.CANNOT_TRANSFER_FUNCTION_TO_NATIVE]: 'Cannot transfer function to native', // 6101

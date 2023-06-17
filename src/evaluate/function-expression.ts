@@ -5,10 +5,12 @@
  */
 
 import * as EST from "estree";
+import { ERROR_CODE } from "../declare/error-code";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
 import { registerFunctionExpressionParams } from "../operation/function-expression/params-register";
+import { error } from "../util/error/error";
 import { Flag } from "../variable/flag";
 import { SandClass } from "../variable/sand-class/sand-class";
 import { SandClassInstance } from "../variable/sand-class/sand-class-instance";
@@ -25,6 +27,11 @@ export const functionExpressionEvaluator: Evaluator<'FunctionExpression'> =
     async function (this: Sandbox, node: EST.FunctionExpression, scope: Scope, trace: Trace): Promise<SandFunction> {
 
         const nextTrace: Trace = trace.stack(node);
+
+        if (node.async) {
+
+            throw error(ERROR_CODE.UNNECESSARY_ASYNC_EXPRESSION, void 0, node, trace);
+        }
 
         const func = async (thisValue: any, ...args: any[]): Promise<any> => {
 

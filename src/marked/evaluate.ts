@@ -8,6 +8,7 @@ import { ISandbox } from "../declare/sandbox";
 import { mountArrayExpression } from "../evaluate/array-expression";
 import { mountArrowFunctionExpression } from "../evaluate/arrow-function-expression";
 import { mountAssignmentExpression } from "../evaluate/assignment-expression";
+import { mountAwaitExpression } from "../evaluate/await-expression";
 import { mountBinaryExpression } from "../evaluate/binary-expression";
 import { mountBlockStatement } from "../evaluate/block-statement";
 import { mountBreakStatement } from "../evaluate/break-statement";
@@ -65,6 +66,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountArrayExpression(sandbox);
     mountArrowFunctionExpression(sandbox);
     mountAssignmentExpression(sandbox);
+    mountAwaitExpression(sandbox);
     mountBinaryExpression(sandbox);
     mountBlockStatement(sandbox);
     mountBreakStatement(sandbox);
