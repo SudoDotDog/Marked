@@ -13,6 +13,7 @@ import { error } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { TraceClass } from "../variable/trace/trace-class";
+import { VARIABLE_TYPE } from "../declare/variable";
 
 export const mountStaticBlock = (sandbox: ISandbox): void => {
 
@@ -29,6 +30,7 @@ export const staticBlockEvaluation: Evaluator<'StaticBlock'> =
 
         const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = scope.child();
+        subScope.register(VARIABLE_TYPE.CONSTANT)(trace.sandClass.className, trace.sandClass.staticBody);
 
         subScope.replaceThis(trace.sandClass.staticBody);
 

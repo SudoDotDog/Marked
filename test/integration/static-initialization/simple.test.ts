@@ -119,6 +119,30 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
         expect(injectExecutes).to.be.deep.equal([0]);
     });
 
+    it('should be able to set static variable with self call', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class A {`,
+            `static a = 10;`,
+            `static {`,
+            `A.a = 0;`,
+            `}`,
+            `}`,
+            `execute(A.a);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([0]);
+    });
+
     it('should be able to set static variable double blocks', async (): Promise<void> => {
 
         const injectExecutes: number[] = [];
