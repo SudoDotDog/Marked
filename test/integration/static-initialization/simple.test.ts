@@ -33,12 +33,13 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
             `class A {`,
             `static {`,
             `execute('A');`,
+            `execute('B');`,
             `}`,
             `}`,
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal(['A']);
+        expect(injectExecutes).to.be.deep.equal(['A', 'B']);
     });
 });
