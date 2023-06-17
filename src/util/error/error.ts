@@ -30,6 +30,8 @@ export class MarkedError extends Error {
         this.info = info || null;
         this.trace = trace || null;
         this.node = node || null;
+
+        Object.setPrototypeOf(this, MarkedError.prototype);
     }
 }
 
