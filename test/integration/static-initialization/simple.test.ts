@@ -95,7 +95,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
         expect(injectExecutes).to.be.deep.equal([0, 10]);
     });
 
-    it.only('should be able to set static variable', async (): Promise<void> => {
+    it('should be able to set static variable', async (): Promise<void> => {
 
         const injectExecutes: number[] = [];
 
