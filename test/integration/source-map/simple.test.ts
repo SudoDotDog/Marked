@@ -7,8 +7,7 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from '../../../src';
-import { New_Line_Character } from '../../../src/host/declare';
+import { emitTypeScriptTransform, EmitTypeScriptTransformResult, New_Line_Character } from '../../../src';
 import { SegmentSourceMapLocationFinder } from '../../../src/source-map/location-finder/segment';
 
 describe('Given Integration Source Map (Simple) Cases', (): void => {

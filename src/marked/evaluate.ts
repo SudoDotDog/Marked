@@ -47,6 +47,7 @@ import { mountPropertyDefinition } from "../evaluate/property-definition";
 import { mountReturnStatement } from "../evaluate/return-statement";
 import { mountSequenceExpression } from "../evaluate/sequence-expression";
 import { mountSpreadElement } from "../evaluate/spread-element";
+import { mountStaticBlock } from "../evaluate/static-block";
 import { mountSwitchCase } from "../evaluate/switch-case";
 import { mountSwitchStatement } from "../evaluate/switch-statement";
 import { mountTaggedTemplateExpression } from "../evaluate/tagged-template-expression";
@@ -103,6 +104,7 @@ export const useEverything = (sandbox: ISandbox): void => {
     mountReturnStatement(sandbox);
     mountSequenceExpression(sandbox);
     mountSpreadElement(sandbox);
+    mountStaticBlock(sandbox);
     mountSwitchCase(sandbox);
     mountSwitchStatement(sandbox);
     mountTaggedTemplateExpression(sandbox);

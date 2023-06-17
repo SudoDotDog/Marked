@@ -228,9 +228,10 @@ export class Sandbox implements ISandbox {
             const parseResult = await parseScript(script, this._language);
             const AST: EST.BaseNode = parseResult.estree;
 
-            const breakPointController: MarkedDebugBreakPointController | undefined = typeof breakPoints === 'undefined'
-                ? undefined
-                : MarkedDebugBreakPointController.fromBreakPoints(breakPoints);
+            const breakPointController: MarkedDebugBreakPointController | undefined =
+                typeof breakPoints === 'undefined'
+                    ? undefined
+                    : MarkedDebugBreakPointController.fromBreakPoints(breakPoints);
 
             const trace: Trace = Trace.init(
                 scriptLocation,
@@ -238,7 +239,11 @@ export class Sandbox implements ISandbox {
                 breakPointController,
             );
 
-            let result: any = await this.execute(AST as EST.Node, targetScope, trace);
+            let result: any = await this.execute(
+                AST as EST.Node,
+                targetScope,
+                trace,
+            );
 
             if (this._broke) {
 
