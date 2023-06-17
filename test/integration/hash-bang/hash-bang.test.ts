@@ -7,7 +7,7 @@
 
 import { expect } from 'chai';
 import * as Chance from 'chance';
-import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
+import { MarkedResult, New_Line_Character, PARSE_ESTREE_COMMENT_TYPE, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
 describe('Given Integration Hand Bang (Hash Bang) Cases', (): void => {
@@ -33,5 +33,6 @@ describe('Given Integration Hand Bang (Hash Bang) Cases', (): void => {
 
         expect(result.exports.default).to.be.equal(10);
         expect(result.comments).to.be.lengthOf(1);
+        expect(result.comments[0].type).to.be.equal(PARSE_ESTREE_COMMENT_TYPE.HASH_BANG);
     });
 });

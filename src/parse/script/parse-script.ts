@@ -11,8 +11,9 @@ import { BaseSourceMapLocationFinder } from "../../source-map/location-finder/ba
 import { RawSourceMapLocationFinder } from "../../source-map/location-finder/raw";
 import { SegmentSourceMapLocationFinder } from "../../source-map/location-finder/segment";
 import { error } from "../../util/error/error";
+import { ParseESTreeResult } from "../declare";
 import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from "../emit/transform";
-import { parseCodeToESTree, ParseESTreeResult } from "../parse-estree";
+import { parseCodeToESTree } from "../parse-estree";
 
 export const parseScript = async (script: string, language: SandboxLanguage): Promise<ParseScriptResult> => {
 

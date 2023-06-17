@@ -7,7 +7,7 @@
 import * as EST from "estree";
 import { MarkedResult } from "../declare/evaluate";
 import { IExecuter } from "../declare/sandbox";
-import { ParseESTreeComment } from "../parse/parse-estree";
+import { ParseESTreeComment } from "../parse/declare";
 import { BaseSourceMapLocationFinder } from "../source-map/location-finder/base";
 
 export type ParseScriptResult = {

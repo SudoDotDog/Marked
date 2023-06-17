@@ -6,24 +6,12 @@
 
 import * as Acorn from 'acorn';
 import * as EST from "estree";
-
-export type ParseESTreeComment = {
-
-    readonly block: boolean;
-    readonly text: string;
-    readonly start: number;
-    readonly end: number;
-};
-
-export type ParseESTreeResult = {
-
-    readonly estree: EST.Node;
-    readonly comments: ParseESTreeComment[];
-};
+import { PARSE_ESTREE_COMMENT_TYPE, ParseESTreeComment, ParseESTreeResult } from './declare';
 
 export const parseCodeToESTree = (sourceCode: string): ParseESTreeResult => {
 
     const comments: ParseESTreeComment[] = [];
+    const hasHashBang: boolean = sourceCode.startsWith('#!');
 
     const AST: EST.Node = Acorn.Parser.parse(sourceCode, {
 
@@ -31,9 +19,26 @@ export const parseCodeToESTree = (sourceCode: string): ParseESTreeResult => {
         allowReturnOutsideFunction: true,
         allowAwaitOutsideFunction: true,
         allowHashBang: true,
-        onComment: (block: boolean, text: string, start: number, end: number) => {
+        onComment: (
+            block: boolean,
+            text: string,
+            start: number,
+            end: number,
+        ) => {
+
+            if (hasHashBang && start === 0) {
+
+                comments.push({
+                    type: PARSE_ESTREE_COMMENT_TYPE.HASH_BANG,
+                    text,
+                    start,
+                    end,
+                });
+                return;
+            }
+
             comments.push({
-                block,
+                type: block ? PARSE_ESTREE_COMMENT_TYPE.BLOCK : PARSE_ESTREE_COMMENT_TYPE.LINE,
                 text,
                 start,
                 end,

@@ -5,7 +5,7 @@
  */
 
 import { Sandbox } from "../marked/sandbox";
-import { ParseESTreeComment } from "../parse/parse-estree";
+import { ParseESTreeComment } from "../parse/declare";
 import { MarkedError } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";

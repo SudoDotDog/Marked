@@ -22,6 +22,7 @@ export { New_Line_Character } from "./host/declare";
 export * from "./marked/executer";
 export * from "./marked/marked";
 export * from "./marked/sandbox";
+export * from "./parse/declare";
 export * from "./parse/emit/declaration";
 export * from "./parse/emit/source";
 export * from "./parse/emit/transform";
