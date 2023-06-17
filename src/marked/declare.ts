@@ -7,12 +7,14 @@
 import * as EST from "estree";
 import { MarkedResult } from "../declare/evaluate";
 import { IExecuter } from "../declare/sandbox";
+import { ParseESTreeComment } from "../parse/parse-estree";
 import { BaseSourceMapLocationFinder } from "../source-map/location-finder/base";
 
 export type ParseScriptResult = {
 
     readonly locationFinder: BaseSourceMapLocationFinder;
     readonly estree: EST.Node;
+    readonly comments: ParseESTreeComment[];
 };
 
 export enum EVALUATE_RESOURCE_END_SIGNAL {

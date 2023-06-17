@@ -195,7 +195,8 @@ export class Sandbox implements ISandbox {
         scope?: IScope,
     ): Promise<MarkedResult> {
 
-        const isCodeLengthExceed: boolean = getRawCodeLength(script) > this._options.maxCodeLength;
+        const isCodeLengthExceed: boolean =
+            getRawCodeLength(script) > this._options.maxCodeLength;
 
         if (isCodeLengthExceed) {
 
@@ -456,6 +457,8 @@ export class Sandbox implements ISandbox {
     }
 
     protected async execute(node: EST.Node, scope: IScope, trace: ITrace): Promise<any> {
+
+        console.log(node);
 
         if (this.getOption('duration') > 0) {
 

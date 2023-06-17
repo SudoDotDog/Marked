@@ -4,7 +4,6 @@
  * @description Parse Script
  */
 
-import * as EST from "estree";
 import { ERROR_CODE } from "../../declare/error-code";
 import { SandboxLanguage } from "../../declare/sandbox";
 import { ParseScriptResult } from "../../marked/declare";
@@ -13,7 +12,7 @@ import { RawSourceMapLocationFinder } from "../../source-map/location-finder/raw
 import { SegmentSourceMapLocationFinder } from "../../source-map/location-finder/segment";
 import { error } from "../../util/error/error";
 import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from "../emit/transform";
-import { parseCodeToESTree } from "../parse-estree";
+import { parseCodeToESTree, ParseESTreeResult } from "../parse-estree";
 
 export const parseScript = async (script: string, language: SandboxLanguage): Promise<ParseScriptResult> => {
 
@@ -30,12 +29,13 @@ const parseJavaScript = async (script: string): Promise<ParseScriptResult> => {
 
     try {
 
-        const estree: EST.Node = await Promise.resolve(
+        const estree: ParseESTreeResult = await Promise.resolve(
             parseCodeToESTree(script),
         );
 
         return {
-            estree,
+            estree: estree.estree,
+            comments: estree.comments,
             locationFinder: RawSourceMapLocationFinder.fromEmpty(),
         };
     } catch (err) {
@@ -52,7 +52,7 @@ const parseTypeScript = async (script: string): Promise<ParseScriptResult> => {
         const transformResult: EmitTypeScriptTransformResult =
             await emitTypeScriptTransform(script);
 
-        const estree: EST.Node = await Promise.resolve(
+        const estree: ParseESTreeResult = await Promise.resolve(
             parseCodeToESTree(transformResult.source)
         );
 
@@ -60,7 +60,8 @@ const parseTypeScript = async (script: string): Promise<ParseScriptResult> => {
             SegmentSourceMapLocationFinder.fromSourceMap(transformResult.sourceMap);
 
         return {
-            estree,
+            estree: estree.estree,
+            comments: estree.comments,
             locationFinder,
         };
     } catch (err) {

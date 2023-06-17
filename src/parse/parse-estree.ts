@@ -7,7 +7,23 @@
 import * as Acorn from 'acorn';
 import * as EST from "estree";
 
-export const parseCodeToESTree = (sourceCode: string): EST.Node => {
+export type ParseESTreeComment = {
+
+    readonly block: boolean;
+    readonly text: string;
+    readonly start: number;
+    readonly end: number;
+};
+
+export type ParseESTreeResult = {
+
+    readonly estree: EST.Node;
+    readonly comments: ParseESTreeComment[];
+};
+
+export const parseCodeToESTree = (sourceCode: string): ParseESTreeResult => {
+
+    const comments: ParseESTreeComment[] = [];
 
     const AST: EST.Node = Acorn.Parser.parse(sourceCode, {
 
@@ -15,9 +31,20 @@ export const parseCodeToESTree = (sourceCode: string): EST.Node => {
         allowReturnOutsideFunction: true,
         allowAwaitOutsideFunction: true,
         allowHashBang: true,
+        onComment: (block: boolean, text: string, start: number, end: number) => {
+            comments.push({
+                block,
+                text,
+                start,
+                end,
+            });
+        },
         sourceType: 'module',
         ecmaVersion: 'latest',
     }) as EST.Node;
 
-    return AST;
+    return {
+        estree: AST,
+        comments,
+    };
 };
