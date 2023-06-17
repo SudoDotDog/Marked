@@ -3,6 +3,7 @@
  * @description Index
  */
 
+export * from "./analysis/analyzer";
 export * from "./debug/break-point/line";
 export * from "./debug/declare";
 export * from "./debug/flow-controller";

@@ -7,7 +7,7 @@
 import * as Acorn from 'acorn';
 import * as EST from "estree";
 
-export const parseCodeToESTree = async (sourceCode: string): Promise<EST.Node> => {
+export const parseCodeToESTree = (sourceCode: string): EST.Node => {
 
     const AST: EST.Node = Acorn.Parser.parse(sourceCode, {
 

@@ -30,7 +30,9 @@ const parseJavaScript = async (script: string): Promise<ParseScriptResult> => {
 
     try {
 
-        const estree: EST.Node = await parseCodeToESTree(script);
+        const estree: EST.Node = await Promise.resolve(
+            parseCodeToESTree(script),
+        );
 
         return {
             estree,
@@ -50,7 +52,10 @@ const parseTypeScript = async (script: string): Promise<ParseScriptResult> => {
         const transformResult: EmitTypeScriptTransformResult =
             await emitTypeScriptTransform(script);
 
-        const estree: EST.Node = await parseCodeToESTree(transformResult.source);
+        const estree: EST.Node = await Promise.resolve(
+            parseCodeToESTree(transformResult.source)
+        );
+
         const locationFinder: BaseSourceMapLocationFinder =
             SegmentSourceMapLocationFinder.fromSourceMap(transformResult.sourceMap);
 
