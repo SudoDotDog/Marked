@@ -22,10 +22,20 @@ export enum END_SIGNAL {
     EXCEPTION = "EXCEPTION",
 }
 
+export type MarkedResultSucceedRootReturn =
+    | {
+        hasRootReturn: true;
+        returnValue: any;
+    }
+    | {
+        hasRootReturn: false;
+    };
+
 export interface IMarkedResultSucceed {
 
     exports: IExposed;
     signal: END_SIGNAL.SUCCEED;
+    rootReturn: MarkedResultSucceedRootReturn;
 }
 
 export interface IMarkedResultTerminated {
@@ -47,7 +57,8 @@ export interface IMarkedResultException {
     exception: any;
 }
 
-export type MarkedResult = IMarkedResultSucceed
+export type MarkedResult =
+    | IMarkedResultSucceed
     | IMarkedResultTerminated
     | IMarkedResultFailed
     | IMarkedResultException;

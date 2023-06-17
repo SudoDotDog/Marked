@@ -13,6 +13,11 @@ export class Flag {
         return new Flag(FLAG_TYPE.RETURN, trace);
     }
 
+    public static fromRootReturn(trace: ITrace): Flag {
+
+        return new Flag(FLAG_TYPE.ROOT_RETURN, trace);
+    }
+
     public static fromBreak(trace: ITrace): Flag {
 
         return new Flag(FLAG_TYPE.BREAK, trace);
@@ -69,6 +74,11 @@ export class Flag {
     public isReturn(): boolean {
 
         return this._type === FLAG_TYPE.RETURN;
+    }
+
+    public isRootReturn(): boolean {
+
+        return this._type === FLAG_TYPE.ROOT_RETURN;
     }
 
     public isBreak(): boolean {

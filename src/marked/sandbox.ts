@@ -260,6 +260,18 @@ export class Sandbox implements ISandbox {
 
             if (result instanceof Flag) {
 
+                if (result.isRootReturn()) {
+
+                    return {
+                        signal: END_SIGNAL.SUCCEED,
+                        exports: targetScope.exposed,
+                        rootReturn: {
+                            hasRootReturn: true,
+                            returnValue: result.getValue(),
+                        },
+                    };
+                }
+
                 if (result.isThrow()) {
 
                     return {
@@ -296,6 +308,9 @@ export class Sandbox implements ISandbox {
         return {
             signal: END_SIGNAL.SUCCEED,
             exports: targetScope.exposed,
+            rootReturn: {
+                hasRootReturn: false,
+            },
         };
     }
 
@@ -501,7 +516,9 @@ export class Sandbox implements ISandbox {
             }
         }
 
-        const executor: Evaluator<EST_TYPE> | undefined = this._map.get(node.type);
+        const executor: Evaluator<EST_TYPE> | undefined = this._map.get(
+            node.type,
+        );
 
         if (!executor) {
 

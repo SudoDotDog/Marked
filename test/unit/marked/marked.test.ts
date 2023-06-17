@@ -26,6 +26,9 @@ describe('Given {Marked} Class', (): void => {
                 named: {},
             },
             signal: END_SIGNAL.SUCCEED,
+            rootReturn: {
+                hasRootReturn: false,
+            },
         });
     });
 
@@ -48,6 +51,9 @@ describe('Given {Marked} Class', (): void => {
                 named: {},
             },
             signal: END_SIGNAL.SUCCEED,
+            rootReturn: {
+                hasRootReturn: false,
+            },
         });
     });
 
@@ -68,6 +74,9 @@ describe('Given {Marked} Class', (): void => {
                 named: {},
             },
             signal: END_SIGNAL.SUCCEED,
+            rootReturn: {
+                hasRootReturn: false,
+            },
         });
     });
 

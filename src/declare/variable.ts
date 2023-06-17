@@ -21,6 +21,7 @@ export enum VARIABLE_TYPE {
 export enum FLAG_TYPE {
 
     RETURN = 'RETURN',
+    ROOT_RETURN = 'ROOT_RETURN',
     BREAK = 'BREAK',
     CONTINUE = 'CONTINUE',
     THROW = 'THROW',

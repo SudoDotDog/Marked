@@ -27,6 +27,9 @@ export const programEvaluator: Evaluator<'Program'> =
             const result: any = await this.execute(child, scope, nextTrace);
             if (result instanceof Flag) {
 
+                if (result.isRootReturn()) {
+                    return result;
+                }
                 if (result.isFatal()) {
                     return result;
                 }

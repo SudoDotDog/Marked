@@ -22,6 +22,18 @@ export const returnStatementEvaluator: Evaluator<'ReturnStatement'> =
 
         const nextTrace: Trace = trace.stack(node);
 
+        const traceNode: EST.Node | null = trace.getNode();
+        if (traceNode !== null && traceNode.type === 'Program') {
+
+            const rootReturnFlag = Flag.fromRootReturn(trace);
+
+            if (node.argument) {
+                const value: any = await this.execute(node.argument, scope, nextTrace);
+                rootReturnFlag.setValue(value);
+            }
+            return rootReturnFlag;
+        }
+
         const flag: Flag = Flag.fromReturn(trace);
         if (node.argument) {
 
