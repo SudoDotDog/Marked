@@ -8,7 +8,6 @@ import * as EST from "estree";
 import { Evaluator } from "../declare/evaluate";
 import { ISandbox } from "../declare/sandbox";
 import { Sandbox } from "../marked/sandbox";
-import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 
@@ -25,7 +24,7 @@ export const staticBlockEvaluation: Evaluator<'StaticBlock'> =
 
         for (const statement of node.body) {
 
-            const result: Flag = await this.execute(statement, subScope, nextTrace);
-            console.log(result);
+            console.log(statement);
+            await this.execute(statement, subScope, nextTrace);
         }
     };

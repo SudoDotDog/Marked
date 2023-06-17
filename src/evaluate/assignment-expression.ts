@@ -89,6 +89,8 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
             }
         })();
 
+        console.log(variable);
+
         const operation: ((variableArg: Variable<any>, value: any) => any) | null =
             getAssignmentOperation(node.operator);
 
@@ -99,6 +101,8 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
 
         const assignee: any = await this.execute(node.right, scope, nextTrace);
         operation(variable, assignee);
+
+        console.log(variable);
 
         return assignee;
     };

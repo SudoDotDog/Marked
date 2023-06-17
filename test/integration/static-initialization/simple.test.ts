@@ -20,7 +20,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
         return sandbox;
     };
 
-    it.only('should be able to execute in static block for initialization', async (): Promise<void> => {
+    it('should be able to execute in static block for initialization', async (): Promise<void> => {
 
         const injectExecutes: string[] = [];
 
@@ -41,5 +41,81 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         expect(injectExecutes).to.be.deep.equal(['A', 'B']);
+    });
+
+    it('should be able to execute as class declaration', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `let a = 10;`,
+            `execute(a);`,
+            `class A {`,
+            `static {`,
+            `a = 0;`,
+            `}`,
+            `}`,
+            `execute(a);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([10, 0]);
+    });
+
+    it('should be able to execute in variable declaration and update within static block', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `let a = 10;`,
+            `let b = 10;`,
+            `class A {`,
+            `static {`,
+            `a = 0;`,
+            `let b = 0;`,
+            `}`,
+            `}`,
+            `execute(a);`,
+            `execute(b);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([0, 10]);
+    });
+
+    it.only('should be able to set static variable', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class A {`,
+            `static a = 10;`,
+            `static {`,
+            `this.a = 0;`,
+            `}`,
+            `}`,
+            `execute(A.a);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(injectExecutes).to.be.deep.equal([0]);
     });
 });

@@ -49,6 +49,8 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
             executeMemberExpressionObject.bind(this);
         const object: any = await bindExecuteMemberExpressionObject(node.object, scope, nextTrace);
 
+        console.log(object);
+
         const key: string | number = computed
             ? await this.execute(node.property, scope, nextTrace)
             : (node.property as EST.Identifier).name;
