@@ -33,9 +33,10 @@ export const propertyDefinitionEvaluation: Evaluator<'PropertyDefinition'> =
 
         const key: string = node.key.name;
 
+        const subScope: Scope = scope.child();
+
         if (node.static) {
 
-            const subScope: Scope = scope.child();
             subScope.register(VARIABLE_TYPE.CONSTANT)(trace.sandClass.className, trace.sandClass.staticBody);
 
             subScope.replaceThis(trace.sandClass.staticBody);
@@ -45,7 +46,9 @@ export const propertyDefinitionEvaluation: Evaluator<'PropertyDefinition'> =
             trace.sandClass.staticBody.set(key, value);
         } else {
 
-            const value: any = await this.execute(node.value as any, scope, trace);
+            subScope.replaceThis(trace.sandClass.body);
+
+            const value: any = await this.execute(node.value as any, subScope, trace);
 
             trace.sandClass.body.set(key, value);
         }
