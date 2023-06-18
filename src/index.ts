@@ -19,6 +19,8 @@ export { ScriptLocation } from "./declare/script-location";
 export { EST_TYPE } from "./declare/types";
 export { IExposed, ITrace } from "./declare/variable";
 export { New_Line_Character } from "./host/declare";
+export * from "./log/declare";
+export * from "./log/log-recorder";
 export * from "./marked/executer";
 export * from "./marked/marked";
 export * from "./marked/sandbox";

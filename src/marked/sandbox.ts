@@ -27,6 +27,8 @@ import { Trace } from '../variable/trace/trace';
 import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL, ParseScriptResult } from "./declare";
 import { useEverything } from './evaluate';
 import { Executer } from './executer';
+import { MarkedLogRecorder } from "../log/log-recorder";
+import { IMarkedExecuteLog } from "../log/declare";
 
 export class Sandbox implements ISandbox {
 
@@ -63,6 +65,8 @@ export class Sandbox implements ISandbox {
 
     private readonly _options: ISandboxOptions;
 
+    private readonly _logRecorderSet: Set<MarkedLogRecorder>;
+
     private _debugInterceptor: MarkedDebugInterceptor | null;
     private _debugNextStep: boolean;
 
@@ -93,6 +97,8 @@ export class Sandbox implements ISandbox {
         this._cachedSource = new Map<string, string>();
 
         this._options = getDefaultSandboxOption();
+
+        this._logRecorderSet = new Set<MarkedLogRecorder>();
 
         this._debugInterceptor = null;
         this._debugNextStep = false;
@@ -174,7 +180,6 @@ export class Sandbox implements ISandbox {
     public provide(name: string, value: any): this {
 
         if (this._modules.has(name)) {
-
             throw error(ERROR_CODE.DUPLICATED_PROVIDED_MODULE_NAME, name);
         }
 
@@ -185,6 +190,43 @@ export class Sandbox implements ISandbox {
     public resolver(resolver: ModuleResolver): this {
 
         this._resolvers.push(resolver);
+        return this;
+    }
+
+    public addLogRecorder(recorder: MarkedLogRecorder): this {
+
+        this._logRecorderSet.add(recorder);
+        return this;
+    }
+
+    public removeLogRecorder(recorder: MarkedLogRecorder): this {
+
+        this._logRecorderSet.delete(recorder);
+        return this;
+    }
+
+    public setDebugInterceptor(interceptor: MarkedDebugInterceptor): this {
+
+        this._debugInterceptor = interceptor;
+        return this;
+    }
+
+    public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
+
+        const value: ISandboxOptions[T] = this._options[name];
+        return assert(value).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
+    }
+
+    public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): this {
+
+        this._options[name] = value;
+        return this;
+    }
+
+    public setAdditionalArgument(value: any): Sandbox {
+
+        this._usingAdditionalArgument = true;
+        this._additionalArgument = value;
         return this;
     }
 
@@ -357,28 +399,11 @@ export class Sandbox implements ISandbox {
         }
     }
 
-    public setDebugInterceptor(interceptor: MarkedDebugInterceptor): this {
+    protected putExecuteLog(log: IMarkedExecuteLog): this {
 
-        this._debugInterceptor = interceptor;
-        return this;
-    }
-
-    public getOption<T extends OptionName>(name: T): ISandboxOptions[T] {
-
-        const value: ISandboxOptions[T] = this._options[name];
-        return assert(value).to.be.exist(ERROR_CODE.UNKNOWN_ERROR).firstValue();
-    }
-
-    public setOption<T extends OptionName>(name: T, value: ISandboxOptions[T]): this {
-
-        this._options[name] = value;
-        return this;
-    }
-
-    public setAdditionalArgument(value: any): Sandbox {
-
-        this._usingAdditionalArgument = true;
-        this._additionalArgument = value;
+        for (const recorder of this._logRecorderSet) {
+            recorder.putExecuteLog(log);
+        }
         return this;
     }
 
@@ -499,6 +524,12 @@ export class Sandbox implements ISandbox {
     }
 
     protected async execute(node: EST.Node, scope: IScope, trace: ITrace): Promise<any> {
+
+        this.putExecuteLog({
+            node,
+            scope,
+            trace,
+        });
 
         if (this.getOption('duration') > 0) {
 
