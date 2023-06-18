@@ -57,7 +57,7 @@ describe('Given <ForOfStatement> Evaluators', (): void => {
             },
         };
 
-        sandbox.when('Identifier', (_: EST.Identifier) => SandList.create([1, 2, 3, 4, 5]));
+        sandbox.when('Identifier', (_: EST.Identifier) => SandList.fromRawList([1, 2, 3, 4, 5]));
 
         await executeWithMock(forOfStatementEvaluator, testNode);
 

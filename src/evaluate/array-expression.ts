@@ -42,5 +42,5 @@ export const arrayExpressionEvaluator: Evaluator<'ArrayExpression'> =
                 }
             }
         }
-        return SandList.create(mapped);
+        return SandList.fromRawList(mapped);
     };

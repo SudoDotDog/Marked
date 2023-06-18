@@ -8,21 +8,31 @@ import { Variable } from "./variable";
 
 export class SandList<T> {
 
-    public static create<T>(list: T[] = []): SandList<T> {
+    public static fromScratch<T>(): SandList<T> {
 
-        return new SandList<T>(list);
+        return new SandList<T>([]);
     }
 
-    private _list: Array<Variable<T>>;
-
-    private constructor(list: T[]) {
+    public static fromRawList<T>(list: T[]): SandList<T> {
 
         const variableList: Array<Variable<T>> = list.map((value: T) => {
 
             return Variable.mutable(value);
         });
 
-        this._list = variableList;
+        return new SandList<T>(variableList);
+    }
+
+    public static fromVariableList<T>(list: Array<Variable<T>>): SandList<T> {
+
+        return new SandList<T>(list);
+    }
+
+    private _list: Array<Variable<T>>;
+
+    private constructor(list: Array<Variable<T>>) {
+
+        this._list = list;
     }
 
     public get list(): T[] {
@@ -72,7 +82,7 @@ export class SandList<T> {
             newList.push(element.clone());
         });
 
-        return SandList.create(newList as any);
+        return SandList.fromVariableList(newList as any);
     }
 
     public toString(): string {

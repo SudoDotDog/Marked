@@ -60,7 +60,7 @@ export const parseNativeToSand = (target: any):
 
     if (Array.isArray(target)) {
 
-        const list: SandList<any> = SandList.create();
+        const list: SandList<any> = SandList.fromScratch();
         for (const element of target) {
             list.push(parseNativeToSand(element));
         }
