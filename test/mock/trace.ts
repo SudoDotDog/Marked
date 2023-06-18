@@ -8,7 +8,6 @@ import * as EST from "estree";
 import { ScriptLocation } from "../../src/declare/script-location";
 import { ITrace } from "../../src/declare/variable";
 import { IMockedClass } from "./node";
-import { BaseSourceMapLocationFinder } from "../../src/source-map/location-finder/base";
 
 export class MockTrace implements ITrace, IMockedClass {
 
@@ -43,7 +42,7 @@ export class MockTrace implements ITrace, IMockedClass {
         throw new Error("[Sudoo-Mock] Should not call this function");
     }
 
-    public ensureLocationFinder(): BaseSourceMapLocationFinder {
+    public ensureLocationFinder(): never {
 
         throw new Error("[Sudoo-Mock] Should not call this function");
     }
