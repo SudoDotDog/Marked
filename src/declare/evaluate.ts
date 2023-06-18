@@ -49,8 +49,13 @@ export interface IMarkedResultSucceed {
 
     exports: IExposed;
     signal: END_SIGNAL.SUCCEED;
+
     rootReturn: MarkedResultSucceedRootReturn;
     comments: ParseESTreeComment[];
+
+    startTime: number;
+    endTime: number;
+    duration: number;
 }
 
 export interface IMarkedResultTerminated {
@@ -58,6 +63,10 @@ export interface IMarkedResultTerminated {
     signal: END_SIGNAL.TERMINATED;
     trace: ITrace;
     comments: ParseESTreeComment[];
+
+    startTime: number;
+    endTime: number;
+    duration: number;
 }
 
 export interface IMarkedResultFailed {
@@ -65,6 +74,10 @@ export interface IMarkedResultFailed {
     error: MarkedError;
     signal: END_SIGNAL.FAILED;
     comments: ParseESTreeComment[];
+
+    startTime: number;
+    endTime: number;
+    duration: number;
 }
 
 export interface IMarkedResultException {
@@ -73,6 +86,10 @@ export interface IMarkedResultException {
     trace: ITrace;
     exception: any;
     comments: ParseESTreeComment[];
+
+    startTime: number;
+    endTime: number;
+    duration: number;
 }
 
 export type MarkedResult =

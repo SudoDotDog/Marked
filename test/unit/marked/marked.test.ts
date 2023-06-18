@@ -10,6 +10,7 @@ import { Marked } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { END_SIGNAL, MarkedResult } from '../../../src/declare/evaluate';
 import { error } from '../../../src/util/error/error';
+import { removeTimeStamps } from '../../util/result';
 
 describe('Given {Marked} Class', (): void => {
 
@@ -20,7 +21,7 @@ describe('Given {Marked} Class', (): void => {
         const value: number = chance.integer();
         const result: MarkedResult = await Marked.runScript(`export default ${value};`);
 
-        expect(result).to.be.deep.equal({
+        expect(removeTimeStamps(result)).to.be.deep.equal({
             exports: {
                 default: value,
                 named: {},
@@ -30,7 +31,7 @@ describe('Given {Marked} Class', (): void => {
                 hasRootReturn: false,
             },
             comments: [],
-        } as MarkedResult);
+        });
     });
 
     it('should be able to handle import', async (): Promise<void> => {
@@ -46,7 +47,7 @@ describe('Given {Marked} Class', (): void => {
             },
         });
 
-        expect(result).to.be.deep.equal({
+        expect(removeTimeStamps(result)).to.be.deep.equal({
             exports: {
                 default: provideValue,
                 named: {},
@@ -56,7 +57,7 @@ describe('Given {Marked} Class', (): void => {
                 hasRootReturn: false,
             },
             comments: [],
-        } as MarkedResult);
+        });
     });
 
     it('should be able to handle inject', async (): Promise<void> => {
@@ -70,7 +71,7 @@ describe('Given {Marked} Class', (): void => {
             },
         });
 
-        expect(result).to.be.deep.equal({
+        expect(removeTimeStamps(result)).to.be.deep.equal({
             exports: {
                 default: injectValue,
                 named: {},
@@ -80,7 +81,7 @@ describe('Given {Marked} Class', (): void => {
                 hasRootReturn: false,
             },
             comments: [],
-        } as MarkedResult);
+        });
     });
 
     it('should be able to handle sandbox options', async (): Promise<void> => {

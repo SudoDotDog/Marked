@@ -226,6 +226,8 @@ export class Sandbox implements ISandbox {
 
         let parseResult: ParseScriptResult;
 
+        const startTime: number = Date.now();
+
         try {
 
             parseResult = await parseScript(script, this._language);
@@ -271,6 +273,8 @@ export class Sandbox implements ISandbox {
                 }
             }
 
+            const endTime: number = Date.now();
+
             if (result instanceof Flag) {
 
                 if (result.isRootReturn()) {
@@ -283,6 +287,9 @@ export class Sandbox implements ISandbox {
                             returnValue: result.getValue(),
                         },
                         comments: parseResult.comments,
+                        startTime,
+                        endTime,
+                        duration: endTime - startTime,
                     };
                 }
 
@@ -293,6 +300,9 @@ export class Sandbox implements ISandbox {
                         trace: result.trace,
                         exception: result.getValue(),
                         comments: parseResult.comments,
+                        startTime,
+                        endTime,
+                        duration: endTime - startTime,
                     };
                 }
 
@@ -302,6 +312,9 @@ export class Sandbox implements ISandbox {
                         signal: END_SIGNAL.FAILED,
                         error: result.getValue(),
                         comments: parseResult.comments,
+                        startTime,
+                        endTime,
+                        duration: endTime - startTime,
                     };
                 }
 
@@ -311,6 +324,9 @@ export class Sandbox implements ISandbox {
                         signal: END_SIGNAL.TERMINATED,
                         trace: result.trace,
                         comments: parseResult.comments,
+                        startTime,
+                        endTime,
+                        duration: endTime - startTime,
                     };
                 }
             }
@@ -322,13 +338,21 @@ export class Sandbox implements ISandbox {
                     hasRootReturn: false,
                 },
                 comments: parseResult.comments,
+                startTime,
+                endTime,
+                duration: endTime - startTime,
             };
         } catch (reason) {
+
+            const endTime: number = Date.now();
 
             return {
                 signal: END_SIGNAL.FAILED,
                 error: reason as any as MarkedError,
                 comments: parseResult.comments,
+                startTime,
+                endTime,
+                duration: endTime - startTime,
             };
         }
     }
