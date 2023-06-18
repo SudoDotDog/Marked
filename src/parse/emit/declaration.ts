@@ -33,15 +33,18 @@ export const emitTypeScriptDeclaration = async (
     const program: TS.Program = TS.createProgram({
         rootNames: [Host_Target_File],
         options: {
+            allowUnusedLabels: true,
+            allowUnreachableCode: true,
+            alwaysStrict: false,
             declaration: true,
             emitDeclarationOnly: true,
             strict: false,
-            alwaysStrict: false,
             removeComments: false,
             skipLibCheck: true,
             skipDefaultLibCheck: true,
             target: TS.ScriptTarget.ESNext,
             newLine: TS.NewLineKind.LineFeed,
+            importsNotUsedAsValues: TS.ImportsNotUsedAsValues.Preserve,
         },
         host,
     });
