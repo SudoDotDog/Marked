@@ -6,7 +6,8 @@
 
 import * as EST from "estree";
 import { MarkedDebugBreakPointController } from "../debug/break-point/controller";
-import { ScopeLabelListener, SCOPE_LABEL_LISTENER_TYPE } from "../variable/declare";
+import { BaseSourceMapLocationFinder } from "../source-map/location-finder/base";
+import { SCOPE_LABEL_LISTENER_TYPE, ScopeLabelListener } from "../variable/declare";
 import { SandMap } from "../variable/sand-map";
 import { Variable } from "../variable/variable";
 import { ScriptLocation } from "./script-location";
@@ -73,6 +74,7 @@ export interface ITrace {
 
     hasBreakPointController(): boolean;
     ensureBreakPointController(): MarkedDebugBreakPointController;
+    ensureLocationFinder(): BaseSourceMapLocationFinder;
 
     getNode(): EST.Node | null;
     getParent(): ITrace | null;
