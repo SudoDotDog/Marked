@@ -21,6 +21,7 @@
   "homepage": "https://marked.sudo.dog",
   "dependencies": {
     "acorn": "8.9.0",
+    "acorn-walk": "^8.2.0",
     "sourcemap-codec": "1.4.8",
     "typescript": "5.1.3"
   },
