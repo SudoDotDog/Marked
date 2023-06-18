@@ -143,6 +143,32 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
         expect(injectExecutes).to.be.deep.equal([0]);
     });
 
+    it('should be able to set static variable in body with self call', async (): Promise<void> => {
+
+        const injectExecutes: number[] = [];
+
+        const sandbox: Sandbox = createSandbox();
+        sandbox.inject('execute', (value: number) => {
+            injectExecutes.push(value);
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class A {`,
+            `static a = 10;`,
+            `static b = this.a + 10;`,
+            `static c = A.b + 10;`,
+            `}`,
+            `execute(A.a);`,
+            `execute(A.b);`,
+            `execute(A.c);`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        expect(injectExecutes).to.be.deep.equal([10, 20, 30]);
+    });
+
     it('should be able to set static variable double blocks', async (): Promise<void> => {
 
         const injectExecutes: number[] = [];

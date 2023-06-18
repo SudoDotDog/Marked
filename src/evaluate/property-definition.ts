@@ -13,6 +13,7 @@ import { error } from "../util/error/error";
 import { Scope } from "../variable/scope";
 import { Trace } from "../variable/trace/trace";
 import { TraceClass } from "../variable/trace/trace-class";
+import { VARIABLE_TYPE } from "../declare/variable";
 
 export const mountPropertyDefinition = (sandbox: ISandbox): void => {
 
@@ -31,11 +32,21 @@ export const propertyDefinitionEvaluation: Evaluator<'PropertyDefinition'> =
         }
 
         const key: string = node.key.name;
-        const value: any = await this.execute(node.value as any, scope, trace);
 
         if (node.static) {
+
+            const subScope: Scope = scope.child();
+            subScope.register(VARIABLE_TYPE.CONSTANT)(trace.sandClass.className, trace.sandClass.staticBody);
+
+            subScope.replaceThis(trace.sandClass.staticBody);
+
+            const value: any = await this.execute(node.value as any, subScope, trace);
+
             trace.sandClass.staticBody.set(key, value);
         } else {
+
+            const value: any = await this.execute(node.value as any, scope, trace);
+
             trace.sandClass.body.set(key, value);
         }
 
