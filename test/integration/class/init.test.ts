@@ -38,4 +38,23 @@ describe('Given Integration Class (Init) Cases', (): void => {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(result.exports.default).to.be.equal(20);
     });
+
+    it('should be able to init class with static value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `class Test{`,
+            `static a = 10;`,
+            `b = Test.a + 10;`,
+            `};`,
+            `const instance = new Test();`,
+            `export default instance.b;`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        expect(result.exports.default).to.be.equal(20);
+    });
 });

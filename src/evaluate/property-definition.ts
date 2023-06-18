@@ -35,9 +35,9 @@ export const propertyDefinitionEvaluation: Evaluator<'PropertyDefinition'> =
 
         const subScope: Scope = scope.child();
 
-        if (node.static) {
+        subScope.register(VARIABLE_TYPE.CONSTANT)(trace.sandClass.className, trace.sandClass.staticBody);
 
-            subScope.register(VARIABLE_TYPE.CONSTANT)(trace.sandClass.className, trace.sandClass.staticBody);
+        if (node.static) {
 
             subScope.replaceThis(trace.sandClass.staticBody);
 
