@@ -4,12 +4,12 @@
  * @description Analyzer
  */
 
-import { Node } from "acorn";
-import { full } from "acorn-walk";
 import { SandboxLanguage } from "../declare/sandbox";
 import { EST_TYPE, IESTreeType } from "../declare/types";
 import { ParseScriptResult } from "../marked/declare";
 import { parseScript } from "../parse/script/parse-script";
+import { findAllESTNodes } from "./find-all";
+import { findOneESTNodeOrNull } from "./find-one";
 
 export class MarkedAnalyzer {
 
@@ -36,27 +36,15 @@ export class MarkedAnalyzer {
         type: T,
     ): IESTreeType[T] | null {
 
-        let result: IESTreeType[T] | null = null;
+        const result = findOneESTNodeOrNull(this._parsed.estree, type);
+        return result;
+    }
 
-        try {
+    public findAllNodes<T extends EST_TYPE>(
+        type: T,
+    ): Array<IESTreeType[T]> {
 
-            full(
-                this._parsed.estree as any,
-                (node: Node, _state: any, nodeType: string) => {
-                    if (nodeType === type) {
-                        result = node as any;
-                        throw new Error('Found');
-                    }
-                },
-            );
-
-            return null;
-        } catch (err) {
-
-            if ((err as any).message === 'Found') {
-                return result;
-            }
-            throw err;
-        }
+        const result = findAllESTNodes(this._parsed.estree, type);
+        return result;
     }
 }
