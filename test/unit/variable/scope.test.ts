@@ -11,7 +11,7 @@ import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import { error } from '../../../src/util/error/error';
 import { Scope } from '../../../src/variable/scope';
 
-describe('Given an Scope class', (): void => {
+describe('Given an {Scope} class', (): void => {
 
     const rootScope = Scope.bridgeScope();
     const chance = new Chance('variable-scope');
