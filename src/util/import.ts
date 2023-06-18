@@ -10,7 +10,7 @@ import { ERROR_CODE } from "../declare/error-code";
 import { END_SIGNAL, MarkedResult } from "../declare/evaluate";
 import { ModuleResolveResult } from "../declare/sandbox";
 import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
-import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL } from "../marked/declare";
+import { EVALUATE_RESOURCE_END_SIGNAL, EvaluateResourceResult } from "../marked/declare";
 import { Sandbox } from "../marked/sandbox";
 import { parseNativeToSand } from "../parse/native-to-sand";
 import { Flag } from "../variable/flag";
@@ -162,7 +162,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
                     importObject[key] = exposed.named[key];
                 });
 
-                const map: SandMap<any> = new SandMap(importObject);
+                const map: SandMap<any> = SandMap.fromRawRecord(importObject);
                 register(target, map);
                 break;
             }

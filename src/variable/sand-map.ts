@@ -9,18 +9,31 @@ import { Variable } from "./variable";
 
 export class SandMap<T> {
 
-    private _map: Map<string, Variable<T>>;
+    public static fromScratch<T>(): SandMap<T> {
 
-    public constructor(obj?: Record<string, any>) {
+        return new SandMap<T>({});
+    }
 
-        this._map = new Map<string, Variable<T>>();
+    public static fromRawRecord<T>(record: Record<string, T>): SandMap<T> {
 
-        if (typeof obj !== 'undefined') {
+        const variablesRecord: Record<string, Variable<T>> = {};
+        Object.keys(record).forEach((key: string) => {
+            variablesRecord[key] = Variable.mutable(record[key]);
+        });
 
-            Object.keys(obj).forEach((key: string) => {
-                this.set(key, obj[key]);
-            });
-        }
+        return new SandMap<T>(variablesRecord);
+    }
+
+    private readonly _map: Map<string, Variable<T>>;
+
+    private constructor(record: Record<string, Variable<T>>) {
+
+        const parsedMap = new Map<string, Variable<T>>();
+        Object.keys(record).forEach((key: string) => {
+            parsedMap.set(key, record[key]);
+        });
+
+        this._map = parsedMap;
     }
 
     public get map(): {
@@ -77,7 +90,7 @@ export class SandMap<T> {
 
     public clone(): SandMap<T> {
 
-        const map: SandMap<T> = new SandMap<T>();
+        const map: SandMap<T> = new SandMap<T>({});
         this._map.forEach((value: Variable<T>, key: string) => {
 
             const actualValue = value.get();

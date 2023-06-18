@@ -25,7 +25,7 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
 
         const nextTrace: Trace = trace.stack(node);
 
-        const map: SandMap<any> = new SandMap();
+        const map: SandMap<any> = SandMap.fromScratch();
         outer: for (const property of node.properties) {
 
             if (property.type === 'SpreadElement') {

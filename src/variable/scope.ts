@@ -147,7 +147,7 @@ export class Scope implements IScope {
 
     public initThis(): Scope {
 
-        this._this = new SandMap<any>();
+        this._this = SandMap.fromScratch();
         return this;
     }
 

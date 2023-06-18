@@ -111,7 +111,7 @@ export const parseNativeToSand = (target: any):
             );
         }
 
-        const map: SandMap<any> = new SandMap();
+        const map: SandMap<any> = SandMap.fromScratch();
         for (const key of Object.keys(target)) {
             map.set(key, parseNativeToSand(target[key]));
         }

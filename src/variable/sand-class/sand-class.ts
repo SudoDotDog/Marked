@@ -31,8 +31,8 @@ export class SandClass {
 
         this._className = className;
 
-        this._map = new SandMap();
-        this._staticMap = new SandMap();
+        this._map = SandMap.fromScratch();
+        this._staticMap = SandMap.fromScratch();
 
         this._superClass = null;
         this._classConstructor = null;

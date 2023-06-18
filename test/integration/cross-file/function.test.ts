@@ -42,4 +42,27 @@ describe('Given Integration Cross File (Function) Cases', (): void => {
 
         expect(result.exports.default).to.be.equal(aValue);
     });
+
+    it('should be able to execute cross file function with namespace import', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createSandbox();
+
+        const aValue: number = chance.integer({ min: 0, max: 100 });
+
+        sandbox.resolver(() => {
+            return {
+                script: `export const func = () => ${aValue};`,
+                scriptLocation: ScriptLocation.create('mock', 'test'),
+            };
+        });
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `import * as Test from 'test';`,
+            `export default Test.func();`,
+        ].join(New_Line_Character));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(aValue);
+    });
 });

@@ -101,7 +101,7 @@ export class MockScope implements IScope, IMockedClass {
 
     public initThis(): MockScope {
 
-        this._this = new SandMap<any>();
+        this._this = SandMap.fromScratch();
         return this;
     }
 

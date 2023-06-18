@@ -56,7 +56,7 @@ describe('Given <ForInStatement> Evaluators', (): void => {
             },
         };
 
-        sandbox.when('Identifier', (_: EST.Identifier) => new SandMap<any>().set(value, undefined));
+        sandbox.when('Identifier', (_: EST.Identifier) => SandMap.fromScratch().set(value, undefined));
 
         await executeWithMock(forInStatementEvaluator, testNode);
 

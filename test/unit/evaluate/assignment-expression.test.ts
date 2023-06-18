@@ -63,7 +63,7 @@ describe('Given <AssignmentExpression> Evaluators', (): void => {
         const objectName: string = chance.string();
         const value: number = chance.integer({ min: 10, max: 50 });
 
-        scope.register(VARIABLE_TYPE.SCOPED)(variableName, new SandMap<number>({
+        scope.register(VARIABLE_TYPE.SCOPED)(variableName, SandMap.fromRawRecord<number>({
             [objectName]: value,
         }));
         const testNode: EST.AssignmentExpression = {
