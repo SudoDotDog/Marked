@@ -24,7 +24,7 @@
     "acorn": "8.10.0",
     "acorn-walk": "8.2.0",
     "sourcemap-codec": "1.4.8",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   },
   "devDependencies": {
     "@sudoo/triforce": "^3.11.0",
