@@ -21,6 +21,10 @@ export const exportDefaultDeclarationEvaluator: Evaluator<'ExportDefaultDeclarat
 
         const nextTrace: Trace = trace.stack(node);
 
-        const content: any = await this.execute(node.declaration, scope, nextTrace);
+        const content: any = await this.execute(
+            node.declaration as EST.Node,
+            scope,
+            nextTrace,
+        );
         scope.exposeDefault(content, trace);
     };
