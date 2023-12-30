@@ -51,7 +51,13 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
                 if (result instanceof Flag) {
 
                     if (!Boolean(result.getValue.bind(result))) {
-                        throw error(ERROR_CODE.UNKNOWN_ERROR, result.toString(), node, trace);
+
+                        throw error(
+                            ERROR_CODE.UNKNOWN_ERROR,
+                            result.getValue(),
+                            node,
+                            trace,
+                        );
                     }
                     if (result.isReturn()) {
                         return result.getValue();
