@@ -1,7 +1,7 @@
 {
   "name": "@sudoo/marked",
   "packageManager": "yarn@4.5.3",
-  "version": "3.21.4",
+  "version": "3.21.5",
   "description": "JavaScript & TypeScript code runner in JavaScript, safe with marked territory, asynchronous",
   "scripts": {
     "test": "jest",

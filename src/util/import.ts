@@ -63,7 +63,10 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
             }
             case "ImportSpecifier": {
 
-                const imported: string = specifier.imported.name;
+                const imported: string = specifier.imported.type === "Literal"
+                    ? await this.execute(specifier.imported, scope, nextTrace)
+                    : specifier.imported.name;
+
                 if (!Boolean(targetModule[imported])) {
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
                 }
@@ -175,7 +178,10 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
                     namedMap.set(namedKey, exposed.named[namedKey]);
                 }
 
-                const imported: string = specifier.imported.name;
+                const imported: string = specifier.imported.type === "Literal"
+                    ? await this.execute(specifier.imported, scope, nextTrace)
+                    : specifier.imported.name;
+
                 if (!namedMap.has(imported)) {
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, imported, node, currentTrace);
                 }

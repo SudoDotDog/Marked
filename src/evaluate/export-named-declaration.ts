@@ -43,10 +43,13 @@ export const exportNamedDeclarationEvaluator: Evaluator<"ExportNamedDeclaration"
 
             for (const specifier of node.specifiers) {
 
-                const id: string = specifier.exported.name;
+                const exported: string = specifier.exported.type === "Literal"
+                    ? await this.execute(specifier.exported, scope, nextTrace)
+                    : specifier.exported.name;
+
                 const value: any = await this.execute(specifier.local, scope, nextTrace);
 
-                scope.expose(id, value, trace);
+                scope.expose(exported, value, trace);
             }
         }
         return;

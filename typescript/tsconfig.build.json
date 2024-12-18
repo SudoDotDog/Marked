@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "lib": [
+            "esnext"
+        ],
+        "outDir": "../app",
+        "downlevelIteration": true,
+        "declaration": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "isolatedModules": true
+    },
+    "include": [
+        "../src/**/*.ts",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
