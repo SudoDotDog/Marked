@@ -5,8 +5,7 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -30,7 +29,7 @@ describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(`first${value}second`);
+        expect(result.exports.default).toEqual(`first${value}second`);
     });
 
     it('should be able to handle template literal - front variable', async (): Promise<void> => {
@@ -44,7 +43,7 @@ describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(`${value}second`);
+        expect(result.exports.default).toEqual(`${value}second`);
     });
 
     it('should be able to handle template literal - end variable', async (): Promise<void> => {
@@ -58,7 +57,7 @@ describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(`first${value}`);
+        expect(result.exports.default).toEqual(`first${value}`);
     });
 
     it('should be able to handle template literal - single variable', async (): Promise<void> => {
@@ -72,7 +71,7 @@ describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(`${value}`);
+        expect(result.exports.default).toEqual(`${value}`);
     });
 
     it('should be able to handle template literal - null', async (): Promise<void> => {
@@ -85,7 +84,7 @@ describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(`first${null}second`);
+        expect(result.exports.default).toEqual(`first${null}second`);
     });
 
     it('should be able to handle template literal - undefined', async (): Promise<void> => {
@@ -98,6 +97,6 @@ describe('Given Sandbox for <TemplateLiteral> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(`first${undefined}second`);
+        expect(result.exports.default).toEqual(`first${undefined}second`);
     });
 });

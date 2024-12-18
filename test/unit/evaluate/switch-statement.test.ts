@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { ScriptLocation } from '../../../src/declare/script-location';
 import { switchCaseEvaluator } from '../../../src/evaluate/switch-case';
@@ -71,6 +70,6 @@ describe('Given <SwitchStatement> Evaluators', (): void => {
 
         await executeWithMock(switchStatementEvaluator, testNode);
 
-        expect(result).to.be.deep.equal([discriminant]);
+        expect(result).toEqual([discriminant]);
     });
 });

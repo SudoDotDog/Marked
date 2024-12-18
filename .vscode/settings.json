@@ -20,8 +20,5 @@
         "triforce",
         "tshook",
         "WMXPY"
-    ],
-    "eslint.options": {
-        "overrideConfigFile": "./typescript/.eslintrc.json"
-    }
+    ]
 }

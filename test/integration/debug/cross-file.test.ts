@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox, ScriptLocation } from '../../../src';
 import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
@@ -60,7 +59,7 @@ describe('Given Integration Debug (Cross File) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(steps).to.be.equal(4);
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(steps).toEqual(4);
     });
 });

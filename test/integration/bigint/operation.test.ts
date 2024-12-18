@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint minus operation', async (): Promise<void> => {
@@ -40,7 +39,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint times operation', async (): Promise<void> => {
@@ -51,7 +50,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint divide operation', async (): Promise<void> => {
@@ -62,7 +61,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint remaining operation', async (): Promise<void> => {
@@ -73,7 +72,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint plus operation with number at back', async (): Promise<void> => {
@@ -84,7 +83,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint plus operation with number at front', async (): Promise<void> => {
@@ -95,7 +94,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint minus operation with number', async (): Promise<void> => {
@@ -106,7 +105,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint times operation with number', async (): Promise<void> => {
@@ -117,7 +116,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint divide operation with number', async (): Promise<void> => {
@@ -128,7 +127,7 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 
     it('should be able to create perform bigint remaining operation with number', async (): Promise<void> => {
@@ -139,6 +138,6 @@ describe('Given Integration BigInt (Operation) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(2));
+        expect(result.exports.default).toEqual(BigInt(2));
     });
 });

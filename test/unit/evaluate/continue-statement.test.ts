@@ -5,20 +5,19 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
-import { ContinueStatementEvaluator } from '../../../src/evaluate/continue-statement';
-import { Flag } from '../../../src/variable/flag';
-import { MockSandbox } from '../../mock/sandbox';
-import { MockScope } from '../../mock/scope';
-import { MockTrace } from '../../mock/trace';
-import { createExecuteWithMock } from '../../util/execute-with-mock';
+import { ContinueStatementEvaluator } from "../../../src/evaluate/continue-statement";
+import { Flag } from "../../../src/variable/flag";
+import { MockSandbox } from "../../mock/sandbox";
+import { MockScope } from "../../mock/scope";
+import { MockTrace } from "../../mock/trace";
+import { createExecuteWithMock } from "../../util/execute-with-mock";
 
-describe('Given <ContinueStatement> Evaluators', (): void => {
+describe("Given <ContinueStatement> Evaluators", (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const chance = new Chance('evaluate-continue-statement');
+    const chance = new Chance("evaluate-continue-statement");
 
     const sandbox: MockSandbox = new MockSandbox();
     const scope: MockScope = new MockScope();
@@ -31,16 +30,16 @@ describe('Given <ContinueStatement> Evaluators', (): void => {
         trace.reset();
     });
 
-    it('should return a continue flag', async (): Promise<void> => {
+    it("should return a continue flag", async (): Promise<void> => {
 
         const testNode: EST.ContinueStatement = {
 
-            type: 'ContinueStatement',
+            type: "ContinueStatement",
         };
 
         const result: Flag = await executeWithMock(ContinueStatementEvaluator, testNode);
 
-        expect(result).to.be.instanceof(Flag);
-        expect(result.isContinue()).to.be.true;
+        expect(result).toBeInstanceOf(Flag);
+        expect(result.isContinue()).toBeTruthy();
     });
 });

@@ -4,8 +4,7 @@
  * @description Declaration
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { emitTypeScriptDeclaration } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 
@@ -23,7 +22,7 @@ describe('Given (Emit Declaration) Parse Methods', (): void => {
 
         const result: string = await emitTypeScriptDeclaration(code);
 
-        expect(result).to.be.equal([
+        expect(result).toEqual([
             `export declare const a: string;`,
         ].join('\n'));
     });

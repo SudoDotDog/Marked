@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { New_Line_Character } from '../../../src/host/declare';
@@ -36,7 +35,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR);
+        expect(result.error.code).toEqual(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR);
     });
 
     it('should be able to handle debug with single debugger - continue', async (): Promise<void> => {
@@ -65,10 +64,10 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(middle).to.be.deep.equal([value1, value2]);
-        expect(debuggerSnapshot).to.be.not.null;
+        expect(middle).toEqual([value1, value2]);
+        expect(debuggerSnapshot).not.toBeNull();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).to.be.deep.equal({
+        expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).toEqual({
             deject: '[Marked Native Function]',
         });
     });
@@ -99,10 +98,10 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         assertTerminatedMarkedResult(result);
 
-        expect(middle).to.be.deep.equal([value1]);
-        expect(debuggerSnapshot).to.be.not.null;
+        expect(middle).toEqual([value1]);
+        expect(debuggerSnapshot).not.toBeNull();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).to.be.deep.equal({
+        expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).toEqual({
             deject: '[Marked Native Function]',
         });
     });
@@ -144,10 +143,10 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         assertTerminatedMarkedResult(result);
 
-        expect(middle).to.be.deep.equal([value1, value2]);
-        expect(debuggerSnapshot).to.be.not.null;
+        expect(middle).toEqual([value1, value2]);
+        expect(debuggerSnapshot).not.toBeNull();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).to.be.deep.equal({
+        expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).toEqual({
             deject: '[Marked Native Function]',
         });
     });

@@ -4,8 +4,7 @@
  * @description Find One
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { MarkedAnalyzer } from '../../../../src/analysis/analyzer';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -24,7 +23,7 @@ describe('Given (Find All) Action of {MarkedAnalyzer} Class', (): void => {
 
         const nodes: EST.ImportDeclaration[] = analyzer.findAllNodes("ImportDeclaration");
 
-        expect(nodes).to.be.lengthOf(1);
-        expect(nodes[0]?.type).to.be.equal('ImportDeclaration');
+        expect(nodes).toHaveLength(1);
+        expect(nodes[0]?.type).toEqual('ImportDeclaration');
     });
 });

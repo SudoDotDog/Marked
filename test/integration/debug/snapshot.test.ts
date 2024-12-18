@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -41,8 +40,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'number',
                 value: value1,
@@ -79,8 +78,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'string',
                 value: value1,
@@ -111,8 +110,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'boolean',
                 value: value1,
@@ -141,8 +140,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'null',
                 value: null,
@@ -171,8 +170,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'undefined',
                 value: undefined,
@@ -201,8 +200,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             C: {
                 type: 'class',
                 value: {
@@ -233,8 +232,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             C: {
                 type: 'class',
                 value: {
@@ -273,8 +272,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'list',
                 value: [1, 2],
@@ -303,8 +302,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value1: {
                 type: 'map',
                 value: {
@@ -336,8 +335,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value: {
                 type: 'regexp',
                 value: /test/ig,
@@ -366,8 +365,8 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getDetailedObject()).to.be.deep.equal({
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getDetailedObject()).toEqual({
             value: {
                 type: 'bigint',
                 value: BigInt(10),
@@ -397,15 +396,15 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
+        expect(debuggerSnapshot).not.toBeNull();
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(debuggerSnapshot.location.startPosition.column).to.be.equal(14);
-        expect(debuggerSnapshot.location.startPosition.line).to.be.equal(1);
+        expect(debuggerSnapshot.location.startPosition.column).toEqual(14);
+        expect(debuggerSnapshot.location.startPosition.line).toEqual(1);
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(debuggerSnapshot.location.endPosition.column).to.be.equal(23);
-        expect(debuggerSnapshot.location.endPosition.line).to.be.equal(1);
+        expect(debuggerSnapshot.location.endPosition.column).toEqual(23);
+        expect(debuggerSnapshot.location.endPosition.line).toEqual(1);
 
-        expect(debuggerSnapshot.sliceCodeClip()).to.be.equal(`debugger;`);
+        expect(debuggerSnapshot.sliceCodeClip()).toEqual(`debugger;`);
     });
 
     it('should be able to get location info from snapshot by stepper', async (): Promise<void> => {
@@ -434,7 +433,7 @@ describe('Given Integration Debug (Snapshot) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.sliceCodeClip()).to.be.equal(`const value=0;`);
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.sliceCodeClip()).toEqual(`const value=0;`);
     });
 });

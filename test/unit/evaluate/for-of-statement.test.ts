@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { forOfStatementEvaluator } from '../../../src/evaluate/for-of-statement';
 import { SandList } from '../../../src/variable/sand-list';
@@ -61,9 +60,9 @@ describe('Given <ForOfStatement> Evaluators', (): void => {
 
         await executeWithMock(forOfStatementEvaluator, testNode);
 
-        expect(sandbox.count).to.be.equal(6);
-        expect(scope.children).to.be.lengthOf(5);
+        expect(sandbox.count).toEqual(6);
+        expect(scope.children).toHaveLength(5);
         scope.children.forEach((child: MockScope, index: number) =>
-            expect((child.rummage('left') as Variable<number>).get()).to.be.equal(index + 1));
+            expect((child.rummage('left') as Variable<number>).get()).toEqual(index + 1));
     });
 });

@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { IMarkedExecuteLog, MarkedLogRecorder, MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -33,7 +32,7 @@ describe('Given Integration Log (Log Recorder) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(recorder).to.be.lengthOf(3);
+        expect(recorder).toHaveLength(3);
     });
 
     it('should be able to record log with multiple log recorder', async (): Promise<void> => {
@@ -51,8 +50,8 @@ describe('Given Integration Log (Log Recorder) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(recorder1).to.be.lengthOf(3);
-        expect(recorder2).to.be.lengthOf(3);
+        expect(recorder1).toHaveLength(3);
+        expect(recorder2).toHaveLength(3);
     });
 
     it('should be able to find logs by line before', async (): Promise<void> => {
@@ -72,7 +71,7 @@ describe('Given Integration Log (Log Recorder) Cases', (): void => {
 
         const logs: IMarkedExecuteLog[] = recorder.findExecuteLogsByLineBefore(2);
 
-        expect(logs).to.be.lengthOf(4);
+        expect(logs).toHaveLength(4);
     });
 
     it('should be able to find logs by line after', async (): Promise<void> => {
@@ -92,7 +91,7 @@ describe('Given Integration Log (Log Recorder) Cases', (): void => {
 
         const logs: IMarkedExecuteLog[] = recorder.findExecuteLogsByLingAfter(2);
 
-        expect(logs).to.be.lengthOf(4);
+        expect(logs).toHaveLength(4);
     });
 
     it('should be able to find logs by line between', async (): Promise<void> => {
@@ -113,6 +112,6 @@ describe('Given Integration Log (Log Recorder) Cases', (): void => {
 
         const logs: IMarkedExecuteLog[] = recorder.findExecuteLogsByLineBetween(2, 3);
 
-        expect(logs).to.be.lengthOf(4);
+        expect(logs).toHaveLength(4);
     });
 });

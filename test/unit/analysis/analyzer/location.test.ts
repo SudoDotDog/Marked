@@ -4,8 +4,7 @@
  * @description Location
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { MarkedAnalyzer } from '../../../../src/analysis/analyzer';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -23,8 +22,8 @@ describe('Given (Location) Action of {MarkedAnalyzer} Class', (): void => {
 
         const node: EST.Literal | null = analyzer.findOneNodeOrNull("Literal");
 
-        expect(node).to.be.not.null;
-        expect(node?.loc).to.be.deep.equal({
+        expect(node).not.toBeNull();
+        expect(node?.loc).toEqual({
             start: {
                 column: 18,
                 line: 1,

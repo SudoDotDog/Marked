@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { forInStatementEvaluator } from '../../../src/evaluate/for-in-statement';
 import { SandMap } from '../../../src/variable/sand-map';
@@ -60,9 +59,9 @@ describe('Given <ForInStatement> Evaluators', (): void => {
 
         await executeWithMock(forInStatementEvaluator, testNode);
 
-        expect(sandbox.count).to.be.equal(2);
+        expect(sandbox.count).toEqual(2);
 
         const variable: Variable<any> = scope.children[0].rummage('left') as Variable<any>;
-        expect(variable.get()).to.be.equal(value);
+        expect(variable.get()).toEqual(value);
     });
 });

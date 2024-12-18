@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, PARSE_ESTREE_COMMENT_TYPE, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -30,10 +29,10 @@ describe('Given Integration Comments (Comments) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.rootReturn.hasRootReturn).to.be.true;
-        expect((result.rootReturn as any).returnValue).to.be.equal(10);
+        expect(result.rootReturn.hasRootReturn).toBeTruthy();
+        expect((result.rootReturn as any).returnValue).toEqual(10);
 
-        expect(result.comments).to.be.deep.equal([{
+        expect(result.comments).toEqual([{
             type: PARSE_ESTREE_COMMENT_TYPE.BLOCK,
             text: ' leading ',
             start: 0,
@@ -51,10 +50,10 @@ describe('Given Integration Comments (Comments) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.rootReturn.hasRootReturn).to.be.true;
-        expect((result.rootReturn as any).returnValue).to.be.equal(10);
+        expect(result.rootReturn.hasRootReturn).toBeTruthy();
+        expect((result.rootReturn as any).returnValue).toEqual(10);
 
-        expect(result.comments).to.be.deep.equal([{
+        expect(result.comments).toEqual([{
             type: PARSE_ESTREE_COMMENT_TYPE.LINE,
             text: ' Tailing',
             start: 11,

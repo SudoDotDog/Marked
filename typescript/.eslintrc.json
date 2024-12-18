@@ -1,9 +1,0 @@
-{
-    "extends": [
-        "@sudoo/eslint-config"
-    ],
-    "rules": {
-        "@typescript-eslint/no-redundant-type-constituents": "off",
-        "camelcase": "off"
-    }
-}

@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -31,6 +30,6 @@ describe('Given Integration BigInt (Native To Sand) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(BigInt(value));
+        expect(result.exports.default).toEqual(BigInt(value));
     });
 });

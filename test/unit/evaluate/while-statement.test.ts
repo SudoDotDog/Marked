@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { whileStatementEvaluator } from '../../../src/evaluate/while-statement';
 import { getBinaryOperation } from '../../../src/operation/binary-expression/operators';
@@ -66,7 +65,7 @@ describe('Given <WhileStatement> Evaluators', (): void => {
 
         await executeWithMock(whileStatementEvaluator, testNode);
 
-        expect(sandbox.count).to.be.equal(16);
-        expect(result).to.be.lengthOf(5);
+        expect(sandbox.count).toEqual(16);
+        expect(result).toHaveLength(5);
     });
 });

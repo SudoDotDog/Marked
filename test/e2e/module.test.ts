@@ -4,8 +4,7 @@
  * @description Module Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -31,8 +30,8 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(middle).to.be.lengthOf(1);
-        expect(middle).to.be.deep.equal([testValue]);
+        expect(middle).toHaveLength(1);
+        expect(middle).toEqual([testValue]);
     });
 
     it('should be able to import literals from declare', async (): Promise<void> => {
@@ -48,8 +47,8 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(middle).to.be.lengthOf(1);
-        expect(middle).to.be.deep.equal([testValue]);
+        expect(middle).toHaveLength(1);
+        expect(middle).toEqual([testValue]);
     });
 
     it('should be able to import literals from namespace', async (): Promise<void> => {
@@ -65,8 +64,8 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(middle).to.be.lengthOf(1);
-        expect(middle).to.be.deep.equal([testValue]);
+        expect(middle).toHaveLength(1);
+        expect(middle).toEqual([testValue]);
     });
 
     it('should be able to export default literals', async (): Promise<void> => {
@@ -80,7 +79,7 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(sandbox.executeScope.exposed.default).to.be.equal(testValue);
+        expect(sandbox.executeScope.exposed.default).toEqual(testValue);
     });
 
     it('should be able to provide objects', async (): Promise<void> => {
@@ -96,7 +95,7 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         await sandbox.evaluate(`import {a} from 'a';export default a.a;`);
 
-        expect(sandbox.executeScope.exposed.default).to.be.equal(testValue);
+        expect(sandbox.executeScope.exposed.default).toEqual(testValue);
     });
 
     it('should be able to provide array', async (): Promise<void> => {
@@ -110,6 +109,6 @@ describe('Given Sandbox for Module evaluators', (): void => {
 
         await sandbox.evaluate(`import {a} from 'a';export default a[0];`);
 
-        expect(sandbox.executeScope.exposed.default).to.be.equal(testValue);
+        expect(sandbox.executeScope.exposed.default).toEqual(testValue);
     });
 });

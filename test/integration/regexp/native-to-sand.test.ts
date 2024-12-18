@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration RegExp (Native To Sand) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(/test/);
+        expect(result.exports.default).toEqual(/test/);
     });
 
     it('should be able to parse native regexp to sand literal regexp with flags', async (): Promise<void> => {
@@ -41,6 +40,6 @@ describe('Given Integration RegExp (Native To Sand) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(/test/ig);
+        expect(result.exports.default).toEqual(/test/ig);
     });
 });

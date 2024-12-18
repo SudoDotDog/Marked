@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration Exception (Try Catch) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.undefined;
+        expect(result.exports.default).toBeUndefined();
     });
 
     it('should be able to handle try catch with assign error', async (): Promise<void> => {
@@ -42,7 +41,7 @@ describe('Given Integration Exception (Try Catch) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(message);
+        expect(result.exports.default).toEqual(message);
     });
 
     it('should be able to handle try catch deep error', async (): Promise<void> => {
@@ -55,6 +54,6 @@ describe('Given Integration Exception (Try Catch) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(message);
+        expect(result.exports.default).toEqual(message);
     });
 });

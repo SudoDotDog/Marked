@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { emitTypeScriptDeclaration } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 
@@ -23,7 +22,7 @@ describe('Given Integration Parse Emit (Declaration) Cases', (): void => {
 
         const javaScriptCode: string = await emitTypeScriptDeclaration(typeScriptCode);
 
-        expect(javaScriptCode).to.be.equal([
+        expect(javaScriptCode).toEqual([
             `export declare const a: string;`,
         ].join(New_Line_Character));
     });

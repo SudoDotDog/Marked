@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { arrayExpressionEvaluator } from '../../../src/evaluate/array-expression';
 import { SandList } from '../../../src/variable/sand-list';
@@ -46,7 +45,7 @@ describe('Given <ArrayExpression> Evaluators', (): void => {
 
         const result: any = await executeWithMock(arrayExpressionEvaluator, testNode);
 
-        expect(result).to.be.instanceof(SandList);
-        expect(result).to.be.lengthOf(2);
+        expect(result).toBeInstanceOf(SandList);
+        expect(result).toHaveLength(2);
     });
 });

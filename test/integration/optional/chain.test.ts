@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { error } from '../../../src/util/error/error';
@@ -31,7 +30,7 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to get result with valid optional chain on undefined value', async (): Promise<void> => {
@@ -42,7 +41,7 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.undefined;
+        expect(result.exports.default).toBeUndefined();
     });
 
     it('should be able to get result with valid optional on null value', async (): Promise<void> => {
@@ -53,7 +52,7 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.undefined;
+        expect(result.exports.default).toBeUndefined();
     });
 
     it('should be able to get error without optional chain', async (): Promise<void> => {
@@ -64,7 +63,7 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED).message);
+        expect(result.error.message).toEqual(error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED).message);
     });
 
     it('should be able to get nested error without optional chain', async (): Promise<void> => {
@@ -75,6 +74,6 @@ describe('Given Integration Optional (Chain) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED).message);
+        expect(result.error.message).toEqual(error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_UNDEFINED).message);
     });
 });

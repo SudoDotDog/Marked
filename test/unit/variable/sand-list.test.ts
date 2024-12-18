@@ -4,8 +4,7 @@
  * @description Sand List
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { SandList } from '../../../src/variable/sand-list';
 import { Variable } from '../../../src/variable/variable';
 
@@ -20,7 +19,7 @@ describe('Given an {SandList} class', (): void => {
         const list: SandList<string> = SandList.fromScratch();
         list.push(value);
 
-        expect(list).to.be.lengthOf(1);
+        expect(list).toHaveLength(1);
     });
 
     it('should be able create raw list', (): void => {
@@ -31,7 +30,7 @@ describe('Given an {SandList} class', (): void => {
             value,
         ]);
 
-        expect(list).to.be.lengthOf(1);
+        expect(list).toHaveLength(1);
     });
 
     it('should be able create variable list', (): void => {
@@ -42,7 +41,7 @@ describe('Given an {SandList} class', (): void => {
             Variable.immutable(value),
         ]);
 
-        expect(list).to.be.lengthOf(1);
+        expect(list).toHaveLength(1);
     });
 
     it('should be able clone sand list', (): void => {
@@ -54,6 +53,6 @@ describe('Given an {SandList} class', (): void => {
         ]);
         const newList = list.clone();
 
-        expect(newList).to.be.lengthOf(1);
+        expect(newList).toHaveLength(1);
     });
 });

@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
+        expect(result.error.code).toEqual(ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
     });
 
     it('should be able to execute map on number', async (): Promise<void> => {
@@ -48,7 +47,7 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([2, 3, 4, 5, 6]);
+        expect(result.exports.default).toEqual([2, 3, 4, 5, 6]);
     });
 
     it('should be able to execute map on string', async (): Promise<void> => {
@@ -63,7 +62,7 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(["11", "21", "31", "41", "51"]);
+        expect(result.exports.default).toEqual(["11", "21", "31", "41", "51"]);
     });
 
     it('should be able to execute map on array', async (): Promise<void> => {
@@ -78,7 +77,7 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([[2], [3], [4], [5], [6]]);
+        expect(result.exports.default).toEqual([[2], [3], [4], [5], [6]]);
     });
 
     it('should be able to execute map on object', async (): Promise<void> => {
@@ -93,7 +92,7 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(
+        expect(result.exports.default).toEqual(
             [{ "a": 2 }, { "a": 3 }, { "a": 4 }, { "a": 5 }, { "a": 6 }],
         );
     });
@@ -111,6 +110,6 @@ describe('Given Integration Member Expression Sand List (Map) Cases', (): void =
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([2, 3, 4, 5, 6]);
+        expect(result.exports.default).toEqual([2, 3, 4, 5, 6]);
     });
 });

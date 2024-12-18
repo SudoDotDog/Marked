@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression SandRegexp (Standard) Cases', (): 
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.true;
+        expect(result.exports.default).toBeTruthy();
     });
 
     it('should be able to execute toString', async (): Promise<void> => {
@@ -47,7 +46,7 @@ describe('Given Integration Member Expression SandRegexp (Standard) Cases', (): 
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('/hello/g');
+        expect(result.exports.default).toEqual('/hello/g');
     });
 
     it('should be able to catch not found error', async (): Promise<void> => {
@@ -61,6 +60,6 @@ describe('Given Integration Member Expression SandRegexp (Standard) Cases', (): 
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_REGEXP);
+        expect(result.error.code).toEqual(ERROR_CODE.ONLY_STRING_AVAILABLE_FOR_REGEXP);
     });
 });

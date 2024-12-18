@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { functionDeclarationEvaluator } from '../../../src/evaluate/function-declaration';
 import { SandFunction } from '../../../src/variable/sand-function/sand-function';
@@ -55,6 +54,6 @@ describe('Given <FunctionDeclaration> Evaluators', (): void => {
 
         const result: any = await executeWithMock(functionDeclarationEvaluator, testNode);
 
-        expect(result).to.be.instanceof(SandFunction);
+        expect(result).toBeInstanceOf(SandFunction);
     });
 });

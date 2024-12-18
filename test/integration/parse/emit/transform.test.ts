@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 
@@ -23,17 +22,17 @@ describe('Given Integration Parse Emit (Transform) Cases', (): void => {
 
         const javaScriptCode: EmitTypeScriptTransformResult = await emitTypeScriptTransform(typeScriptCode);
 
-        expect(javaScriptCode.source).to.be.equal([
+        expect(javaScriptCode.source).toEqual([
             `export const a = 'hello';`,
         ].join(New_Line_Character));
 
-        expect(javaScriptCode.sourceMap).to.be.deep.equal({
+        expect(javaScriptCode.sourceMap).toEqual({
             sourceRoot: '',
             // spell-checker: disable-next-line
             mappings: 'AAAA,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC',
         });
 
-        expect(javaScriptCode.declaration).to.be.equal([
+        expect(javaScriptCode.declaration).toEqual([
             `export declare const a: string;`,
         ].join(New_Line_Character));
     });
@@ -48,19 +47,19 @@ describe('Given Integration Parse Emit (Transform) Cases', (): void => {
 
         const javaScriptCode: EmitTypeScriptTransformResult = await emitTypeScriptTransform(typeScriptCode);
 
-        expect(javaScriptCode.source).to.be.equal([
+        expect(javaScriptCode.source).toEqual([
             `// Start`,
             `export const a = 'hello';`,
             `export const b = 'world';`,
         ].join(New_Line_Character));
 
-        expect(javaScriptCode.sourceMap).to.be.deep.equal({
+        expect(javaScriptCode.sourceMap).toEqual({
             sourceRoot: '',
             // spell-checker: disable-next-line
             mappings: 'AAAA,QAAQ;AACR,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC;AACjC,MAAM,CAAC,MAAM,CAAC,GAAW,OAAO,CAAC',
         });
 
-        expect(javaScriptCode.declaration).to.be.equal([
+        expect(javaScriptCode.declaration).toEqual([
             `export declare const a: string;`,
             `export declare const b: string;`,
         ].join(New_Line_Character));

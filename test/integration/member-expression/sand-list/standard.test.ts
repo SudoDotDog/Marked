@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { assertFailedMarkedResult } from '../../../util/assert-result';
@@ -32,6 +31,6 @@ describe('Given Integration Member Expression Sand List (Standard) Cases', (): v
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST);
+        expect(result.error.code).toEqual(ERROR_CODE.ONLY_NUMBER_AVAILABLE_FOR_LIST);
     });
 });

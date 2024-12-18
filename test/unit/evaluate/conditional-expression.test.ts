@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { conditionalExpressionEvaluator } from '../../../src/evaluate/conditional-expression';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
@@ -45,7 +44,7 @@ describe('Given <ConditionalExpression> Evaluators', (): void => {
 
         const result: any = await executeWithMock(conditionalExpressionEvaluator, testNode);
 
-        expect(result).to.be.equal(true);
+        expect(result).toEqual(true);
     });
 
     it('alternative should be returned of test is false', async (): Promise<void> => {
@@ -62,6 +61,6 @@ describe('Given <ConditionalExpression> Evaluators', (): void => {
 
         const result: any = await executeWithMock(conditionalExpressionEvaluator, testNode);
 
-        expect(result).to.be.equal(false);
+        expect(result).toEqual(false);
     });
 });

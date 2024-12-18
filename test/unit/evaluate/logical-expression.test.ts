@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { logicalExpressionEvaluator } from '../../../src/evaluate/logical-expression';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
@@ -43,7 +42,7 @@ describe('Given <LogicalExpression> Evaluators', (): void => {
         sandbox.when('Literal', mockLLiteralEvaluator);
         const result: any = await executeWithMock(logicalExpressionEvaluator, testNode);
 
-        expect(result).to.be.equal(true);
+        expect(result).toEqual(true);
     });
 
     it('and operator should return operated result', async (): Promise<void> => {
@@ -59,6 +58,6 @@ describe('Given <LogicalExpression> Evaluators', (): void => {
         const result: any = await executeWithMock(logicalExpressionEvaluator, testNode);
 
 
-        expect(result).to.be.equal(false);
+        expect(result).toEqual(false);
     });
 });

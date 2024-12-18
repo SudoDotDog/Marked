@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.LIST_FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION);
+        expect(result.error.code).toEqual(ERROR_CODE.LIST_FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION);
     });
 
     it('should be able to execute filter', async (): Promise<void> => {
@@ -48,7 +47,7 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([4, 5]);
+        expect(result.exports.default).toEqual([4, 5]);
     });
 
     it('should be able to execute filter on list', async (): Promise<void> => {
@@ -63,7 +62,7 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([[4], [5]]);
+        expect(result.exports.default).toEqual([[4], [5]]);
     });
 
     it('should be able to execute filter on map', async (): Promise<void> => {
@@ -78,7 +77,7 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([{ a: 4 }, { a: 5 }]);
+        expect(result.exports.default).toEqual([{ a: 4 }, { a: 5 }]);
     });
 
     it('should be able to execute nested filter', async (): Promise<void> => {
@@ -101,7 +100,7 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(["layer3"]);
+        expect(result.exports.default).toEqual(["layer3"]);
     });
 
     it('should be able to execute filter with additional arguments', async (): Promise<void> => {
@@ -117,6 +116,6 @@ describe('Given Integration Member Expression Sand List (Filter) Cases', (): voi
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([4, 5]);
+        expect(result.exports.default).toEqual([4, 5]);
     });
 });

@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { exportDefaultDeclarationEvaluator } from '../../../src/evaluate/export-default-declaration';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
@@ -43,7 +42,7 @@ describe('Given <ExportDefaultDeclaration> Evaluators', (): void => {
 
         const result: any = await executeWithMock(exportDefaultDeclarationEvaluator, testNode);
 
-        expect(result).to.be.undefined;
-        expect(scope.exposed.default).to.be.equal(testValue);
+        expect(result).toBeUndefined();
+        expect(scope.exposed.default).toEqual(testValue);
     });
 });

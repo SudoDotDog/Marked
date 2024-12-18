@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { error } from '../../../src/util/error/error';
@@ -33,7 +32,7 @@ describe('Given Integration Unnecessary (Async Await) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.UNNECESSARY_AWAIT_EXPRESSION).message);
+        expect(result.error.message).toEqual(error(ERROR_CODE.UNNECESSARY_AWAIT_EXPRESSION).message);
     });
 
     it('should be able to detect unnecessary async expression', async (): Promise<void> => {
@@ -46,6 +45,6 @@ describe('Given Integration Unnecessary (Async Await) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.UNNECESSARY_ASYNC_EXPRESSION).message);
+        expect(result.error.message).toEqual(error(ERROR_CODE.UNNECESSARY_ASYNC_EXPRESSION).message);
     });
 });

@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration Class (Static) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(1);
+        expect(result.exports.default).toEqual(1);
     });
 
     it('should be able to assign override and get static value', async (): Promise<void> => {
@@ -42,6 +41,6 @@ describe('Given Integration Class (Static) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(1);
+        expect(result.exports.default).toEqual(1);
     });
 });

@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
@@ -36,8 +35,8 @@ describe('Given Integration Class (Extends) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.AName).to.be.equal(originName);
-        expect(result.exports.named.BName).to.be.equal(className);
+        expect(result.exports.named.AName).toEqual(originName);
+        expect(result.exports.named.BName).toEqual(className);
     });
 
     it('should be able to get extends super class value', async (): Promise<void> => {
@@ -56,7 +55,7 @@ describe('Given Integration Class (Extends) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to get nested extends super class value', async (): Promise<void> => {
@@ -73,7 +72,7 @@ describe('Given Integration Class (Extends) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to override extends super class value', async (): Promise<void> => {
@@ -94,8 +93,8 @@ describe('Given Integration Class (Extends) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.AValue).to.be.equal(10);
+        expect(result.exports.named.AValue).toEqual(10);
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(result.exports.named.BValue).to.be.equal(20);
+        expect(result.exports.named.BValue).toEqual(20);
     });
 });

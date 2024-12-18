@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { functionExpressionEvaluator } from '../../../src/evaluate/function-expression';
 import { SandFunction } from '../../../src/variable/sand-function/sand-function';
@@ -62,12 +61,12 @@ describe('Given <FunctionExpression> Evaluators', (): void => {
 
         const func: SandFunction = await executeWithMock(functionExpressionEvaluator, testNode);
 
-        expect(func).to.be.instanceof(SandFunction);
+        expect(func).toBeInstanceOf(SandFunction);
 
         func.execute(argument);
-        expect(result).to.be.deep.equal([value]);
+        expect(result).toEqual([value]);
 
         const mockedChildScope: MockScope = scope.children[0];
-        expect((mockedChildScope.constantMap.get(param) as any).get()).to.be.equal(argument);
+        expect((mockedChildScope.constantMap.get(param) as any).get()).toEqual(argument);
     });
 });

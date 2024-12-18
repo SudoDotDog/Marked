@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration Built-In Types (String) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to create string and export its length', async (): Promise<void> => {
@@ -42,6 +41,6 @@ describe('Given Integration Built-In Types (String) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value.length);
+        expect(result.exports.default).toEqual(value.length);
     });
 });

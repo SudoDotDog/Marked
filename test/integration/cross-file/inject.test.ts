@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
 import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
@@ -41,6 +40,6 @@ describe('Given Integration Cross File (Inject) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(aValue + 1);
+        expect(result.exports.default).toEqual(aValue + 1);
     });
 });

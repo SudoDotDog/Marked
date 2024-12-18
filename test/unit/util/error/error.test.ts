@@ -4,7 +4,7 @@
  * @description Error Test
  */
 
-import { expect } from 'chai';
+
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { error } from '../../../../src/util/error/error';
 
@@ -15,7 +15,7 @@ describe('Given an <Error> function', (): void => {
         it('error a error code should return target error', (): void => {
 
             const result = error(ERROR_CODE.UNKNOWN_ERROR);
-            expect(result.message).to.be.equal('1000: Unknown error');
+            expect(result.message).toEqual('1000: Unknown error');
         });
 
         it('a returned arrow should be throwable', (): void => {
@@ -24,7 +24,7 @@ describe('Given an <Error> function', (): void => {
             const throwThis = () => {
                 throw result;
             };
-            expect(throwThis).to.be.throw("9001: Internal error");
+            expect(throwThis).toThrow("9001: Internal error");
         });
     });
 });

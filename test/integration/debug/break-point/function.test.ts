@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugLineBreakPoint, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../../util/assert-result';
@@ -54,17 +53,17 @@ describe('Given Integration Debug (Break Point Function) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(triggered).to.be.equal(2);
-        expect(middle).to.be.deep.equal([1, 1]);
+        expect(triggered).toEqual(2);
+        expect(middle).toEqual([1, 1]);
 
-        expect(debuggerSnapshot).to.be.not.null;
-        expect(debuggerSnapshot.scope.getKeyValueObject()).to.be.deep.equal({});
+        expect(debuggerSnapshot).not.toBeNull();
+        expect(debuggerSnapshot.scope.getKeyValueObject()).toEqual({});
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(debuggerSnapshot.scope.getParent()!.getParent()!.getKeyValueObject()).to.be.deep.equal({
+        expect(debuggerSnapshot.scope.getParent()!.getParent()!.getKeyValueObject()).toEqual({
             test: `[Marked Function]`,
         });
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        expect(debuggerSnapshot.scope.getParent()!.getParent()!.getParent()!.getKeyValueObject()).to.be.deep.equal({
+        expect(debuggerSnapshot.scope.getParent()!.getParent()!.getParent()!.getKeyValueObject()).toEqual({
             deject: `[Marked Native Function]`,
         });
     });

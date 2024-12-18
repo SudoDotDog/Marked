@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { breakStatementEvaluator } from '../../../src/evaluate/break-statement';
 import { Flag } from '../../../src/variable/flag';
@@ -40,7 +39,7 @@ describe('Given <BreakStatement> Evaluators', (): void => {
 
         const result: any = await executeWithMock(breakStatementEvaluator, testNode);
 
-        expect(result).to.be.instanceof(Flag);
-        expect(result.isBreak()).to.be.true;
+        expect(result).toBeInstanceOf(Flag);
+        expect(result.isBreak()).toBeTruthy();
     });
 });

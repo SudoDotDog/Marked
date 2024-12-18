@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { doWhileStatementEvaluator } from '../../../src/evaluate/do-while-statement';
 import { getBinaryOperation } from '../../../src/operation/binary-expression/operators';
@@ -67,8 +66,8 @@ describe('Given <DoWhileStatement> Evaluators', (): void => {
         await executeWithMock(doWhileStatementEvaluator, testNode);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(sandbox.count).to.be.equal(15);
-        expect(trace).to.be.lengthOf(1);
-        expect(result).to.be.lengthOf(5);
+        expect(sandbox.count).toEqual(15);
+        expect(trace).toHaveLength(1);
+        expect(result).toHaveLength(5);
     });
 });

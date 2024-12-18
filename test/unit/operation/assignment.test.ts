@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { getAssignmentOperation } from '../../../src/operation/assignment';
 
@@ -25,7 +24,7 @@ describe('Given Assignment Operation', (): void => {
             const operation: any = getAssignmentOperation(operator);
 
             if (!operation) {
-                expect(operation).to.be.null;
+                expect(operation).toBeNull();
             }
         });
     });

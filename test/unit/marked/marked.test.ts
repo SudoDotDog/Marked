@@ -4,8 +4,7 @@
  * @description Marked Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Marked } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { END_SIGNAL, MarkedResult } from '../../../src/declare/evaluate';
@@ -21,7 +20,7 @@ describe('Given {Marked} Class', (): void => {
         const value: number = chance.integer();
         const result: MarkedResult = await Marked.runScript(`export default ${value};`);
 
-        expect(removeTimeStamps(result)).to.be.deep.equal({
+        expect(removeTimeStamps(result)).toEqual({
             exports: {
                 default: value,
                 named: {},
@@ -47,7 +46,7 @@ describe('Given {Marked} Class', (): void => {
             },
         });
 
-        expect(removeTimeStamps(result)).to.be.deep.equal({
+        expect(removeTimeStamps(result)).toEqual({
             exports: {
                 default: provideValue,
                 named: {},
@@ -71,7 +70,7 @@ describe('Given {Marked} Class', (): void => {
             },
         });
 
-        expect(removeTimeStamps(result)).to.be.deep.equal({
+        expect(removeTimeStamps(result)).toEqual({
             exports: {
                 default: injectValue,
                 named: {},
@@ -92,7 +91,7 @@ describe('Given {Marked} Class', (): void => {
             },
         });
 
-        expect(result.signal).to.be.equal(END_SIGNAL.ABORTED);
-        expect((result as any).error.message).to.be.equal(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
+        expect(result.signal).toEqual(END_SIGNAL.ABORTED);
+        expect((result as any).error.message).toEqual(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
     });
 });

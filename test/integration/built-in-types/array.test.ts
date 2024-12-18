@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration Built-In Types (Array) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([value]);
+        expect(result.exports.default).toEqual([value]);
     });
 
     it('should be able to create array and export its element', async (): Promise<void> => {
@@ -42,7 +41,7 @@ describe('Given Integration Built-In Types (Array) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to create string and export its length', async (): Promise<void> => {
@@ -55,7 +54,7 @@ describe('Given Integration Built-In Types (Array) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(1);
+        expect(result.exports.default).toEqual(1);
     });
 
     it('should be able to map array value', async (): Promise<void> => {
@@ -68,7 +67,7 @@ describe('Given Integration Built-In Types (Array) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([`${value}PLUS`]);
+        expect(result.exports.default).toEqual([`${value}PLUS`]);
     });
 
     it('should be able to filter array value', async (): Promise<void> => {
@@ -79,6 +78,6 @@ describe('Given Integration Built-In Types (Array) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([2, 3, 4]);
+        expect(result.exports.default).toEqual([2, 3, 4]);
     });
 });

@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { formatTypeScriptCode } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 
@@ -23,7 +22,7 @@ describe('Given Integration Parse Format (TypeScript) Cases', (): void => {
 
         const formatted: string = await formatTypeScriptCode(typeScriptCode);
 
-        expect(formatted).to.be.equal([
+        expect(formatted).toEqual([
             `export const a: string = 'hello';`,
         ].join(New_Line_Character));
     });

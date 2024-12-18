@@ -6,23 +6,22 @@
  */
 
 /* eslint-disable max-classes-per-file */
-import { expect } from 'chai';
-import * as Chance from 'chance';
-import { Sandbox } from '../../../src';
-import { ERROR_CODE } from '../../../src/declare/error-code';
-import { error } from '../../../src/util/error/error';
+import Chance from "chance";
+import { Sandbox } from "../../../src";
+import { ERROR_CODE } from "../../../src/declare/error-code";
+import { error } from "../../../src/util/error/error";
 
-describe('Given Integration Sandbox (Inject Class) Cases', (): void => {
+describe("Given Integration Sandbox (Inject Class) Cases", (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const chance = new Chance('integration-sandbox-inject-class');
+    const chance = new Chance("integration-sandbox-inject-class");
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 
-    it('should be able to fail for inject class', async (): Promise<void> => {
+    it("should be able to fail for inject class", async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -30,22 +29,22 @@ describe('Given Integration Sandbox (Inject Class) Cases', (): void => {
 
         const exec = () => {
 
-            sandbox.inject('Test', Test);
+            sandbox.inject("Test", Test);
         };
 
-        expect(exec).to.be.throw(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS).message);
+        expect(exec).toThrow(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS).message);
     });
 
-    it('should be able to inject empty object', async (): Promise<void> => {
+    it("should be able to inject empty object", async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
-        sandbox.inject('object', new Object());
+        sandbox.inject("object", new Object());
 
-        expect(sandbox).to.be.instanceOf(Sandbox);
+        expect(sandbox).toBeInstanceOf(Sandbox);
     });
 
-    it('should be able to fail for inject class instance', async (): Promise<void> => {
+    it("should be able to fail for inject class instance", async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -54,9 +53,9 @@ describe('Given Integration Sandbox (Inject Class) Cases', (): void => {
 
         const exec = () => {
 
-            sandbox.inject('test', test);
+            sandbox.inject("test", test);
         };
 
-        expect(exec).to.be.throw(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE).message);
+        expect(exec).toThrow(error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE).message);
     });
 });

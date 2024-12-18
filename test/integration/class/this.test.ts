@@ -6,8 +6,7 @@
  */
 
 /* eslint-disable max-classes-per-file */
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -30,7 +29,7 @@ describe('Given Integration Class (This) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to get this property from external class method', async (): Promise<void> => {
@@ -56,7 +55,7 @@ describe('Given Integration Class (This) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(a.value);
+        expect(result.exports.default).toEqual(a.value);
     });
 
     it('should be able to get this property from external class method', async (): Promise<void> => {
@@ -79,7 +78,7 @@ describe('Given Integration Class (This) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(typeof result.error.message).to.be.equal('string');
+        expect(typeof result.error.message).toEqual('string');
     });
 
     it('should be able to get this property from class standalone method', async (): Promise<void> => {
@@ -92,6 +91,6 @@ describe('Given Integration Class (This) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 });

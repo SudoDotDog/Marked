@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('hello world');
+        expect(result.exports.default).toEqual('hello world');
     });
 
     it('should be able to execute endsWith', async (): Promise<void> => {
@@ -47,7 +46,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.true;
+        expect(result.exports.default).toBeTruthy();
     });
 
     it('should be able to execute includes', async (): Promise<void> => {
@@ -61,7 +60,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.true;
+        expect(result.exports.default).toBeTruthy();
     });
 
     it('should be able to execute pad end', async (): Promise<void> => {
@@ -75,7 +74,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('hello_____');
+        expect(result.exports.default).toEqual('hello_____');
     });
 
     it('should be able to execute pad start', async (): Promise<void> => {
@@ -89,7 +88,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('_____hello');
+        expect(result.exports.default).toEqual('_____hello');
     });
 
     it('should be able to execute repeat', async (): Promise<void> => {
@@ -103,7 +102,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('hello_hello_hello_');
+        expect(result.exports.default).toEqual('hello_hello_hello_');
     });
 
     it('should be able to execute replace', async (): Promise<void> => {
@@ -117,7 +116,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('helloworld');
+        expect(result.exports.default).toEqual('helloworld');
     });
 
     it('should be able to execute slice', async (): Promise<void> => {
@@ -131,7 +130,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('el');
+        expect(result.exports.default).toEqual('el');
     });
 
     it('should be able to execute split', async (): Promise<void> => {
@@ -145,7 +144,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal(['h', 'e', 'l', 'l', 'o']);
+        expect(result.exports.default).toEqual(['h', 'e', 'l', 'l', 'o']);
     });
 
     it('should be able to execute substring', async (): Promise<void> => {
@@ -159,7 +158,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('el');
+        expect(result.exports.default).toEqual('el');
     });
 
     it('should be able to execute startsWith', async (): Promise<void> => {
@@ -173,7 +172,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.true;
+        expect(result.exports.default).toBeTruthy();
     });
 
     it('should be able to execute toLowerCase', async (): Promise<void> => {
@@ -187,7 +186,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('hello');
+        expect(result.exports.default).toEqual('hello');
     });
 
     it('should be able to execute toUpperCase', async (): Promise<void> => {
@@ -201,7 +200,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('HELLO');
+        expect(result.exports.default).toEqual('HELLO');
     });
 
     it('should be able to execute toString', async (): Promise<void> => {
@@ -215,7 +214,7 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('hello');
+        expect(result.exports.default).toEqual('hello');
     });
 
     it('should be able to catch not found error', async (): Promise<void> => {
@@ -229,6 +228,6 @@ describe('Given Integration Member Expression String (Standard) Cases', (): void
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.STRING_METHOD_NOT_FOUND);
+        expect(result.error.code).toEqual(ERROR_CODE.STRING_METHOD_NOT_FOUND);
     });
 });

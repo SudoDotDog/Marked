@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { VARIABLE_TYPE } from '../../../src/declare/variable';
@@ -54,7 +53,7 @@ describe('Given <AssignmentExpression> Evaluators', (): void => {
         await executeWithMock(assignmentExpressionEvaluator, testNode);
 
         const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
-        expect(variable.get()).to.be.equal(value);
+        expect(variable.get()).toEqual(value);
     });
 
     it('should be able to assign member', async (): Promise<void> => {
@@ -90,9 +89,9 @@ describe('Given <AssignmentExpression> Evaluators', (): void => {
 
         const result = await executeWithMock(assignmentExpressionEvaluator, testNode);
 
-        expect(result).to.be.equal(value);
+        expect(result).toEqual(value);
 
         const variable: Variable<any> = scope.rummage(variableName) as Variable<any>;
-        expect((variable as Variable<SandMap<number>>).get().get(objectName)).to.be.equal(value + value);
+        expect((variable as Variable<SandMap<number>>).get().get(objectName)).toEqual(value + value);
     });
 });

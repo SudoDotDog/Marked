@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression Boolean (Standard) Cases', (): voi
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('true');
+        expect(result.exports.default).toEqual('true');
     });
 
     it('should be able to catch not found error', async (): Promise<void> => {
@@ -47,6 +46,6 @@ describe('Given Integration Member Expression Boolean (Standard) Cases', (): voi
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.BOOLEAN_METHOD_NOT_FOUND);
+        expect(result.error.code).toEqual(ERROR_CODE.BOOLEAN_METHOD_NOT_FOUND);
     });
 });

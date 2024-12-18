@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(className);
+        expect(result.exports.default).toEqual(className);
     });
 
     it('should be able to get typeof class declaration', async (): Promise<void> => {
@@ -40,7 +39,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('class');
+        expect(result.exports.default).toEqual('class');
     });
 
     it('should be able to get typeof class instance', async (): Promise<void> => {
@@ -51,7 +50,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('class-instance');
+        expect(result.exports.default).toEqual('class-instance');
     });
 
     it('should be able to create a class variable', async (): Promise<void> => {
@@ -64,7 +63,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to create a class function', async (): Promise<void> => {
@@ -77,7 +76,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to call mutate variable method', async (): Promise<void> => {
@@ -102,8 +101,8 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.valueResult).to.be.equal(1);
-        expect(result.exports.named.getValueResult).to.be.equal(1);
+        expect(result.exports.named.valueResult).toEqual(1);
+        expect(result.exports.named.getValueResult).toEqual(1);
     });
 
     it('should be able to call mutate variable method with nested map', async (): Promise<void> => {
@@ -128,7 +127,7 @@ describe('Given Integration Class (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.valueResult).to.be.equal(1);
-        expect(result.exports.named.getValueResult).to.be.equal(1);
+        expect(result.exports.named.valueResult).toEqual(1);
+        expect(result.exports.named.getValueResult).toEqual(1);
     });
 });

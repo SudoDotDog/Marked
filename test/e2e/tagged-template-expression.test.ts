@@ -5,8 +5,7 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -33,7 +32,7 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             args: ['', '1', '2'],
             values: ['A', 'B'],
         });
@@ -51,7 +50,7 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             args: ['', ''],
             values: ['A'],
         });
@@ -68,7 +67,7 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             args: ['123'],
             values: [],
         });
@@ -89,7 +88,7 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             args: ['', '1', '2'],
             values: ['A', 'B'],
         });
@@ -111,7 +110,7 @@ describe('Given Sandbox for <TaggedTemplateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             additional: 'additional',
             args: ['', '1', '2'],
             values: ['A', 'B'],

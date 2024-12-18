@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression Number (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('1.23');
+        expect(result.exports.default).toEqual('1.23');
     });
 
     it('should be able to execute toPrecision', async (): Promise<void> => {
@@ -47,7 +46,7 @@ describe('Given Integration Member Expression Number (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('1.2');
+        expect(result.exports.default).toEqual('1.2');
     });
 
     it('should be able to execute toString', async (): Promise<void> => {
@@ -61,7 +60,7 @@ describe('Given Integration Member Expression Number (Standard) Cases', (): void
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('1.23456789');
+        expect(result.exports.default).toEqual('1.23456789');
     });
 
     it('should be able to catch not found error', async (): Promise<void> => {
@@ -75,6 +74,6 @@ describe('Given Integration Member Expression Number (Standard) Cases', (): void
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.NUMBER_METHOD_NOT_FOUND);
+        expect(result.error.code).toEqual(ERROR_CODE.NUMBER_METHOD_NOT_FOUND);
     });
 });

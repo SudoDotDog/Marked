@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
 import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
@@ -39,8 +38,8 @@ describe('Given Integration Cross File (Export) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
-        expect(Object.keys(result.exports.named)).to.be.deep.equal([]);
+        expect(result.exports.default).toEqual(value);
+        expect(Object.keys(result.exports.named)).toEqual([]);
     });
 
     it('should be able to only export value from script file', async (): Promise<void> => {
@@ -62,7 +61,7 @@ describe('Given Integration Cross File (Export) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named).to.be.deep.equal({
+        expect(result.exports.named).toEqual({
             value,
         });
     });
@@ -86,7 +85,7 @@ describe('Given Integration Cross File (Export) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named).to.be.deep.equal({
+        expect(result.exports.named).toEqual({
             crossFile: value,
         });
     });

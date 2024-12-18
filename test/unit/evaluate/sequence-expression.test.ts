@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { VARIABLE_TYPE } from '../../../src/declare/variable';
 import { sequenceExpressionEvaluator } from '../../../src/evaluate/sequence-expression';
@@ -50,11 +49,11 @@ describe('Given <SequenceStatement> Evaluators', (): void => {
 
         const result: any = await executeWithMock(sequenceExpressionEvaluator, testNode);
 
-        expect(result).to.be.equal(10);
-        expect(sandbox.count).to.be.equal(2);
-        expect(trace).to.be.lengthOf(1);
+        expect(result).toEqual(10);
+        expect(sandbox.count).toEqual(2);
+        expect(trace).toHaveLength(1);
 
         const variable: Variable<any> = scope.rummage('hello') as Variable<any>;
-        expect(variable.get()).to.be.equal(value);
+        expect(variable.get()).toEqual(value);
     });
 });

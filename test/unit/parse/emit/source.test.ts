@@ -4,8 +4,7 @@
  * @description Source
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { emitTypeScriptSource } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 
@@ -22,7 +21,7 @@ describe('Given (Emit Source) Parse Methods', (): void => {
 
         const result: string = await emitTypeScriptSource(code);
 
-        expect(result).to.be.equal(code);
+        expect(result).toEqual(code);
     });
 
     it('should be able to emit source - module with slash', async (): Promise<void> => {
@@ -34,6 +33,6 @@ describe('Given (Emit Source) Parse Methods', (): void => {
 
         const result: string = await emitTypeScriptSource(code);
 
-        expect(result).to.be.equal(code);
+        expect(result).toEqual(code);
     });
 });

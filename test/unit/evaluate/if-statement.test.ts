@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { ifStatementEvaluator } from '../../../src/evaluate/if-statement';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
@@ -51,7 +50,7 @@ describe('Given <IfStatement> Evaluators', (): void => {
 
         await executeWithMock(ifStatementEvaluator, testNode);
 
-        expect(result).to.be.deep.equal([value]);
+        expect(result).toEqual([value]);
     });
 
     it('should be able to handle if statement - sad path', async (): Promise<void> => {
@@ -80,6 +79,6 @@ describe('Given <IfStatement> Evaluators', (): void => {
 
         await executeWithMock(ifStatementEvaluator, testNode);
 
-        expect(result).to.be.deep.equal([sadValue]);
+        expect(result).toEqual([sadValue]);
     });
 });

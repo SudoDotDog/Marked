@@ -5,8 +5,7 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 
 describe('Given Sandbox for <FunctionExpression> Cases', (): void => {
@@ -28,8 +27,8 @@ describe('Given Sandbox for <FunctionExpression> Cases', (): void => {
 
         await sandbox.evaluate(`const a = function(){return ${value}};deject(a());`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal(value);
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual(value);
     });
 
 
@@ -43,7 +42,7 @@ describe('Given Sandbox for <FunctionExpression> Cases', (): void => {
 
         await sandbox.evaluate(`const a = function(value){return value};deject(a(${value}));`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal(value);
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual(value);
     });
 });

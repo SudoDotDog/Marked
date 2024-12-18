@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { returnStatementEvaluator } from '../../../src/evaluate/return-statement';
 import { Flag } from '../../../src/variable/flag';
@@ -40,8 +39,8 @@ describe('Given <ReturnStatement> Evaluators', (): void => {
 
         const result: Flag = await executeWithMock(returnStatementEvaluator, testNode);
 
-        expect(result).to.be.instanceof(Flag);
-        expect(result.isReturn()).to.be.true;
+        expect(result).toBeInstanceOf(Flag);
+        expect(result.isReturn()).toBeTruthy();
     });
 
     it('should be able to contain value with return flag', async (): Promise<void> => {
@@ -58,8 +57,8 @@ describe('Given <ReturnStatement> Evaluators', (): void => {
 
         const result: Flag = await executeWithMock(returnStatementEvaluator, testNode);
 
-        expect(result).to.be.instanceof(Flag);
-        expect(result.isReturn()).to.be.true;
-        expect(result.getValue()).to.be.equal(payload);
+        expect(result).toBeInstanceOf(Flag);
+        expect(result.isReturn()).toBeTruthy();
+        expect(result.getValue()).toEqual(payload);
     });
 });

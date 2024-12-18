@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { New_Line_Character } from '../../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../../util/assert-result';
@@ -32,6 +31,6 @@ describe('Given Integration Member Expression String (Index) Cases', (): void =>
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('h');
+        expect(result.exports.default).toEqual('h');
     });
 });

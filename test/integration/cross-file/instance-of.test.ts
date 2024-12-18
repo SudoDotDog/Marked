@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
 import { New_Line_Character } from '../../../src/host/declare';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
@@ -39,7 +38,7 @@ describe('Given Integration Cross File (Instance Of) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.true;
+        expect(result.exports.default).toBeTruthy();
     });
 
     it('should be able to execute cross file instance of operation - cross two files', async (): Promise<void> => {
@@ -79,6 +78,6 @@ describe('Given Integration Cross File (Instance Of) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.true;
+        expect(result.exports.default).toBeTruthy();
     });
 });

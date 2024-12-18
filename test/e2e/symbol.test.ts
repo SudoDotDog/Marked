@@ -4,8 +4,7 @@
  * @description Symbol Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 
 describe('Given Sandbox for Symbol evaluators', (): void => {
@@ -29,8 +28,8 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
             sandbox.inject('loop', [loopStart, loopStart + 1, loopStart + 2]);
 
             await sandbox.evaluate(`for(const a of loop){deject(a);break;}`);
-            expect(result).to.be.lengthOf(1);
-            expect(result).to.be.deep.equal([loopStart]);
+            expect(result).toHaveLength(1);
+            expect(result).toEqual([loopStart]);
         });
 
         it('continue should skip rest of loop', async (): Promise<void> => {
@@ -43,8 +42,8 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
             sandbox.inject('loop', [loopStart, loopStart + 1, loopStart + 2]);
 
             await sandbox.evaluate(`for(const a of loop){deject(a);continue;deject(a);}`);
-            expect(result).to.be.lengthOf(3);
-            expect(result).to.be.deep.equal([loopStart, loopStart + 1, loopStart + 2]);
+            expect(result).toHaveLength(3);
+            expect(result).toEqual([loopStart, loopStart + 1, loopStart + 2]);
         });
 
         it('return should break loop and return value', async (): Promise<void> => {
@@ -58,9 +57,9 @@ describe('Given Sandbox for Symbol evaluators', (): void => {
 
             await sandbox.evaluate(`export default (() => {for(const a of loop){deject(a);return a;}})()`);
 
-            expect(result).to.be.lengthOf(1);
-            expect(result).to.be.deep.equal([loopStart]);
-            expect(sandbox.executeScope.exposed.default).to.be.equal(loopStart);
+            expect(result).toHaveLength(1);
+            expect(result).toEqual([loopStart]);
+            expect(sandbox.executeScope.exposed.default).toEqual(loopStart);
         });
     });
 });

@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { binaryExpressionEvaluator } from '../../../src/evaluate/binary-expression';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
@@ -45,6 +44,6 @@ describe('Given <BinaryExpression> Evaluators', (): void => {
         const result: any = await executeWithMock(binaryExpressionEvaluator, testNode);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(result).to.be.equal(25);
+        expect(result).toEqual(25);
     });
 });

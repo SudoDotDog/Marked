@@ -5,8 +5,7 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 
 describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
@@ -28,8 +27,8 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(!${value.toString()});`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal(!value);
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual(!value);
     });
 
     it('should be able to handle typeof operation - string', async (): Promise<void> => {
@@ -42,8 +41,8 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(typeof "${value}");`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal('string');
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual('string');
     });
 
     it('should be able to handle typeof operation - function', async (): Promise<void> => {
@@ -56,8 +55,8 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(typeof (() => "${value}"));`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal('function');
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual('function');
     });
 
     it('should be able to handle typeof operation - object', async (): Promise<void> => {
@@ -70,8 +69,8 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(typeof {key: "${value}"});`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal('object');
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual('object');
     });
 
     it('should be able to handle typeof operation - list', async (): Promise<void> => {
@@ -84,8 +83,8 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(typeof ["${value}"]);`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal('array');
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual('array');
     });
 
     it('should be able to handle typeof operation - null', async (): Promise<void> => {
@@ -97,8 +96,8 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(typeof null);`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal('null');
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual('null');
     });
 
     it('should be able to handle typeof operation - undefined', async (): Promise<void> => {
@@ -110,7 +109,7 @@ describe('Given Sandbox for <UnaryExpression> Cases', (): void => {
 
         await sandbox.evaluate(`deject(typeof undefined);`);
 
-        expect(result).to.be.lengthOf(1);
-        expect(result[0]).to.be.equal('undefined');
+        expect(result).toHaveLength(1);
+        expect(result[0]).toEqual('undefined');
     });
 });

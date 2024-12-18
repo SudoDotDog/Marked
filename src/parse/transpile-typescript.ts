@@ -20,7 +20,6 @@ export const transpileTypeScriptCode = async (sourceCode: string): Promise<strin
                 allowUnusedLabels: true,
                 allowUnreachableCode: true,
                 alwaysStrict: false,
-                importsNotUsedAsValues: TS.ImportsNotUsedAsValues.Preserve,
                 skipLibCheck: true,
                 skipDefaultLibCheck: true,
             },

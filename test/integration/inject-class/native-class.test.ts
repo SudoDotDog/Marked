@@ -6,8 +6,7 @@
  */
 
 /* eslint-disable max-classes-per-file */
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedNativeClass, MarkedNativeClassInstance, MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -50,8 +49,8 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.member).to.be.equal(memberResult);
-        expect(result.exports.named.native).to.be.equal(nativeResult);
+        expect(result.exports.named.member).toEqual(memberResult);
+        expect(result.exports.named.native).toEqual(nativeResult);
     });
 
     it('should be able to inject native class with static value', async (): Promise<void> => {
@@ -73,7 +72,7 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(staticResult);
+        expect(result.exports.default).toEqual(staticResult);
     });
 
     it('should be able to inject native class with static method', async (): Promise<void> => {
@@ -95,7 +94,7 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(staticResult);
+        expect(result.exports.default).toEqual(staticResult);
     });
 
     it('should be able to inject native class with constructor value', async (): Promise<void> => {
@@ -135,8 +134,8 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.member).to.be.equal(memberResult);
-        expect(result.exports.named.native).to.be.equal(nativeResult);
+        expect(result.exports.named.member).toEqual(memberResult);
+        expect(result.exports.named.native).toEqual(nativeResult);
     });
 
     it('should be able to inject native class with constructor with map and array', async (): Promise<void> => {
@@ -186,9 +185,9 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.value1).to.be.deep.equal([value1Result]);
-        expect(result.exports.named.value2).to.be.deep.equal({ test: value2Result });
-        expect(result.exports.named.native).to.be.equal(nativeResult);
+        expect(result.exports.named.value1).toEqual([value1Result]);
+        expect(result.exports.named.value2).toEqual({ test: value2Result });
+        expect(result.exports.named.native).toEqual(nativeResult);
     });
 
     it('should be able to inject native class with export mapped member function', async (): Promise<void> => {
@@ -223,9 +222,9 @@ describe('Given Integration Inject Class (Native Class) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.named.member).to.be.deep.equal({
+        expect(result.exports.named.member).toEqual({
             test: memberResult,
         });
-        expect(result.exports.named.native).to.be.equal(nativeResult);
+        expect(result.exports.named.native).toEqual(nativeResult);
     });
 });

@@ -4,8 +4,7 @@
  * @description TypeScript
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { New_Line_Character } from '../../../../src/host/declare';
 import { formatTypeScriptCode } from '../../../../src/parse/format/typescript';
 
@@ -22,7 +21,7 @@ describe('Given (Format TypeScript) Parse Methods', (): void => {
 
         const result: string = await formatTypeScriptCode(code);
 
-        expect(result).to.be.equal(code);
+        expect(result).toEqual(code);
     });
 
     it('should be able to format slashed import ts code', async (): Promise<void> => {
@@ -34,7 +33,7 @@ describe('Given (Format TypeScript) Parse Methods', (): void => {
 
         const result: string = await formatTypeScriptCode(code);
 
-        expect(result).to.be.equal(code);
+        expect(result).toEqual(code);
     });
 
     it('should be able to format incorrect ts code', async (): Promise<void> => {
@@ -53,6 +52,6 @@ describe('Given (Format TypeScript) Parse Methods', (): void => {
 
         const result: string = await formatTypeScriptCode(code);
 
-        expect(result).to.be.equal(fixedCode);
+        expect(result).toEqual(fixedCode);
     });
 });

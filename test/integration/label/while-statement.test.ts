@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -36,7 +35,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(3);
+        expect(result.exports.default).toEqual(3);
     });
 
     it('should be able to break labeled for while loop', async (): Promise<void> => {
@@ -56,7 +55,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(3);
+        expect(result.exports.default).toEqual(3);
     });
 
     it('should be able to break labeled while loop with nested stack', async (): Promise<void> => {
@@ -84,7 +83,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to break labeled stacked while loop', async (): Promise<void> => {
@@ -108,7 +107,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to continue without labeled while loop', async (): Promise<void> => {
@@ -128,7 +127,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to continue labeled while loop', async (): Promise<void> => {
@@ -148,7 +147,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to continue labeled stacked with nested stack while loop', async (): Promise<void> => {
@@ -174,7 +173,7 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to continue labeled stacked while loop', async (): Promise<void> => {
@@ -196,6 +195,6 @@ describe('Given Integration Label (While Statement) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 });

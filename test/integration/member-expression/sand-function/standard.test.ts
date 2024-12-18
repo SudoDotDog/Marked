@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression Sand Function (Standard) Cases', (
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal('[Marked Function]');
+        expect(result.exports.default).toEqual('[Marked Function]');
     });
 
     it('should be able to catch not found error', async (): Promise<void> => {
@@ -47,6 +46,6 @@ describe('Given Integration Member Expression Sand Function (Standard) Cases', (
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.FUNCTION_METHOD_NOT_FOUND);
+        expect(result.error.code).toEqual(ERROR_CODE.FUNCTION_METHOD_NOT_FOUND);
     });
 });

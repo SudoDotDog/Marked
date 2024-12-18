@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { emitTypeScriptTransform, EmitTypeScriptTransformResult, New_Line_Character } from '../../../src';
 import { SegmentSourceMapLocationFinder } from '../../../src/source-map/location-finder/segment';
 
@@ -28,6 +27,6 @@ describe('Given Integration Source Map (Simple) Cases', (): void => {
         expect(locationFinder.findSourceLocation({
             line: 1,
             column: 0,
-        }, null as any).line).to.be.equal(1);
+        }, null as any).line).toEqual(1);
     });
 });

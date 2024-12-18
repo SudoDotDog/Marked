@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox, ScriptLocation } from '../../../src';
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { New_Line_Character } from '../../../src/host/declare';
@@ -68,7 +67,7 @@ describe('Given Integration Cross File (Cycle) Cases', (): void => {
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.CYCLED_IMPORT).message);
-        expect(result.error.info).to.be.equal("source: [mock://b], target: [mock://a]");
+        expect(result.error.message).toEqual(error(ERROR_CODE.CYCLED_IMPORT).message);
+        expect(result.error.info).toEqual("source: [mock://b], target: [mock://a]");
     });
 });

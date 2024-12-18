@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -40,7 +39,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal(['A', 'B']);
+        expect(injectExecutes).toEqual(['A', 'B']);
     });
 
     it('should be able to execute as class declaration', async (): Promise<void> => {
@@ -65,7 +64,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([10, 0]);
+        expect(injectExecutes).toEqual([10, 0]);
     });
 
     it('should be able to execute in variable declaration and update within static block', async (): Promise<void> => {
@@ -92,7 +91,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([0, 10]);
+        expect(injectExecutes).toEqual([0, 10]);
     });
 
     it('should be able to set static variable', async (): Promise<void> => {
@@ -116,7 +115,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([0]);
+        expect(injectExecutes).toEqual([0]);
     });
 
     it('should be able to set static variable with self call', async (): Promise<void> => {
@@ -140,7 +139,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([0]);
+        expect(injectExecutes).toEqual([0]);
     });
 
     it('should be able to set static variable in body with self call', async (): Promise<void> => {
@@ -166,7 +165,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(injectExecutes).to.be.deep.equal([10, 20, 30]);
+        expect(injectExecutes).toEqual([10, 20, 30]);
     });
 
     it('should be able to set static variable double blocks', async (): Promise<void> => {
@@ -193,7 +192,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([10]);
+        expect(injectExecutes).toEqual([10]);
     });
 
     it('should be able to set static variable reverse orders', async (): Promise<void> => {
@@ -217,7 +216,7 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([10]);
+        expect(injectExecutes).toEqual([10]);
     });
 
     it('should be able to set static variable non-declaration', async (): Promise<void> => {
@@ -240,6 +239,6 @@ describe('Given Integration Static Initialization (Simple) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(injectExecutes).to.be.deep.equal([0]);
+        expect(injectExecutes).toEqual([0]);
     });
 });

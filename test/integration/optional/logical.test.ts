@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -30,7 +29,7 @@ describe('Given Integration Optional (Logical) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to get fallback result with true chain logical operator', async (): Promise<void> => {
@@ -44,7 +43,7 @@ describe('Given Integration Optional (Logical) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(fallback);
+        expect(result.exports.default).toEqual(fallback);
     });
 
     it('should be able to get result with true optional logical operator', async (): Promise<void> => {
@@ -58,7 +57,7 @@ describe('Given Integration Optional (Logical) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to get fallback result with true optional logical operator', async (): Promise<void> => {
@@ -72,6 +71,6 @@ describe('Given Integration Optional (Logical) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(fallback);
+        expect(result.exports.default).toEqual(fallback);
     });
 });

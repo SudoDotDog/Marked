@@ -5,8 +5,7 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -29,7 +28,7 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([value]);
+        expect(result.exports.default).toEqual([value]);
     });
 
     it('should be able to handle array init with multiple spread element', async (): Promise<void> => {
@@ -44,7 +43,7 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([value1, value2, value3]);
+        expect(result.exports.default).toEqual([value1, value2, value3]);
     });
 
     it('should be able to handle array init with single spread element - injected list', async (): Promise<void> => {
@@ -58,7 +57,7 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal([value]);
+        expect(result.exports.default).toEqual([value]);
     });
 
     it('should be able to handle object init with single spread element', async (): Promise<void> => {
@@ -72,7 +71,7 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             [key]: value,
         });
     });
@@ -91,7 +90,7 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             [key1]: value1,
             [key2]: value2,
         });
@@ -112,7 +111,7 @@ describe('Given Sandbox for <SpreadElement> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({
+        expect(result.exports.default).toEqual({
             [key]: value,
         });
     });

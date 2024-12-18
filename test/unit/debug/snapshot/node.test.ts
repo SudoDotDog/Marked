@@ -4,8 +4,7 @@
  * @description Node
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedDebugSnapshotNode } from '../../../../src/debug/snapshot/node';
 
 describe('Given {MarkedDebugSnapshotNode} Class', (): void => {
@@ -21,9 +20,9 @@ describe('Given {MarkedDebugSnapshotNode} Class', (): void => {
             name: identifierName,
         });
 
-        expect(node.type).to.be.equal('Identifier');
-        expect(node.getLeadComments()).to.be.deep.equal([]);
-        expect(node.getTailComments()).to.be.deep.equal([]);
+        expect(node.type).toEqual('Identifier');
+        expect(node.getLeadComments()).toEqual([]);
+        expect(node.getTailComments()).toEqual([]);
     });
 
     it('should be able to get lead comments', async (): Promise<void> => {
@@ -41,10 +40,10 @@ describe('Given {MarkedDebugSnapshotNode} Class', (): void => {
             ],
         });
 
-        expect(node.getLeadComments()).to.be.deep.equal([
+        expect(node.getLeadComments()).toEqual([
             'test',
         ]);
-        expect(node.getTailComments()).to.be.deep.equal([]);
+        expect(node.getTailComments()).toEqual([]);
     });
 
     it('should be able to get tailing comments', async (): Promise<void> => {
@@ -62,8 +61,8 @@ describe('Given {MarkedDebugSnapshotNode} Class', (): void => {
             ],
         });
 
-        expect(node.getLeadComments()).to.be.deep.equal([]);
-        expect(node.getTailComments()).to.be.deep.equal([
+        expect(node.getLeadComments()).toEqual([]);
+        expect(node.getTailComments()).toEqual([
             'test',
         ]);
     });

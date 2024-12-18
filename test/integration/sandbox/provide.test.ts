@@ -6,8 +6,7 @@
  */
 
 /* eslint-disable max-classes-per-file */
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from "../../util/assert-result";
 
@@ -39,6 +38,6 @@ describe('Given Integration Sandbox (Provide) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(executed).to.be.true;
+        expect(executed).toBeTruthy();
     });
 });

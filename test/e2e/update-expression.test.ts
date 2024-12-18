@@ -5,8 +5,7 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { Sandbox } from '../../src/marked/sandbox';
 import { assertFailedMarkedResult, assertSucceedMarkedResult } from '../util/assert-result';
 
@@ -30,7 +29,7 @@ describe('Given Sandbox for <UpdateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value);
+        expect(result.exports.default).toEqual(value);
     });
 
     it('should be able to handle position operation - prefix number', async (): Promise<void> => {
@@ -44,7 +43,7 @@ describe('Given Sandbox for <UpdateExpression> Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal(value + 1);
+        expect(result.exports.default).toEqual(value + 1);
     });
 
     it('should be able to handle position operation - string', async (): Promise<void> => {

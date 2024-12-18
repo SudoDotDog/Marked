@@ -5,8 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import * as EST from "estree";
 import { getUnaryOperation } from '../../../src/operation/unary';
 
@@ -26,9 +25,9 @@ describe('Given Unary Operation', (): void => {
             if (operation) {
 
                 // eslint-disable-next-line no-eval
-                expect(operation(element)).to.be.equal(eval(`${operator} ${element}`));
+                expect(operation(element)).toEqual(eval(`${operator} ${element}`));
             } else {
-                expect(operation).to.be.null;
+                expect(operation).toBeNull();
             }
         });
     });

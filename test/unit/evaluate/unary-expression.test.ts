@@ -5,7 +5,7 @@
  * @override Unit Test
  */
 
-import { expect } from 'chai';
+
 import * as EST from "estree";
 import { unaryExpressionEvaluator } from '../../../src/evaluate/unary-expression';
 import { createLiteral, mockLLiteralEvaluator } from '../../mock/node';
@@ -39,6 +39,6 @@ describe('Given <UnaryExpression> Evaluators', (): void => {
         sandbox.when('Literal', mockLLiteralEvaluator);
         const result: any = await executeWithMock(unaryExpressionEvaluator, testNode);
 
-        expect(result).to.be.false;
+        expect(result).toBeFalsy();
     });
 });

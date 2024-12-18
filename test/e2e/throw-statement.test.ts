@@ -5,21 +5,20 @@
  * @override E2E Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
-import { Sandbox } from '../../src/marked/sandbox';
-import { assertExceptionMarkedResult } from '../util/assert-result';
+import Chance from "chance";
+import { Sandbox } from "../../src/marked/sandbox";
+import { assertExceptionMarkedResult } from "../util/assert-result";
 
-describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
+describe("Given Sandbox for <ThrowStatement> Cases", (): void => {
 
-    const chance = new Chance('sandbox-empty-statement');
+    const chance = new Chance("sandbox-empty-statement");
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 
-    it('should be able to handle root level throw', async (): Promise<void> => {
+    it("should be able to handle root level throw", async (): Promise<void> => {
 
         const message: string = chance.string();
 
@@ -29,10 +28,10 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
 
         assertExceptionMarkedResult(result);
 
-        expect(result.exception).to.be.equal(message);
+        expect(result.exception).toEqual(message);
     });
 
-    it('should be able to handle function level throw', async (): Promise<void> => {
+    it("should be able to handle function level throw", async (): Promise<void> => {
 
         const message: string = chance.string();
 
@@ -42,10 +41,10 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
 
         assertExceptionMarkedResult(result);
 
-        expect(result.exception).to.be.equal(message);
+        expect(result.exception).toEqual(message);
     });
 
-    it('should be able to handle function level throw with default export', async (): Promise<void> => {
+    it("should be able to handle function level throw with default export", async (): Promise<void> => {
 
         const message: string = chance.string();
 
@@ -55,10 +54,10 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
 
         assertExceptionMarkedResult(result);
 
-        expect(result.exception).to.be.equal(message);
+        expect(result.exception).toEqual(message);
     });
 
-    it('should be able to handle function level throw with named export', async (): Promise<void> => {
+    it("should be able to handle function level throw with named export", async (): Promise<void> => {
 
         const message: string = chance.string();
 
@@ -68,10 +67,10 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
 
         assertExceptionMarkedResult(result);
 
-        expect(result.exception).to.be.equal(message);
+        expect(result.exception).toEqual(message);
     });
 
-    it('should be able to handle function level throw with declaration', async (): Promise<void> => {
+    it("should be able to handle function level throw with declaration", async (): Promise<void> => {
 
         const message: string = chance.string();
 
@@ -81,24 +80,24 @@ describe('Given Sandbox for <ThrowStatement> Cases', (): void => {
 
         assertExceptionMarkedResult(result);
 
-        expect(result.exception).to.be.equal(message);
+        expect(result.exception).toEqual(message);
     });
 
-    it('should be able to handle deep function level throw', async (): Promise<void> => {
+    it("should be able to handle deep function level throw", async (): Promise<void> => {
 
         const message: string = chance.string();
 
         const sandbox: Sandbox = createSandbox();
 
         const middle: any[] = [];
-        sandbox.inject('deject', (content: any) => middle.push(content));
+        sandbox.inject("deject", (content: any) => middle.push(content));
 
         const result = await sandbox.evaluate(`const t=()=>{deject(1);throw "${message}";deject(2);};const r=t()+t();`);
 
         assertExceptionMarkedResult(result);
 
-        expect(result.exception).to.be.equal(message);
-        expect(middle).to.have.lengthOf(1);
-        expect(middle[0]).to.be.equal(1);
+        expect(result.exception).toEqual(message);
+        expect(middle).toHaveLength(1);
+        expect(middle[0]).toEqual(1);
     });
 });

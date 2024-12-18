@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, Sandbox } from '../../../../src';
 import { ERROR_CODE } from '../../../../src/declare/error-code';
 import { New_Line_Character } from '../../../../src/host/declare';
@@ -33,7 +32,7 @@ describe('Given Integration Member Expression Sand List (Filter) For Each', (): 
 
         assertFailedMarkedResult(result);
 
-        expect(result.error.code).to.be.equal(ERROR_CODE.LIST_FOR_EACH_ARGUMENT_SHOULD_BE_A_FUNCTION);
+        expect(result.error.code).toEqual(ERROR_CODE.LIST_FOR_EACH_ARGUMENT_SHOULD_BE_A_FUNCTION);
     });
 
     it('should be able to execute for each', async (): Promise<void> => {
@@ -52,6 +51,6 @@ describe('Given Integration Member Expression Sand List (Filter) For Each', (): 
 
         assertSucceedMarkedResult(result);
 
-        expect(middle).to.be.deep.equal([1, 2, 3, 4, 5]);
+        expect(middle).toEqual([1, 2, 3, 4, 5]);
     });
 });

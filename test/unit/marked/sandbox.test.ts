@@ -4,8 +4,7 @@
  * @description Sandbox Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { ERROR_CODE } from '../../../src/declare/error-code';
 import { END_SIGNAL, IMarkedResultFailed, MarkedResult } from '../../../src/declare/evaluate';
 import { Sandbox } from '../../../src/marked/sandbox';
@@ -28,8 +27,8 @@ describe('Given Sandbox for sandbox option tests', (): void => {
 
         const result: IMarkedResultFailed = await sandbox.evaluate(`1+1`) as IMarkedResultFailed;
 
-        expect(result.signal).to.be.equal(END_SIGNAL.ABORTED);
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
+        expect(result.signal).toEqual(END_SIGNAL.ABORTED);
+        expect(result.error.message).toEqual(error(ERROR_CODE.MAXIMUM_CODE_LENGTH_LIMIT_EXCEED).message);
     });
 
     it('should be able to get expression count', async (): Promise<void> => {
@@ -37,7 +36,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
         const sandbox: Sandbox = createSandbox();
 
         await sandbox.evaluate(`1+2+3+4`);
-        expect(sandbox.count).to.be.equal(9);
+        expect(sandbox.count).toEqual(9);
     });
 
     it('should be able to use additional argument - no additional for marked', async (): Promise<void> => {
@@ -51,7 +50,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
             throw new Error('Failed');
         }
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to use additional argument - additional for native', async (): Promise<void> => {
@@ -66,7 +65,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
             throw new Error('Failed');
         }
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).toEqual(10);
     });
 
     it('should be able to break running', async (): Promise<void> => {
@@ -76,7 +75,7 @@ describe('Given Sandbox for sandbox option tests', (): void => {
 
         const result: IMarkedResultFailed = await sandbox.evaluate(`1+1`) as IMarkedResultFailed;
 
-        expect(result.signal).to.be.equal(END_SIGNAL.ABORTED);
-        expect(result.error.message).to.be.equal(error(ERROR_CODE.SANDBOX_IS_BROKE).message);
+        expect(result.signal).toEqual(END_SIGNAL.ABORTED);
+        expect(result.error.message).toEqual(error(ERROR_CODE.SANDBOX_IS_BROKE).message);
     });
 });

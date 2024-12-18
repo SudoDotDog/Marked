@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -36,7 +35,7 @@ describe('Given Integration Class (Init) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(result.exports.default).to.be.equal(20);
+        expect(result.exports.default).toEqual(20);
     });
 
     it('should be able to init class with static value', async (): Promise<void> => {
@@ -55,6 +54,6 @@ describe('Given Integration Class (Init) Cases', (): void => {
         assertSucceedMarkedResult(result);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(result.exports.default).to.be.equal(20);
+        expect(result.exports.default).toEqual(20);
     });
 });

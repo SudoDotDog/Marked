@@ -5,8 +5,7 @@
  * @override Integration Test
  */
 
-import { expect } from 'chai';
-import * as Chance from 'chance';
+import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox, SandClass } from '../../../src';
 import { assertSucceedMarkedResult } from '../../util/assert-result';
 
@@ -33,6 +32,6 @@ describe('Given Integration Inject Class (Date) Cases', (): void => {
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.deep.equal({});
+        expect(result.exports.default).toEqual({});
     });
 });
