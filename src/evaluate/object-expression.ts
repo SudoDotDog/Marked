@@ -47,7 +47,7 @@ export const objectExpressionEvaluator: Evaluator<"ObjectExpression"> =
                 throw error(ERROR_CODE.UNKNOWN_ERROR, keyNode.type, keyNode, trace);
             }
 
-            const key: string = keyNode.type === "Literal"
+            const key: string = keyNode.type === "Literal" || property.computed
                 ? await this.execute(keyNode, scope, nextTrace)
                 : keyNode.name;
 

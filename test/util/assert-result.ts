@@ -15,7 +15,7 @@ export const assertAbortedMarkedResult: (
 
         if (result.signal !== END_SIGNAL.ABORTED) {
             console.log(result);
-            throw new Error('Invalid marked result');
+            throw new Error("Invalid marked result");
         }
         return;
     };
@@ -28,7 +28,7 @@ export const assertSucceedMarkedResult: (
 
         if (result.signal !== END_SIGNAL.SUCCEED) {
             console.log(result);
-            throw new Error('Invalid marked result');
+            throw new Error("Invalid marked result");
         }
         return;
     };
@@ -41,7 +41,7 @@ export const assertFailedMarkedResult: (
 
         if (result.signal !== END_SIGNAL.FAILED) {
             console.log(result);
-            throw new Error('Invalid marked result');
+            throw new Error("Invalid marked result");
         }
         return;
     };
@@ -54,7 +54,7 @@ export const assertExceptionMarkedResult: (
 
         if (result.signal !== END_SIGNAL.EXCEPTION) {
             console.log(result);
-            throw new Error('Invalid marked result');
+            throw new Error("Invalid marked result");
         }
         return;
     };
@@ -67,7 +67,7 @@ export const assertTerminatedMarkedResult: (
 
         if (result.signal !== END_SIGNAL.TERMINATED) {
             console.log(result);
-            throw new Error('Invalid marked result');
+            throw new Error("Invalid marked result");
         }
         return;
     };

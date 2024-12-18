@@ -525,8 +525,6 @@ export class Sandbox implements ISandbox {
 
     protected async execute(node: EST.Node, scope: IScope, trace: ITrace): Promise<any> {
 
-        console.log(node);
-
         this.putExecuteLog({
             node,
             scope,

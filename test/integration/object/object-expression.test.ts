@@ -24,13 +24,11 @@ describe("Given Object (Object Expression) Cases", (): void => {
         const sandbox: Sandbox = createSandbox();
         const result: MarkedResult = await sandbox.evaluate([
             "const a = 'key';",
-            "const map = {[a]: 0};",
-            "export default map;",
+            "const map = {[a]: 1};",
+            "export default map.key;",
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
-
-        console.log(result.exports);
 
         expect(result.exports.default).toEqual(1);
     });
