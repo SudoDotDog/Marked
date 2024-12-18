@@ -17,17 +17,17 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountExportNamedDeclaration = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ExportNamedDeclaration', exportNamedDeclarationEvaluator);
+    sandbox.mount("ExportNamedDeclaration", exportNamedDeclarationEvaluator);
 };
 
-export const exportNamedDeclarationEvaluator: Evaluator<'ExportNamedDeclaration'> =
+export const exportNamedDeclarationEvaluator: Evaluator<"ExportNamedDeclaration"> =
     async function (this: Sandbox, node: EST.ExportNamedDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
 
         if (node.declaration) { // Node has a declaration
 
-            if (node.declaration.type === 'VariableDeclaration') {
+            if (node.declaration.type === "VariableDeclaration") {
 
                 const bindDeclareVariableStack = declareVariableStack.bind(this);
                 const declareResults: DeclareVariableElement[] = await bindDeclareVariableStack(node.declaration, scope, trace, nextTrace);

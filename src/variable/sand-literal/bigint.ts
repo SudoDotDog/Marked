@@ -12,7 +12,7 @@ export class SandLiteralBigInt {
             return value.toNativeBigInt();
         }
 
-        if (typeof value === 'bigint') {
+        if (typeof value === "bigint") {
             return value;
         }
 

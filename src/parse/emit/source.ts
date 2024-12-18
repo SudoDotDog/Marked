@@ -12,7 +12,7 @@ export const emitTypeScriptSource = async (
     sourceCode: string,
 ): Promise<string> => {
 
-    let result: string = '';
+    let result: string = "";
 
     const host: TS.CompilerHost = createTypeScriptComplierHost(
         sourceCode,

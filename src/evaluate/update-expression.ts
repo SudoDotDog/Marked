@@ -21,10 +21,10 @@ import { Variable } from "../variable/variable";
 
 export const mountUpdateExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('UpdateExpression', updateExpressionEvaluator);
+    sandbox.mount("UpdateExpression", updateExpressionEvaluator);
 };
 
-export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
+export const updateExpressionEvaluator: Evaluator<"UpdateExpression"> =
     async function (this: Sandbox, node: EST.UpdateExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -40,7 +40,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             );
         }
 
-        if (node.argument.type === 'Identifier') {
+        if (node.argument.type === "Identifier") {
 
             const identifierVariable: Variable<any> | null = scope.rummage(node.argument.name);
             if (!identifierVariable) {
@@ -59,7 +59,7 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
             identifierVariable.set(result);
 
             return node.prefix ? result : current;
-        } else if (node.argument.type === 'MemberExpression') {
+        } else if (node.argument.type === "MemberExpression") {
 
             const argument: EST.MemberExpression = node.argument;
             const preExtractObject: SandList<any> | SandMap<any>
@@ -99,8 +99,8 @@ export const updateExpressionEvaluator: Evaluator<'UpdateExpression'> =
                     ? memberVariable.get()
                     : undefined;
 
-            if (typeof memberValue === 'undefined'
-                || typeof memberVariable === 'undefined') {
+            if (typeof memberValue === "undefined"
+                || typeof memberVariable === "undefined") {
 
                 throw error(
                     ERROR_CODE.MEMBER_EXPRESSION_VALUE_CANNOT_BE_UNDEFINED,

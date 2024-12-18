@@ -81,7 +81,7 @@ export class Trace implements ITrace {
         if (this._parent) {
             return this._parent.ensureBreakPointController();
         }
-        throw error(ERROR_CODE.INTERNAL_ERROR, 'No Break Point Controller');
+        throw error(ERROR_CODE.INTERNAL_ERROR, "No Break Point Controller");
     }
 
     public ensureLocationFinder(): BaseSourceMapLocationFinder {
@@ -92,7 +92,7 @@ export class Trace implements ITrace {
         if (this._parent) {
             return this._parent.ensureLocationFinder();
         }
-        throw error(ERROR_CODE.INTERNAL_ERROR, 'No Location Finder');
+        throw error(ERROR_CODE.INTERNAL_ERROR, "No Location Finder");
     }
 
     public getNode(): EST.Node | null {
@@ -107,7 +107,7 @@ export class Trace implements ITrace {
 
     public hasLabel(): boolean {
 
-        return typeof this._label === 'string';
+        return typeof this._label === "string";
     }
 
     public getLabel(): string | null {
@@ -117,10 +117,10 @@ export class Trace implements ITrace {
 
     public ensureLabel(): string {
 
-        if (typeof this._label === 'string') {
+        if (typeof this._label === "string") {
             return this._label;
         }
-        throw error(ERROR_CODE.INTERNAL_ERROR, 'No Label');
+        throw error(ERROR_CODE.INTERNAL_ERROR, "No Label");
     }
 
     public stack(node: EST.Node): Trace {

@@ -12,7 +12,7 @@ import { SandFunction } from "../../variable/sand-function/sand-function";
 
 export const memberExpressionClassInstance = (sandbox: Sandbox, sandClassInstance: SandClassInstance, key: string | number): any => {
 
-    if (typeof key === 'string') {
+    if (typeof key === "string") {
 
         const target: any = sandClassInstance.lookFor(key);
 

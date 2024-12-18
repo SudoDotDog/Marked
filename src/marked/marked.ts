@@ -4,9 +4,9 @@
  * @description Marked
  */
 
-import { MarkedResult } from '../declare/evaluate';
-import { MarkedRunScriptOptions } from './static/declare';
-import { markedRunScriptStaticMethod } from './static/run-script';
+import { MarkedResult } from "../declare/evaluate";
+import { MarkedRunScriptOptions } from "./static/declare";
+import { markedRunScriptStaticMethod } from "./static/run-script";
 
 export class Marked {
 

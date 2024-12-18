@@ -17,10 +17,10 @@ import { Variable } from "../variable/variable";
 
 export const mountCatchClause = (sandbox: ISandbox): void => {
 
-    sandbox.mount('CatchClause', CatchClauseEvaluator);
+    sandbox.mount("CatchClause", CatchClauseEvaluator);
 };
 
-export const CatchClauseEvaluator: Evaluator<'CatchClause'> =
+export const CatchClauseEvaluator: Evaluator<"CatchClause"> =
     async function (this: Sandbox, node: EST.CatchClause, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);

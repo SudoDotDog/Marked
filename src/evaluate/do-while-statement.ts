@@ -17,15 +17,15 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountDoWhileStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('DoWhileStatement', doWhileStatementEvaluator);
+    sandbox.mount("DoWhileStatement", doWhileStatementEvaluator);
 };
 
-export const doWhileStatementEvaluator: Evaluator<'DoWhileStatement'> =
+export const doWhileStatementEvaluator: Evaluator<"DoWhileStatement"> =
     async function (this: Sandbox, node: EST.DoWhileStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
 
-        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxWhileLoopLimit'));
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption("maxWhileLoopLimit"));
         const test: () => Promise<boolean>
             = async () => await this.execute(node.test, scope, nextTrace);
 

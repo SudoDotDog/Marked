@@ -18,16 +18,16 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountForStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ForStatement', forStatementEvaluator);
+    sandbox.mount("ForStatement", forStatementEvaluator);
 };
 
-export const forStatementEvaluator: Evaluator<'ForStatement'> =
+export const forStatementEvaluator: Evaluator<"ForStatement"> =
     async function (this: Sandbox, node: EST.ForStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
         const subScope: Scope = scope.child();
 
-        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption("maxForLoopLimit"));
 
         if (node.init) {
             await this.execute(node.init, subScope, nextTrace);
@@ -107,7 +107,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
 
                 if (result.isBreak()) {
 
-                    if (typeof result.getValue() === 'string') {
+                    if (typeof result.getValue() === "string") {
 
                         const breakingLabel: string = result.getValue();
                         scope.executeLabelListener(
@@ -123,7 +123,7 @@ export const forStatementEvaluator: Evaluator<'ForStatement'> =
                     return result;
                 } else if (result.isContinue()) {
 
-                    if (typeof result.getValue() === 'string') {
+                    if (typeof result.getValue() === "string") {
 
                         if (trace.hasLabel()
                             && trace.ensureLabel() === result.getValue()) {

@@ -58,7 +58,7 @@ export class MarkedLogRecorder {
 
             if (
                 log.node.loc === null
-                || typeof log.node.loc === 'undefined'
+                || typeof log.node.loc === "undefined"
             ) {
                 return false;
             }
@@ -76,7 +76,7 @@ export class MarkedLogRecorder {
 
             if (
                 log.node.loc === null
-                || typeof log.node.loc === 'undefined'
+                || typeof log.node.loc === "undefined"
             ) {
                 return false;
             }
@@ -94,7 +94,7 @@ export class MarkedLogRecorder {
 
             if (
                 log.node.loc === null
-                || typeof log.node.loc === 'undefined'
+                || typeof log.node.loc === "undefined"
             ) {
                 return false;
             }

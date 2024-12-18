@@ -32,9 +32,9 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
 
         switch (specifier.type) {
 
-            case 'ImportDefaultSpecifier': {
+            case "ImportDefaultSpecifier": {
 
-                if (!(typeof targetModule === 'object' && Boolean(targetModule.default))) {
+                if (!(typeof targetModule === "object" && Boolean(targetModule.default))) {
 
                     throw error(
                         ERROR_CODE.IMPORT_DEFAULT_OBJECT_HAVE_NO_DEFAULT_EXPORT,
@@ -50,9 +50,9 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
                 register(target, parsedContent);
                 break;
             }
-            case 'ImportNamespaceSpecifier': {
+            case "ImportNamespaceSpecifier": {
 
-                if (!(typeof targetModule === 'object')) {
+                if (!(typeof targetModule === "object")) {
                     throw error(ERROR_CODE.IMPORT_OBJECT_NOT_FOUND, target, node, currentTrace);
                 }
 
@@ -61,7 +61,7 @@ const resolveModuleImport = async function (this: Sandbox, source: string, node:
                 register(target, parsedContent);
                 break;
             }
-            case 'ImportSpecifier': {
+            case "ImportSpecifier": {
 
                 const imported: string = specifier.imported.name;
                 if (!Boolean(targetModule[imported])) {
@@ -88,7 +88,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
 
     const targetModule: ModuleResolveResult | null = await this.resolveResource(source, currentTrace);
 
-    if (typeof targetModule !== 'object'
+    if (typeof targetModule !== "object"
         || !targetModule) {
         return false;
     }
@@ -138,7 +138,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
 
         switch (specifier.type) {
 
-            case 'ImportDefaultSpecifier': {
+            case "ImportDefaultSpecifier": {
 
                 if (!Boolean(exposed.default)) {
                     throw error(
@@ -153,7 +153,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
                 register(target, exposed.default);
                 break;
             }
-            case 'ImportNamespaceSpecifier': {
+            case "ImportNamespaceSpecifier": {
 
                 const namedKeys: string[] = Object.keys(exposed.named);
 
@@ -166,7 +166,7 @@ const resolveDynamicImport = async function (this: Sandbox, source: string, node
                 register(target, map);
                 break;
             }
-            case 'ImportSpecifier': {
+            case "ImportSpecifier": {
 
                 const namedMap: Map<string, any> = new Map();
                 const namedKeys: string[] = Object.keys(exposed.named);

@@ -14,12 +14,12 @@ export const memberExpressionSandRegExp = (sandbox: Sandbox, regexp: SandLiteral
 
     switch (key) {
 
-        case 'test': {
+        case "test": {
             return wrapMemberFunction(sandbox, (target: string) => {
                 return regexp.toNativeRegExp().test(target);
             });
         }
-        case 'toString': {
+        case "toString": {
             return wrapMemberFunction(sandbox, () => {
                 return regexp.toNativeRegExp().toString();
             });

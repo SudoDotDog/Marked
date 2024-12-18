@@ -27,7 +27,7 @@ export class MarkedDebugSnapshotNode {
 
     public getLeadComments(): string[] {
 
-        if (typeof this._node.leadingComments === 'undefined') {
+        if (typeof this._node.leadingComments === "undefined") {
             return [];
         }
 
@@ -38,7 +38,7 @@ export class MarkedDebugSnapshotNode {
 
     public getTailComments(): string[] {
 
-        if (typeof this._node.trailingComments === 'undefined') {
+        if (typeof this._node.trailingComments === "undefined") {
             return [];
         }
 

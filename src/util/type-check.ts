@@ -6,13 +6,14 @@
 
 export const typeCheckIsConstructor = (target: any): boolean => {
 
-    if (typeof target !== 'function') {
+    if (typeof target !== "function") {
         return false;
     }
 
     try {
         Reflect.construct(String, [], target);
-    } catch (e) {
+    } catch (error) {
+
         return false;
     }
 

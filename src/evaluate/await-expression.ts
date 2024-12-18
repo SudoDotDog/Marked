@@ -15,10 +15,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountAwaitExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('AwaitExpression', awaitExpressionEvaluator);
+    sandbox.mount("AwaitExpression", awaitExpressionEvaluator);
 };
 
-export const awaitExpressionEvaluator: Evaluator<'AwaitExpression'> =
+export const awaitExpressionEvaluator: Evaluator<"AwaitExpression"> =
     async function (this: Sandbox, node: EST.AwaitExpression, scope: Scope, trace: Trace): Promise<any> {
 
         throw error(ERROR_CODE.UNNECESSARY_AWAIT_EXPRESSION, void 0, node, trace);

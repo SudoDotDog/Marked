@@ -35,24 +35,24 @@ export const parseNativeToSand = (target: any):
     | SandMap<any>
     | SandList<any> => {
 
-    if (typeof target === 'undefined') {
+    if (typeof target === "undefined") {
         return undefined;
     }
     if (target === null) {
         return null;
     }
 
-    if (typeof target === 'string') {
+    if (typeof target === "string") {
         return target;
     }
-    if (typeof target === 'number') {
+    if (typeof target === "number") {
         return target;
     }
-    if (typeof target === 'boolean') {
+    if (typeof target === "boolean") {
         return target;
     }
 
-    if (typeof target === 'bigint') {
+    if (typeof target === "bigint") {
 
         const sandBitInt: SandLiteralBigInt = SandLiteralBigInt.create(target.toString());
         return sandBitInt;
@@ -101,9 +101,9 @@ export const parseNativeToSand = (target: any):
         return target;
     }
 
-    if (typeof target === 'object') {
+    if (typeof target === "object") {
 
-        if (target.constructor && target.constructor.name !== 'Object') {
+        if (target.constructor && target.constructor.name !== "Object") {
 
             throw error(
                 ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS_INSTANCE,
@@ -122,7 +122,7 @@ export const parseNativeToSand = (target: any):
         throw error(ERROR_CODE.CANNOT_TRANSFER_NATIVE_TO_CLASS, target);
     }
 
-    if (typeof target === 'function') {
+    if (typeof target === "function") {
 
         return (...args) => {
             const parsedArgs: any = [];
@@ -133,5 +133,5 @@ export const parseNativeToSand = (target: any):
         };
     }
 
-    throw error(ERROR_CODE.INTERNAL_ERROR, 'Invalid Type');
+    throw error(ERROR_CODE.INTERNAL_ERROR, "Invalid Type");
 };

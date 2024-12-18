@@ -16,15 +16,15 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountTaggedTemplateExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('TaggedTemplateExpression', taggedTemplateExpressionEvaluator);
+    sandbox.mount("TaggedTemplateExpression", taggedTemplateExpressionEvaluator);
 };
 
-export const taggedTemplateExpressionEvaluator: Evaluator<'TaggedTemplateExpression'> =
+export const taggedTemplateExpressionEvaluator: Evaluator<"TaggedTemplateExpression"> =
     async function (this: Sandbox, node: EST.TaggedTemplateExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const target: SandFunction | ((...callArgs: any[]) => any) = await this.execute(node.tag, scope, trace);
 
-        if (typeof target === 'undefined') {
+        if (typeof target === "undefined") {
 
             throw error(
                 ERROR_CODE.CANNOT_CALL_TAGGED_TEMPLATE_EXPRESSION_OF_UNDEFINED,
@@ -61,7 +61,7 @@ export const taggedTemplateExpressionEvaluator: Evaluator<'TaggedTemplateExpress
             return await target.execute(...args);
         }
 
-        if (typeof target === 'function') {
+        if (typeof target === "function") {
             return await Promise.resolve(target(...args));
         }
     };

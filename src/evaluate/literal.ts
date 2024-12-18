@@ -15,13 +15,13 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountLiteral = (sandbox: ISandbox): void => {
 
-    sandbox.mount('Literal', literalEvaluator);
+    sandbox.mount("Literal", literalEvaluator);
 };
 
-export const literalEvaluator: Evaluator<'Literal'> =
+export const literalEvaluator: Evaluator<"Literal"> =
     async function (this: Sandbox, node: EST.Literal, _scope: Scope, _trace: Trace): Promise<any> {
 
-        if (typeof (node as any).regex !== 'undefined') {
+        if (typeof (node as any).regex !== "undefined") {
 
             const regexpNode: EST.RegExpLiteral = node as EST.RegExpLiteral;
             const sandRegExp: SandLiteralRegExp = SandLiteralRegExp.create(
@@ -32,7 +32,7 @@ export const literalEvaluator: Evaluator<'Literal'> =
             return sandRegExp;
         }
 
-        if (typeof (node as any).bigint !== 'undefined') {
+        if (typeof (node as any).bigint !== "undefined") {
 
             const bigintNode: EST.BigIntLiteral = node as EST.BigIntLiteral;
             const sandBigint: SandLiteralBigInt = SandLiteralBigInt.create(bigintNode.bigint);

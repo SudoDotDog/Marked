@@ -8,7 +8,7 @@ import { Node } from "acorn";
 import { full } from "acorn-walk";
 import { EST_TYPE, IESTreeType } from "../declare/types";
 
-const FOUND_MESSAGE: string = 'Found';
+const FOUND_MESSAGE: string = "Found";
 
 export const findOneESTNodeOrNull = <T extends EST_TYPE>(
     estree: any,

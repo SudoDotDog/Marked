@@ -17,10 +17,10 @@ import { VARIABLE_TYPE } from "../declare/variable";
 
 export const mountStaticBlock = (sandbox: ISandbox): void => {
 
-    sandbox.mount('StaticBlock', staticBlockEvaluation);
+    sandbox.mount("StaticBlock", staticBlockEvaluation);
 };
 
-export const staticBlockEvaluation: Evaluator<'StaticBlock'> =
+export const staticBlockEvaluation: Evaluator<"StaticBlock"> =
     async function (this: Sandbox, node: EST.StaticBlock, scope: Scope, trace: Trace): Promise<void> {
 
         if (!(trace instanceof TraceClass)) {

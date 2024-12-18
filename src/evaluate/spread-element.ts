@@ -13,10 +13,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountSpreadElement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('SpreadElement', spreadElementEvaluator);
+    sandbox.mount("SpreadElement", spreadElementEvaluator);
 };
 
-export const spreadElementEvaluator: Evaluator<'SpreadElement'> =
+export const spreadElementEvaluator: Evaluator<"SpreadElement"> =
     async function (this: Sandbox, node: EST.SpreadElement, scope: Scope, trace: Trace): Promise<any> {
 
         const argumentValue: any = await this.execute(node.argument, scope, trace);

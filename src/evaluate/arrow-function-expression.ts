@@ -19,10 +19,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountArrowFunctionExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ArrowFunctionExpression', arrowFunctionExpressionEvaluator);
+    sandbox.mount("ArrowFunctionExpression", arrowFunctionExpressionEvaluator);
 };
 
-export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpression'> =
+export const arrowFunctionExpressionEvaluator: Evaluator<"ArrowFunctionExpression"> =
     async function (this: Sandbox, node: EST.ArrowFunctionExpression, scope: Scope, trace: Trace): Promise<SandFunction> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -45,7 +45,7 @@ export const arrowFunctionExpressionEvaluator: Evaluator<'ArrowFunctionExpressio
 
             bindingRegisterFunctionExpressionParams(args, node.params, subScope);
 
-            if (node.body.type === 'BlockStatement') {
+            if (node.body.type === "BlockStatement") {
 
                 const result: any = await this.execute(node.body, subScope, nextTrace);
                 if (result instanceof Flag) {

@@ -84,12 +84,12 @@ class Assert<T> {
         return this;
     }
 
-    // eslint-disable-next-line id-blacklist
+     
     public number(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
 
         const result: boolean = this.eachElement((value: T) => {
 
-            return typeof value === 'number';
+            return typeof value === "number";
         });
         if (!result) {
 
@@ -98,12 +98,12 @@ class Assert<T> {
         return this;
     }
 
-    // eslint-disable-next-line id-blacklist
+     
     public string(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): Assert<T> {
 
         const result: boolean = this.eachElement((value: T) => {
 
-            return typeof value === 'string';
+            return typeof value === "string";
         });
         if (!result) {
 

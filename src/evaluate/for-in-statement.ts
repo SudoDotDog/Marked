@@ -20,22 +20,22 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountForInStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ForInStatement', forInStatementEvaluator);
+    sandbox.mount("ForInStatement", forInStatementEvaluator);
 };
 
-export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
+export const forInStatementEvaluator: Evaluator<"ForInStatement"> =
     async function (this: Sandbox, node: EST.ForInStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
 
         const map: SandMap<any> = await this.execute(node.right, scope, nextTrace);
-        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption("maxForLoopLimit"));
 
         if (!(map instanceof SandMap)) {
             throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
         }
 
-        if (node.left.type !== 'VariableDeclaration') {
+        if (node.left.type !== "VariableDeclaration") {
             throw error(ERROR_CODE.FOR_IN_LOOP_ONLY_FOR_MAP, void 0, node, trace);
         }
 
@@ -104,7 +104,7 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
 
                 if (result.isBreak()) {
 
-                    if (typeof result.getValue() === 'string') {
+                    if (typeof result.getValue() === "string") {
 
                         const breakingLabel: string = result.getValue();
                         scope.executeLabelListener(
@@ -120,7 +120,7 @@ export const forInStatementEvaluator: Evaluator<'ForInStatement'> =
                     return result.getValue();
                 } else if (result.isContinue()) {
 
-                    if (typeof result.getValue() === 'string') {
+                    if (typeof result.getValue() === "string") {
 
                         if (trace.hasLabel()
                             && trace.ensureLabel() === result.getValue()) {

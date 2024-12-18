@@ -61,8 +61,8 @@ export const performBinaryExpressionOnNumber = (
         return SandLiteralBigInt.create(result.toString());
     }
 
-    if (typeof left !== 'number'
-        || typeof right !== 'number') {
+    if (typeof left !== "number"
+        || typeof right !== "number") {
         throw error(ERROR_CODE.CANNOT_PERFORM_ACTION_ON_NON_NUMBER, `${left} & ${right}`);
     }
 

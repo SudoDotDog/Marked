@@ -39,7 +39,7 @@ export class MarkedAnalyzer {
 
         const result = findOneESTNodeOrNull(this._parsed.estree, type);
 
-        if (result === null || typeof result === 'undefined') {
+        if (result === null || typeof result === "undefined") {
             return null;
         }
 

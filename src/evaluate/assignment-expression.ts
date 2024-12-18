@@ -21,10 +21,10 @@ import { Variable } from "../variable/variable";
 
 export const mountAssignmentExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('AssignmentExpression', assignmentExpressionEvaluator);
+    sandbox.mount("AssignmentExpression", assignmentExpressionEvaluator);
 };
 
-export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
+export const assignmentExpressionEvaluator: Evaluator<"AssignmentExpression"> =
     async function (this: Sandbox, node: EST.AssignmentExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -32,14 +32,14 @@ export const assignmentExpressionEvaluator: Evaluator<'AssignmentExpression'> =
         const variable: Variable<any> = await (async ()
             : Promise<Variable<any>> => {
 
-            if (node.left.type === 'Identifier') {
+            if (node.left.type === "Identifier") {
 
                 const name: string = node.left.name;
 
                 return assert(
                     scope.validateEditable(name).rummage(name) as Variable<any>,
                 ).to.be.exist(ERROR_CODE.VARIABLE_IS_NOT_DEFINED).firstValue();
-            } else if (node.left.type === 'MemberExpression') {
+            } else if (node.left.type === "MemberExpression") {
 
                 const preExtractObject: SandList<any> | SandMap<any>
                     = await this.execute(node.left.object, scope, nextTrace);

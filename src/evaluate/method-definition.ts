@@ -17,17 +17,17 @@ import { TraceClass } from "../variable/trace/trace-class";
 
 export const mountMethodDefinition = (sandbox: ISandbox): void => {
 
-    sandbox.mount('MethodDefinition', methodDefinitionEvaluation);
+    sandbox.mount("MethodDefinition", methodDefinitionEvaluation);
 };
 
-export const methodDefinitionEvaluation: Evaluator<'MethodDefinition'> =
+export const methodDefinitionEvaluation: Evaluator<"MethodDefinition"> =
     async function (this: Sandbox, node: EST.MethodDefinition, scope: Scope, trace: Trace): Promise<boolean> {
 
         if (!(trace instanceof TraceClass)) {
             throw error(ERROR_CODE.TRACE_SHOULD_BE_CLASS_TRACE, void 0, node, trace);
         }
 
-        if (node.key.type !== 'Identifier') {
+        if (node.key.type !== "Identifier") {
             throw error(ERROR_CODE.PROPERTY_SHOULD_BE_IDENTIFIER, "Key", node, trace);
         }
 
@@ -38,7 +38,7 @@ export const methodDefinitionEvaluation: Evaluator<'MethodDefinition'> =
             throw error(ERROR_CODE.INTERNAL_ERROR, void 0, node, trace);
         }
 
-        if (node.kind === 'constructor') {
+        if (node.kind === "constructor") {
 
             trace.sandClass.setClassConstructor(value);
             return true;

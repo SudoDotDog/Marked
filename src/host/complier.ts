@@ -34,15 +34,15 @@ export const createTypeScriptComplierHost = (
         writeFile: (fileName: string, data: string): void => {
 
             if (fileName === `${Host_Target_File}.js.map`) {
-                if (typeof emitSourceMap !== 'undefined') {
+                if (typeof emitSourceMap !== "undefined") {
                     emitSourceMap(data);
                 }
             } else if (fileName === `${Host_Target_File}.js`) {
-                if (typeof emitSource !== 'undefined') {
+                if (typeof emitSource !== "undefined") {
                     emitSource(data);
                 }
             } else if (fileName === `${Host_Target_File}.d.ts`) {
-                if (typeof emitDeclaration !== 'undefined') {
+                if (typeof emitDeclaration !== "undefined") {
                     emitDeclaration(data);
                 }
             }

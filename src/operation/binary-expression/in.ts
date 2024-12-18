@@ -22,7 +22,7 @@ export const executeInBinaryOperator = async function (
 ): Promise<any> {
 
     const assertedLeft: EST.Identifier = left as EST.Identifier;
-    if (assertedLeft.type !== 'Identifier') {
+    if (assertedLeft.type !== "Identifier") {
 
         throw error(
             ERROR_CODE.IN_BINARY_OPERATION_ONLY_ALLOW_ON_IDENTIFIER,

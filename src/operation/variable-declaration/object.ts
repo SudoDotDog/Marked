@@ -23,13 +23,13 @@ export const declareVariableStackObject = async function (
     nextTrace: ITrace,
 ): Promise<DeclareVariableElement[]> {
 
-    if (declaration.id.type !== 'ObjectPattern') {
-        throw error(ERROR_CODE.INTERNAL_ERROR, 'Object Pattern Only', node, currentTrace);
+    if (declaration.id.type !== "ObjectPattern") {
+        throw error(ERROR_CODE.INTERNAL_ERROR, "Object Pattern Only", node, currentTrace);
     }
 
     const results: DeclareVariableElement[] = [];
 
-    if (typeof declaration.init === 'undefined'
+    if (typeof declaration.init === "undefined"
         || declaration.init === null) {
 
         throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
@@ -48,11 +48,11 @@ export const declareVariableStackObject = async function (
 
             throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
         }
-        if (pattern.type !== 'Property') {
+        if (pattern.type !== "Property") {
 
             throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.type, node, currentTrace);
         }
-        if (pattern.key.type !== 'Identifier') {
+        if (pattern.key.type !== "Identifier") {
 
             throw error(ERROR_CODE.BESIDES_DECLARATION_NOT_SUPPORT, pattern.key.type, node, currentTrace);
         }

@@ -13,10 +13,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountConditionalExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ConditionalExpression', conditionalExpressionEvaluator);
+    sandbox.mount("ConditionalExpression", conditionalExpressionEvaluator);
 };
 
-export const conditionalExpressionEvaluator: Evaluator<'ConditionalExpression'> =
+export const conditionalExpressionEvaluator: Evaluator<"ConditionalExpression"> =
     async function (this: Sandbox, node: EST.ConditionalExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);

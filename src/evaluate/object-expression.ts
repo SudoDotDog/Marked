@@ -17,10 +17,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountObjectExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ObjectExpression', objectExpressionEvaluator);
+    sandbox.mount("ObjectExpression", objectExpressionEvaluator);
 };
 
-export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
+export const objectExpressionEvaluator: Evaluator<"ObjectExpression"> =
     async function (this: Sandbox, node: EST.ObjectExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -28,7 +28,7 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
         const map: SandMap<any> = SandMap.fromScratch();
         outer: for (const property of node.properties) {
 
-            if (property.type === 'SpreadElement') {
+            if (property.type === "SpreadElement") {
                 const spreadArgument: any = await this.execute(property.argument, scope, nextTrace);
 
                 if (!(spreadArgument instanceof SandMap)) {
@@ -47,11 +47,11 @@ export const objectExpressionEvaluator: Evaluator<'ObjectExpression'> =
                 throw error(ERROR_CODE.UNKNOWN_ERROR, keyNode.type, keyNode, trace);
             }
 
-            const key: string = keyNode.type === 'Literal'
+            const key: string = keyNode.type === "Literal"
                 ? await this.execute(keyNode, scope, nextTrace)
                 : keyNode.name;
 
-            if (property.kind !== 'init') {
+            if (property.kind !== "init") {
 
                 throw error(ERROR_CODE.PROPERTY_KIND_NOT_INIT_NOT_SUPPORT, property.kind, property, trace);
             }

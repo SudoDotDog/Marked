@@ -28,7 +28,7 @@ export const declareVariableStack = async function (
 
         switch (declaration.id.type) {
 
-            case 'Identifier': {
+            case "Identifier": {
 
                 const results: DeclareVariableElement[] = [];
 
@@ -40,12 +40,12 @@ export const declareVariableStack = async function (
 
                 return results;
             }
-            case 'ArrayPattern': {
+            case "ArrayPattern": {
 
                 const bindingDeclareVariableStackArray = declareVariableStackArray.bind(this);
                 return await bindingDeclareVariableStackArray(node, type, declaration, scope, currentTrace, nextTrace);
             }
-            case 'ObjectPattern': {
+            case "ObjectPattern": {
 
                 const bindingDeclareVariableStackObject = declareVariableStackObject.bind(this);
                 return await bindingDeclareVariableStackObject(node, type, declaration, scope, currentTrace, nextTrace);
@@ -57,5 +57,5 @@ export const declareVariableStack = async function (
         }
     }
 
-    throw error(ERROR_CODE.INTERNAL_ERROR, 'No Declaration', node, currentTrace);
+    throw error(ERROR_CODE.INTERNAL_ERROR, "No Declaration", node, currentTrace);
 };

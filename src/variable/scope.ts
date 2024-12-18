@@ -9,11 +9,11 @@ import { IExposed, IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { extractSandToNative } from "../parse/sand-to-native";
 import { error } from "../util/error/error";
 import { Variable } from "../variable/variable";
-import { ScopeLabelListener, SCOPE_LABEL_LISTENER_TYPE } from "./declare";
+import { SCOPE_LABEL_LISTENER_TYPE, ScopeLabelListener } from "./declare";
 import { SandMap } from "./sand-map";
 
-export const BRIDGE_SCOPE_SYMBOL: unique symbol = Symbol('bridge-scope');
-export const EXECUTE_SCOPE_SYMBOL: unique symbol = Symbol('execute-scope');
+export const BRIDGE_SCOPE_SYMBOL: unique symbol = Symbol("bridge-scope");
+export const EXECUTE_SCOPE_SYMBOL: unique symbol = Symbol("execute-scope");
 
 type ScopeSymbol =
     | typeof BRIDGE_SCOPE_SYMBOL
@@ -32,7 +32,7 @@ export class Scope implements IScope {
     public static executeScope(parent: IScope): Scope {
 
         if (!parent.isBridgeScope()) {
-            throw error(ERROR_CODE.INTERNAL_ERROR, 'only bridge scope can create execute scope');
+            throw error(ERROR_CODE.INTERNAL_ERROR, "only bridge scope can create execute scope");
         }
 
         const scope: Scope = new Scope(parent, EXECUTE_SCOPE_SYMBOL);
@@ -141,7 +141,7 @@ export class Scope implements IScope {
 
                 return this._parent.findThis();
             }
-            throw error(ERROR_CODE.UNKNOWN_ERROR, 'this');
+            throw error(ERROR_CODE.UNKNOWN_ERROR, "this");
         }
     }
 

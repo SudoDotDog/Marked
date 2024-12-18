@@ -23,13 +23,13 @@ export const declareVariableStackArray = async function (
     nextTrace: ITrace,
 ): Promise<DeclareVariableElement[]> {
 
-    if (declaration.id.type !== 'ArrayPattern') {
-        throw error(ERROR_CODE.INTERNAL_ERROR, 'Array Pattern Only', node, currentTrace);
+    if (declaration.id.type !== "ArrayPattern") {
+        throw error(ERROR_CODE.INTERNAL_ERROR, "Array Pattern Only", node, currentTrace);
     }
 
     const results: DeclareVariableElement[] = [];
 
-    if (typeof declaration.init === 'undefined'
+    if (typeof declaration.init === "undefined"
         || declaration.init === null) {
 
         throw error(ERROR_CODE.UNDEFINED_BESIDES_DECLARATION_NOT_SUPPORT, undefined, node, currentTrace);
@@ -57,7 +57,7 @@ export const declareVariableStackArray = async function (
 
         switch (pattern.type) {
 
-            case 'Identifier': {
+            case "Identifier": {
 
                 const id: string = pattern.name;
 

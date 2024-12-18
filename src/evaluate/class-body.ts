@@ -16,10 +16,10 @@ import { TraceClass } from "../variable/trace/trace-class";
 
 export const mountClassBody = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ClassBody', classBodyEvaluation);
+    sandbox.mount("ClassBody", classBodyEvaluation);
 };
 
-export const classBodyEvaluation: Evaluator<'ClassBody'> =
+export const classBodyEvaluation: Evaluator<"ClassBody"> =
     async function (this: Sandbox, node: EST.ClassBody, scope: Scope, trace: Trace): Promise<any> {
 
         if (!(trace instanceof TraceClass)) {

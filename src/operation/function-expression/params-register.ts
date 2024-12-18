@@ -23,11 +23,11 @@ export function registerFunctionExpressionParams(
 
         const registerer = scope.register(VARIABLE_TYPE.CONSTANT);
 
-        if (pattern.type === 'Identifier') {
+        if (pattern.type === "Identifier") {
 
             const value: any = args[index];
             registerer(pattern.name, value);
-        } else if (pattern.type === 'RestElement') {
+        } else if (pattern.type === "RestElement") {
 
             const identifier: EST.Identifier = pattern.argument as EST.Identifier;
             const value: any = args.slice(index);

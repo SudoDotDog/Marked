@@ -20,10 +20,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountNewExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('NewExpression', newStatementEvaluator);
+    sandbox.mount("NewExpression", newStatementEvaluator);
 };
 
-export const newStatementEvaluator: Evaluator<'NewExpression'> =
+export const newStatementEvaluator: Evaluator<"NewExpression"> =
     async function (this: Sandbox, node: EST.NewExpression, scope: Scope, trace: Trace): Promise<SandClassInstance | MarkedNativeClassInstance> {
 
         const targetClass: any = await this.execute(node.callee, scope, trace);

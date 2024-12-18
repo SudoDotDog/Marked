@@ -14,10 +14,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountContinueStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ContinueStatement', ContinueStatementEvaluator);
+    sandbox.mount("ContinueStatement", ContinueStatementEvaluator);
 };
 
-export const ContinueStatementEvaluator: Evaluator<'ContinueStatement'> =
+export const ContinueStatementEvaluator: Evaluator<"ContinueStatement"> =
     async function (this: Sandbox, node: EST.ContinueStatement, _scope: Scope, trace: Trace): Promise<any> {
 
         const flag: Flag = Flag.fromContinue(trace);

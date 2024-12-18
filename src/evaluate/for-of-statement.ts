@@ -20,23 +20,23 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountForOfStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ForOfStatement', forOfStatementEvaluator);
+    sandbox.mount("ForOfStatement", forOfStatementEvaluator);
 };
 
-export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
+export const forOfStatementEvaluator: Evaluator<"ForOfStatement"> =
     async function (this: Sandbox, node: EST.ForOfStatement, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
 
         const lists: SandList<any> = await this.execute(node.right, scope, nextTrace);
-        const limitCounter: LimitCounter = new LimitCounter(this.getOption('maxForLoopLimit'));
+        const limitCounter: LimitCounter = new LimitCounter(this.getOption("maxForLoopLimit"));
 
         if (!(lists instanceof SandList)) {
 
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
 
-        if (node.left.type !== 'VariableDeclaration') {
+        if (node.left.type !== "VariableDeclaration") {
 
             throw error(ERROR_CODE.FOR_OF_LOOP_ONLY_FOR_LIST, void 0, node, trace);
         }
@@ -107,7 +107,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
 
                 if (result.isBreak()) {
 
-                    if (typeof result.getValue() === 'string') {
+                    if (typeof result.getValue() === "string") {
 
                         const breakingLabel: string = result.getValue();
                         scope.executeLabelListener(
@@ -123,7 +123,7 @@ export const forOfStatementEvaluator: Evaluator<'ForOfStatement'> =
                     return result;
                 } else if (result.isContinue()) {
 
-                    if (typeof result.getValue() === 'string') {
+                    if (typeof result.getValue() === "string") {
 
                         if (trace.hasLabel()
                             && trace.ensureLabel() === result.getValue()) {

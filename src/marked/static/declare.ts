@@ -5,7 +5,7 @@
  */
 
 import { MarkedDebugInterceptor } from "../../debug/interceptor";
-import { MarkedMixin, ModuleResolver, ISandboxOptions, SandboxLanguage } from "../../declare/sandbox";
+import { ISandboxOptions, MarkedMixin, ModuleResolver, SandboxLanguage } from "../../declare/sandbox";
 
 export type MarkedRunScriptOptions = {
 
@@ -20,5 +20,5 @@ export type MarkedRunScriptOptions = {
 
 export const defaultMarkedRunScriptOptions: MarkedRunScriptOptions = {
 
-    language: 'javascript',
+    language: "javascript",
 };

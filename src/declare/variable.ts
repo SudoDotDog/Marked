@@ -14,20 +14,20 @@ import { ScriptLocation } from "./script-location";
 
 export enum VARIABLE_TYPE {
 
-    CONSTANT = 'const',
-    SCOPED = 'let',
-    VARIABLE = 'var',
+    CONSTANT = "const",
+    SCOPED = "let",
+    VARIABLE = "var",
 }
 
 export enum FLAG_TYPE {
 
-    RETURN = 'RETURN',
-    ROOT_RETURN = 'ROOT_RETURN',
-    BREAK = 'BREAK',
-    CONTINUE = 'CONTINUE',
-    THROW = 'THROW',
-    FATAL = 'FATAL',
-    TERMINATE = 'TERMINATE',
+    RETURN = "RETURN",
+    ROOT_RETURN = "ROOT_RETURN",
+    BREAK = "BREAK",
+    CONTINUE = "CONTINUE",
+    THROW = "THROW",
+    FATAL = "FATAL",
+    TERMINATE = "TERMINATE",
 }
 
 export type SCOPE_DECLARE_FUNC =

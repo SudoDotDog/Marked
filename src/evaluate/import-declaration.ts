@@ -17,10 +17,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountImportDeclaration = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ImportDeclaration', importDeclarationEvaluator);
+    sandbox.mount("ImportDeclaration", importDeclarationEvaluator);
 };
 
-export const importDeclarationEvaluator: Evaluator<'ImportDeclaration'> =
+export const importDeclarationEvaluator: Evaluator<"ImportDeclaration"> =
     async function (this: Sandbox, node: EST.ImportDeclaration, scope: Scope, trace: Trace): Promise<any> {
 
         if (!scope.isExecuteScope()) {

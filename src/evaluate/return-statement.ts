@@ -14,16 +14,16 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountReturnStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ReturnStatement', returnStatementEvaluator);
+    sandbox.mount("ReturnStatement", returnStatementEvaluator);
 };
 
-export const returnStatementEvaluator: Evaluator<'ReturnStatement'> =
+export const returnStatementEvaluator: Evaluator<"ReturnStatement"> =
     async function (this: Sandbox, node: EST.ReturnStatement, scope: Scope, trace: Trace): Promise<Flag> {
 
         const nextTrace: Trace = trace.stack(node);
 
         const traceNode: EST.Node | null = trace.getNode();
-        if (traceNode !== null && traceNode.type === 'Program') {
+        if (traceNode !== null && traceNode.type === "Program") {
 
             const rootReturnFlag = Flag.fromRootReturn(trace);
 

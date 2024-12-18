@@ -11,11 +11,11 @@ import { wrapMemberFunction } from "../../util/wrap-member-function";
 
 export const memberExpressionBoolean = (sandbox: Sandbox, target: boolean, key: string | number): any => {
 
-    if (typeof key === 'string') {
+    if (typeof key === "string") {
 
         switch (key) {
 
-            case 'toString': {
+            case "toString": {
 
                 return wrapMemberFunction(sandbox, () => {
                     return target.toString();

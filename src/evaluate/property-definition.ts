@@ -17,17 +17,17 @@ import { VARIABLE_TYPE } from "../declare/variable";
 
 export const mountPropertyDefinition = (sandbox: ISandbox): void => {
 
-    sandbox.mount('PropertyDefinition', propertyDefinitionEvaluation);
+    sandbox.mount("PropertyDefinition", propertyDefinitionEvaluation);
 };
 
-export const propertyDefinitionEvaluation: Evaluator<'PropertyDefinition'> =
+export const propertyDefinitionEvaluation: Evaluator<"PropertyDefinition"> =
     async function (this: Sandbox, node: EST.PropertyDefinition, scope: Scope, trace: Trace): Promise<boolean> {
 
         if (!(trace instanceof TraceClass)) {
             throw error(ERROR_CODE.TRACE_SHOULD_BE_CLASS_TRACE, void 0, node, trace);
         }
 
-        if (node.key.type !== 'Identifier') {
+        if (node.key.type !== "Identifier") {
             throw error(ERROR_CODE.PROPERTY_SHOULD_BE_IDENTIFIER, "Key", node, trace);
         }
 

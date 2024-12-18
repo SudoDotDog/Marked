@@ -15,25 +15,25 @@ export const getAssignmentOperation
 
         switch (symbol) {
 
-            case '%=': return null;
-            case '&=': return null;
-            case '**=': return null;
-            case '*=': return (variable: Variable<any>, value: any) => variable.set(variable.get() * value);
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            case '+=': return (variable: Variable<any>, value: any) => variable.set(variable.get() + value);
-            case '-=': return (variable: Variable<any>, value: any) => variable.set(variable.get() - value);
-            case '/=': return (variable: Variable<any>, value: any) => {
+            case "%=": return null;
+            case "&=": return null;
+            case "**=": return null;
+            case "*=": return (variable: Variable<any>, value: any) => variable.set(variable.get() * value);
+             
+            case "+=": return (variable: Variable<any>, value: any) => variable.set(variable.get() + value);
+            case "-=": return (variable: Variable<any>, value: any) => variable.set(variable.get() - value);
+            case "/=": return (variable: Variable<any>, value: any) => {
                 if (value === 0) {
                     throw error(ERROR_CODE.CANNOT_DIVIDE_BY_ZERO, symbol);
                 }
                 return variable.set(variable.get() / value);
             };
-            case '<<=': return null;
-            case '=': return (variable: Variable<any>, value: any) => variable.set(value);
-            case '>>=': return null;
-            case '>>>=': return null;
-            case '^=': return null;
-            case '|=': return null;
+            case "<<=": return null;
+            case "=": return (variable: Variable<any>, value: any) => variable.set(value);
+            case ">>=": return null;
+            case ">>>=": return null;
+            case "^=": return null;
+            case "|=": return null;
         }
 
         return null;

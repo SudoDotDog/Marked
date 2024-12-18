@@ -18,10 +18,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountCallExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('CallExpression', callExpressionEvaluator);
+    sandbox.mount("CallExpression", callExpressionEvaluator);
 };
 
-export const callExpressionEvaluator: Evaluator<'CallExpression'> =
+export const callExpressionEvaluator: Evaluator<"CallExpression"> =
     async function (this: Sandbox, node: EST.CallExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -29,7 +29,7 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
         const func: SandFunction | ((...callArgs: any[]) => any) =
             await this.execute(node.callee, scope, nextTrace);
 
-        if (typeof func === 'undefined') {
+        if (typeof func === "undefined") {
 
             const calleeNode: EST.MemberExpression = node.callee as EST.MemberExpression;
             const callee: EST.Identifier = calleeNode.property as EST.Identifier;
@@ -62,7 +62,7 @@ export const callExpressionEvaluator: Evaluator<'CallExpression'> =
             return await func.execute(...args);
         }
 
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
 
             const result = await Promise.resolve(func(...args));
             const sandResult = parseNativeToSand(result);

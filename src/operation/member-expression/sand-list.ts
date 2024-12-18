@@ -11,18 +11,18 @@ import { wrapMemberFunction } from "../../util/wrap-member-function";
 import { SandFunction } from "../../variable/sand-function/sand-function";
 import { SandList } from "../../variable/sand-list";
 
-export const GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL = Symbol('GET_ARRAY_MEMBER_NOT_FOUND');
+export const GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL = Symbol("GET_ARRAY_MEMBER_NOT_FOUND");
 
 export const memberExpressionSandList = (sandbox: Sandbox, list: SandList<any>, key: string): any => {
 
     switch (key) {
 
-        case 'filter': {
+        case "filter": {
 
             return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => Promise<boolean>) | SandFunction) => {
 
                 if (!(func instanceof SandFunction)
-                    && typeof func !== 'function') {
+                    && typeof func !== "function") {
                     throw error(ERROR_CODE.LIST_FILTER_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
 
@@ -41,12 +41,12 @@ export const memberExpressionSandList = (sandbox: Sandbox, list: SandList<any>, 
                 return result;
             });
         }
-        case 'forEach': {
+        case "forEach": {
 
             return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => Promise<void>) | SandFunction) => {
 
                 if (!(func instanceof SandFunction)
-                    && typeof func !== 'function') {
+                    && typeof func !== "function") {
                     throw error(ERROR_CODE.LIST_FOR_EACH_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
 
@@ -59,16 +59,16 @@ export const memberExpressionSandList = (sandbox: Sandbox, list: SandList<any>, 
                 return;
             });
         }
-        case 'length': {
+        case "length": {
 
             return list.length;
         }
-        case 'map': {
+        case "map": {
 
             return wrapMemberFunction(sandbox, async (func: ((element: any, index: number) => any) | SandFunction) => {
 
                 if (!(func instanceof SandFunction)
-                    && typeof func !== 'function') {
+                    && typeof func !== "function") {
                     throw error(ERROR_CODE.LIST_MAP_ARGUMENT_SHOULD_BE_A_FUNCTION);
                 }
 

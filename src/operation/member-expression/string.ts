@@ -11,93 +11,93 @@ import { wrapMemberFunction } from "../../util/wrap-member-function";
 
 export const memberExpressionString = (sandbox: Sandbox, target: string, key: string | number): any => {
 
-    if (typeof key === 'string') {
+    if (typeof key === "string") {
 
         switch (key) {
 
-            case 'concat': {
+            case "concat": {
 
                 return wrapMemberFunction(sandbox, (...args: any[]) => {
                     return target.concat(...args);
                 });
             }
-            case 'endsWith': {
+            case "endsWith": {
 
                 return wrapMemberFunction(sandbox, (slice: string) => {
                     return target.endsWith(slice);
                 });
             }
-            case 'includes': {
+            case "includes": {
 
                 return wrapMemberFunction(sandbox, (slice: string) => {
                     return target.includes(slice);
                 });
             }
-            case 'length': {
+            case "length": {
 
                 return target.length;
             }
-            case 'padEnd': {
+            case "padEnd": {
 
                 return wrapMemberFunction(sandbox, (length: number, fillString: string) => {
                     return target.padEnd(length, fillString);
                 });
             }
-            case 'padStart': {
+            case "padStart": {
 
                 return wrapMemberFunction(sandbox, (length: number, fillString: string) => {
                     return target.padStart(length, fillString);
                 });
             }
-            case 'repeat': {
+            case "repeat": {
 
                 return wrapMemberFunction(sandbox, (count: number) => {
                     return target.repeat(count);
                 });
             }
-            case 'replace': {
+            case "replace": {
 
                 return wrapMemberFunction(sandbox, (searchValue: string, replaceValue: string) => {
                     return target.replace(searchValue, replaceValue);
                 });
             }
-            case 'slice': {
+            case "slice": {
 
                 return wrapMemberFunction(sandbox, (start: number, end?: number) => {
                     return target.slice(start, end);
                 });
             }
-            case 'split': {
+            case "split": {
 
                 return wrapMemberFunction(sandbox, (separator: string) => {
                     return target.split(separator);
                 });
             }
-            case 'substring': {
+            case "substring": {
 
                 return wrapMemberFunction(sandbox, (start: number, end?: number) => {
                     return target.substring(start, end);
                 });
             }
-            case 'startsWith': {
+            case "startsWith": {
 
                 return wrapMemberFunction(sandbox, (slice: string) => {
                     return target.startsWith(slice);
                 });
             }
-            case 'toLowerCase': {
+            case "toLowerCase": {
 
                 return wrapMemberFunction(sandbox, () => {
                     return target.toLowerCase();
                 });
             }
-            case 'toString': {
+            case "toString": {
 
                 return wrapMemberFunction(sandbox, () => {
                     return target.toString();
                 });
             }
-            case 'toUpperCase': {
+            case "toUpperCase": {
 
                 return wrapMemberFunction(sandbox, () => {
                     return target.toUpperCase();
@@ -106,7 +106,7 @@ export const memberExpressionString = (sandbox: Sandbox, target: string, key: st
         }
     }
 
-    if (typeof key === 'number') {
+    if (typeof key === "number") {
 
         return target.charAt(key);
     }

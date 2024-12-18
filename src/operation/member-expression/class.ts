@@ -12,7 +12,7 @@ import { SandFunction } from "../../variable/sand-function/sand-function";
 
 export const memberExpressionClass = (sandbox: Sandbox, sandClass: SandClass, key: string | number): any => {
 
-    if (typeof key === 'string') {
+    if (typeof key === "string") {
 
         if (sandClass.staticBody.has(key)) {
 
@@ -26,7 +26,7 @@ export const memberExpressionClass = (sandbox: Sandbox, sandClass: SandClass, ke
 
         switch (key) {
 
-            case 'name': {
+            case "name": {
                 return sandClass.className;
             }
         }

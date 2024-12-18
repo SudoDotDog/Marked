@@ -30,7 +30,7 @@ export const pauseForBreakPoint = async function (this: Sandbox, node: EST.Node,
 
     const sourceCode: string | null = this.getSourceCode(trace.scriptLocation);
 
-    if (typeof sourceCode !== 'string') {
+    if (typeof sourceCode !== "string") {
 
         throw error(
             ERROR_CODE.INTERNAL_ERROR,

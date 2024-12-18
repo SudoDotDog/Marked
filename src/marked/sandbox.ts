@@ -9,24 +9,24 @@ import { MarkedDebugBreakPoint } from "../debug/break-point/break-point";
 import { MarkedDebugBreakPointController } from "../debug/break-point/controller";
 import { MarkedDebugInterceptor } from "../debug/interceptor";
 import { shouldDebugNode } from "../debug/node";
-import { ERROR_CODE } from '../declare/error-code';
+import { ERROR_CODE } from "../declare/error-code";
 import { END_SIGNAL, Evaluator, MarkedResult } from "../declare/evaluate";
-import { defaultSandboxLanguage, IExecuter, ISandbox, ISandboxOptions, MarkedMixin, ModuleResolver, ModuleResolveResult, OptionName, SandboxLanguage } from '../declare/sandbox';
-import { ScriptLocation } from '../declare/script-location';
-import { EST_TYPE } from '../declare/types';
-import { IScope, ITrace, VARIABLE_TYPE } from '../declare/variable';
+import { IExecuter, ISandbox, ISandboxOptions, MarkedMixin, ModuleResolveResult, ModuleResolver, OptionName, SandboxLanguage, defaultSandboxLanguage } from "../declare/sandbox";
+import { ScriptLocation } from "../declare/script-location";
+import { EST_TYPE } from "../declare/types";
+import { IScope, ITrace, VARIABLE_TYPE } from "../declare/variable";
 import { pauseForBreakPoint } from "../operation/break-point";
 import { parseNativeToSand } from "../parse/native-to-sand";
 import { parseScript } from "../parse/script/parse-script";
-import { assert } from '../util/error/assert';
-import { error, MarkedError } from "../util/error/error";
-import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from '../util/options';
-import { Flag } from '../variable/flag';
+import { assert } from "../util/error/assert";
+import { MarkedError, error } from "../util/error/error";
+import { awaitableSleep, getDefaultSandboxOption, getRawCodeLength } from "../util/options";
+import { Flag } from "../variable/flag";
 import { Scope } from "../variable/scope";
-import { Trace } from '../variable/trace/trace';
-import { EvaluateResourceResult, EVALUATE_RESOURCE_END_SIGNAL, ParseScriptResult } from "./declare";
-import { useEverything } from './evaluate';
-import { Executer } from './executer';
+import { Trace } from "../variable/trace/trace";
+import { EVALUATE_RESOURCE_END_SIGNAL, EvaluateResourceResult, ParseScriptResult } from "./declare";
+import { useEverything } from "./evaluate";
+import { Executer } from "./executer";
 import { MarkedLogRecorder } from "../log/log-recorder";
 import { IMarkedExecuteLog } from "../log/declare";
 
@@ -262,7 +262,7 @@ export class Sandbox implements ISandbox {
             script,
         );
 
-        const targetScope: IScope = typeof scope === 'undefined'
+        const targetScope: IScope = typeof scope === "undefined"
             ? this._executeScope
             : scope;
 
@@ -286,7 +286,7 @@ export class Sandbox implements ISandbox {
             const AST: EST.BaseNode = parseResult.estree;
 
             const breakPointController: MarkedDebugBreakPointController | undefined =
-                typeof breakPoints === 'undefined'
+                typeof breakPoints === "undefined"
                     ? undefined
                     : MarkedDebugBreakPointController.fromBreakPoints(breakPoints);
 
@@ -531,9 +531,9 @@ export class Sandbox implements ISandbox {
             trace,
         });
 
-        if (this.getOption('duration') > 0) {
+        if (this.getOption("duration") > 0) {
 
-            await awaitableSleep(this.getOption('duration'));
+            await awaitableSleep(this.getOption("duration"));
         }
 
         if (this._broke) {

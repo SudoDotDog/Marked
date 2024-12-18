@@ -4,14 +4,14 @@
  * @description Parse ESTree
  */
 
-import * as Acorn from 'acorn';
+import * as Acorn from "acorn";
 import * as EST from "estree";
-import { PARSE_ESTREE_COMMENT_TYPE, ParseESTreeComment, ParseESTreeResult } from './declare';
+import { PARSE_ESTREE_COMMENT_TYPE, ParseESTreeComment, ParseESTreeResult } from "./declare";
 
 export const parseCodeToESTree = (sourceCode: string): ParseESTreeResult => {
 
     const comments: ParseESTreeComment[] = [];
-    const hasHashBang: boolean = sourceCode.startsWith('#!');
+    const hasHashBang: boolean = sourceCode.startsWith("#!");
 
     const AST: EST.Node = Acorn.Parser.parse(sourceCode, {
 
@@ -44,8 +44,8 @@ export const parseCodeToESTree = (sourceCode: string): ParseESTreeResult => {
                 end,
             });
         },
-        sourceType: 'module',
-        ecmaVersion: 'latest',
+        sourceType: "module",
+        ecmaVersion: "latest",
     }) as EST.Node;
 
     return {

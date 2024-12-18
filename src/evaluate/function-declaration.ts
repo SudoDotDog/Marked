@@ -18,10 +18,10 @@ import { functionExpressionEvaluator } from "./function-expression";
 
 export const mountFunctionDeclaration = (sandbox: ISandbox): void => {
 
-    sandbox.mount('FunctionDeclaration', functionDeclarationEvaluator);
+    sandbox.mount("FunctionDeclaration", functionDeclarationEvaluator);
 };
 
-export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
+export const functionDeclarationEvaluator: Evaluator<"FunctionDeclaration"> =
     async function (this: Sandbox, node: EST.FunctionDeclaration, scope: Scope, trace: Trace): Promise<SandFunction> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -33,11 +33,11 @@ export const functionDeclarationEvaluator: Evaluator<'FunctionDeclaration'> =
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         }
 
-        if (node.id.type !== 'Identifier') {
+        if (node.id.type !== "Identifier") {
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         }
 
-        if (typeof node.id.name !== 'string') {
+        if (typeof node.id.name !== "string") {
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         }
 

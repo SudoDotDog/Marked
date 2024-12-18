@@ -16,9 +16,10 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
+          - macos-latest
         node-version:
-          - 16
           - 18
+          - 20
         architecture:
           - x64
     steps:
@@ -28,18 +29,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           architecture: ${{ matrix.architecture }}
+          cache: yarn
       - name: Install Dependencies
         run: |
-          npm install @sudoo/build-cli -g
-          sudoo-build install
+          yarn
       - name: Lint
         run: |
-          sudoo-build lint
+          yarn lint
       - name: Build
         run: |
-          sudoo-build build
+          yarn build
       - name: Test
         run: |
-          sudoo-build coverage
+          yarn coverage
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -19,14 +19,14 @@ import { Variable } from "../variable/variable";
 export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebugSnapshotScopeVariable => {
 
     if (!(variable instanceof Variable)) {
-        throw error(ERROR_CODE.INTERNAL_ERROR, 'Scope variable is not variable');
+        throw error(ERROR_CODE.INTERNAL_ERROR, "Scope variable is not variable");
     }
 
     const value: any = variable.get();
 
     if (value instanceof SandLiteralBigInt) {
         return {
-            type: 'bigint',
+            type: "bigint",
             value: value.toNativeBigInt(),
             native: false,
             mutable: variable.mutable,
@@ -35,7 +35,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value instanceof SandClass) {
         return {
-            type: 'class',
+            type: "class",
             value: value.body.map,
             native: false,
             mutable: variable.mutable,
@@ -44,7 +44,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value instanceof SandClassInstance) {
         return {
-            type: 'class-instance',
+            type: "class-instance",
             value: value.body.map,
             native: false,
             mutable: variable.mutable,
@@ -53,7 +53,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value instanceof SandLiteralRegExp) {
         return {
-            type: 'regexp',
+            type: "regexp",
             value: value.toNativeRegExp(),
             native: false,
             mutable: variable.mutable,
@@ -62,7 +62,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value instanceof SandList) {
         return {
-            type: 'list',
+            type: "list",
             value: value.list,
             native: false,
             mutable: variable.mutable,
@@ -71,7 +71,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value instanceof SandMap) {
         return {
-            type: 'map',
+            type: "map",
             value: value.map,
             native: false,
             mutable: variable.mutable,
@@ -80,52 +80,52 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value instanceof SandFunction) {
         return {
-            type: 'function',
-            value: '[Marked Function]',
+            type: "function",
+            value: "[Marked Function]",
             native: false,
             mutable: false,
         };
     }
 
-    if (typeof value === 'function') {
+    if (typeof value === "function") {
         return {
-            type: 'function',
-            value: '[Marked Native Function]',
+            type: "function",
+            value: "[Marked Native Function]",
             native: true,
             mutable: variable.mutable,
         };
     }
 
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
         return {
-            type: 'number',
+            type: "number",
             value,
             native: false,
             mutable: variable.mutable,
         };
     }
 
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
         return {
-            type: 'string',
+            type: "string",
             value,
             native: false,
             mutable: variable.mutable,
         };
     }
 
-    if (typeof value === 'boolean') {
+    if (typeof value === "boolean") {
         return {
-            type: 'boolean',
+            type: "boolean",
             value,
             native: false,
             mutable: variable.mutable,
         };
     }
 
-    if (typeof value === 'undefined') {
+    if (typeof value === "undefined") {
         return {
-            type: 'undefined',
+            type: "undefined",
             value,
             native: false,
             mutable: variable.mutable,
@@ -134,7 +134,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
 
     if (value === null) {
         return {
-            type: 'null',
+            type: "null",
             value,
             native: false,
             mutable: variable.mutable,
@@ -142,7 +142,7 @@ export const parseSnapshotScopeVariable = (variable: Variable<any>): MarkedDebug
     }
 
     return {
-        type: 'unknown',
+        type: "unknown",
         value,
         native: false,
         mutable: variable.mutable,

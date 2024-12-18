@@ -11,7 +11,7 @@ export class SandLiteralRegExp {
         flagsString: string,
     ): SandLiteralRegExp {
 
-        const flags: string[] = flagsString.split('');
+        const flags: string[] = flagsString.split("");
         const filtered: string[] = flags.filter((flag) => flag.length === 1);
 
         return new SandLiteralRegExp(pattern, filtered);
@@ -31,6 +31,6 @@ export class SandLiteralRegExp {
 
     public toNativeRegExp(): RegExp {
 
-        return new RegExp(this._pattern, this._flags.join(''));
+        return new RegExp(this._pattern, this._flags.join(""));
     }
 }

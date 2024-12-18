@@ -14,7 +14,7 @@ export const memberExpressionSandBigInt = (sandbox: Sandbox, bigint: SandLiteral
 
     switch (key) {
 
-        case 'toString': {
+        case "toString": {
 
             return wrapMemberFunction(sandbox, () => {
                 return bigint.toNativeBigInt().toString();

@@ -35,10 +35,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountMemberExpressionEvaluator = (sandbox: ISandbox): void => {
 
-    sandbox.mount('MemberExpression', memberExpressionEvaluator);
+    sandbox.mount("MemberExpression", memberExpressionEvaluator);
 };
 
-export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
+export const memberExpressionEvaluator: Evaluator<"MemberExpression"> =
     async function (this: Sandbox, node: EST.MemberExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -71,7 +71,7 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
             return memberValue;
         }
 
-        if (typeof object === 'undefined') {
+        if (typeof object === "undefined") {
 
             if (node.optional) {
                 return undefined;
@@ -89,22 +89,22 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
             throw error(ERROR_CODE.CANNOT_READ_PROPERTY_OF_NULL, String(key), node, trace);
         }
 
-        if (typeof object === 'string') {
+        if (typeof object === "string") {
             return memberExpressionString(this, object, key);
         }
-        if (typeof object === 'number') {
+        if (typeof object === "number") {
             return memberExpressionNumber(this, object, key);
         }
-        if (typeof object === 'boolean') {
+        if (typeof object === "boolean") {
             return memberExpressionBoolean(this, object, key);
         }
 
         if (object instanceof SandList) {
 
-            if (typeof key === 'number') {
+            if (typeof key === "number") {
 
                 return object.get(key);
-            } else if (typeof key === 'string') {
+            } else if (typeof key === "string") {
 
                 const arrayMember: any = memberExpressionSandList(this, object, key);
                 if (arrayMember !== GET_ARRAY_MEMBER_NOT_FOUND_SYMBOL) {
@@ -116,7 +116,7 @@ export const memberExpressionEvaluator: Evaluator<'MemberExpression'> =
 
         if (object instanceof SandMap) {
 
-            if (typeof key === 'string') {
+            if (typeof key === "string") {
 
                 return object.get(key);
             }

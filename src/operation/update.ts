@@ -14,13 +14,13 @@ export const getUpdateOperation
 
         switch (symbol) {
 
-            case '++': return (value: any) => {
-                if (typeof value === 'number') {
+            case "++": return (value: any) => {
+                if (typeof value === "number") {
                     return value + 1;
                 }
                 throw error(ERROR_CODE.POSITIVE_UPDATE_ONLY_AVAILABLE_FOR_VALID_NUMBER, value);
             };
-            case '--': return (value: any) => value - 1;
+            case "--": return (value: any) => value - 1;
         }
 
         return null;

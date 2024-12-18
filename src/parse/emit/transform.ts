@@ -16,7 +16,7 @@ export type EmitTypeScriptTransformResult = {
     declaration: string;
 };
 
-const sourceMapEnding: string = '//# sourceMappingURL=__$marked-target.js.map';
+const sourceMapEnding: string = "//# sourceMappingURL=__$marked-target.js.map";
 
 export const emitTypeScriptTransform = async (
     sourceCode: string,
@@ -24,9 +24,9 @@ export const emitTypeScriptTransform = async (
 
 
     const results: EmitTypeScriptTransformResult = {
-        source: '',
+        source: "",
         sourceMap: null as any,
-        declaration: '',
+        declaration: "",
     };
 
     const host: TS.CompilerHost = createTypeScriptComplierHost(
@@ -37,13 +37,13 @@ export const emitTypeScriptTransform = async (
             if (results.source.endsWith(sourceMapEnding)) {
                 results.source = results.source.substring(
                     0,
-                    results.source.length - sourceMapEnding.length
+                    results.source.length - sourceMapEnding.length,
                 );
             }
             if (results.source.endsWith(New_Line_Character)) {
                 results.source = results.source.substring(
                     0,
-                    results.source.length - New_Line_Character.length
+                    results.source.length - New_Line_Character.length,
                 );
             }
         },
@@ -61,7 +61,7 @@ export const emitTypeScriptTransform = async (
             if (results.declaration.endsWith(New_Line_Character)) {
                 results.declaration = results.declaration.substring(
                     0,
-                    results.declaration.length - New_Line_Character.length
+                    results.declaration.length - New_Line_Character.length,
                 );
             }
         },

@@ -13,10 +13,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountEmptyStatement = (sandbox: ISandbox): void => {
 
-    sandbox.mount('EmptyStatement', emptyStatementEvaluator);
+    sandbox.mount("EmptyStatement", emptyStatementEvaluator);
 };
 
-export const emptyStatementEvaluator: Evaluator<'EmptyStatement'> =
+export const emptyStatementEvaluator: Evaluator<"EmptyStatement"> =
     async function (this: Sandbox, _node: EST.EmptyStatement, _scope: Scope, _trace: Trace): Promise<any> {
 
         return null;

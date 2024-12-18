@@ -16,13 +16,13 @@ import { Variable } from "../variable/variable";
 
 export const mountIdentifier = (sandbox: ISandbox): void => {
 
-    sandbox.mount('Identifier', identifierEvaluator);
+    sandbox.mount("Identifier", identifierEvaluator);
 };
 
-export const identifierEvaluator: Evaluator<'Identifier'> =
+export const identifierEvaluator: Evaluator<"Identifier"> =
     async function (this: Sandbox, node: EST.Identifier, scope: Scope, trace: Trace): Promise<any> {
 
-        if (node.name === 'undefined') {
+        if (node.name === "undefined") {
             return undefined;
         }
 

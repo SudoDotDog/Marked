@@ -4,7 +4,7 @@
  * @description Decode
  */
 
-import { decode, SourceMapMappings } from "sourcemap-codec";
+import { SourceMapMappings, decode } from "sourcemap-codec";
 import { SourceMappingLine, SourceMappingSegment } from "./declare";
 
 export const decodeSourceMap = (sourceMapString: string): SourceMappingLine[] => {

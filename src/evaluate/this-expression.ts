@@ -14,11 +14,11 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountThisExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ThisExpression', thisExpressionEvaluator);
+    sandbox.mount("ThisExpression", thisExpressionEvaluator);
 };
 
-export const thisExpressionEvaluator: Evaluator<'ThisExpression'> =
-    // eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
+export const thisExpressionEvaluator: Evaluator<"ThisExpression"> =
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function (this: Sandbox, node: EST.ThisExpression, scope: Scope, trace: Trace): Promise<SandMap<any>> {
 
         const thisValue: SandMap<any> = scope.findThis();

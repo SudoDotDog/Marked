@@ -18,8 +18,8 @@ export type ModuleResolveResult = {
     readonly scriptLocation: ScriptLocation;
 };
 
-export type SandboxLanguage = 'typescript' | 'javascript';
-export const defaultSandboxLanguage: SandboxLanguage = 'javascript';
+export type SandboxLanguage = "typescript" | "javascript";
+export const defaultSandboxLanguage: SandboxLanguage = "javascript";
 
 export type ModuleResolver = (source: string, trace: ITrace) => ModuleResolveResult | null | Promise<ModuleResolveResult | null>;
 

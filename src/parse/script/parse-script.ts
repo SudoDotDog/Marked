@@ -12,14 +12,14 @@ import { RawSourceMapLocationFinder } from "../../source-map/location-finder/raw
 import { SegmentSourceMapLocationFinder } from "../../source-map/location-finder/segment";
 import { error } from "../../util/error/error";
 import { ParseESTreeResult } from "../declare";
-import { emitTypeScriptTransform, EmitTypeScriptTransformResult } from "../emit/transform";
+import { EmitTypeScriptTransformResult, emitTypeScriptTransform } from "../emit/transform";
 import { parseCodeToESTree } from "../parse-estree";
 
 export const parseScript = async (script: string, language: SandboxLanguage): Promise<ParseScriptResult> => {
 
-    if (language === 'javascript') {
+    if (language === "javascript") {
         return await parseJavaScript(script);
-    } else if (language === 'typescript') {
+    } else if (language === "typescript") {
         return await parseTypeScript(script);
     }
 
@@ -54,7 +54,7 @@ const parseTypeScript = async (script: string): Promise<ParseScriptResult> => {
             await emitTypeScriptTransform(script);
 
         const estree: ParseESTreeResult = await Promise.resolve(
-            parseCodeToESTree(transformResult.source)
+            parseCodeToESTree(transformResult.source),
         );
 
         const locationFinder: BaseSourceMapLocationFinder =

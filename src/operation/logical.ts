@@ -12,9 +12,9 @@ export const getLogicalOperation
 
         switch (symbol) {
 
-            case '&&': return (left: any, right: any) => left && right;
-            case '||': return (left: any, right: any) => left || right;
-            case '??': return (left: any, right: any) => left ?? right;
+            case "&&": return (left: any, right: any) => left && right;
+            case "||": return (left: any, right: any) => left || right;
+            case "??": return (left: any, right: any) => left ?? right;
         }
 
         return null;

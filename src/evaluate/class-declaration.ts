@@ -18,21 +18,21 @@ import { TraceClass } from "../variable/trace/trace-class";
 
 export const mountClassDeclaration = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ClassDeclaration', classDeclarationEvaluation);
+    sandbox.mount("ClassDeclaration", classDeclarationEvaluation);
 };
 
-export const classDeclarationEvaluation: Evaluator<'ClassDeclaration'> =
+export const classDeclarationEvaluation: Evaluator<"ClassDeclaration"> =
     async function (this: Sandbox, node: EST.ClassDeclaration, scope: Scope, trace: Trace): Promise<SandClass> {
 
         if (!node.id) {
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         }
 
-        if (node.id.type !== 'Identifier') {
+        if (node.id.type !== "Identifier") {
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         }
 
-        if (typeof node.id.name !== 'string') {
+        if (typeof node.id.name !== "string") {
             throw error(ERROR_CODE.UNKNOWN_ERROR, void 0, node, trace);
         }
 
@@ -43,7 +43,7 @@ export const classDeclarationEvaluation: Evaluator<'ClassDeclaration'> =
 
             const superClass: any = await this.execute(node.superClass, scope, trace);
             if (!(superClass instanceof SandClass)) {
-                throw error(ERROR_CODE.INTERNAL_ERROR, 'Super class node is not sand class', node, trace);
+                throw error(ERROR_CODE.INTERNAL_ERROR, "Super class node is not sand class", node, trace);
             }
 
             sandClass.setSuperClass(superClass);

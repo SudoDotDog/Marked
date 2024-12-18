@@ -6,7 +6,7 @@
 
 import * as EST from "estree";
 
-export type EST_TYPE = EST.Node['type'];
+export type EST_TYPE = EST.Node["type"];
 
 export interface IESTreeType extends Record<EST_TYPE, any> {
 

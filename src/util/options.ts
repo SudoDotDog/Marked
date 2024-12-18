@@ -23,7 +23,7 @@ export const getRawCode = (script: string): string => {
             .split(New_Line_Character)
             .map((str: string) => str.trim())
             .filter((str: string) => Boolean(str))
-            .join('');
+            .join("");
     return rawCode;
 };
 
@@ -35,7 +35,7 @@ export const getRawCodeLength = (script: string): number => {
 export const getCommentRemovedCode = (script: string): string => {
 
     const regExp: RegExp = /(\/\/.*)|(\/\*[\s\S]*?\*\/)/g;
-    return script.replace(regExp, '');
+    return script.replace(regExp, "");
 };
 
 export const awaitableSleep = (time: number): Promise<void> => {

@@ -9,8 +9,8 @@ import * as EST from "estree";
 export const validateLiteralOrIdentifier
     = (node: EST.Literal | EST.Identifier): boolean => {
 
-        if (node.type === 'Literal'
-            || node.type === 'Identifier') {
+        if (node.type === "Literal"
+            || node.type === "Identifier") {
             return true;
         }
         return false;

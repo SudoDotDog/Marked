@@ -5,7 +5,7 @@
  */
 
 import { ISandbox } from "../../declare/sandbox";
-import { defaultMarkedNativeClassGetStaticMemberFunction, defaultMarkedNativeClassToNativeFunction, MarkedNativeClassConstructor, MarkedNativeClassGetStaticMemberFunction, MarkedNativeClassToNativeFunction } from "./declare";
+import { MarkedNativeClassConstructor, MarkedNativeClassGetStaticMemberFunction, MarkedNativeClassToNativeFunction, defaultMarkedNativeClassGetStaticMemberFunction, defaultMarkedNativeClassToNativeFunction } from "./declare";
 
 export class MarkedNativeClass {
 

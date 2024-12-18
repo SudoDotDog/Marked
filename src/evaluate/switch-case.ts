@@ -16,10 +16,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountSwitchCase = (sandbox: ISandbox): void => {
 
-    sandbox.mount('SwitchCase', switchCaseEvaluator);
+    sandbox.mount("SwitchCase", switchCaseEvaluator);
 };
 
-export const switchCaseEvaluator: Evaluator<'SwitchCase'> =
+export const switchCaseEvaluator: Evaluator<"SwitchCase"> =
     async function (this: Sandbox, node: EST.SwitchCase, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);

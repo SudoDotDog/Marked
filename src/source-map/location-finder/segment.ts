@@ -35,7 +35,7 @@ export class SegmentSourceMapLocationFinder extends BaseSourceMapLocationFinder 
 
         const line: SourceMappingLine | undefined = this._decoded[position.line - 1];
 
-        if (typeof line === 'undefined') {
+        if (typeof line === "undefined") {
 
             throw error(
                 ERROR_CODE.CANNOT_FIND_ORIGINAL_POSITION_FROM_LINE,

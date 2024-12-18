@@ -18,10 +18,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountBinaryExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('BinaryExpression', binaryExpressionEvaluator);
+    sandbox.mount("BinaryExpression", binaryExpressionEvaluator);
 };
 
-export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
+export const binaryExpressionEvaluator: Evaluator<"BinaryExpression"> =
     async function (this: Sandbox, node: EST.BinaryExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
@@ -29,13 +29,13 @@ export const binaryExpressionEvaluator: Evaluator<'BinaryExpression'> =
         const evalLeft: () => Promise<any> = async () => await this.execute(node.left, scope, nextTrace);
         const evalRight: () => Promise<any> = async () => await this.execute(node.right, scope, nextTrace);
 
-        if (node.operator === 'in') {
+        if (node.operator === "in") {
 
             const bindingExecuteInBinaryOperator = executeInBinaryOperator.bind(this);
             return bindingExecuteInBinaryOperator(node.left, node.right, scope, nextTrace);
         }
 
-        if (node.operator === 'instanceof') {
+        if (node.operator === "instanceof") {
 
             const bindingExecuteInstanceOfBinaryOperator = executeInstanceOfBinaryOperator.bind(this);
             return bindingExecuteInstanceOfBinaryOperator(node.left, node.right, scope, nextTrace);

@@ -13,10 +13,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountImportNamespaceSpecifier = (sandbox: ISandbox): void => {
 
-    sandbox.mount('ImportNamespaceSpecifier', importNamespaceSpecifierEvaluator);
+    sandbox.mount("ImportNamespaceSpecifier", importNamespaceSpecifierEvaluator);
 };
 
-export const importNamespaceSpecifierEvaluator: Evaluator<'ImportNamespaceSpecifier'> =
+export const importNamespaceSpecifierEvaluator: Evaluator<"ImportNamespaceSpecifier"> =
     async function (this: Sandbox, node: EST.ImportNamespaceSpecifier, _scope: Scope, _trace: Trace): Promise<any> {
 
         const name: string = node.local.name;

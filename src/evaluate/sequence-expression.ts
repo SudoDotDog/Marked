@@ -14,10 +14,10 @@ import { Trace } from "../variable/trace/trace";
 
 export const mountSequenceExpression = (sandbox: ISandbox): void => {
 
-    sandbox.mount('SequenceExpression', sequenceExpressionEvaluator);
+    sandbox.mount("SequenceExpression", sequenceExpressionEvaluator);
 };
 
-export const sequenceExpressionEvaluator: Evaluator<'SequenceExpression'> =
+export const sequenceExpressionEvaluator: Evaluator<"SequenceExpression"> =
     async function (this: Sandbox, node: EST.SequenceExpression, scope: Scope, trace: Trace): Promise<any> {
 
         const nextTrace: Trace = trace.stack(node);
