@@ -12,6 +12,7 @@ export const typeCheckIsConstructor = (target: any): boolean => {
 
     try {
         Reflect.construct(String, [], target);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
 
         return false;

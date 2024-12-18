@@ -6,21 +6,21 @@
  */
 
 import Chance from "chance";
-import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox } from '../../../src';
-import { ERROR_CODE } from '../../../src/declare/error-code';
-import { New_Line_Character } from '../../../src/host/declare';
-import { assertFailedMarkedResult, assertSucceedMarkedResult, assertTerminatedMarkedResult } from '../../util/assert-result';
+import { MarkedDebugFlowController, MarkedDebugInterceptor, MarkedDebugSnapshot, MarkedResult, Sandbox } from "../../../src";
+import { ERROR_CODE } from "../../../src/declare/error-code";
+import { New_Line_Character } from "../../../src/host/declare";
+import { assertFailedMarkedResult, assertSucceedMarkedResult, assertTerminatedMarkedResult } from "../../util/assert-result";
 
-describe('Given Integration Debug (Debugger) Cases', (): void => {
+describe("Given Integration Debug (Debugger) Cases", (): void => {
 
-    const chance = new Chance('integration-debug-debugger');
+    const chance = new Chance("integration-debug-debugger");
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();
         return sandbox;
     };
 
-    it('should be able to throw when debug without interceptor', async (): Promise<void> => {
+    it("should be able to throw when debug without interceptor", async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
 
@@ -29,7 +29,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         const value1: number = chance.integer({ max: 10, min: 1 });
         const value2: number = chance.integer({ max: 10, min: 1 });
 
-        sandbox.inject('deject', (content: any) => middle.push(content));
+        sandbox.inject("deject", (content: any) => middle.push(content));
 
         const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
 
@@ -38,7 +38,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         expect(result.error.code).toEqual(ERROR_CODE.DEBUGGER_WITHOUT_DEBUG_INTERCEPTOR);
     });
 
-    it('should be able to handle debug with single debugger - continue', async (): Promise<void> => {
+    it("should be able to handle debug with single debugger - continue", async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -58,7 +58,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         const value1: number = chance.integer({ max: 10, min: 1 });
         const value2: number = chance.integer({ max: 10, min: 1 });
 
-        sandbox.inject('deject', (content: any) => middle.push(content));
+        sandbox.inject("deject", (content: any) => middle.push(content));
 
         const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
 
@@ -66,13 +66,12 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         expect(middle).toEqual([value1, value2]);
         expect(debuggerSnapshot).not.toBeNull();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).toEqual({
-            deject: '[Marked Native Function]',
+            deject: "[Marked Native Function]",
         });
     });
 
-    it('should be able to handle debug with single debugger - terminate', async (): Promise<void> => {
+    it("should be able to handle debug with single debugger - terminate", async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -92,7 +91,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         const value1: number = chance.integer({ max: 10, min: 1 });
         const value2: number = chance.integer({ max: 10, min: 1 });
 
-        sandbox.inject('deject', (content: any) => middle.push(content));
+        sandbox.inject("deject", (content: any) => middle.push(content));
 
         const result: MarkedResult = await sandbox.evaluate(`deject(${value1});debugger;deject(${value2});`);
 
@@ -100,13 +99,12 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         expect(middle).toEqual([value1]);
         expect(debuggerSnapshot).not.toBeNull();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).toEqual({
-            deject: '[Marked Native Function]',
+            deject: "[Marked Native Function]",
         });
     });
 
-    it('should be able to handle debug with single debugger - next step', async (): Promise<void> => {
+    it("should be able to handle debug with single debugger - next step", async (): Promise<void> => {
 
         let debuggerSnapshot: MarkedDebugSnapshot = null as any;
 
@@ -133,7 +131,7 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
         const value2: number = chance.integer({ max: 10, min: 1 });
         const value3: number = chance.integer({ max: 10, min: 1 });
 
-        sandbox.inject('deject', (content: any) => middle.push(content));
+        sandbox.inject("deject", (content: any) => middle.push(content));
 
         const result: MarkedResult = await sandbox.evaluate([
             `deject(${value1});`,
@@ -145,9 +143,8 @@ describe('Given Integration Debug (Debugger) Cases', (): void => {
 
         expect(middle).toEqual([value1, value2]);
         expect(debuggerSnapshot).not.toBeNull();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(debuggerSnapshot.scope.getParent()!.getKeyValueObject()).toEqual({
-            deject: '[Marked Native Function]',
+            deject: "[Marked Native Function]",
         });
     });
 });

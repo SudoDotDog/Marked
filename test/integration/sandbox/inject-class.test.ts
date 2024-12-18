@@ -5,7 +5,6 @@
  * @override Integration Test
  */
 
-/* eslint-disable max-classes-per-file */
 import Chance from "chance";
 import { Sandbox } from "../../../src";
 import { ERROR_CODE } from "../../../src/declare/error-code";

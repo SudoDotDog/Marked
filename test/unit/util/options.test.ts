@@ -4,7 +4,6 @@
  * @description Options Test
  */
 
-
 import { ISandboxOptions } from "../../../src/declare/sandbox";
 import { New_Line_Character } from "../../../src/host/declare";
 import { getCommentRemovedCode, getDefaultSandboxOption, getRawCode, getRawCodeLength } from "../../../src/util/options";
@@ -53,7 +52,6 @@ describe("Given an Options utils", (): void => {
             const result: string = getRawCode(testCode);
             expect(result.split(New_Line_Character)).toHaveLength(1);
 
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(result).toHaveLength(37);
         });
 
@@ -61,7 +59,6 @@ describe("Given an Options utils", (): void => {
 
             const result: number = getRawCodeLength(testCode);
 
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             expect(result).toEqual(37);
         });
     });

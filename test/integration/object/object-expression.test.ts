@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace MemberExpression
- * @description Update
+ * @description Object
  * @override Integration Test
  */
 
@@ -9,10 +9,10 @@ import Chance from "chance";
 import { MarkedResult, New_Line_Character, Sandbox } from "../../../src";
 import { assertSucceedMarkedResult } from "../../util/assert-result";
 
-describe("Given Integration Member Expression (Update) Cases", (): void => {
+describe("Given Object (Object Expression) Cases", (): void => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const chance = new Chance("integration-member-expression-update");
+    const chance = new Chance("object-object-expression");
 
     const createSandbox = () => {
         const sandbox: Sandbox = Sandbox.fromAllEvaluators();
@@ -22,14 +22,15 @@ describe("Given Integration Member Expression (Update) Cases", (): void => {
     it("should be able to update expression with member expression", async (): Promise<void> => {
 
         const sandbox: Sandbox = createSandbox();
-
         const result: MarkedResult = await sandbox.evaluate([
-            "const map = {a: 0};",
-            "map.a++;",
-            "export default map.a;",
+            "const a = 'key';",
+            "const map = {[a]: 0};",
+            "export default map;",
         ].join(New_Line_Character));
 
         assertSucceedMarkedResult(result);
+
+        console.log(result.exports);
 
         expect(result.exports.default).toEqual(1);
     });

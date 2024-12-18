@@ -65,6 +65,7 @@ const parseTypeScript = async (script: string): Promise<ParseScriptResult> => {
             comments: estree.comments,
             locationFinder,
         };
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
 
         throw error(ERROR_CODE.TYPESCRIPT_COMPILE_ERROR);
