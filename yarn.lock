@@ -1879,8 +1879,8 @@ __metadata:
     "@types/estree": "npm:^1.0.6"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.2"
-    "@typescript-eslint/eslint-plugin": "npm:^8.18.0"
-    "@typescript-eslint/parser": "npm:^8.18.0"
+    "@typescript-eslint/eslint-plugin": "npm:^8.18.1"
+    "@typescript-eslint/parser": "npm:^8.18.1"
     acorn: "npm:8.14.0"
     acorn-walk: "npm:8.3.4"
     babel-jest: "npm:^29.7.0"
@@ -2052,7 +2052,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^8.18.0":
+"@typescript-eslint/eslint-plugin@npm:^8.18.1":
   version: 8.18.1
   resolution: "@typescript-eslint/eslint-plugin@npm:8.18.1"
   dependencies:
@@ -2073,7 +2073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^8.18.0":
+"@typescript-eslint/parser@npm:^8.18.1":
   version: 8.18.1
   resolution: "@typescript-eslint/parser@npm:8.18.1"
   dependencies:
