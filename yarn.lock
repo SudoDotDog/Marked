@@ -1452,12 +1452,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/test-origin-jest@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@imbricate/test-origin-jest@npm:3.4.0"
+"@imbricate/test-origin-jest@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "@imbricate/test-origin-jest@npm:3.5.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/23fe459b3bf9a469e315549a4343d207f4f08dc6fbaaf83f627fc35e11641f592d89924aca32a2b560ff08405fdde3ec2c1004c3320efd55d9f4c1d4f7755a3a
+  checksum: 10c0/624cf354a25ea742640f0be4cec6dbefbebfbfab722b47bcca6235fab4a58e18930ec716e0c0193a68e275fbcfcc654ed86bea695e9169e8c62211f5bfd2f424
   languageName: node
   linkType: hard
 
@@ -1875,7 +1875,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.26.0"
     "@babel/preset-typescript": "npm:^7.26.0"
     "@imbricate/core": "npm:^3.10.1"
-    "@imbricate/test-origin-jest": "npm:^3.4.0"
+    "@imbricate/test-origin-jest": "npm:^3.5.0"
     "@types/estree": "npm:^1.0.6"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.2"
