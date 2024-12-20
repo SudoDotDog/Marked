@@ -1445,10 +1445,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:^3.10.1":
-  version: 3.10.1
-  resolution: "@imbricate/core@npm:3.10.1"
-  checksum: 10c0/c82794906a83e37580c84fb32ce1c58f5ddeeb2a1a2541346adf200f1cc749b22237d3fc53e23c6056fd6802f5ebb3fe1190389dd31169160d42b08b3317990d
+"@imbricate/core@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "@imbricate/core@npm:3.11.0"
+  checksum: 10c0/4823f00bb40cde6dd4af0759971faadda5205094f51d1af2c3dffd08dc9a3fcfc51cd9b5b4ab98e556e9fe1630b9d929d72bc1fa85f5e0a62884bd6511f14a7f
   languageName: node
   linkType: hard
 
@@ -1874,7 +1874,7 @@ __metadata:
     "@babel/core": "npm:^7.26.0"
     "@babel/preset-env": "npm:^7.26.0"
     "@babel/preset-typescript": "npm:^7.26.0"
-    "@imbricate/core": "npm:^3.10.1"
+    "@imbricate/core": "npm:^3.11.0"
     "@imbricate/test-origin-jest": "npm:^3.4.0"
     "@types/estree": "npm:^1.0.6"
     "@types/jest": "npm:^29.5.14"
