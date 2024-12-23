@@ -1445,19 +1445,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:^3.11.0":
-  version: 3.11.0
-  resolution: "@imbricate/core@npm:3.11.0"
-  checksum: 10c0/4823f00bb40cde6dd4af0759971faadda5205094f51d1af2c3dffd08dc9a3fcfc51cd9b5b4ab98e556e9fe1630b9d929d72bc1fa85f5e0a62884bd6511f14a7f
+"@imbricate/core@npm:^3.15.1":
+  version: 3.15.1
+  resolution: "@imbricate/core@npm:3.15.1"
+  checksum: 10c0/54cf9d55f4216324cd37a2431dbd2bb5684ea4ddc4fc4eca0c6a3db9eeb9903b355b03cc07ab163f29fa6de42bc970cce6261b6177c343eccb43e0b01a21d4c1
   languageName: node
   linkType: hard
 
-"@imbricate/test-origin-jest@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@imbricate/test-origin-jest@npm:3.4.0"
+"@imbricate/test-origin-jest@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "@imbricate/test-origin-jest@npm:3.6.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/23fe459b3bf9a469e315549a4343d207f4f08dc6fbaaf83f627fc35e11641f592d89924aca32a2b560ff08405fdde3ec2c1004c3320efd55d9f4c1d4f7755a3a
+  checksum: 10c0/44df21cd4b681f52446744b80e0cd340b21b055a99f78edbcac5d455d7a8fb52dda5b5f4bfffbe68e60bfdd4db5d4916a998f653f52658d19efed5a89a19df3e
   languageName: node
   linkType: hard
 
@@ -1874,8 +1874,8 @@ __metadata:
     "@babel/core": "npm:^7.26.0"
     "@babel/preset-env": "npm:^7.26.0"
     "@babel/preset-typescript": "npm:^7.26.0"
-    "@imbricate/core": "npm:^3.11.0"
-    "@imbricate/test-origin-jest": "npm:^3.4.0"
+    "@imbricate/core": "npm:^3.15.1"
+    "@imbricate/test-origin-jest": "npm:^3.6.0"
     "@types/estree": "npm:^1.0.6"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.2"
