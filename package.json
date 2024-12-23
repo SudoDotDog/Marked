@@ -41,8 +41,6 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
-    "@imbricate/core": "^3.15.1",
-    "@imbricate/test-origin-jest": "^3.6.0",
     "@types/estree": "^1.0.6",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
