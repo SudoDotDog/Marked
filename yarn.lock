@@ -1981,7 +1981,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.26.0"
     "@types/estree": "npm:^1.0.6"
     "@types/jest": "npm:^29.5.14"
-    "@types/node": "npm:^22.13.11"
+    "@types/node": "npm:^22.13.14"
     "@typescript-eslint/eslint-plugin": "npm:^8.27.0"
     "@typescript-eslint/parser": "npm:^8.27.0"
     acorn: "npm:8.14.1"
@@ -2132,12 +2132,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.13.11":
-  version: 22.13.11
-  resolution: "@types/node@npm:22.13.11"
+"@types/node@npm:^22.13.14":
+  version: 22.13.14
+  resolution: "@types/node@npm:22.13.14"
   dependencies:
     undici-types: "npm:~6.20.0"
-  checksum: 10c0/f6ee33d36372242535c38640fe7550a6640d8a775ec19b55bfc11775b521cba072d892ca92a912332ce01b317293d645c1bf767f3f882ec719f2404a3d2a5b96
+  checksum: 10c0/fa2ab5b8277bfbcc86c42e46a3ea9871b0d559894cc9d955685d17178c9499f0b1bf03d1d1ea8d92ef2dda818988f4035acb8abf9dc15423a998fa56173ab804
   languageName: node
   linkType: hard
 
