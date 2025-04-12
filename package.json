@@ -35,22 +35,22 @@
     "acorn": "8.14.1",
     "acorn-walk": "8.3.4",
     "sourcemap-codec": "1.4.8",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
-    "@babel/preset-typescript": "^7.26.0",
-    "@types/estree": "^1.0.6",
+    "@babel/preset-typescript": "^7.27.0",
+    "@types/estree": "^1.0.7",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.11",
-    "@typescript-eslint/eslint-plugin": "^8.27.0",
-    "@typescript-eslint/parser": "^8.27.0",
+    "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^8.29.1",
+    "@typescript-eslint/parser": "^8.29.1",
     "babel-jest": "^29.7.0",
     "chance": "^1.1.12",
-    "eslint": "^9.23.0",
+    "eslint": "^9.24.0",
     "jest": "^29.7.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
